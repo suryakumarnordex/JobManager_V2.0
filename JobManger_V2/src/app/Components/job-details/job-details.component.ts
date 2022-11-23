@@ -22,7 +22,8 @@ export class JobDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.GetJobDetails();
+    // this.GetJobDetails();
+    this.SetJobPriority();
   }
 
   GetJobDetails() {
@@ -55,6 +56,16 @@ export class JobDetailsComponent implements OnInit {
         this.logger.reportError(error);
       },
       // console.log(this.layouts.map((res: any) => res.cockpitIdFragment));
+    });
+  }
+  SetJobPriority() {
+    this.ApiService.SetJobPriority([52290, 45078], 'Normal+100').subscribe({
+      next: (res: any) => {
+        console.log(res);
+      },
+      error: (error: string) => {
+        console.log(error);
+      },
     });
   }
 }

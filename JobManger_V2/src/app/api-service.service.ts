@@ -133,4 +133,24 @@ export class ApiServiceService {
         })
       );
   }
+
+  SetJobPriority(jobIds: Array<number>, priority: string) {
+    let params = new HttpParams().set('priority', priority);
+    jobIds.forEach((jobId: any) => {
+      params = params.append('jobIds', jobId);
+    });
+
+    console.log(this.apiurl + 'SetPriorityBand', {
+      headers: this.headers,
+      params: params,
+    });
+    return this.http.post(
+      this.apiurl + 'SetPriorityBand',
+      {},
+      {
+        headers: this.headers,
+        params: params,
+      }
+    );
+  }
 }
