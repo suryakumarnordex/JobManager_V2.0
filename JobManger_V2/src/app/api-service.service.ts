@@ -26,4 +26,41 @@ GetJobDetails(jobIdFragment:number|null,userFragment:String|null,typeFragment:St
   
 }
 
+GetJobDetailsNew():Observable<JobDetailsModules[]>
+{
+  const infos = [];
+return infos;
+}
+
+searchLayout(jobIdFragment: string = '', userFragment string = null,typeFragment:String|null,topicFragment:String|null,cockpitIdFragment:String|null,runnoFragment:String|null,statusFragment:String|null,
+  priorityFragment:String|null,progressFragment:String|null,numberOfTasksFragment:String|null,nodeGroupFragment:String|null,pendingReasonFragment:String|null,orderBy:String|null,orderDescending:boolean, PageNo:number|null, PageSize:number|null,waitForChange:boolean): Observable<SearchResultsLayout> {
+  const params = new HttpParams()
+    .set('jobIdFragment', jobIdFragment ? jobIdFragment : '')
+    .set('userFragment', userFragment ? userFragment : '')
+    .set('typeFragment', typeFragment ? typeFragment : '')
+    .set('topicFragment', topicFragment ? topicFragment : '')
+    .set('cockpitIdFragment', cockpitIdFragment ? cockpitIdFragment : '')
+    .set('runnoFragment', runnoFragment ? runnoFragment : '')
+    .set('statusFragment', statusFragment ? statusFragment : '')
+    .set('priorityFragment', priorityFragment ? priorityFragment : '')
+    .set('progressFragment', progressFragment ? typeFragment : '')
+    .set('numberOfTasksFragment', numberOfTasksFragment ? numberOfTasksFragment: '')
+    .set('nodeGroupFragment', nodeGroupFragment ? nodeGroupFragment : '')
+    .set('pendingReasonFragment', pendingReasonFragment ? pendingReasonFragment : '')
+    .set('orderBy', orderBy ? orderBy : '')
+    .set('orderDescending', orderDescending.toString())
+    .set('PageNo', PageNo.toFixed(0))
+    .set('PageSize', PageSize.toFixed(0))
+    .set('waitForChange', waitForChange ? waitForChange : false);
+
+  return this.http.get(this.apiurl + 'SearchLayout', { headers: this.headers, params: params, withCredentials: true })
+    .pipe(
+      map((resp: Array<any>) => {
+        return new SearchResultsLayout().deserialize(resp);
+      }),
+      tap((results: SearchResultsLayout) => {
+        this.logger.log(`fetched ${results.results.length} search results for nameFragment=${nameFragment}, orderBy=${orderBy}, orderDescending=${orderDescending}, page=${page}, pageSize=${pageSize}`);
+      }));
+}
+
 }
