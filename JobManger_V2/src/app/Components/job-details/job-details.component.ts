@@ -43,7 +43,7 @@ export class JobDetailsComponent implements OnInit {
       '',
       false,
       1,
-      10,
+      100,
       false
     ).subscribe({
       next: (res: SearchResultsLayout) => {
