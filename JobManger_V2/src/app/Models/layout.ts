@@ -32,10 +32,7 @@ export class LayoutInfo implements Deserializable, Serializable {
     this.numberOfTasksFragment = input.numberOfTasks;
     this.nodeGroupFragment = input.nodeGroup;
     this.pendingReasonFragment = input.pendingReason;
-    // this.orderBy = input.orderBy;
-    // this.PageNo = input.PageNo;
-    // this.PageSize = input.PageSize;
-    // this.waitForChange = input.waitForChange;
+
     return this;
   }
   serialize() {

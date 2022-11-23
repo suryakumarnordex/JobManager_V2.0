@@ -10,12 +10,11 @@ import { JobDetailsModules } from 'src/app/Modules/JobDetailsModules';
   styleUrls: ['./job-details.component.css'],
 })
 export class JobDetailsComponent implements OnInit {
-  JobDetails: JobDetailsModules[] = [];
-  selectedLayout: LayoutInfo;
   layouts: LayoutInfo[];
   total = 0;
   layoutLoading = true;
   loading = true;
+
   constructor(private ApiService: ApiServiceService) {}
 
   ngOnInit(): void {
