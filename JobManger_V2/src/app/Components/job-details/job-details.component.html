@@ -1,1 +1,46 @@
-<div class="head"></div>
+<clr-datagrid [(clrDgSelected)]="selected">
+  <clr-dg-column>ID</clr-dg-column>
+  <clr-dg-column>User</clr-dg-column>
+  <clr-dg-column>Cockpit Id</clr-dg-column>
+  <clr-dg-column>Run</clr-dg-column>
+
+  <clr-dg-column>Type</clr-dg-column>
+  <clr-dg-column>Topic</clr-dg-column>
+  <clr-dg-column>Status</clr-dg-column>
+  <clr-dg-column>Progress</clr-dg-column>
+
+  <clr-dg-column>Job Priority</clr-dg-column>
+  <clr-dg-column>Number Of Tasks</clr-dg-column>
+
+  <clr-dg-column>Start Time (yy/mm/dd HH:mm)</clr-dg-column>
+  <clr-dg-column>End Time (yy/mm/dd HH:mm)</clr-dg-column>
+  <clr-dg-column>Submit Time (yy/mm/dd HH:mm)</clr-dg-column>
+  <clr-dg-column>Elapsed Time (HH:mm:ss)</clr-dg-column>
+
+  <clr-dg-row *ngFor="let job of layouts" [clrDgItem]="job">
+    <clr-dg-cell>{{ job.jobIdFragment }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.userFragment }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.cockpitIdFragment }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.runnoFragment }}</clr-dg-cell>
+
+    <clr-dg-cell>{{ job.typeFragment }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.topicFragment }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.statusFragment }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.progressFragment }}</clr-dg-cell>
+
+    <clr-dg-cell>{{ job.priorityFragment }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.numberOfTasksFragment }}</clr-dg-cell>
+
+    <clr-dg-cell>{{ job.startTime }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.endTime }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.submitTime }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.elapsedTime }}</clr-dg-cell>
+  </clr-dg-row>
+  <!--
+  <clr-dg-footer>{{ this.layouts.length }} users</clr-dg-footer> -->
+  <ng-template
+    clrIfDetail
+    let-task
+    (clrIfDetailChange)="onDetailOpen($event)"
+  ></ng-template>
+</clr-datagrid>

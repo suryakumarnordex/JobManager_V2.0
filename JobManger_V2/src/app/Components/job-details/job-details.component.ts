@@ -12,6 +12,7 @@ import { LoggerService } from 'src/app/Services/logger.service';
 })
 export class JobDetailsComponent implements OnInit {
   layouts: LayoutInfo[];
+  selected = [] as any;
   total = 0;
   layoutLoading = true;
   loading = true;
@@ -57,4 +58,5 @@ export class JobDetailsComponent implements OnInit {
       // console.log(this.layouts.map((res: any) => res.cockpitIdFragment));
     });
   }
+  onDetailOpen(event: any) {}
 }

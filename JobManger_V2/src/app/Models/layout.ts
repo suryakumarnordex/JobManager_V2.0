@@ -15,6 +15,15 @@ export class LayoutInfo implements Deserializable, Serializable {
   pendingReasonFragment: string;
   orderBy: string;
   orderDescending: boolean;
+
+  //New
+  startTime: string;
+  endTime: string;
+  elapsedTime: string;
+  submitTime: string;
+  failedTasksCount: number;
+  runningTasksCount: number;
+  finishedTasksCount: number;
   // PageNo: number;
   // PageSize: number;
   waitForChange: boolean;
@@ -33,6 +42,15 @@ export class LayoutInfo implements Deserializable, Serializable {
     this.nodeGroupFragment = input.nodeGroup;
     this.pendingReasonFragment = input.pendingReason;
 
+    //New
+    this.startTime = input.startTime;
+    this.endTime = input.endTime;
+    this.elapsedTime = input.elapsedTime;
+    this.submitTime = input.submitTime;
+    this.failedTasksCount = input.failedTasksCount;
+    this.runningTasksCount = input.runningTasksCount;
+    this.finishedTasksCount = input.finishedTasksCount;
+
     return this;
   }
   serialize() {
@@ -50,6 +68,14 @@ export class LayoutInfo implements Deserializable, Serializable {
       nodeGroupFragment: this.nodeGroupFragment,
       pendingReasonFragment: this.pendingReasonFragment,
       Comment: this.pendingReasonFragment,
+
+      startTime: this.startTime,
+      endTime: this.endTime,
+      elapsedTime: this.elapsedTime,
+      submitTime: this.submitTime,
+      failedTasksCount: this.failedTasksCount,
+      runningTasksCount: this.runningTasksCount,
+      finishedTasksCount: this.finishedTasksCount,
     };
   }
 }
