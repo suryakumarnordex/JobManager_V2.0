@@ -3,6 +3,7 @@ import { ApiServiceService } from 'src/app/api-service.service';
 import { SearchResultsLayout } from 'src/app/Models/helper';
 import { LayoutInfo } from 'src/app/Models/layout';
 import { JobDetailsModules } from 'src/app/Modules/JobDetailsModules';
+import { LoggerService } from 'src/app/Services/logger.service';
 
 @Component({
   selector: 'app-job-details',
@@ -15,7 +16,10 @@ export class JobDetailsComponent implements OnInit {
   layoutLoading = true;
   loading = true;
 
-  constructor(private ApiService: ApiServiceService) {}
+  constructor(
+    private ApiService: ApiServiceService,
+    private logger: LoggerService
+  ) {}
 
   ngOnInit(): void {
     this.GetJobDetails();
@@ -40,11 +44,16 @@ export class JobDetailsComponent implements OnInit {
       1,
       10,
       false
-    ).subscribe((res: SearchResultsLayout) => {
-      this.layouts = res.results;
-      this.total = res.totalResults;
-      this.layoutLoading = false;
-      console.log(this.layouts);
+    ).subscribe({
+      next: (res: SearchResultsLayout) => {
+        this.layouts = res.results;
+        this.total = res.totalResults;
+        this.layoutLoading = false;
+        console.log(this.layouts);
+      },
+      error: (error) => {
+        this.logger.reportError(error);
+      },
       // console.log(this.layouts.map((res: any) => res.cockpitIdFragment));
     });
   }
