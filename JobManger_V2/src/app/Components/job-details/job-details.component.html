@@ -20,12 +20,60 @@
   <clr-dg-row *ngFor="let job of layouts" [clrDgItem]="job">
     <clr-dg-cell>{{ job.jobIdFragment }}</clr-dg-cell>
     <clr-dg-cell>{{ job.userFragment }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.cockpitIdFragment }}</clr-dg-cell>
+    <!-- <clr-dg-cell>{{ job.cockpitIdFragment }}</clr-dg-cell> -->
+
+    <clr-dg-cell style="text-align: left">
+      <div style="display: flex; justify-content: space-evenly">
+        <div>
+          <div
+            role="tooltip"
+            aria-haspopup="true"
+            class="tooltip tooltip-sm tooltip tooltip-right"
+          >
+            {{ job.cockpitIdFragment }}
+            <span class="tooltip-content">{{ job.cockpitIdFragment }} </span>
+          </div>
+        </div>
+        <div>
+          <div (click)="copyClipboard(job)">
+            <a
+              href="javascript:void(0)"
+              role="tooltip"
+              aria-haspopup="true"
+              class="tooltip tooltip-sm tooltip tooltip-right"
+            >
+              <clr-icon
+                shape="copy-to-clipboard"
+                class="is-solid has-badge-info"
+                *ngIf="job.cockpitIdFragment != undefined"
+              ></clr-icon>
+              <span class="tooltip-content">{{ job.clipboardtext }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </clr-dg-cell>
+
     <clr-dg-cell>{{ job.runnoFragment }}</clr-dg-cell>
 
     <clr-dg-cell>{{ job.typeFragment }}</clr-dg-cell>
     <clr-dg-cell>{{ job.topicFragment }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.statusFragment }}</clr-dg-cell>
+    <clr-dg-cell
+      [style.color]="
+        job.statusFragment == 'Failed'
+          ? 'red'
+          : job.statusFragment == 'Running'
+          ? 'blue'
+          : job.statusFragment == 'Finished'
+          ? 'green'
+          : job.statusFragment == 'Canceled'
+          ? 'orange'
+          : job.statusFragment == 'Queued'
+          ? 'Magenta'
+          : 'black'
+      "
+      >{{ job.statusFragment }}</clr-dg-cell
+    >
     <clr-dg-cell>{{ job.progressFragment }}</clr-dg-cell>
 
     <clr-dg-cell>{{ job.priorityFragment }}</clr-dg-cell>

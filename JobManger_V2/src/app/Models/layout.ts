@@ -24,6 +24,7 @@ export class LayoutInfo implements Deserializable, Serializable {
   failedTasksCount: number;
   runningTasksCount: number;
   finishedTasksCount: number;
+  clipboardtext: string;
   // PageNo: number;
   // PageSize: number;
   waitForChange: boolean;
@@ -50,7 +51,7 @@ export class LayoutInfo implements Deserializable, Serializable {
     this.failedTasksCount = input.failedTasksCount;
     this.runningTasksCount = input.runningTasksCount;
     this.finishedTasksCount = input.finishedTasksCount;
-
+    this.clipboardtext = 'Copy directory path to clipboard';
     return this;
   }
   serialize() {
@@ -68,7 +69,7 @@ export class LayoutInfo implements Deserializable, Serializable {
       nodeGroupFragment: this.nodeGroupFragment,
       pendingReasonFragment: this.pendingReasonFragment,
       Comment: this.pendingReasonFragment,
-
+      clipboardtext: this.clipboardtext,
       startTime: this.startTime,
       endTime: this.endTime,
       elapsedTime: this.elapsedTime,

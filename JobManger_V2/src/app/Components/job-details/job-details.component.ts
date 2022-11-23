@@ -59,4 +59,23 @@ export class JobDetailsComponent implements OnInit {
     });
   }
   onDetailOpen(event: any) {}
+  copyClipboard(selectedItem: any) {
+    const create_copy = (e: ClipboardEvent) => {
+      e.clipboardData?.setData('text/plain', selectedItem.CockpitFolder);
+      e.preventDefault();
+      // selectedItem.text="Copied";
+
+      if (
+        selectedItem.CockpitFolder != '' &&
+        selectedItem.CockpitFolder != null
+      ) {
+        selectedItem.text = 'copied';
+      } else {
+        selectedItem.text = 'no data to copy';
+      }
+    };
+    document.addEventListener('copy', create_copy);
+    document.execCommand('copy');
+    document.removeEventListener('copy', create_copy);
+  }
 }

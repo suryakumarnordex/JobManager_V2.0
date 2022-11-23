@@ -18,7 +18,7 @@ export class JobDetailsModules implements Deserializable {
   PageNo?: number;
   PageSize?: number;
   waitForChange?: boolean;
-
+  clipboardtext?: string;
   //New
   startTime?: string;
   endTime?: string;
@@ -46,6 +46,7 @@ export class JobDetailsModules implements Deserializable {
     this.PageSize = input.PageSize;
     this.waitForChange = input.waitForChange;
     //New
+    this.clipboardtext = 'Copy directory path to clipboard';
     this.startTime = input.startTime;
     this.endTime = input.endTime;
     this.elapsedTime = input.elapsedTime;
