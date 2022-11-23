@@ -8,20 +8,23 @@ export interface Serializable {
 }
 
 export class SearchResultsLayout implements Deserializable {
-    page: number;
-    pageSize: number;
+    PageNo: number;
+    PageSize: number;
     totalResults: number;
     results: Array<LayoutInfo>;
 
     deserialize(input: any): this {
-        this.page = input.Page;
-        this.pageSize = input.PageSize;
-        this.totalResults = input.TotalResults;
+        this.PageNo = input.PageNo;
+        this.PageSize = input.PageSize;
+        this.totalResults = input.totalResults;
         
         this.results = [];
-        for (const result of input.Results) {
+        for (const result of input.result) {
             this.results.push(new LayoutInfo().deserialize(result));
         }
         return this;
     }
+
+    
 }
+

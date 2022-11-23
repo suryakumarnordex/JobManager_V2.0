@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiServiceService } from 'src/app/api-service.service';
+import { SearchResultsLayout } from 'src/app/Models/helper';
+import { LayoutInfo } from 'src/app/Models/layout';
 import { JobDetailsModules } from 'src/app/Modules/JobDetailsModules';
 
 @Component({
@@ -9,6 +11,11 @@ import { JobDetailsModules } from 'src/app/Modules/JobDetailsModules';
 })
 export class JobDetailsComponent implements OnInit {
   JobDetails : JobDetailsModules[]=[];
+  selectedLayout: LayoutInfo;
+  layouts: LayoutInfo[];
+  total = 0;
+  layoutLoading = true;
+  loading = true;
   constructor(private ApiService:ApiServiceService) { }
 
   ngOnInit(): void {
@@ -17,10 +24,17 @@ export class JobDetailsComponent implements OnInit {
 
   GetJobDetails()
   {
-    this.ApiService.GetJobDetails(54212,'','','','','','Finished','','','','','','',false,1,10,false).subscribe((data:JobDetailsModules[]) =>{  
-      this.JobDetails=data;
-      console.log( this.JobDetails);
-  });
+
+    this.ApiService.searchLayout('54212','','','','','','Finished','','','','','','',false,1,10,false).subscribe((results: SearchResultsLayout) => {
+      this.layouts = results.results;
+      this.total = results.totalResults;
+      this.layoutLoading = false;
+      console.log(this.layouts);
+    });
+  //   this.ApiService.searchLayout().subscribe((data:JobDetailsModules[]) =>{  
+  //     this.JobDetails=data;
+  //     console.log( this.JobDetails);
+  // });
 }
 
   

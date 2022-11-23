@@ -1,23 +1,23 @@
 import { Deserializable, Serializable } from './helper';
 
 export class LayoutInfo implements Deserializable, Serializable {
-    jobIdFragment?: number;
-    userFragment?:string;
-    typeFragment?:string;
-    topicFragment?:string;
-    cockpitIdFragment?:number;
-    runnoFragment?:number;
-    statusFragment?:string;
-    priorityFragment?:string;
-    progressFragment?:number;
-    numberOfTasksFragment?:number;
-    nodeGroupFragment?:string;
-    pendingReasonFragment?:string;
-    orderBy?:string;
-    orderDescending?:boolean; 
-    PageNo?:number; 
-    PageSize?:number;
-    waitForChange?:boolean
+    jobIdFragment: number;
+    userFragment:string;
+    typeFragment:string;
+    topicFragment:string;
+    cockpitIdFragment:number;
+    runnoFragment:number;
+    statusFragment:string;
+    priorityFragment:string;
+    progressFragment:number;
+    numberOfTasksFragment:number;
+    nodeGroupFragment:string;
+    pendingReasonFragment:string;
+    orderBy:string;
+    orderDescending:boolean; 
+    PageNo:number; 
+    PageSize:number;
+    waitForChange:boolean;
     
     deserialize(input: any): this {
         this.jobIdFragment = input.jobIdFragment;
