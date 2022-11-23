@@ -7,35 +7,46 @@ import { JobDetailsModules } from 'src/app/Modules/JobDetailsModules';
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-details.component.html',
-  styleUrls: ['./job-details.component.css']
+  styleUrls: ['./job-details.component.css'],
 })
 export class JobDetailsComponent implements OnInit {
-  JobDetails : JobDetailsModules[]=[];
+  JobDetails: JobDetailsModules[] = [];
   selectedLayout: LayoutInfo;
   layouts: LayoutInfo[];
   total = 0;
   layoutLoading = true;
   loading = true;
-  constructor(private ApiService:ApiServiceService) { }
+  constructor(private ApiService: ApiServiceService) {}
 
   ngOnInit(): void {
     this.GetJobDetails();
   }
 
-  GetJobDetails()
-  {
-
-    this.ApiService.searchLayout('54212','','','','','','Finished','','','','','','',false,1,10,false).subscribe((results: SearchResultsLayout) => {
-      this.layouts = results.results;
-      this.total = results.totalResults;
+  GetJobDetails() {
+    this.ApiService.searchLayout(
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      false,
+      1,
+      10,
+      false
+    ).subscribe((res: SearchResultsLayout) => {
+      this.layouts = res.results;
+      this.total = res.totalResults;
       this.layoutLoading = false;
       console.log(this.layouts);
+      // console.log(this.layouts.map((res: any) => res.cockpitIdFragment));
     });
-  //   this.ApiService.searchLayout().subscribe((data:JobDetailsModules[]) =>{  
-  //     this.JobDetails=data;
-  //     console.log( this.JobDetails);
-  // });
-}
-
-  
+  }
 }
