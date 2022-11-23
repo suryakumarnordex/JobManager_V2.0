@@ -139,12 +139,12 @@ export class ApiServiceService {
       .set('orderDescending', orderDescending.toString())
       .set('PageNo', PageNo.toFixed(0))
       .set('PageSize', PageSize.toFixed(0));
-    console.log(this.apiurl + 'SearchLayout', {
+    console.log(this.apiurl + 'SearchTaskLayout', {
       headers: this.headers,
       params: params,
     });
     return this.http
-      .get(this.apiurl + 'SearchLayout', {
+      .get(this.apiurl + 'SearchTaskLayout', {
         headers: this.headers,
         params: params,
         withCredentials: true,
