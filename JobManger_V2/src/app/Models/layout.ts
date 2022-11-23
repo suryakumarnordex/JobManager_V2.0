@@ -56,3 +56,43 @@ export class LayoutInfo implements Deserializable, Serializable {
     };
   }
 }
+export class TaskLayoutInfo implements Deserializable, Serializable {
+  jobIdFragment: number;
+  taskIdFragment: number;
+  nameFragment: string;
+  statusFragment: string;
+  exidCodeFragment: string;
+
+  startTimeFragment: string;
+  endTimeFragment: string;
+  allocatedNodesFragment: string;
+
+  commandLineFragment: string;
+
+  deserialize(input: any): this {
+    this.jobIdFragment = input.jobID;
+    this.taskIdFragment = input.taskID;
+    this.nameFragment = input.taskName;
+    this.statusFragment = input.taskState;
+    this.exidCodeFragment = input.exitCode;
+    this.startTimeFragment = input.startTime;
+    this.endTimeFragment = input.endTime;
+    this.allocatedNodesFragment = input.allocatedNodes;
+    this.commandLineFragment = input.commandLine;
+    return this;
+  }
+  serialize() {
+    return {
+      jobIdFragment: this.jobIdFragment,
+      taskIdFragment: this.taskIdFragment,
+      nameFragment: this.nameFragment,
+      statusFragment: this.statusFragment,
+      exidCodeFragment: this.exidCodeFragment,
+
+      startTimeFragment: this.startTimeFragment,
+      endTimeFragment: this.endTimeFragment,
+      allocatedNodesFragment: this.allocatedNodesFragment,
+      commandLineFragment: this.commandLineFragment,
+    };
+  }
+}

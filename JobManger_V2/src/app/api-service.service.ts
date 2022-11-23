@@ -5,7 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.beta';
 import { LoggerService } from './Services/logger.service';
 import { JobDetailsModules } from './Modules/JobDetailsModules';
-import { SearchResultsLayout } from './Models/helper';
+import { SearchResultsLayout, SearchTaskResultsLayout } from './Models/helper';
 
 @Injectable({
   providedIn: 'root',
@@ -42,12 +42,6 @@ export class ApiServiceService {
     console.log(url);
     return this.http.get<JobDetailsModules[]>(url);
   }
-
-  // GetJobDetailsNew():Observable<JobDetailsModules[]>
-  // {
-  //   const infos = [];
-  // return infos;
-  // }
 
   searchLayout(
     jobIdFragment: string = '',
@@ -109,6 +103,59 @@ export class ApiServiceService {
         tap((results: SearchResultsLayout) => {
           this.logger.log(
             `fetched ${results.results.length} search results for jobIdFragment=${jobIdFragment}, orderBy=${orderBy}, orderDescending=${orderDescending}, PageNo=${PageNo}, pageSize=${PageSize}`
+          );
+        })
+      );
+  }
+  searchTaskLayout(
+    jobIdFragment: string = '',
+    taskIdFragment: string = '',
+    nameFragment: string = '',
+    statusFragment: string = '',
+    startTimeFragment: string = '',
+    endTimeFragment: string = '',
+    allocatedNodesFragment: string = '',
+    commandLineFragment: string = '',
+    PageNo: number = 1,
+    PageSize: number = 10,
+    orderDescending: boolean
+  ): Observable<SearchTaskResultsLayout> {
+    const params = new HttpParams()
+      .set('jobIdFragment', jobIdFragment ? jobIdFragment : '')
+      .set('taskIdFragment', taskIdFragment ? taskIdFragment : '')
+      .set('nameFragment', nameFragment ? nameFragment : '')
+      .set('startTimeFragment', startTimeFragment ? startTimeFragment : '')
+      .set('endTimeFragment', endTimeFragment ? endTimeFragment : '')
+      .set(
+        'allocatedNodesFragment',
+        allocatedNodesFragment ? allocatedNodesFragment : ''
+      )
+      .set('statusFragment', statusFragment ? statusFragment : '')
+      .set(
+        'commandLineFragment',
+        commandLineFragment ? commandLineFragment : ''
+      )
+
+      .set('orderDescending', orderDescending.toString())
+      .set('PageNo', PageNo.toFixed(0))
+      .set('PageSize', PageSize.toFixed(0));
+    console.log(this.apiurl + 'SearchLayout', {
+      headers: this.headers,
+      params: params,
+    });
+    return this.http
+      .get(this.apiurl + 'SearchLayout', {
+        headers: this.headers,
+        params: params,
+        withCredentials: true,
+      })
+      .pipe(
+        map((resp: any) => {
+          return new SearchTaskResultsLayout().deserialize(resp);
+        }),
+        tap((results: SearchTaskResultsLayout) => {
+          this.logger.log(
+            `fetched ${results.results.length} search results for jobIdFragment=${jobIdFragment}, orderDescending=${orderDescending}, PageNo=${PageNo}, pageSize=${PageSize}`
           );
         })
       );
