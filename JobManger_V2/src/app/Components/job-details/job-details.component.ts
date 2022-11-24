@@ -52,8 +52,8 @@ export class JobDetailsComponent implements OnInit {
     this.dataloading =true;
     this.ApiService.searchLayout(
       '',
-      '',
-      '',
+      [],
+      [],
       '',
       '',
       '',
@@ -71,7 +71,7 @@ export class JobDetailsComponent implements OnInit {
     ).subscribe({      
       next: (res: SearchResultsLayout) => {      
         this.layouts = res.results;
-        this.total = res.totalResults;      
+        this.total = res.totalResults;                     
         this.dataloading=false;
       },
       error: (error) => {
@@ -87,7 +87,7 @@ export class JobDetailsComponent implements OnInit {
       this.ApiService.searchTaskLayout(this.detailTaskID,
       '',
       '',
-      '',
+      [],
       '',
       '',
       '',
@@ -127,23 +127,22 @@ export class JobDetailsComponent implements OnInit {
   onNodeGroupChange(event: any) {
     this.dataloading=true;
     let selectedNodeGroup='';
-    console.log(event.target.value);
+    let statusList:Array<string>=[] ;   
     if (event.target.value.includes('Queue')) {
       selectedNodeGroup = event.target.value.replace('Queue ', '');
+      statusList = ['Queued','Finished'];
     } else {
-      selectedNodeGroup = event.target.value;
-    }
-    console.log(selectedNodeGroup.trim());
-    
+      selectedNodeGroup ='';
+    }       
     if (event !== null) {  
       this.ApiService.searchLayout(
         '',
+        [],
+        [],
         '',
         '',
         '',
-        '',
-        '',
-        ['Queued','Finished'],
+        statusList,
         '',
         '',
         '',
@@ -157,8 +156,7 @@ export class JobDetailsComponent implements OnInit {
       ).subscribe({      
         next: (res: SearchResultsLayout) => {      
           this.layouts = res.results;
-          this.total = res.totalResults;
-          console.log(this.layouts,"Node Group Changed");
+          this.total = res.totalResults;         
           this.dataloading=false;
         },
         error: (error) => {

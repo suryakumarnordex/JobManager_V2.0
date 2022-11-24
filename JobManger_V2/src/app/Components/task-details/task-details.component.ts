@@ -31,7 +31,7 @@ export class TaskDetailsComponent implements OnInit {
       this.JobIDFragement,
       '',
       '',
-      '',
+      [],
       '',
       '',
       '',
