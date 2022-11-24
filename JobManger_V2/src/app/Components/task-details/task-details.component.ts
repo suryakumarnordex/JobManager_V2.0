@@ -4,6 +4,7 @@ import { SearchTaskResultsLayout } from 'src/app/Models/helper';
 import { TaskLayoutInfo } from 'src/app/Models/layout';
 import { LoggerService } from 'src/app/Services/logger.service';
 
+
 @Component({
   selector: 'app-task-details',
   templateUrl: './task-details.component.html',
@@ -11,6 +12,7 @@ import { LoggerService } from 'src/app/Services/logger.service';
 })
 export class TaskDetailsComponent implements OnInit {
   layouts: TaskLayoutInfo[];
+  selected = [] as any;
   total = 0;
   layoutLoading = true;
   loading = true;

@@ -6,7 +6,7 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from './app-routing.module';
 import { JobDetailsComponent } from './Components/job-details/job-details.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { UtcToLocalTimePipe } from './Components/utc-pipe/utc-to-local-time.pipe';
 @NgModule({
     imports: [
         BrowserModule,
@@ -16,7 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
         HttpClientModule,
 
      ],
-     declarations: [ AppComponent, JobDetailsComponent ],
+     declarations: [ AppComponent, JobDetailsComponent,UtcToLocalTimePipe ],
      bootstrap: [ AppComponent ]
 })
 export class AppModule { }

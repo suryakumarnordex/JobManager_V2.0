@@ -20,8 +20,6 @@
   <clr-dg-row *ngFor="let job of layouts" [clrDgItem]="job">
     <clr-dg-cell>{{ job.jobIdFragment }}</clr-dg-cell>
     <clr-dg-cell>{{ job.userFragment }}</clr-dg-cell>
-    <!-- <clr-dg-cell>{{ job.cockpitIdFragment }}</clr-dg-cell> -->
-
     <clr-dg-cell style="text-align: left">
       <div style="display: flex; justify-content: space-evenly">
         <div>
@@ -79,10 +77,10 @@
     <clr-dg-cell>{{ job.priorityFragment }}</clr-dg-cell>
     <clr-dg-cell>{{ job.numberOfTasksFragment }}</clr-dg-cell>
 
-    <clr-dg-cell>{{ job.startTime }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.endTime }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.submitTime }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.elapsedTime }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.startTime | utcToLocalTime: "short" }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.endTime | utcToLocalTime: "short" }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.submitTime | utcToLocalTime: "short" }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.elapsedTime | utcToLocalTime: "short" }}</clr-dg-cell>
   </clr-dg-row>
   <!--
   <clr-dg-footer>{{ this.layouts.length }} users</clr-dg-footer> -->
