@@ -7,6 +7,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { JobDetailsComponent } from './Components/job-details/job-details.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UtcToLocalTimePipe } from './Components/utc-pipe/utc-to-local-time.pipe';
+import { TaskDetailsComponent } from "./Components/task-details/task-details.component";
+import { UtcConverterService } from "./Components/utc-converter.service/utc-converter.service";
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -14,9 +17,9 @@ import { UtcToLocalTimePipe } from './Components/utc-pipe/utc-to-local-time.pipe
         ClarityModule,
         AppRoutingModule,
         HttpClientModule,
-
      ],
-     declarations: [ AppComponent, JobDetailsComponent,UtcToLocalTimePipe ],
+     declarations: [ AppComponent, JobDetailsComponent,UtcToLocalTimePipe,TaskDetailsComponent ],
+     providers: [ UtcConverterService,],
      bootstrap: [ AppComponent ]
 })
 export class AppModule { }

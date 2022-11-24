@@ -6,7 +6,7 @@ export class TaskDetailsModules implements Deserializable {
   nameFragment?: string;
   statusFragment?: string;
   exidCodeFragment?: string;
-
+  exidCodeNameFragment?: string;
   startTimeFragment?: string;
   endTimeFragment?: string;
   allocatedNodesFragment?: string;
@@ -20,6 +20,7 @@ export class TaskDetailsModules implements Deserializable {
     this.nameFragment = input.taskName;
     this.statusFragment = input.taskState;
     this.exidCodeFragment = input.exitCode;
+    this.exidCodeNameFragment= input.exitCodeName;
     this.startTimeFragment = input.startTime;
     this.endTimeFragment = input.endTime;
     this.allocatedNodesFragment = input.allocatedNodes;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ApiServiceService } from 'src/app/api-service.service';
 import { SearchTaskResultsLayout } from 'src/app/Models/helper';
 import { TaskLayoutInfo } from 'src/app/Models/layout';
@@ -11,11 +11,13 @@ import { LoggerService } from 'src/app/Services/logger.service';
   styleUrls: ['./task-details.component.css'],
 })
 export class TaskDetailsComponent implements OnInit {
-  layouts: TaskLayoutInfo[];
+  @Input() taskLayout: TaskLayoutInfo[];
+  @Input() JobIDFragement: string;
+  //layouts: TaskLayoutInfo[];
   selected = [] as any;
   total = 0;
-  layoutLoading = true;
-  loading = true;
+  dataloading:boolean=false;
+
   constructor(
     private ApiService: ApiServiceService,
     private logger: LoggerService
@@ -26,8 +28,9 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   GetTaskDetails() {
+    this.dataloading=true;
     this.ApiService.searchTaskLayout(
-      '54212',
+      this.JobIDFragement,
       '',
       '',
       '',
@@ -40,13 +43,15 @@ export class TaskDetailsComponent implements OnInit {
       false
     ).subscribe({
       next: (res: SearchTaskResultsLayout) => {
-        this.layouts = res.results;
+        this.taskLayout = res.results;
         this.total = res.totalResults;
-        this.layoutLoading = false;
-        console.log(this.layouts);
+ 
+        console.log(this.taskLayout);
+        this.dataloading = false;
       },
       error: (error) => {
         this.logger.reportError(error);
+        this.dataloading = false;
       },
       // console.log(this.layouts.map((res: any) => res.cockpitIdFragment));
     });

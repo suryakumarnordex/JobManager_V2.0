@@ -6,7 +6,8 @@ export class JobDetailsModules implements Deserializable {
   typeFragment?: string;
   topicFragment?: string;
   cockpitIdFragment?: number;
-  runnoFragment?: number;
+  runnoFragment?: string;
+  runFolderFragment?: string;
   statusFragment?: string;
   priorityFragment?: string;
   progressFragment?: number;
@@ -35,6 +36,7 @@ export class JobDetailsModules implements Deserializable {
     this.topicFragment = input.topicFragment;
     this.cockpitIdFragment = input.cockpitIdFragment;
     this.runnoFragment = input.runnoFragment;
+    this.runFolderFragment = input.runFolderFragment;
     this.statusFragment = input.statusFragment;
     this.priorityFragment = input.priorityFragment;
     this.progressFragment = input.progressFragment;

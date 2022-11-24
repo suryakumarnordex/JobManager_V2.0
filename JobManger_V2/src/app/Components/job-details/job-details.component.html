@@ -1,4 +1,4 @@
-<clr-datagrid [(clrDgSelected)]="selected">
+<clr-datagrid [(clrDgSelected)]="selected" [clrDgLoading]="this.dataloading">
   <clr-dg-column>ID</clr-dg-column>
   <clr-dg-column>User</clr-dg-column>
   <clr-dg-column>Cockpit Id</clr-dg-column>
@@ -11,6 +11,8 @@
 
   <clr-dg-column>Job Priority</clr-dg-column>
   <clr-dg-column>Number Of Tasks</clr-dg-column>
+  <clr-dg-column>Running Tasks</clr-dg-column>
+  <clr-dg-column>Queued Tasks</clr-dg-column>
 
   <clr-dg-column>Start Time (yy/mm/dd HH:mm)</clr-dg-column>
   <clr-dg-column>End Time (yy/mm/dd HH:mm)</clr-dg-column>
@@ -51,8 +53,36 @@
         </div>
       </div>
     </clr-dg-cell>
-
-    <clr-dg-cell>{{ job.runnoFragment }}</clr-dg-cell>
+    <clr-dg-cell [style.width.px]="800" style="text-align: left">
+      <div style="display: flex; justify-content: space-evenly">
+        <span title="{{ job.runnoFragment }}">
+          <a
+            href="{{
+              'http://ldms/NXplore2/data?projectId=498&run=' + job.runnoFragment
+            }}"
+            target="_blank"
+            >{{ job.runnoFragment | slice: 0:5 }}</a
+          >
+        </span>
+        <div>
+          <div (click)="copyRunClipboard(job)">
+            <a
+              href="javascript:void(0)"
+              role="tooltip"
+              aria-haspopup="true"
+              class="tooltip tooltip-sm tooltip tooltip-right"
+            >
+              <clr-icon
+                shape="copy-to-clipboard"
+                class="is-solid has-badge-info"
+                *ngIf="job.runFolderFragment != undefined"
+              ></clr-icon>
+              <span class="tooltip-content">{{ job.clipboardtext }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </clr-dg-cell>
 
     <clr-dg-cell>{{ job.typeFragment }}</clr-dg-cell>
     <clr-dg-cell>{{ job.topicFragment }}</clr-dg-cell>
@@ -72,21 +102,67 @@
       "
       >{{ job.statusFragment }}</clr-dg-cell
     >
-    <clr-dg-cell>{{ job.progressFragment }}</clr-dg-cell>
+
+    <clr-dg-cell
+      [style.width.px]="300"
+      style="text-align: left; min-width: 113px"
+    >
+      <h6
+        *ngIf="job.failedTasksCount > 0"
+        class="badge badge-danger"
+        style="padding: 3px"
+      >
+        {{ job.failedTasksCount }}
+      </h6>
+      <a
+        href="javascript:void(0)"
+        role="tooltip"
+        aria-haspopup="true"
+        class="tooltip tooltip-sm tooltip tooltip-right"
+      >
+        <clr-progress-bar
+          [clrValue]="job.progressFragment"
+          [clrLabeled]="true"
+          [style.width.px]="100"
+        >
+        </clr-progress-bar>
+        <span class="tooltip-content">
+          Running:{{ job.runningTasksCount }}
+          <br />
+          <span class="tooltip-content" style="width: fit-content">
+            Finished:{{ job.finishedTasksCount }}&nbsp;({{
+              (job.finishedTasksCount / job.numberOfTasksFragment) * 100
+                | number: "1.0-0"
+            }}%)
+          </span>
+          <br />
+
+          <span class="tooltip-content" style="width: fit-content">
+            Failed:{{ job.failedTasksCount }}&nbsp;({{
+              (job.failedTasksCount / job.numberOfTasksFragment) * 100
+                | number: "1.0-0"
+            }}%)
+          </span>
+
+          <br />
+          Total:{{ job.numberOfTasksFragment }}
+        </span>
+      </a>
+    </clr-dg-cell>
 
     <clr-dg-cell>{{ job.priorityFragment }}</clr-dg-cell>
     <clr-dg-cell>{{ job.numberOfTasksFragment }}</clr-dg-cell>
-
+    <clr-dg-cell>{{ job.runningTasksCount }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.queuedTasksCount }}</clr-dg-cell>
     <clr-dg-cell>{{ job.startTime | utcToLocalTime: "short" }}</clr-dg-cell>
     <clr-dg-cell>{{ job.endTime | utcToLocalTime: "short" }}</clr-dg-cell>
     <clr-dg-cell>{{ job.submitTime | utcToLocalTime: "short" }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.elapsedTime | utcToLocalTime: "short" }}</clr-dg-cell>
+    <clr-dg-cell>{{ job.elapsedTime }}</clr-dg-cell>
   </clr-dg-row>
   <!--
   <clr-dg-footer>{{ this.layouts.length }} users</clr-dg-footer> -->
-  <ng-template
-    clrIfDetail
-    let-task
-    (clrIfDetailChange)="onDetailOpen($event)"
-  ></ng-template>
+  <ng-template clrIfDetail let-task (clrIfDetailChange)="onDetailOpen($event)">
+    <app-task-details [taskLayout]="taskLayout" [JobIDFragement]="detailTaskID">
+    </app-task-details>
+  </ng-template>
 </clr-datagrid>

@@ -6,7 +6,8 @@ export class LayoutInfo implements Deserializable, Serializable {
   typeFragment: string;
   topicFragment: string;
   cockpitIdFragment: number;
-  runnoFragment: number;
+  runnoFragment: string;
+  runFolderFragment: string;
   statusFragment: string;
   priorityFragment: string;
   progressFragment: number;
@@ -23,6 +24,7 @@ export class LayoutInfo implements Deserializable, Serializable {
   submitTime: string;
   failedTasksCount: number;
   runningTasksCount: number;
+  queuedTasksCount:number;
   finishedTasksCount: number;
   clipboardtext: string;
   // PageNo: number;
@@ -36,6 +38,7 @@ export class LayoutInfo implements Deserializable, Serializable {
     this.topicFragment = input.runTopic;
     this.cockpitIdFragment = input.cockpitId;
     this.runnoFragment = input.runNumber;
+    this.runFolderFragment= input.runFolder;
     this.statusFragment = input.state;
     this.priorityFragment = input.priorityBand;
     this.progressFragment = input.progress;
@@ -50,6 +53,7 @@ export class LayoutInfo implements Deserializable, Serializable {
     this.submitTime = input.submitTime;
     this.failedTasksCount = input.failedTasksCount;
     this.runningTasksCount = input.runningTasksCount;
+    this.queuedTasksCount = input.queuedTasksCount;
     this.finishedTasksCount = input.finishedTasksCount;
     this.clipboardtext = 'Copy directory path to clipboard';
     return this;
@@ -62,6 +66,7 @@ export class LayoutInfo implements Deserializable, Serializable {
       topicFragment: this.topicFragment,
       cockpitIdFragment: this.cockpitIdFragment,
       runnoFragment: this.runnoFragment,
+      runFolderFragment: this.runFolderFragment,
       statusFragment: this.statusFragment,
       priorityFragment: this.priorityFragment,
       progressFragment: this.progressFragment,
@@ -76,6 +81,7 @@ export class LayoutInfo implements Deserializable, Serializable {
       submitTime: this.submitTime,
       failedTasksCount: this.failedTasksCount,
       runningTasksCount: this.runningTasksCount,
+      queuedTasksCount: this.queuedTasksCount,
       finishedTasksCount: this.finishedTasksCount,
     };
   }
@@ -86,7 +92,7 @@ export class TaskLayoutInfo implements Deserializable, Serializable {
   nameFragment: string;
   statusFragment: string;
   exidCodeFragment: string;
-
+  exidCodeNameFragment: string;
   startTimeFragment: string;
   endTimeFragment: string;
   allocatedNodesFragment: string;
@@ -99,6 +105,7 @@ export class TaskLayoutInfo implements Deserializable, Serializable {
     this.nameFragment = input.taskName;
     this.statusFragment = input.taskState;
     this.exidCodeFragment = input.exitCode;
+    this.exidCodeNameFragment = input.exitCodeName;
     this.startTimeFragment = input.startTime;
     this.endTimeFragment = input.endTime;
     this.allocatedNodesFragment = input.allocatedNodes;
@@ -112,7 +119,7 @@ export class TaskLayoutInfo implements Deserializable, Serializable {
       nameFragment: this.nameFragment,
       statusFragment: this.statusFragment,
       exidCodeFragment: this.exidCodeFragment,
-
+      exidCodeNameFragment: this.exidCodeNameFragment,
       startTimeFragment: this.startTimeFragment,
       endTimeFragment: this.endTimeFragment,
       allocatedNodesFragment: this.allocatedNodesFragment,
