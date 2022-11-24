@@ -9,6 +9,10 @@ const routes: Routes = [
     path: 'app-task-details',
     component: TaskDetailsComponent,
   },
+  {
+    path:'Job-Details',
+    component:JobDetailsComponent,
+  },
 ];
 
 @NgModule({

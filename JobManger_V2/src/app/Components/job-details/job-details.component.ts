@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
 import { SearchResultsLayout, SearchTaskResultsLayout } from 'src/app/Models/helper';
 import { LayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
@@ -21,15 +22,32 @@ export class JobDetailsComponent implements OnInit {
   detailTaskID:any;
   dataloading:boolean=false;
 
+  QuickerViewNavigation = [] as any;
+
+  public Nodelist: Array<string> = [
+    'All jobs',
+    'Queue Simulation',
+    'Queue BladedSimulation',
+    'Queue PrePostProcessing',
+  ];
+
   constructor(
     private ApiService: ApiServiceService,
+    private router: Router,
     private logger: LoggerService
   ) {}
 
   ngOnInit(): void {
     this.GetJobDetails();
   }
-
+  getNavigationsList(): void {
+    this.ApiService.getNavigations().subscribe((res) => {
+      this.QuickerViewNavigation = res;
+    });
+  } 
+  nodeListPage() {
+    this.router.navigate(['nodelist']);
+  }
   GetJobDetails() {
     this.dataloading =true;
     this.ApiService.searchLayout(
@@ -50,20 +68,16 @@ export class JobDetailsComponent implements OnInit {
       1,
       100,
       false
-    ).subscribe({
-      
-      next: (res: SearchResultsLayout) => {
-      
+    ).subscribe({      
+      next: (res: SearchResultsLayout) => {      
         this.layouts = res.results;
-        this.total = res.totalResults;
-        console.log(this.layouts);
+        this.total = res.totalResults;      
         this.dataloading=false;
       },
       error: (error) => {
         this.logger.reportError(error);
         this.dataloading = false;
-      },
-      // console.log(this.layouts.map((res: any) => res.cockpitIdFragment));
+      },     
     });
   }
   onDetailOpen(event: any) {
@@ -83,19 +97,15 @@ export class JobDetailsComponent implements OnInit {
       false).subscribe({
         next: (res: SearchTaskResultsLayout) => {
           this.taskLayout = res.results;
-          this.total = res.totalResults;
-          console.log(this.layouts);
+          this.total = res.totalResults;         
           this.dataloading = false;
         },
         error: (error) => {
           this.logger.reportError(error);
           this.dataloading = false;
         },
-        // console.log(this.layouts.map((res: any) => res.cockpitIdFragment));
       });
     }
-
-
   }
   copyClipboard(selectedItem: any) {
     const create_copy = (e: ClipboardEvent) => {
@@ -114,18 +124,48 @@ export class JobDetailsComponent implements OnInit {
     document.execCommand('copy');
     document.removeEventListener('copy', create_copy);
   }
-  copyRunClipboard(selectedItem: any) {
-    const create_copy = (e: ClipboardEvent) => {
-      e.clipboardData?.setData('text/plain', selectedItem.runFolder);
-      e.preventDefault();
-           if (selectedItem.runFolder != '' && selectedItem.runFolder != null) {
-        selectedItem.text = 'copied';
-      } else {
-        selectedItem.text = 'no data to copy';
-      }
-    };
-    document.addEventListener('copy', create_copy);
-    document.execCommand('copy');
-    document.removeEventListener('copy', create_copy);
+  onNodeGroupChange(event: any) {
+    this.dataloading=true;
+    let selectedNodeGroup='';
+    console.log(event.target.value);
+    if (event.target.value.includes('Queue')) {
+      selectedNodeGroup = event.target.value.replace('Queue ', '');
+    } else {
+      selectedNodeGroup = event.target.value;
+    }
+    console.log(selectedNodeGroup.trim());
+    
+    if (event !== null) {  
+      this.ApiService.searchLayout(
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        'Queued',
+        '',
+        '',
+        '',
+        selectedNodeGroup,
+        '',
+        '',
+        false,
+        1,
+        100,
+        false
+      ).subscribe({      
+        next: (res: SearchResultsLayout) => {      
+          this.layouts = res.results;
+          this.total = res.totalResults;
+          console.log(this.layouts,"Node Group Changed");
+          this.dataloading=false;
+        },
+        error: (error) => {
+          this.logger.reportError(error);
+          this.dataloading = false;
+        },     
+      });
+    }
   }
 }

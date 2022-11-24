@@ -4,7 +4,6 @@ import { SearchTaskResultsLayout } from 'src/app/Models/helper';
 import { TaskLayoutInfo } from 'src/app/Models/layout';
 import { LoggerService } from 'src/app/Services/logger.service';
 
-
 @Component({
   selector: 'app-task-details',
   templateUrl: './task-details.component.html',
@@ -12,8 +11,7 @@ import { LoggerService } from 'src/app/Services/logger.service';
 })
 export class TaskDetailsComponent implements OnInit {
   @Input() taskLayout: TaskLayoutInfo[];
-  @Input() JobIDFragement: string;
-  //layouts: TaskLayoutInfo[];
+  @Input() JobIDFragement: string;  
   selected = [] as any;
   total = 0;
   dataloading:boolean=false;
@@ -44,16 +42,13 @@ export class TaskDetailsComponent implements OnInit {
     ).subscribe({
       next: (res: SearchTaskResultsLayout) => {
         this.taskLayout = res.results;
-        this.total = res.totalResults;
- 
-        console.log(this.taskLayout);
+        this.total = res.totalResults; 
         this.dataloading = false;
       },
       error: (error) => {
         this.logger.reportError(error);
         this.dataloading = false;
-      },
-      // console.log(this.layouts.map((res: any) => res.cockpitIdFragment));
+      },      
     });
   }
 }

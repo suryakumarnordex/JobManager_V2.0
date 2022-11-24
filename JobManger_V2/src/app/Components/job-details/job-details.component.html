@@ -1,168 +1,211 @@
-<clr-datagrid [(clrDgSelected)]="selected" [clrDgLoading]="this.dataloading">
-  <clr-dg-column>ID</clr-dg-column>
-  <clr-dg-column>User</clr-dg-column>
-  <clr-dg-column>Cockpit Id</clr-dg-column>
-  <clr-dg-column>Run</clr-dg-column>
-
-  <clr-dg-column>Type</clr-dg-column>
-  <clr-dg-column>Topic</clr-dg-column>
-  <clr-dg-column>Status</clr-dg-column>
-  <clr-dg-column>Progress</clr-dg-column>
-
-  <clr-dg-column>Job Priority</clr-dg-column>
-  <clr-dg-column>Number Of Tasks</clr-dg-column>
-  <clr-dg-column>Running Tasks</clr-dg-column>
-  <clr-dg-column>Queued Tasks</clr-dg-column>
-
-  <clr-dg-column>Start Time (yy/mm/dd HH:mm)</clr-dg-column>
-  <clr-dg-column>End Time (yy/mm/dd HH:mm)</clr-dg-column>
-  <clr-dg-column>Submit Time (yy/mm/dd HH:mm)</clr-dg-column>
-  <clr-dg-column>Elapsed Time (HH:mm:ss)</clr-dg-column>
-
-  <clr-dg-row *ngFor="let job of layouts" [clrDgItem]="job">
-    <clr-dg-cell>{{ job.jobIdFragment }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.userFragment }}</clr-dg-cell>
-    <clr-dg-cell style="text-align: left">
-      <div style="display: flex; justify-content: space-evenly">
-        <div>
-          <div
-            role="tooltip"
-            aria-haspopup="true"
-            class="tooltip tooltip-sm tooltip tooltip-right"
-          >
-            {{ job.cockpitIdFragment }}
-            <span class="tooltip-content">{{ job.cockpitIdFragment }} </span>
-          </div>
-        </div>
-        <div>
-          <div (click)="copyClipboard(job)">
-            <a
-              href="javascript:void(0)"
-              role="tooltip"
-              aria-haspopup="true"
-              class="tooltip tooltip-sm tooltip tooltip-right"
-            >
-              <clr-icon
-                shape="copy-to-clipboard"
-                class="is-solid has-badge-info"
-                *ngIf="job.cockpitIdFragment != undefined"
-              ></clr-icon>
-              <span class="tooltip-content">{{ job.clipboardtext }}</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </clr-dg-cell>
-    <clr-dg-cell [style.width.px]="800" style="text-align: left">
-      <div style="display: flex; justify-content: space-evenly">
-        <span title="{{ job.runnoFragment }}">
-          <a
-            href="{{
-              'http://ldms/NXplore2/data?projectId=498&run=' + job.runnoFragment
-            }}"
-            target="_blank"
-            >{{ job.runnoFragment | slice: 0:5 }}</a
-          >
-        </span>
-        <div>
-          <div (click)="copyRunClipboard(job)">
-            <a
-              href="javascript:void(0)"
-              role="tooltip"
-              aria-haspopup="true"
-              class="tooltip tooltip-sm tooltip tooltip-right"
-            >
-              <clr-icon
-                shape="copy-to-clipboard"
-                class="is-solid has-badge-info"
-                *ngIf="job.runFolderFragment != undefined"
-              ></clr-icon>
-              <span class="tooltip-content">{{ job.clipboardtext }}</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </clr-dg-cell>
-
-    <clr-dg-cell>{{ job.typeFragment }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.topicFragment }}</clr-dg-cell>
-    <clr-dg-cell
-      [style.color]="
-        job.statusFragment == 'Failed'
-          ? 'red'
-          : job.statusFragment == 'Running'
-          ? 'blue'
-          : job.statusFragment == 'Finished'
-          ? 'green'
-          : job.statusFragment == 'Canceled'
-          ? 'orange'
-          : job.statusFragment == 'Queued'
-          ? 'Magenta'
-          : 'black'
-      "
-      >{{ job.statusFragment }}</clr-dg-cell
-    >
-
-    <clr-dg-cell
-      [style.width.px]="300"
-      style="text-align: left; min-width: 113px"
-    >
-      <h6
-        *ngIf="job.failedTasksCount > 0"
-        class="badge badge-danger"
-        style="padding: 3px"
-      >
-        {{ job.failedTasksCount }}
-      </h6>
+<div class="main-container">
+  <!-- Nordex logo header -->
+  <header class="header header-12">
+    <div class="header-nav">
+      <img
+        src="http://kghapp83v/QuickerView/assets/nordex_logo.png"
+        alt="No image"
+        height="50"
+      />
       <a
-        href="javascript:void(0)"
-        role="tooltip"
-        aria-haspopup="true"
-        class="tooltip tooltip-sm tooltip tooltip-right"
+        *ngFor="let NavigationUrl of QuickerViewNavigation"
+        class="nav-link"
+        [href]="NavigationUrl.url"
       >
-        <clr-progress-bar
-          [clrValue]="job.progressFragment"
-          [clrLabeled]="true"
-          [style.width.px]="100"
-        >
-        </clr-progress-bar>
-        <span class="tooltip-content">
-          Running:{{ job.runningTasksCount }}
-          <br />
-          <span class="tooltip-content" style="width: fit-content">
-            Finished:{{ job.finishedTasksCount }}&nbsp;({{
-              (job.finishedTasksCount / job.numberOfTasksFragment) * 100
-                | number: "1.0-0"
-            }}%)
-          </span>
-          <br />
-
-          <span class="tooltip-content" style="width: fit-content">
-            Failed:{{ job.failedTasksCount }}&nbsp;({{
-              (job.failedTasksCount / job.numberOfTasksFragment) * 100
-                | number: "1.0-0"
-            }}%)
-          </span>
-
-          <br />
-          Total:{{ job.numberOfTasksFragment }}
-        </span>
+        <span class="nav-text">{{ NavigationUrl.name }}</span>
       </a>
-    </clr-dg-cell>
+    </div>
+  </header>
 
-    <clr-dg-cell>{{ job.priorityFragment }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.numberOfTasksFragment }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.runningTasksCount }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.queuedTasksCount }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.startTime | utcToLocalTime: "short" }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.endTime | utcToLocalTime: "short" }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.submitTime | utcToLocalTime: "short" }}</clr-dg-cell>
-    <clr-dg-cell>{{ job.elapsedTime }}</clr-dg-cell>
-  </clr-dg-row>
-  <!--
+  <nav class="subnav">
+    <ul class="nav">
+      <li class="nav-item" style="margin: 20px">
+        <a class="nav-link" (click)="nodeListPage()">Nodes</a>
+      </li>
+      <li>
+        <div>
+          <select clrSelect name="options" (change)="onNodeGroupChange($event)">
+            <option *ngFor="let Node of Nodelist" [value]="Node">
+              {{ Node }}
+            </option>
+          </select>
+          <p style="display: hidden"></p>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <clr-datagrid [(clrDgSelected)]="selected" [clrDgLoading]="this.dataloading">
+    <clr-dg-column>ID</clr-dg-column>
+    <clr-dg-column>User</clr-dg-column>
+    <clr-dg-column>Cockpit Id</clr-dg-column>
+    <clr-dg-column>Run</clr-dg-column>
+    <clr-dg-column>Type</clr-dg-column>
+    <clr-dg-column>Topic</clr-dg-column>
+    <clr-dg-column>Status</clr-dg-column>
+    <clr-dg-column>Progress</clr-dg-column>
+    <clr-dg-column>Job Priority</clr-dg-column>
+    <clr-dg-column>Number Of Tasks</clr-dg-column>
+    <clr-dg-column>Running Tasks</clr-dg-column>
+    <clr-dg-column>Queued Tasks</clr-dg-column>
+    <clr-dg-column>Start Time (yy/mm/dd HH:mm)</clr-dg-column>
+    <clr-dg-column>End Time (yy/mm/dd HH:mm)</clr-dg-column>
+    <clr-dg-column>Submit Time (yy/mm/dd HH:mm)</clr-dg-column>
+    <clr-dg-column>Elapsed Time (HH:mm:ss)</clr-dg-column>
+
+    <clr-dg-row *ngFor="let job of layouts" [clrDgItem]="job">
+      <clr-dg-cell>{{ job.jobIdFragment }}</clr-dg-cell>
+      <clr-dg-cell>{{ job.userFragment }}</clr-dg-cell>
+      <clr-dg-cell style="text-align: left">
+        <div style="display: flex; justify-content: space-evenly">
+          <div>
+            <div
+              role="tooltip"
+              aria-haspopup="true"
+              class="tooltip tooltip-sm tooltip tooltip-right"
+            >
+              {{ job.cockpitIdFragment }}
+              <span class="tooltip-content">{{ job.cockpitIdFragment }} </span>
+            </div>
+          </div>
+          <div>
+            <div (click)="copyClipboard(job)">
+              <a
+                href="javascript:void(0)"
+                role="tooltip"
+                aria-haspopup="true"
+                class="tooltip tooltip-sm tooltip tooltip-right"
+              >
+                <clr-icon
+                  shape="copy-to-clipboard"
+                  class="is-solid has-badge-info"
+                  *ngIf="job.cockpitIdFragment != undefined"
+                ></clr-icon>
+                <span class="tooltip-content">{{ job.clipboardtext }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </clr-dg-cell>
+      <clr-dg-cell [style.width.px]="800" style="text-align: left">
+        <div style="display: flex; justify-content: space-evenly">
+          <span title="{{ job.runnoFragment }}">
+            <a
+              href="{{
+                'http://ldms/NXplore2/data?projectId=498&run=' +
+                  job.runnoFragment
+              }}"
+              target="_blank"
+              >{{ job.runnoFragment | slice: 0:5 }}</a
+            >
+          </span>
+          <div>
+            <div (click)="copyClipboard(job)">
+              <a
+                href="javascript:void(0)"
+                role="tooltip"
+                aria-haspopup="true"
+                class="tooltip tooltip-sm tooltip tooltip-right"
+              >
+                <clr-icon
+                  shape="copy-to-clipboard"
+                  class="is-solid has-badge-info"
+                  *ngIf="job.runFolderFragment != undefined"
+                ></clr-icon>
+                <span class="tooltip-content">{{ job.clipboardtext }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </clr-dg-cell>
+
+      <clr-dg-cell>{{ job.typeFragment }}</clr-dg-cell>
+      <clr-dg-cell>{{ job.topicFragment }}</clr-dg-cell>
+      <clr-dg-cell
+        [style.color]="
+          job.statusFragment == 'Failed'
+            ? 'red'
+            : job.statusFragment == 'Running'
+            ? 'blue'
+            : job.statusFragment == 'Finished'
+            ? 'green'
+            : job.statusFragment == 'Canceled'
+            ? 'orange'
+            : job.statusFragment == 'Queued'
+            ? 'Magenta'
+            : 'black'
+        "
+        >{{ job.statusFragment }}</clr-dg-cell
+      >
+
+      <clr-dg-cell
+        [style.width.px]="300"
+        style="text-align: left; min-width: 113px"
+      >
+        <h6
+          *ngIf="job.failedTasksCount > 0"
+          class="badge badge-danger"
+          style="padding: 3px"
+        >
+          {{ job.failedTasksCount }}
+        </h6>
+        <a
+          href="javascript:void(0)"
+          role="tooltip"
+          aria-haspopup="true"
+          class="tooltip tooltip-sm tooltip tooltip-right"
+        >
+          <clr-progress-bar
+            [clrValue]="job.progressFragment"
+            [clrLabeled]="true"
+            [style.width.px]="100"
+          >
+          </clr-progress-bar>
+          <span class="tooltip-content">
+            Running:{{ job.runningTasksCount }}
+            <br />
+            <span class="tooltip-content" style="width: fit-content">
+              Finished:{{ job.finishedTasksCount }}&nbsp;({{
+                (job.finishedTasksCount / job.numberOfTasksFragment) * 100
+                  | number: "1.0-0"
+              }}%)
+            </span>
+            <br />
+
+            <span class="tooltip-content" style="width: fit-content">
+              Failed:{{ job.failedTasksCount }}&nbsp;({{
+                (job.failedTasksCount / job.numberOfTasksFragment) * 100
+                  | number: "1.0-0"
+              }}%)
+            </span>
+
+            <br />
+            Total:{{ job.numberOfTasksFragment }}
+          </span>
+        </a>
+      </clr-dg-cell>
+
+      <clr-dg-cell>{{ job.priorityFragment }}</clr-dg-cell>
+      <clr-dg-cell>{{ job.numberOfTasksFragment }}</clr-dg-cell>
+      <clr-dg-cell>{{ job.runningTasksCount }}</clr-dg-cell>
+      <clr-dg-cell>{{ job.queuedTasksCount }}</clr-dg-cell>
+      <clr-dg-cell>{{ job.startTime | utcToLocalTime: "short" }}</clr-dg-cell>
+      <clr-dg-cell>{{ job.endTime | utcToLocalTime: "short" }}</clr-dg-cell>
+      <clr-dg-cell>{{ job.submitTime | utcToLocalTime: "short" }}</clr-dg-cell>
+      <clr-dg-cell>{{ job.elapsedTime }}</clr-dg-cell>
+    </clr-dg-row>
+    <!--
   <clr-dg-footer>{{ this.layouts.length }} users</clr-dg-footer> -->
-  <ng-template clrIfDetail let-task (clrIfDetailChange)="onDetailOpen($event)">
-    <app-task-details [taskLayout]="taskLayout" [JobIDFragement]="detailTaskID">
-    </app-task-details>
-  </ng-template>
-</clr-datagrid>
+    <ng-template
+      clrIfDetail
+      let-task
+      (clrIfDetailChange)="onDetailOpen($event)"
+    >
+      <app-task-details
+        [taskLayout]="taskLayout"
+        [JobIDFragement]="detailTaskID"
+      >
+      </app-task-details>
+    </ng-template>
+  </clr-datagrid>
+</div>

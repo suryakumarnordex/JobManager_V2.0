@@ -16,6 +16,12 @@ export class ApiServiceService {
 
   constructor(private http: HttpClient, private logger: LoggerService) {}
 
+  getNavigations() {
+    let url = 
+    'http://ldms/navigations.json';
+    return this.http.get(url);
+  }
+
   searchLayout(
     jobIdFragment: string = '',
     userFragment: string = '',
@@ -45,15 +51,9 @@ export class ApiServiceService {
       .set('statusFragment', statusFragment ? statusFragment : '')
       .set('priorityFragment', priorityFragment ? priorityFragment : '')
       .set('progressFragment', progressFragment ? typeFragment : '')
-      .set(
-        'numberOfTasksFragment',
-        numberOfTasksFragment ? numberOfTasksFragment : ''
-      )
+      .set('numberOfTasksFragment', numberOfTasksFragment ? numberOfTasksFragment : '' )
       .set('nodeGroupFragment', nodeGroupFragment ? nodeGroupFragment : '')
-      .set(
-        'pendingReasonFragment',
-        pendingReasonFragment ? pendingReasonFragment : ''
-      )
+      .set('pendingReasonFragment',pendingReasonFragment ? pendingReasonFragment : '')
       .set('orderBy', orderBy ? orderBy : '')
       .set('orderDescending', orderDescending.toString())
       .set('PageNo', PageNo.toFixed(0))
