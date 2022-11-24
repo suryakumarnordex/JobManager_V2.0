@@ -29,7 +29,7 @@ export class ApiServiceService {
     topicFragment: string = '',
     cockpitIdFragment: string = '',
     runnoFragment: string = '',
-    statusFragment: string = '',
+    statusFragment: Array<string> = [],
     priorityFragment: string = '',
     progressFragment: string = '',
     numberOfTasksFragment: string = '',
@@ -48,7 +48,8 @@ export class ApiServiceService {
       .set('topicFragment', topicFragment ? topicFragment : '')
       .set('cockpitIdFragment', cockpitIdFragment ? cockpitIdFragment : '')
       .set('runnoFragment', runnoFragment ? runnoFragment : '')
-      .set('statusFragment', statusFragment ? statusFragment : '')
+     
+      
       .set('priorityFragment', priorityFragment ? priorityFragment : '')
       .set('progressFragment', progressFragment ? typeFragment : '')
       .set('numberOfTasksFragment', numberOfTasksFragment ? numberOfTasksFragment : '' )
@@ -59,6 +60,9 @@ export class ApiServiceService {
       .set('PageNo', PageNo.toFixed(0))
       .set('PageSize', PageSize.toFixed(0))
       .set('waitForChange', waitForChange ? waitForChange : false);
+      statusFragment.forEach(function (status:string){
+        params.append('statusFragment', status )
+      })
     console.log(this.apiurl + 'SearchLayout', {
       headers: this.headers,
       params: params,
