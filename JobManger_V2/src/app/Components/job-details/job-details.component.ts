@@ -5,7 +5,7 @@ import { SearchResultsLayout, SearchTaskResultsLayout } from 'src/app/Models/hel
 import { LayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
 import { JobDetailsModules } from 'src/app/Modules/JobDetailsModules';
 import { LoggerService } from 'src/app/Services/logger.service';
-
+import { JobDetailsVariable } from './job-details-variables';
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-details.component.html',
@@ -21,7 +21,7 @@ export class JobDetailsComponent implements OnInit {
   detailTaskID:any;
   dataloading:boolean=false;
   JobManageerNavigation = [] as any;
-
+  // jobvariable:JobDetailsVariable
   public Nodelist: Array<string> = [
     'All jobs',
     'Queue Simulation',
@@ -32,7 +32,7 @@ export class JobDetailsComponent implements OnInit {
   constructor(
     private ApiService: ApiServiceService,
     private router: Router,
-    private logger: LoggerService
+    private logger: LoggerService,
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +41,7 @@ export class JobDetailsComponent implements OnInit {
   getNavigationsList(): void {
     this.ApiService.getNavigations().subscribe((res) => {
       this.JobManageerNavigation = res;
+    
     });
   } 
   nodeListPage() {
