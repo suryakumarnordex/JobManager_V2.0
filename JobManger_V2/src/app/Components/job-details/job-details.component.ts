@@ -17,12 +17,10 @@ export class JobDetailsComponent implements OnInit {
   taskLayout:TaskLayoutInfo[];
   selected = [] as any;
   total = 0;
-
   loading = true;
   detailTaskID:any;
   dataloading:boolean=false;
-
-  QuickerViewNavigation = [] as any;
+  JobManageerNavigation = [] as any;
 
   public Nodelist: Array<string> = [
     'All jobs',
@@ -42,7 +40,7 @@ export class JobDetailsComponent implements OnInit {
   }
   getNavigationsList(): void {
     this.ApiService.getNavigations().subscribe((res) => {
-      this.QuickerViewNavigation = res;
+      this.JobManageerNavigation = res;
     });
   } 
   nodeListPage() {
@@ -80,8 +78,7 @@ export class JobDetailsComponent implements OnInit {
       },     
     });
   }
-  onDetailOpen(event: any) {
-  
+  onDetailOpen(event: any) {  
     if (event !== null) {  
       this.detailTaskID = event.jobIdFragment;        
       this.ApiService.searchTaskLayout(this.detailTaskID,
@@ -124,12 +121,14 @@ export class JobDetailsComponent implements OnInit {
     document.execCommand('copy');
     document.removeEventListener('copy', create_copy);
   }
-  onNodeGroupChange(event: any) {
+  onNodeGroupChange(event: Event) {
     this.dataloading=true;
     let selectedNodeGroup='';
+    let val = event.target as HTMLInputElement;
+    console.log(val.name,"sele")
     let statusList:Array<string>=[] ;   
-    if (event.target.value.includes('Queue')) {
-      selectedNodeGroup = event.target.value.replace('Queue ', '');
+    if (val.name.includes('Queue')) {
+      selectedNodeGroup = val.name.replace('Queue ', '');
       statusList = ['Queued','Finished'];
     } else {
       selectedNodeGroup ='';
