@@ -40,7 +40,7 @@ export class LayoutInfo implements Deserializable, Serializable {
     this.runnoFragment = input.runNumber;
     this.runFolderFragment= input.runFolder;
     this.statusFragment = input.state;
-    this.priorityFragment = input.priorityBand;
+    this.priorityFragment = input.priority;
     this.progressFragment = input.progress;
     this.numberOfTasksFragment = input.numberOfTasks;
     this.nodeGroupFragment = input.nodeGroup;
