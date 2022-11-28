@@ -76,4 +76,7 @@
     <clr-dg-cell>{{ task.allocatedNodesFragment }}</clr-dg-cell>
     <clr-dg-cell>{{ task.commandLineFragment }}</clr-dg-cell>
   </clr-dg-row>
+  <clr-dg-footer>
+    <app-job-footer [requestFromTask]="requestFromTask"></app-job-footer>
+  </clr-dg-footer>
 </clr-datagrid>

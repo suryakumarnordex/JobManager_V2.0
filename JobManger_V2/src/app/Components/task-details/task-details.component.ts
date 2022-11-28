@@ -10,11 +10,13 @@ import { LoggerService } from 'src/app/Services/logger.service';
   styleUrls: ['./task-details.component.css'],
 })
 export class TaskDetailsComponent implements OnInit {
+  @Input() recordPerPage: number;
   @Input() taskLayout: TaskLayoutInfo[];
-  @Input() JobIDFragement: string;  
+  @Input() JobIDFragement: string;
+  requestFromTask: string = 'Task';
   selected = [] as any;
   total = 0;
-  dataloading:boolean=false;
+  dataloading: boolean = false;
 
   constructor(
     private ApiService: ApiServiceService,
@@ -22,11 +24,12 @@ export class TaskDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.GetTaskDetails();
+    this.GetTaskDetails(this.recordPerPage);
   }
 
-  GetTaskDetails() {
-    this.dataloading=true;
+  GetTaskDetails(recordPerPage: number) {
+    this.recordPerPage = recordPerPage;
+    this.dataloading = true;
     this.ApiService.searchTaskLayout(
       this.JobIDFragement,
       '',
@@ -37,18 +40,18 @@ export class TaskDetailsComponent implements OnInit {
       '',
       '',
       1,
-      10,
+      this.recordPerPage,
       false
     ).subscribe({
       next: (res: SearchTaskResultsLayout) => {
         this.taskLayout = res.results;
-        this.total = res.totalResults; 
+        this.total = res.totalResults;
         this.dataloading = false;
       },
       error: (error) => {
         this.logger.reportError(error);
         this.dataloading = false;
-      },      
+      },
     });
   }
 }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { JobDetailsComponent } from './Components/job-details/job-details.component';
+import { JobFooterComponent } from './Components/job-footer/job-footer.component';
 import { TaskDetailsComponent } from './Components/task-details/task-details.component';
 
 const routes: Routes = [
@@ -9,9 +10,10 @@ const routes: Routes = [
     path: 'app-task-details',
     component: TaskDetailsComponent,
   },
+
   {
-    path:'Job-Details',
-    component:JobDetailsComponent,
+    path: 'app-job-footer',
+    component: JobFooterComponent,
   },
 ];
 
