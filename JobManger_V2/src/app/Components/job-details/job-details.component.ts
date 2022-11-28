@@ -24,6 +24,7 @@ export class JobDetailsComponent implements OnInit {
   total = 0;
   loading = true;
   detailTaskID: any;
+  pageSize: number;
   dataloading: boolean = false;
   JobManageerNavigation = [] as any;
   // jobvariable:JobDetailsVariable
@@ -41,7 +42,7 @@ export class JobDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.GetJobDetails(this.recordPerPage);
+    this.GetJobDetails(this.recordPerPage, this.pageSize);
   }
   getNavigationsList(): void {
     this.ApiService.getNavigations().subscribe((res) => {
@@ -51,7 +52,8 @@ export class JobDetailsComponent implements OnInit {
   nodeListPage() {
     this.router.navigate(['nodelist']);
   }
-  GetJobDetails(recordPerPage: number) {
+  GetJobDetails(recordPerPage: number, pageSize: number) {
+    this.pageSize = pageSize;
     this.recordPerPage = recordPerPage;
     this.dataloading = true;
     this.ApiService.searchLayout(
@@ -69,7 +71,7 @@ export class JobDetailsComponent implements OnInit {
       '',
       '',
       false,
-      1,
+      this.pageSize,
       this.recordPerPage,
       false
     ).subscribe({
@@ -77,6 +79,7 @@ export class JobDetailsComponent implements OnInit {
         this.layouts = res.results;
         this.total = res.totalResults;
         this.dataloading = false;
+        console.log(this.layouts);
       },
       error: (error) => {
         this.logger.reportError(error);
@@ -158,7 +161,7 @@ export class JobDetailsComponent implements OnInit {
         '',
         false,
         1,
-        100,
+        this.recordPerPage,
         false
       ).subscribe({
         next: (res: SearchResultsLayout) => {
