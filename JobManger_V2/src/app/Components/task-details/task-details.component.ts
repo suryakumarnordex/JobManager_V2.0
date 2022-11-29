@@ -15,7 +15,9 @@ export class TaskDetailsComponent implements OnInit {
   @Input() JobIDFragement: string;
   requestFromTask: string = 'Task';
   selected = [] as any;
-  total = 0;
+  pageSize: number = 1;
+  totalRecords = 0;
+  totalPage: number;
   dataloading: boolean = false;
 
   constructor(
@@ -24,10 +26,10 @@ export class TaskDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.GetTaskDetails(this.recordPerPage);
+    this.GetTaskDetails(this.recordPerPage,this.pageSize);
   }
 
-  GetTaskDetails(recordPerPage: number) {
+  GetTaskDetails(recordPerPage: number,pageSize: number) {
     this.recordPerPage = recordPerPage;
     this.dataloading = true;
     this.ApiService.searchTaskLayout(
@@ -45,7 +47,7 @@ export class TaskDetailsComponent implements OnInit {
     ).subscribe({
       next: (res: SearchTaskResultsLayout) => {
         this.taskLayout = res.results;
-        this.total = res.totalResults;
+        this.totalRecords = res.totalResults;
         this.dataloading = false;
       },
       error: (error) => {

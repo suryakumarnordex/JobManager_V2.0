@@ -19,10 +19,10 @@ export class JobDetailsComponent implements OnInit {
 
   @Input() recordPerPage: number = 10;
   taskLayout: TaskLayoutInfo[];
-  requestFromJOb: string = 'Job';
+  requestFromJOb: boolean = true;
   selected = [] as any;
-  total = 0;
-  pageNumberJob: number;
+  jobCount = 0;
+  totalPage: number;
   loading = true;
   detailTaskID: any;
   pageSize: number = 1;
@@ -79,9 +79,9 @@ export class JobDetailsComponent implements OnInit {
     ).subscribe({
       next: (res: SearchResultsLayout) => {
         this.layouts = res.results;
-        this.total = res.totalResults;
+        this.jobCount = res.totalResults;
         this.dataloading = false;
-        this.pageNumberJob = Math.ceil(this.total / this.recordPerPage);
+        this.totalPage = Math.ceil(this.jobCount / this.recordPerPage);
         console.log(this.layouts);
       },
       error: (error) => {
@@ -108,7 +108,7 @@ export class JobDetailsComponent implements OnInit {
       ).subscribe({
         next: (res: SearchTaskResultsLayout) => {
           this.taskLayout = res.results;
-          this.total = res.totalResults;
+          this.jobCount = res.totalResults;
           this.dataloading = false;
         },
         error: (error) => {
@@ -169,7 +169,7 @@ export class JobDetailsComponent implements OnInit {
       ).subscribe({
         next: (res: SearchResultsLayout) => {
           this.layouts = res.results;
-          this.total = res.totalResults;
+          this.jobCount = res.totalResults;
           this.dataloading = false;
         },
         error: (error) => {

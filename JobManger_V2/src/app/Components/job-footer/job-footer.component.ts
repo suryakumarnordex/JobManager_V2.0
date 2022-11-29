@@ -8,54 +8,55 @@ import { TaskDetailsComponent } from '../task-details/task-details.component';
   styleUrls: ['./job-footer.component.css'],
 })
 export class JobFooterComponent implements OnInit {
-  recordPerPage: number = 10;
-  @Input() requestFromJOb: string;
-  @Input() requestFromTask: string;
-  @Input() total: number;
+  @Input() requestFromJob: boolean;
+
+
+  //For Footer
+  @Input() totalRecords: number;
   @Input() recordPerPagerequest: number;
-  @Input() pageSize: number;
-  @Input() pageNumberJob: number;
-  pageNumber: number;
-  pn: number;
+  @Input() currentPage: number;
+  @Input() totalPage: number;
+
   constructor(
     private taskdetails: TaskDetailsComponent,
-    private jdetails: JobDetailsComponent
+    private jobdetails: JobDetailsComponent
   ) {}
 
   ngOnInit(): void {}
   goTofirstPage() {
-    this.pageNumber = 1;
-    this.jdetails.GetJobDetails(this.recordPerPagerequest, this.pageNumber);
+    this.currentPage = 1;
+    this.GetFooterDetails(this.requestFromJob)
   }
   goTonextPage() {
-    this.pageNumber = this.pageSize + 1;
-    this.pageNumberJob = Math.ceil(this.total / this.recordPerPagerequest);
-    this.jdetails.GetJobDetails(this.recordPerPagerequest, this.pageNumber);
+    this.currentPage = this.currentPage + 1;
+    this.totalPage = Math.ceil(this.totalRecords / this.recordPerPagerequest);
+    this.jobdetails.GetJobDetails(this.recordPerPagerequest, this.currentPage);
   }
   goTopriviousPage() {
-    this.pageNumber = this.pageSize - 1;
-    this.pageNumberJob = Math.ceil(this.total / this.recordPerPagerequest);
-    this.jdetails.GetJobDetails(this.recordPerPagerequest, this.pageNumber);
+    this.currentPage = this.currentPage - 1;
+    this.totalPage = Math.ceil(this.totalRecords / this.recordPerPagerequest);
+    this.jobdetails.GetJobDetails(this.recordPerPagerequest, this.currentPage);
   }
   goTolastPage() {
-    // console.log(this.total, 'TOTAL PAGE');
-    // console.log(this.pageSize, 'PAGE SIZE');
-    // console.log(this.recordPerPagerequest, 'RECORD PER PAGE');
-    // console.log(this.pageNumberJob, 'PAGE');
-    this.pageNumber = Math.ceil(this.total / this.recordPerPagerequest);
-    this.jdetails.GetJobDetails(this.recordPerPagerequest, this.pageNumber);
+   
+    this.currentPage = Math.ceil(this.totalRecords / this.recordPerPagerequest);
+    this.jobdetails.GetJobDetails(this.recordPerPagerequest, this.currentPage);
+    console.log(this.totalRecords, 'TOTAL');
+    console.log(this.currentPage, 'PAGE SIZE');
+    console.log(this.recordPerPagerequest, 'RECORD PER PAGE');
+    console.log(this.totalPage, ' TOTAL PAGE');
+  }
+  GetFooterDetails(isjob:boolean){
+    isjob ? this.jobdetails.GetJobDetails(this.recordPerPagerequest, this.currentPage):this.taskdetails.GetTaskDetails(this.recordPerPagerequest, this.currentPage);
   }
   onSelected(value: string) {
     console.log(value, 'SELECTED');
     this.recordPerPagerequest = Number(value);
-    console.log(this.pageNumber);
-    if (this.requestFromJOb != undefined) {
-      this.jdetails.GetJobDetails(this.recordPerPagerequest, this.pageSize);
-      // console.log(this.total, 'TOTAL PAGE');
-      // console.log(this.pageSize, 'PAGE SIZE');
-      // console.log(this.recordPerPagerequest, 'RECORD PER PAGE');
+    console.log(this.currentPage);
+    if (this.requestFromJob) {
+      this.jobdetails.GetJobDetails(this.recordPerPagerequest, this.currentPage);
     } else {
-      this.taskdetails.GetTaskDetails(this.recordPerPagerequest);
+      this.taskdetails.GetTaskDetails(this.recordPerPagerequest,this.currentPage);
     }
   }
 }

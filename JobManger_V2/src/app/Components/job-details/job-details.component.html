@@ -209,11 +209,11 @@
     </ng-template>
     <clr-dg-footer>
       <app-job-footer
-        [requestFromJOb]="requestFromJOb"
-        [total]="total"
+        [requestFromJob]="true"
+        [totalRecords]="jobCount"
         [recordPerPagerequest]="recordPerPage"
-        [pageSize]="pageSize"
-        [pageNumberJob]="pageNumberJob"
+        [currentPage]="pageSize"
+        [totalPage]="totalPage"
       ></app-job-footer>
     </clr-dg-footer>
   </clr-datagrid>
