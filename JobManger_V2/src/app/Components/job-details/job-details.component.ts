@@ -17,14 +17,15 @@ import { JobDetailsVariable } from './job-details-variables';
 export class JobDetailsComponent implements OnInit {
   layouts: LayoutInfo[];
 
-  @Input() recordPerPage: number;
+  @Input() recordPerPage: number = 10;
   taskLayout: TaskLayoutInfo[];
   requestFromJOb: string = 'Job';
   selected = [] as any;
   total = 0;
+  pageNumberJob: number;
   loading = true;
   detailTaskID: any;
-  pageSize: number;
+  pageSize: number = 1;
   dataloading: boolean = false;
   JobManageerNavigation = [] as any;
   // jobvariable:JobDetailsVariable
@@ -56,6 +57,7 @@ export class JobDetailsComponent implements OnInit {
     this.pageSize = pageSize;
     this.recordPerPage = recordPerPage;
     this.dataloading = true;
+
     this.ApiService.searchLayout(
       '',
       [],
@@ -79,6 +81,7 @@ export class JobDetailsComponent implements OnInit {
         this.layouts = res.results;
         this.total = res.totalResults;
         this.dataloading = false;
+        this.pageNumberJob = Math.ceil(this.total / this.recordPerPage);
         console.log(this.layouts);
       },
       error: (error) => {

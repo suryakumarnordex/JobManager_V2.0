@@ -208,7 +208,13 @@
       </app-task-details>
     </ng-template>
     <clr-dg-footer>
-      <app-job-footer [requestFromJOb]="requestFromJOb"></app-job-footer>
+      <app-job-footer
+        [requestFromJOb]="requestFromJOb"
+        [total]="total"
+        [recordPerPagerequest]="recordPerPage"
+        [pageSize]="pageSize"
+        [pageNumberJob]="pageNumberJob"
+      ></app-job-footer>
     </clr-dg-footer>
   </clr-datagrid>
 </div>

@@ -17,8 +17,7 @@ export class ApiServiceService {
   constructor(private http: HttpClient, private logger: LoggerService) {}
 
   getNavigations() {
-    let url = 
-    'http://ldms/navigations.json';
+    let url = 'http://ldms/navigations.json';
     return this.http.get(url);
   }
 
@@ -45,26 +44,32 @@ export class ApiServiceService {
       .set('jobIdFragment', jobIdFragment ? jobIdFragment : '')
       .set('topicFragment', topicFragment ? topicFragment : '')
       .set('cockpitIdFragment', cockpitIdFragment ? cockpitIdFragment : '')
-      .set('runnoFragment', runnoFragment ? runnoFragment : '') 
+      .set('runnoFragment', runnoFragment ? runnoFragment : '')
       .set('priorityFragment', priorityFragment ? priorityFragment : '')
       .set('progressFragment', progressFragment ? progressFragment : '')
-      .set('numberOfTasksFragment', numberOfTasksFragment ? numberOfTasksFragment : '' )
+      .set(
+        'numberOfTasksFragment',
+        numberOfTasksFragment ? numberOfTasksFragment : ''
+      )
       .set('nodeGroupFragment', nodeGroupFragment ? nodeGroupFragment : '')
-      .set('pendingReasonFragment',pendingReasonFragment ? pendingReasonFragment : '')
+      .set(
+        'pendingReasonFragment',
+        pendingReasonFragment ? pendingReasonFragment : ''
+      )
       .set('orderBy', orderBy ? orderBy : '')
       .set('orderDescending', orderDescending.toString())
-      .set('PageNo', PageNo.toFixed(0))
+      .set('page', PageNo.toFixed(0))
       .set('PageSize', PageSize.toFixed(0))
       .set('waitForChange', waitForChange ? waitForChange : false);
-      statusFragment.forEach(function (status:string){
-        params = params.append('statusFragment', status );
-      });
-      userFragment.forEach(function (users:string){
-        params = params.append('userFragment', users );
-      });
-      typeFragment.forEach(function (types:string){
-        params = params.append('typeFragment', types );
-      });
+    statusFragment.forEach(function (status: string) {
+      params = params.append('statusFragment', status);
+    });
+    userFragment.forEach(function (users: string) {
+      params = params.append('userFragment', users);
+    });
+    typeFragment.forEach(function (types: string) {
+      params = params.append('typeFragment', types);
+    });
     console.log(this.apiurl + 'SearchLayout', {
       headers: this.headers,
       params: params,
@@ -108,7 +113,7 @@ export class ApiServiceService {
       .set(
         'allocatedNodesFragment',
         allocatedNodesFragment ? allocatedNodesFragment : ''
-      )      
+      )
       .set(
         'commandLineFragment',
         commandLineFragment ? commandLineFragment : ''
@@ -116,9 +121,9 @@ export class ApiServiceService {
       .set('orderDescending', orderDescending.toString())
       .set('PageNo', PageNo.toFixed(0))
       .set('PageSize', PageSize.toFixed(0));
-      statusFragment.forEach(function (status:string){
-        params = params.append('statusFragment', status );
-      });
+    statusFragment.forEach(function (status: string) {
+      params = params.append('statusFragment', status);
+    });
     console.log(this.apiurl + 'SearchTaskLayout', {
       headers: this.headers,
       params: params,

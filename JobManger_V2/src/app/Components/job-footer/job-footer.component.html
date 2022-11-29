@@ -6,14 +6,19 @@
     <option>50</option>
     <option>100</option>
   </select>
-  &nbsp; 1 / 20 Pages of 100 Records &nbsp;
+  &nbsp; {{ pageSize }} / {{ pageNumberJob }} Pages of {{ total }} Records
+  &nbsp;
 
   <button type="button" (click)="goTofirstPage()" class="btn btn-icon">
     |<
   </button>
-  <button type="button" class="btn btn-icon"><</button>
+  <button type="button" (click)="goTopriviousPage()" class="btn btn-icon">
+    <
+  </button>
 
   <button type="button" (click)="goTonextPage()" class="btn btn-icon">></button>
 
-  <button type="button" class="btn btn-icon">>|</button>
+  <button type="button" (click)="goTolastPage()" class="btn btn-icon">
+    >|
+  </button>
 </div>
