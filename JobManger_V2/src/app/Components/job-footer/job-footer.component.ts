@@ -9,8 +9,7 @@ import { TaskDetailsComponent } from '../task-details/task-details.component';
 })
 export class JobFooterComponent implements OnInit {
   @Input() requestFromJob: boolean;
-
-
+  @Input() requestFromTask: boolean;
   //For Footer
   @Input() totalRecords: number;
   @Input() recordPerPagerequest: number;
@@ -25,38 +24,51 @@ export class JobFooterComponent implements OnInit {
   ngOnInit(): void {}
   goTofirstPage() {
     this.currentPage = 1;
-    this.GetFooterDetails(this.requestFromJob)
+    this.GetFooterDetails(this.requestFromJob);
   }
   goTonextPage() {
     this.currentPage = this.currentPage + 1;
     this.totalPage = Math.ceil(this.totalRecords / this.recordPerPagerequest);
-    this.jobdetails.GetJobDetails(this.recordPerPagerequest, this.currentPage);
+    this.GetFooterDetails(this.requestFromJob);
   }
   goTopriviousPage() {
     this.currentPage = this.currentPage - 1;
     this.totalPage = Math.ceil(this.totalRecords / this.recordPerPagerequest);
-    this.jobdetails.GetJobDetails(this.recordPerPagerequest, this.currentPage);
+    this.GetFooterDetails(this.requestFromJob);
   }
   goTolastPage() {
-   
     this.currentPage = Math.ceil(this.totalRecords / this.recordPerPagerequest);
-    this.jobdetails.GetJobDetails(this.recordPerPagerequest, this.currentPage);
+    this.GetFooterDetails(this.requestFromJob);
     console.log(this.totalRecords, 'TOTAL');
     console.log(this.currentPage, 'PAGE SIZE');
     console.log(this.recordPerPagerequest, 'RECORD PER PAGE');
     console.log(this.totalPage, ' TOTAL PAGE');
   }
-  GetFooterDetails(isjob:boolean){
-    isjob ? this.jobdetails.GetJobDetails(this.recordPerPagerequest, this.currentPage):this.taskdetails.GetTaskDetails(this.recordPerPagerequest, this.currentPage);
+  GetFooterDetails(isjob: boolean) {
+    isjob
+      ? this.jobdetails.GetJobDetails(
+          this.recordPerPagerequest,
+          this.currentPage
+        )
+      : this.taskdetails.GetTaskDetails(
+          this.recordPerPagerequest,
+          this.currentPage
+        );
   }
   onSelected(value: string) {
     console.log(value, 'SELECTED');
     this.recordPerPagerequest = Number(value);
     console.log(this.currentPage);
     if (this.requestFromJob) {
-      this.jobdetails.GetJobDetails(this.recordPerPagerequest, this.currentPage);
+      this.jobdetails.GetJobDetails(
+        this.recordPerPagerequest,
+        this.currentPage
+      );
     } else {
-      this.taskdetails.GetTaskDetails(this.recordPerPagerequest,this.currentPage);
+      this.taskdetails.GetTaskDetails(
+        this.recordPerPagerequest,
+        this.currentPage
+      );
     }
   }
 }

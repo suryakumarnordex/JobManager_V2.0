@@ -13,7 +13,7 @@ export class TaskDetailsComponent implements OnInit {
   @Input() recordPerPage: number;
   @Input() taskLayout: TaskLayoutInfo[];
   @Input() JobIDFragement: string;
-  requestFromTask: string = 'Task';
+  requestFromTask: boolean = true;
   selected = [] as any;
   pageSize: number = 1;
   totalRecords = 0;
@@ -26,12 +26,14 @@ export class TaskDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.GetTaskDetails(this.recordPerPage,this.pageSize);
+    this.GetTaskDetails(this.recordPerPage, this.pageSize);
   }
 
-  GetTaskDetails(recordPerPage: number,pageSize: number) {
+  GetTaskDetails(recordPerPage: number, pageSize: number) {
     this.recordPerPage = recordPerPage;
     this.dataloading = true;
+    console.log(this.JobIDFragement);
+
     this.ApiService.searchTaskLayout(
       this.JobIDFragement,
       '',
