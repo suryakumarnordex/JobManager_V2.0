@@ -85,6 +85,8 @@ export class ApiServiceService {
           return new SearchResultsLayout().deserialize(resp);
         }),
         tap((results: SearchResultsLayout) => {
+          console.log();
+
           this.logger.log(
             `fetched ${results.results.length} search results for jobIdFragment=${jobIdFragment}, orderBy=${orderBy}, orderDescending=${orderDescending}, PageNo=${PageNo}, pageSize=${PageSize}`
           );
@@ -119,7 +121,7 @@ export class ApiServiceService {
         commandLineFragment ? commandLineFragment : ''
       )
       .set('orderDescending', orderDescending.toString())
-      .set('PageNo', PageNo.toFixed(0))
+      .set('page', PageNo.toFixed(0))
       .set('PageSize', PageSize.toFixed(0));
     statusFragment.forEach(function (status: string) {
       params = params.append('statusFragment', status);

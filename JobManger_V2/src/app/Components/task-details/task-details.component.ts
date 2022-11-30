@@ -10,7 +10,7 @@ import { LoggerService } from 'src/app/Services/logger.service';
   styleUrls: ['./task-details.component.css'],
 })
 export class TaskDetailsComponent implements OnInit {
-  @Input() recordPerPage: number;
+  @Input() recordPerPage: number = 10;
   @Input() taskLayout: TaskLayoutInfo[];
   @Input() JobIDFragement: string;
   requestFromTask: boolean = true;
@@ -30,6 +30,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   GetTaskDetails(recordPerPage: number, pageSize: number) {
+    this.pageSize = pageSize;
     this.recordPerPage = recordPerPage;
     this.dataloading = true;
     console.log(this.JobIDFragement);
@@ -43,13 +44,15 @@ export class TaskDetailsComponent implements OnInit {
       '',
       '',
       '',
-      1,
+      this.pageSize,
       this.recordPerPage,
       false
     ).subscribe({
       next: (res: SearchTaskResultsLayout) => {
         this.taskLayout = res.results;
         this.totalRecords = res.totalResults;
+        console.log(this.totalRecords);
+        this.totalPage = Math.ceil(this.totalRecords / this.recordPerPage);
         this.dataloading = false;
       },
       error: (error) => {
