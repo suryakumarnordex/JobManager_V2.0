@@ -82,7 +82,6 @@ export class JobDetailsComponent implements OnInit {
         this.jobCount = res.totalResults;
         this.dataloading = false;
         this.totalPage = Math.ceil(this.jobCount / this.recordPerPage);
-        console.log(this.layouts);
       },
       error: (error) => {
         this.logger.reportError(error);

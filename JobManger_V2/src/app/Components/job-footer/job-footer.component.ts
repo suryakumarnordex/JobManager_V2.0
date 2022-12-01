@@ -9,8 +9,6 @@ import { TaskDetailsComponent } from '../task-details/task-details.component';
 })
 export class JobFooterComponent implements OnInit {
   @Input() requestFromJob: boolean;
-  @Input() requestFromTask: boolean;
-  //For Footer
   @Input() totalRecords: number;
   @Input() recordPerPagerequest: number;
   @Input() currentPage: number;
@@ -25,42 +23,22 @@ export class JobFooterComponent implements OnInit {
   goTofirstPage() {
     this.currentPage = 1;
     this.GetFooterDetails(this.requestFromJob);
-    // this.taskdetails.GetTaskDetails(
-    //   this.recordPerPagerequest,
-    //   this.currentPage
-    // );
+  
   }
   goTonextPage() {
     this.currentPage = this.currentPage + 1;
     this.totalPage = Math.ceil(this.totalRecords / this.recordPerPagerequest);
     this.GetFooterDetails(this.requestFromJob);
-    // this.taskdetails.GetTaskDetails(
-    //   this.recordPerPagerequest,
-    //   this.currentPage
-    // );
-
-    this.jobdetails.GetJobDetails(this.recordPerPagerequest, this.currentPage);
+   
   }
   goTopriviousPage() {
     this.currentPage = this.currentPage - 1;
-    console.log(this.totalRecords, 'TOTAL');
-    console.log(this.currentPage, 'PAGE SIZE');
-    console.log(this.recordPerPagerequest, 'RECORD PER PAGE');
-    console.log(this.totalPage, ' TOTAL PAGE');
     this.totalPage = Math.ceil(this.totalRecords / this.recordPerPagerequest);
-    // this.taskdetails.GetTaskDetails(
-    //   this.recordPerPagerequest,
-    //   this.currentPage
-    // );
     this.GetFooterDetails(this.requestFromJob);
   }
   goTolastPage() {
     this.currentPage = Math.ceil(this.totalRecords / this.recordPerPagerequest);
     this.GetFooterDetails(this.requestFromJob);
-    // console.log(this.totalRecords, 'TOTAL');
-    // console.log(this.currentPage, 'PAGE SIZE');
-    // console.log(this.recordPerPagerequest, 'RECORD PER PAGE');
-    // console.log(this.totalPage, ' TOTAL PAGE');
   }
   GetFooterDetails(isjob: boolean) {
     isjob
@@ -74,9 +52,7 @@ export class JobFooterComponent implements OnInit {
         );
   }
   onSelected(value: string) {
-    console.log(value, 'SELECTED');
     this.recordPerPagerequest = Number(value);
-    console.log(this.currentPage);
     if (this.requestFromJob) {
       this.jobdetails.GetJobDetails(
         this.recordPerPagerequest,
