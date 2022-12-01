@@ -20,6 +20,7 @@ export class JobFooterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+  
   goTofirstPage() {
     this.currentPage = 1;
     this.GetFooterDetails(this.requestFromJob);

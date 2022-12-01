@@ -27,14 +27,9 @@ export class JobDetailsComponent implements OnInit {
   detailTaskID: any;
   pageSize: number = 1;
   dataloading: boolean = false;
-  JobManageerNavigation = [] as any;
+ 
   // jobvariable:JobDetailsVariable
-  public Nodelist: Array<string> = [
-    'All jobs',
-    'Queue Simulation',
-    'Queue BladedSimulation',
-    'Queue PrePostProcessing',
-  ];
+
 
   constructor(
     private ApiService: ApiServiceService,
@@ -45,14 +40,13 @@ export class JobDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.GetJobDetails(this.recordPerPage, this.pageSize);
   }
-  getNavigationsList(): void {
-    this.ApiService.getNavigations().subscribe((res) => {
-      this.JobManageerNavigation = res;
-    });
-  }
-  nodeListPage() {
-    this.router.navigate(['nodelist']);
-  }
+
+  // getNavigationsList(): void {
+  //   this.ApiService.getNavigations().subscribe((res) => {
+  //     this.JobManageerNavigation = res;
+  //   });
+  // }
+
   GetJobDetails(recordPerPage: number, pageSize: number) {
     this.pageSize = pageSize;
     this.recordPerPage = recordPerPage;
@@ -134,48 +128,5 @@ export class JobDetailsComponent implements OnInit {
     document.execCommand('copy');
     document.removeEventListener('copy', create_copy);
   }
-  onNodeGroupChange(event: Event) {
-    this.dataloading = true;
-    let selectedNodeGroup = '';
-    let val = event.target as HTMLInputElement;
-    console.log(val.name, 'sele');
-    let statusList: Array<string> = [];
-    if (val.name.includes('Queue')) {
-      selectedNodeGroup = val.name.replace('Queue ', '');
-      statusList = ['Queued', 'Finished'];
-    } else {
-      selectedNodeGroup = '';
-    }
-    if (event !== null) {
-      this.ApiService.searchLayout(
-        '',
-        [],
-        [],
-        '',
-        '',
-        '',
-        statusList,
-        '',
-        '',
-        '',
-        selectedNodeGroup,
-        '',
-        '',
-        false,
-        1,
-        this.recordPerPage,
-        false
-      ).subscribe({
-        next: (res: SearchResultsLayout) => {
-          this.layouts = res.results;
-          this.jobCount = res.totalResults;
-          this.dataloading = false;
-        },
-        error: (error) => {
-          this.logger.reportError(error);
-          this.dataloading = false;
-        },
-      });
-    }
-  }
+ 
 }

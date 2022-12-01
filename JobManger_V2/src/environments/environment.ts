@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  webAppApiUrl: 'http://ldms.nordex-ag.com/JobManagerApi/swagger/ui/index#/JobManager',
+  navigationsUrl: 'http://ldms.nordex-ag.com/navigations.json',
 };
 
 /*

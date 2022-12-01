@@ -10,6 +10,8 @@ import { UtcToLocalTimePipe } from './Components/utc-pipe/utc-to-local-time.pipe
 import { TaskDetailsComponent } from './Components/task-details/task-details.component';
 import { UtcConverterService } from './Components/utc-converter.service/utc-converter.service';
 import { JobFooterComponent } from './Components/job-footer/job-footer.component';
+import { JobHeaderComponent } from './Components/job-header/job-header.component';
+import { PopupModalsComponent } from './Components/popup-modals/popup-modals.component';
 
 @NgModule({
   imports: [
@@ -25,8 +27,10 @@ import { JobFooterComponent } from './Components/job-footer/job-footer.component
     UtcToLocalTimePipe,
     TaskDetailsComponent,
     JobFooterComponent,
+    JobHeaderComponent,
+    PopupModalsComponent,
   ],
-  providers: [UtcConverterService, TaskDetailsComponent],
+  providers: [UtcConverterService, TaskDetailsComponent,JobHeaderComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
