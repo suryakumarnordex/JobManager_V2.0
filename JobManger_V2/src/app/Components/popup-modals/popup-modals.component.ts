@@ -19,7 +19,5 @@ export class PopupModalsComponent implements OnInit {
   @Output() modalClosed: EventEmitter<void> = new EventEmitter<void>();
 
   ngOnInit(): void {}
-  discord() {
-    alert('Ok');
-  }
+ 
 }

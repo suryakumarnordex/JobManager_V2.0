@@ -40,11 +40,13 @@
         >
           <clr-icon shape="pencil"></clr-icon>&nbsp;Priority
         </button>
-        <app-popup-modals
-          [parentChildConnection]="openModal"
-          (modalClosed)="onModalClose()"
-        ></app-popup-modals>
       </div>
     </ul>
   </nav>
+</div>
+<div>
+  <app-popup-modals
+    [parentChildConnection]="openModal"
+    (modalClosed)="onModalClose()"
+  ></app-popup-modals>
 </div>

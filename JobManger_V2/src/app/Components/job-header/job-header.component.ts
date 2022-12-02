@@ -17,8 +17,7 @@ export class JobHeaderComponent implements OnInit {
   JobManageerNavigation = [] as any;
   dataloading: boolean = false;
   layouts: LayoutInfo[];
-  jobCount = 0;
-  priorityJobModal: boolean = false;
+  jobCount = 0; 
   openModal = false;
 
   public Nodelist: Array<string> = [
@@ -35,12 +34,10 @@ export class JobHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getNavigationsList();
-  }
- 
+  } 
   nodeListPage() {
     this.router.navigate(['nodelist']);
-  }
- 
+  } 
   onModalClose() {
     this.openModal = false;
   }
@@ -54,7 +51,6 @@ export class JobHeaderComponent implements OnInit {
     this.dataloading = true;
     let selectedNodeGroup = '';
     let val = event.target as HTMLInputElement;
-    console.log(val.name, 'sele');
     let statusList: Array<string> = [];
     if (val.name.includes('Queue')) {
       selectedNodeGroup = val.name.replace('Queue ', '');
