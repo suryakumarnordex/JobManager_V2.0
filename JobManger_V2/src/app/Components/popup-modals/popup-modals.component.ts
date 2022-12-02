@@ -1,22 +1,25 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
-import { JobHeaderComponent } from '../job-header/job-header.component';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-popup-modals',
   templateUrl: './popup-modals.component.html',
-  styleUrls: ['./popup-modals.component.css']
+  styleUrls: ['./popup-modals.component.css'],
 })
 export class PopupModalsComponent implements OnInit {
-  @Input() priorityJobModal:boolean;
-  titleTxt:string;
-  jobIds:Array<string>;
-  constructor(private header:JobHeaderComponent) { }
-
-  ngOnInit(): void {
+  isOpen: boolean = false;
+  get parentChildConnection(): boolean {
+    return this.isOpen;
   }
-  Cancel(priority:boolean){
-    console.log("pop called");
-    
-    this.header.priority(priority)
+  @Input() set parentChildConnection(setting: boolean) {
+    this.isOpen = setting;
+    if (setting === false) {
+      this.modalClosed.emit();
+    }
+  }
+  @Output() modalClosed: EventEmitter<void> = new EventEmitter<void>();
+
+  ngOnInit(): void {}
+  discord() {
+    alert('Ok');
   }
 }

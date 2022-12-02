@@ -1,43 +1,47 @@
-import { Component, Input,OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
 import { LoggerService } from 'src/app/Services/logger.service';
 import { LayoutInfo } from 'src/app/Models/layout';
-import { SearchResultsLayout} from 'src/app/Models/helper';
-import { PopupModalsComponent } from '../popup-modals/popup-modals.component';
+import { SearchResultsLayout } from 'src/app/Models/helper';
+
 @Component({
   selector: 'app-job-header',
   templateUrl: './job-header.component.html',
-  styleUrls: ['./job-header.component.css']
+  styleUrls: ['./job-header.component.css'],
 })
 export class JobHeaderComponent implements OnInit {
   @Input() recordPerPage: number = 10;
   @Input() recordPerPagerequest: number;
-  
+
   JobManageerNavigation = [] as any;
   dataloading: boolean = false;
   layouts: LayoutInfo[];
   jobCount = 0;
-  @Input() priorityJobModal:boolean;
+  priorityJobModal: boolean = false;
   public Nodelist: Array<string> = [
     'All jobs',
     'Queue Simulation',
     'Queue BladedSimulation',
     'Queue PrePostProcessing',
   ];
-  constructor( private router: Router, private ApiService: ApiServiceService, private logger: LoggerService) { }
+  constructor(
+    private router: Router,
+    private ApiService: ApiServiceService,
+    private logger: LoggerService
+  ) {}
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
   nodeListPage() {
     this.router.navigate(['nodelist']);
   }
 
-  priority(priority:boolean){
-     this.priorityJobModal=priority;
+  openModal = false;
 
+  onModalClose() {
+    this.openModal = false;
   }
+
   onNodeGroupChange(event: Event) {
     this.dataloading = true;
     let selectedNodeGroup = '';
