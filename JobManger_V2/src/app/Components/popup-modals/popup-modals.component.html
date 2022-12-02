@@ -1,8 +1,14 @@
-<clr-modal [(clrModalOpen)]="parentChildConnection">
-  <h3 class="modal-title">I have a nice title</h3>
+<!-- <clr-modal
+  [(clrModalOpen)]="parentChildConnection"
+  [clrModalSize]="'lg'"
+  [clrModalClosable]="false"
+  *ngIf="passingEvent == 'Priority'"
+>
+  <h3 class="modal-title">Title {{ this.passingEvent }}</h3>
   <div class="modal-body">
-    <p>But not much to say...</p>
+    <input clrInput type="text" id="Priority" name="Priority" />
   </div>
+
   <div class="modal-footer">
     <button
       type="button"
@@ -13,4 +19,62 @@
     </button>
     <button type="button" class="btn btn-outline">OK</button>
   </div>
-</clr-modal>
+</clr-modal> -->
+
+<div class="modal" *ngIf="parentChildConnection">
+  <div class="modal-dialog modal-lg" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          aria-label="Close"
+          class="close"
+          type="button"
+          (click)="parentChildConnection = false"
+        >
+          <clr-icon aria-hidden="true" shape="close"></clr-icon>
+        </button>
+        <h3 class="modal-title">{{ passingEvent }}</h3>
+      </div>
+
+      <div class="modal-body" *ngIf="passingEvent == 'Priority'">
+        <clr-input-container>
+          <label>Enter Priority</label>
+          <input clrInput type="text" id="Priority" name="Priority" />
+        </clr-input-container>
+        <br />
+        <clr-signpost>
+          <clr-signpost-content [clrPosition]="'bottom-right'" *clrIfOpen>
+            <h3 style="margin-top: 0">Example Priority</h3>
+            <p>
+              <code class="clr-code">
+                <li>Highest - 4000</li>
+                <li>AboveNormal - 3000</li>
+                <li>Normal - 2000</li>
+                <li>BelowNormal - 1000</li>
+                <li>Lowest - 0</li>
+              </code>
+            </p>
+          </clr-signpost-content>
+        </clr-signpost>
+
+        <button style="float: right" class="btn btn-outline" type="button">
+          Update
+        </button>
+      </div>
+
+      <div class="modal-body" *ngIf="passingEvent != 'Priority'">
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-outline"
+            (click)="parentChildConnection = false"
+          >
+            Cancel
+          </button>
+          <button type="button" class="btn btn-outline">OK</button>
+        </div>
+      </div>
+      <br />
+    </div>
+  </div>
+</div>

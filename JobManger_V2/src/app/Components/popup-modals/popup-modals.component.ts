@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./popup-modals.component.css'],
 })
 export class PopupModalsComponent implements OnInit {
+  @Input() passingEvent: string;
   isOpen: boolean = false;
   get parentChildConnection(): boolean {
     return this.isOpen;
@@ -19,5 +20,4 @@ export class PopupModalsComponent implements OnInit {
   @Output() modalClosed: EventEmitter<void> = new EventEmitter<void>();
 
   ngOnInit(): void {}
- 
 }

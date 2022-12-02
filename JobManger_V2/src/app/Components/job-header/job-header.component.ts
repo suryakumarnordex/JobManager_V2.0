@@ -14,10 +14,11 @@ export class JobHeaderComponent implements OnInit {
   @Input() recordPerPage: number = 10;
   @Input() recordPerPagerequest: number;
 
+  @Input() passingEvent: string;
   JobManageerNavigation = [] as any;
   dataloading: boolean = false;
   layouts: LayoutInfo[];
-  jobCount = 0; 
+  jobCount = 0;
   openModal = false;
 
   public Nodelist: Array<string> = [
@@ -34,19 +35,23 @@ export class JobHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getNavigationsList();
-  } 
+  }
   nodeListPage() {
     this.router.navigate(['nodelist']);
-  } 
+  }
   onModalClose() {
     this.openModal = false;
   }
-   getNavigationsList(): void {
+  getNavigationsList(): void {
     this.ApiService.getNavigations().subscribe((res) => {
       this.JobManageerNavigation = res;
     });
   }
-
+  openmodel(event: string) {
+    console.log(event);
+    this.passingEvent = event;
+    this.openModal = true;
+  }
   onNodeGroupChange(event: Event) {
     this.dataloading = true;
     let selectedNodeGroup = '';
