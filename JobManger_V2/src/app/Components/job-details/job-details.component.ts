@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
-import {
-  SearchResultsLayout,
-  SearchTaskResultsLayout,
-} from 'src/app/Models/helper';
+import { SearchResultsLayout, SearchTaskResultsLayout,} from 'src/app/Models/helper';
 import { LayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
 import { JobDetailsModules } from 'src/app/Modules/JobDetailsModules';
 import { LoggerService } from 'src/app/Services/logger.service';
 import { JobDetailsVariable } from './job-details-variables';
+import { LocalStorageService } from 'src/app/local-storage.service';
+import { JobDetaillocalstorage } from './job-detail-Localstorage';
+
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-details.component.html',
@@ -27,26 +27,25 @@ export class JobDetailsComponent implements OnInit {
   detailTaskID: any;
   pageSize: number = 1;
   dataloading: boolean = false;
- 
-  // jobvariable:JobDetailsVariable
-
 
   constructor(
     private ApiService: ApiServiceService,
     private router: Router,
-    private logger: LoggerService
+    private logger: LoggerService,
+    private localstorage: LocalStorageService,
+
   ) {}
 
   ngOnInit(): void {
     this.GetJobDetails(this.recordPerPage, this.pageSize);
   }
-
-  // getNavigationsList(): void {
-  //   this.ApiService.getNavigations().subscribe((res) => {
-  //     this.JobManageerNavigation = res;
-  //   });
-  // }
-
+public ColumnResized(event: any, colType: String)
+{  
+  console.log(event,"event")
+  this.localstorage.set('idcolumnwidth', event);
+  this.localstorage.set('coltype', 'id');
+}
+ 
   GetJobDetails(recordPerPage: number, pageSize: number) {
     this.pageSize = pageSize;
     this.recordPerPage = recordPerPage;

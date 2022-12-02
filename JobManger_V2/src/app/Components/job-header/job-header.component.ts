@@ -28,7 +28,7 @@ export class JobHeaderComponent implements OnInit {
   constructor( private router: Router, private ApiService: ApiServiceService, private logger: LoggerService) { }
 
   ngOnInit(): void {
-    
+    this.getNavigationsList();
   }
   nodeListPage() {
     this.router.navigate(['nodelist']);
@@ -37,6 +37,11 @@ export class JobHeaderComponent implements OnInit {
   priority(priority:boolean){
      this.priorityJobModal=priority;
 
+  }
+   getNavigationsList(): void {
+    this.ApiService.getNavigations().subscribe((res) => {
+      this.JobManageerNavigation = res;
+    });
   }
   onNodeGroupChange(event: Event) {
     this.dataloading = true;
