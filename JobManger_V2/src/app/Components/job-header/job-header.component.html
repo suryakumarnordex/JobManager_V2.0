@@ -36,17 +36,14 @@
         <button
           type="button"
           class="btn btn-sm btn-secondary"
-          (click)="priority(true)"
+          (click)="openModal = true"
         >
-          <!----- Priority -->
-          <div *ngIf="priorityJobModal">
-            <app-popup-modals [priorityJobModal]="priorityJobModal">
-            </app-popup-modals>
-          </div>
-
-          <!--  End -->
           <clr-icon shape="pencil"></clr-icon>&nbsp;Priority
         </button>
+        <app-popup-modals
+          [parentChildConnection]="openModal"
+          (modalClosed)="onModalClose()"
+        ></app-popup-modals>
       </div>
     </ul>
   </nav>

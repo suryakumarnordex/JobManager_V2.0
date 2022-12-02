@@ -30,7 +30,7 @@ import { PopupModalsComponent } from './Components/popup-modals/popup-modals.com
     JobHeaderComponent,
     PopupModalsComponent,
   ],
-  providers: [UtcConverterService, TaskDetailsComponent,JobHeaderComponent],
+  providers: [UtcConverterService, TaskDetailsComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
