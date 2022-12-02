@@ -45,9 +45,36 @@
         <button
           type="button"
           class="btn btn-sm btn-secondary"
-          (click)="openmodel('Submit')"
+          (click)="openmodel('Requeue')"
         >
-          <clr-icon shape="pencil"></clr-icon>&nbsp;Submit
+          <clr-icon shape="history"></clr-icon>&nbsp;Requeue
+        </button>
+      </div>
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-sm btn-secondary"
+          (click)="openmodel('Pending_Reason')"
+        >
+          <clr-icon shape="book"></clr-icon>&nbsp;Pending Reason
+        </button>
+      </div>
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-sm btn btn-warning-outline"
+          (click)="openmodel('Cancel')"
+        >
+          <clr-icon shape="times"></clr-icon>&nbsp;Cancel
+        </button>
+      </div>
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-sm btn btn-success-outline"
+          (click)="openmodel('Cancel')"
+        >
+          <clr-icon shape="thumbs-up"></clr-icon>&nbsp;Submit
         </button>
       </div>
     </ul>
