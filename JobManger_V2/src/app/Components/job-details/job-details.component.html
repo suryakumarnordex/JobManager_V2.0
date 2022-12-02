@@ -2,7 +2,11 @@
   <app-job-header></app-job-header>
 
   <clr-datagrid [(clrDgSelected)]="selected" [clrDgLoading]="dataloading">
-    <clr-dg-column>ID</clr-dg-column>
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'idcolumnwidth')"
+      style="align-content: space-around"
+      >ID</clr-dg-column
+    >
     <clr-dg-column>User</clr-dg-column>
     <clr-dg-column>Cockpit Id</clr-dg-column>
     <clr-dg-column>Run</clr-dg-column>
@@ -62,7 +66,7 @@
                   job.runnoFragment
               }}"
               target="_blank"
-              >{{ job.runnoFragment | slice: 0:5 }}</a
+              >{{ job.runnoFragment | slice : 0 : 5 }}</a
             >
           </span>
           <div>
@@ -133,7 +137,7 @@
             <span class="tooltip-content" style="width: fit-content">
               Finished:{{ job.finishedTasksCount }}&nbsp;({{
                 (job.finishedTasksCount / job.numberOfTasksFragment) * 100
-                  | number: "1.0-0"
+                  | number : "1.0-0"
               }}%)
             </span>
             <br />
@@ -141,7 +145,7 @@
             <span class="tooltip-content" style="width: fit-content">
               Failed:{{ job.failedTasksCount }}&nbsp;({{
                 (job.failedTasksCount / job.numberOfTasksFragment) * 100
-                  | number: "1.0-0"
+                  | number : "1.0-0"
               }}%)
             </span>
 
@@ -155,9 +159,9 @@
       <clr-dg-cell>{{ job.numberOfTasksFragment }}</clr-dg-cell>
       <clr-dg-cell>{{ job.runningTasksCount }}</clr-dg-cell>
       <clr-dg-cell>{{ job.queuedTasksCount }}</clr-dg-cell>
-      <clr-dg-cell>{{ job.startTime | utcToLocalTime: "short" }}</clr-dg-cell>
-      <clr-dg-cell>{{ job.endTime | utcToLocalTime: "short" }}</clr-dg-cell>
-      <clr-dg-cell>{{ job.submitTime | utcToLocalTime: "short" }}</clr-dg-cell>
+      <clr-dg-cell>{{ job.startTime | utcToLocalTime : "short" }}</clr-dg-cell>
+      <clr-dg-cell>{{ job.endTime | utcToLocalTime : "short" }}</clr-dg-cell>
+      <clr-dg-cell>{{ job.submitTime | utcToLocalTime : "short" }}</clr-dg-cell>
       <clr-dg-cell>{{ job.elapsedTime }}</clr-dg-cell>
     </clr-dg-row>
     <ng-template
