@@ -37,7 +37,8 @@ export class JobDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.GetJobDetails(this.recordPerPage, this.pageSize);
+    // this.GetJobDetails(this.recordPerPage, this.pageSize);
+    this.SetJobPriority();
   }
 public ColumnResized(event: any, colType: String)
 {  
@@ -127,5 +128,14 @@ public ColumnResized(event: any, colType: String)
     document.execCommand('copy');
     document.removeEventListener('copy', create_copy);
   }
- 
+  SetJobPriority() {
+    this.ApiService.SetJobPriority([], '').subscribe({
+      next: (res: any) => {
+        console.log(res);
+      },
+      error: (error: string) => {
+        console.log(error);
+      },
+    });
+  }
 }
