@@ -7,6 +7,7 @@
     (clrDgSelectedChange)="selectionChanged($event)"
   >
     <clr-dg-column
+      [style.width.px]=""
       (clrDgColumnResize)="ColumnResized($event, 'idcolumnwidth')"
       style="align-content: space-around"
       >ID</clr-dg-column

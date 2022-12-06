@@ -3,9 +3,7 @@ import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
 import { SearchResultsLayout, SearchTaskResultsLayout,} from 'src/app/Models/helper';
 import { LayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
-
 import { LoggerService } from 'src/app/Services/logger.service';
-
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetaillocalstorage } from './job-detail-Localstorage';
 
@@ -16,9 +14,8 @@ import { JobDetaillocalstorage } from './job-detail-Localstorage';
 })
 export class JobDetailsComponent implements OnInit {
 
-  layouts: LayoutInfo[];
-
   @Input() recordPerPage: number = 10;
+  layouts: LayoutInfo[];
   taskLayout: TaskLayoutInfo[];
   requestFromJOb: boolean = true;
   selected = [] as any;
@@ -40,25 +37,24 @@ export class JobDetailsComponent implements OnInit {
 
   ngOnInit(): void {
    this.GetJobDetails(this.recordPerPage, this.pageSize);
+   this.GetLocalStorageColumnValue();
    
   }
-public ColumnResized(event: any, colType: String)
-{  
+public ColumnResized(event: any, colType: string)
+{   
+  this.localstorage.set(colType, event);
+
   switch(colType) { 
     case 'idcolumnwidth': { 
-    this.JobDetailsLocalStorage.setidcolumnWidthValue(event);
-    console.log(this.JobDetailsLocalStorage.idcolumnWidthValue,colType);
-    
+    this.JobDetailsLocalStorage.setidcolumnWidthValue(event);  
        break; 
     } 
     case 'cockpitcolumnWidth': { 
-      this.JobDetailsLocalStorage.setcockpitcolumnWidthValue(event);
-      console.log(this.JobDetailsLocalStorage.cockpitcolumnWidthValue,colType);
+      this.JobDetailsLocalStorage.setcockpitcolumnWidthValue(event);     
        break; 
     } 
     case 'runcolumnWidth': { 
-      this.JobDetailsLocalStorage.setruncolumnWidthValue(event);
-      console.log(this.JobDetailsLocalStorage.runcolumnWidthValue,colType);
+      this.JobDetailsLocalStorage.setruncolumnWidthValue(event);   
       break; 
    } 
    case 'typecolumnWidth': { 
@@ -117,6 +113,8 @@ case 'elapsedtimecolumnWidth': {
   GetJobDetails(recordPerPage: number, pageSize: number) {
     this.pageSize = pageSize;
     this.recordPerPage = recordPerPage;
+    this.JobDetailsLocalStorage.setrecordPerPageValue(recordPerPage);
+    this.JobDetailsLocalStorage.setpageSize(pageSize);
     this.dataloading = true;
 
     this.ApiService.searchLayout(
@@ -209,5 +207,26 @@ case 'elapsedtimecolumnWidth': {
   selectionChanged(event: any[]) {   
     this.JobDetailsLocalStorage.SetSelectedjobId(event.map((e) => e.jobIdFragment));
     console.log(this.JobDetailsLocalStorage.SelectedjobId);
+  }
+  GetLocalStorageColumnValue()
+  {
+    this.JobDetailsLocalStorage.idcolumnWidthValue = this.localstorage.get('idcolumnwidth');
+    this.JobDetailsLocalStorage.usercolumnWidthValue = this.localstorage.get('usercolumnwidth');
+    this.JobDetailsLocalStorage.cockpitcolumnWidthValue = this.localstorage.get('cockpitcolumnwidth');
+    this.JobDetailsLocalStorage.runcolumnWidthValue = this.localstorage.get('runcolumnwidth');
+    this.JobDetailsLocalStorage.typecolumnWidthValue = this.localstorage.get('typecolumnwidth');
+    this.JobDetailsLocalStorage.topiccolumnWidthValue = this.localstorage.get('topiccolumnwidth');
+    this.JobDetailsLocalStorage.statuscolumnWidthValue = this.localstorage.get('statuscolumnwidth');
+    this.JobDetailsLocalStorage.progresscolumnWidthValue = this.localstorage.get('progresscolumnwidth');
+    this.JobDetailsLocalStorage.prioritycolumnWidthValue = this.localstorage.get('prioritycolumnwidth');
+    this.JobDetailsLocalStorage.notaskcolumnWidthValue = this.localstorage.get('notaskcolumnwidth');
+    this.JobDetailsLocalStorage.RunningTaskcolumnWidthValue = this.localstorage.get('runningtaskcolumnwidth');
+    this.JobDetailsLocalStorage.QueuedTaskcolumnWidthValue = this.localstorage.get('Queuedtaskcolumnwidth');
+    this.JobDetailsLocalStorage.starttimecolumnWidthValue = this.localstorage.get('starttimecolumnwidth');
+    this.JobDetailsLocalStorage.endtimecolumnWidthValue = this.localstorage.get('endtimecolumnwidth');
+    this.JobDetailsLocalStorage.elapsedtimecolumnWidthValue = this.localstorage.get('elapsedtimecolumnwidth');
+    this.JobDetailsLocalStorage.submittimecolumnWidthValue = this.localstorage.get('submittimecolumnwidth');
+    this.JobDetailsLocalStorage.pendingreasoncolumnWidthValue = this.localstorage.get('pendingreasoncolumnwidth');
+    this.JobDetailsLocalStorage.recordPerPageValue = this.localstorage.get('recordperpage');
   }
 }
