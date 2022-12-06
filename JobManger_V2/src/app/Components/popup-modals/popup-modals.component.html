@@ -1,26 +1,3 @@
-<!-- <clr-modal
-  [(clrModalOpen)]="parentChildConnection"
-  [clrModalSize]="'lg'"
-  [clrModalClosable]="false"
-  *ngIf="passingEvent == 'Priority'"
->
-  <h3 class="modal-title">Title {{ this.passingEvent }}</h3>
-  <div class="modal-body">
-    <input clrInput type="text" id="Priority" name="Priority" />
-  </div>
-
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline"
-      (click)="parentChildConnection = false"
-    >
-      Cancel
-    </button>
-    <button type="button" class="btn btn-outline">OK</button>
-  </div>
-</clr-modal> -->
-
 <div class="modal" *ngIf="parentChildConnection">
   <div class="modal-dialog modal-lg" role="dialog" aria-hidden="true">
     <div class="modal-content">

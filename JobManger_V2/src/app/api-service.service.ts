@@ -167,4 +167,31 @@ export class ApiServiceService {
       }
     );
   }
+
+  jobRequeue(parameterers: any) {
+    let url = 
+    environment.webAppApiUrl + `HPCPackJob`;      
+    return this.http.post<string>(url, {}, { params: parameterers });
+  }
+
+  jobSubmit(parameterers: any) {
+    let url = 
+    environment.webAppApiUrl + `HPCPackJobSubmit`;   
+    return this.http.post<string>(url, {}, { params: parameterers });
+  }
+
+  jobPendingreason(tempArrayIds: any) {
+    let url = 
+    environment.webAppApiUrl + `SearchLayout?JobIdFragment=${tempArrayIds}&waitForChange=false`;  
+    this.logger.log(url);
+      return this.http.get(url);
+  }
+  
+  jobCancel(parameterers: any) {
+    let url = 
+    environment.webAppApiUrl + `HPCPackJob`;  
+    this.logger.log(url);
+      return this.http.delete<string>(url, { params: parameterers });
+  }
+
 }

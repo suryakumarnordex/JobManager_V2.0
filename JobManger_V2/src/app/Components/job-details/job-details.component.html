@@ -1,27 +1,75 @@
 <div class="main-container">
   <app-job-header></app-job-header>
 
-  <clr-datagrid [(clrDgSelected)]="selected" [clrDgLoading]="dataloading">
+  <clr-datagrid
+    [(clrDgSelected)]="selected"
+    [clrDgLoading]="dataloading"
+    (clrDgSelectedChange)="selectionChanged($event)"
+  >
     <clr-dg-column
       (clrDgColumnResize)="ColumnResized($event, 'idcolumnwidth')"
       style="align-content: space-around"
       >ID</clr-dg-column
     >
-    <clr-dg-column>User</clr-dg-column>
-    <clr-dg-column>Cockpit Id</clr-dg-column>
-    <clr-dg-column>Run</clr-dg-column>
-    <clr-dg-column>Type</clr-dg-column>
-    <clr-dg-column>Topic</clr-dg-column>
-    <clr-dg-column>Status</clr-dg-column>
-    <clr-dg-column>Progress</clr-dg-column>
-    <clr-dg-column>Job Priority</clr-dg-column>
-    <clr-dg-column>Number Of Tasks</clr-dg-column>
-    <clr-dg-column>Running Tasks</clr-dg-column>
-    <clr-dg-column>Queued Tasks</clr-dg-column>
-    <clr-dg-column>Start Time (yy/mm/dd HH:mm)</clr-dg-column>
-    <clr-dg-column>End Time (yy/mm/dd HH:mm)</clr-dg-column>
-    <clr-dg-column>Submit Time (yy/mm/dd HH:mm)</clr-dg-column>
-    <clr-dg-column>Elapsed Time (HH:mm:ss)</clr-dg-column>
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'usercolumnWidth')"
+      >User</clr-dg-column
+    >
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'cockpitcolumnWidth')"
+      >Cockpit Id</clr-dg-column
+    >
+    <clr-dg-column (clrDgColumnResize)="ColumnResized($event, 'runcolumnWidth')"
+      >Run</clr-dg-column
+    >
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'typecolumnWidth')"
+      >Type</clr-dg-column
+    >
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'topiccolumnWidth')"
+      >Topic</clr-dg-column
+    >
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'statuscolumnWidth')"
+      >Status</clr-dg-column
+    >
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'progresscolumnWidth')"
+      >Progress</clr-dg-column
+    >
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'prioritycolumnWidth')"
+      >Job Priority</clr-dg-column
+    >
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'notaskcolumnWidth')"
+      >Number Of Tasks</clr-dg-column
+    >
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'runningTaskcolumnWidth')"
+      >Running Tasks</clr-dg-column
+    >
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'queuedTaskcolumnWidth')"
+      >Queued Tasks</clr-dg-column
+    >
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'starttimecolumnWidth')"
+      >Start Time (yy/mm/dd HH:mm)</clr-dg-column
+    >
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'endtimecolumnWidth')"
+      >End Time (yy/mm/dd HH:mm)</clr-dg-column
+    >
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'submittimecolumnWidth')"
+      >Submit Time (yy/mm/dd HH:mm)</clr-dg-column
+    >
+    <clr-dg-column
+      (clrDgColumnResize)="ColumnResized($event, 'elapsedtimecolumnWidth')"
+      >Elapsed Time (HH:mm:ss)</clr-dg-column
+    >
 
     <clr-dg-row *ngFor="let job of layouts" [clrDgItem]="job">
       <clr-dg-cell>{{ job.jobIdFragment }}</clr-dg-cell>

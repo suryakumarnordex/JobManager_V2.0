@@ -12,6 +12,7 @@ import { UtcConverterService } from './Components/utc-converter.service/utc-conv
 import { JobFooterComponent } from './Components/job-footer/job-footer.component';
 import { JobHeaderComponent } from './Components/job-header/job-header.component';
 import { PopupModalsComponent } from './Components/popup-modals/popup-modals.component';
+import {JobDetaillocalstorage} from './Components/job-details/job-detail-Localstorage'
 
 @NgModule({
   imports: [
@@ -29,8 +30,9 @@ import { PopupModalsComponent } from './Components/popup-modals/popup-modals.com
     JobFooterComponent,
     JobHeaderComponent,
     PopupModalsComponent,
+    
   ],
-  providers: [UtcConverterService, TaskDetailsComponent],
+  providers: [UtcConverterService, TaskDetailsComponent,JobDetaillocalstorage],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

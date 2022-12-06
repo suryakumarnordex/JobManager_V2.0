@@ -48,9 +48,28 @@ export class JobHeaderComponent implements OnInit {
     });
   }
   openmodel(event: string) {
-    console.log(event);
-    this.passingEvent = event;
+    this.passingEvent = event;    
     this.openModal = true;
+    if(this.passingEvent==="Requeue")
+    {
+
+    }
+    else if(this.passingEvent==="Pending_Reason")
+    {
+
+    }
+    else if(this.passingEvent==="Cancel")
+    {
+
+    }
+    else if(this.passingEvent==="Submit")
+    {
+
+    }
+    else if(this.passingEvent==="Priority")
+    {
+
+    }
   }
   onNodeGroupChange(event: Event) {
     this.dataloading = true;

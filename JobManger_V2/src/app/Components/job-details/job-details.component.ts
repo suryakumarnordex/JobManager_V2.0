@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
 import { SearchResultsLayout, SearchTaskResultsLayout,} from 'src/app/Models/helper';
 import { LayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
-import { JobDetailsModules } from 'src/app/Modules/JobDetailsModules';
+
 import { LoggerService } from 'src/app/Services/logger.service';
-import { JobDetailsVariable } from './job-details-variables';
+
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetaillocalstorage } from './job-detail-Localstorage';
 
@@ -15,6 +15,7 @@ import { JobDetaillocalstorage } from './job-detail-Localstorage';
   styleUrls: ['./job-details.component.css'],
 })
 export class JobDetailsComponent implements OnInit {
+
   layouts: LayoutInfo[];
 
   @Input() recordPerPage: number = 10;
@@ -33,6 +34,7 @@ export class JobDetailsComponent implements OnInit {
     private router: Router,
     private logger: LoggerService,
     private localstorage: LocalStorageService,
+    private JobDetailsLocalStorage : JobDetaillocalstorage,
 
   ) {}
 
@@ -42,9 +44,74 @@ export class JobDetailsComponent implements OnInit {
   }
 public ColumnResized(event: any, colType: String)
 {  
-  console.log(event,"event")
-  this.localstorage.set('idcolumnwidth', event);
-  this.localstorage.set('coltype', 'id');
+  switch(colType) { 
+    case 'idcolumnwidth': { 
+    this.JobDetailsLocalStorage.setidcolumnWidthValue(event);
+    console.log(this.JobDetailsLocalStorage.idcolumnWidthValue,colType);
+    
+       break; 
+    } 
+    case 'cockpitcolumnWidth': { 
+      this.JobDetailsLocalStorage.setcockpitcolumnWidthValue(event);
+      console.log(this.JobDetailsLocalStorage.cockpitcolumnWidthValue,colType);
+       break; 
+    } 
+    case 'runcolumnWidth': { 
+      this.JobDetailsLocalStorage.setruncolumnWidthValue(event);
+      console.log(this.JobDetailsLocalStorage.runcolumnWidthValue,colType);
+      break; 
+   } 
+   case 'typecolumnWidth': { 
+    this.JobDetailsLocalStorage.settypecolumnWidthValue(event);
+    break; 
+ } 
+ case 'topiccolumnWidth': { 
+  this.JobDetailsLocalStorage.settopiccolumnWidthValue(event);
+  break; 
+} 
+case 'statuscolumnWidth': { 
+  this.JobDetailsLocalStorage.setstatuscolumnWidthValue(event);
+  break; 
+} 
+case 'progresscolumnWidth': { 
+  this.JobDetailsLocalStorage.setprogresscolumnWidthValue(event);
+  break; 
+} 
+case 'prioritycolumnWidth': { 
+  this.JobDetailsLocalStorage.setprioritycolumnWidthValue(event);
+  break; 
+} 
+case 'notaskcolumnWidth': { 
+  this.JobDetailsLocalStorage.setnotaskcolumnWidthValue(event);
+  break; 
+} 
+case 'runningTaskcolumnWidth': { 
+  this.JobDetailsLocalStorage.setRunningTaskcolumnWidthValue(event);
+  break; 
+} 
+case 'queuedTaskcolumnWidth': { 
+  this.JobDetailsLocalStorage.setQueuedTaskcolumnWidthValue(event);
+  break; 
+} 
+case 'starttimecolumnWidth': { 
+  this.JobDetailsLocalStorage.setstarttimecolumnWidthValue(event);
+  break; 
+} 
+case 'endtimecolumnWidth': { 
+  this.JobDetailsLocalStorage.setendtimecolumnWidthValue(event);
+  break; 
+} 
+case 'submittimecolumnWidth': { 
+  this.JobDetailsLocalStorage.setsubmittimecolumnWidth(event);
+  break; 
+} 
+case 'elapsedtimecolumnWidth': { 
+  this.JobDetailsLocalStorage.setelapsedtimecolumnWidthValue(event);
+  break; 
+    } 
+ } 
+
+
 }
  
   GetJobDetails(recordPerPage: number, pageSize: number) {
@@ -138,5 +205,9 @@ public ColumnResized(event: any, colType: String)
         console.log(error);
       },
     });
+  }
+  selectionChanged(event: any[]) {   
+    this.JobDetailsLocalStorage.SetSelectedjobId(event.map((e) => e.jobIdFragment));
+    console.log(this.JobDetailsLocalStorage.SelectedjobId);
   }
 }
