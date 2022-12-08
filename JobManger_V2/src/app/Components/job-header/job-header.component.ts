@@ -4,6 +4,7 @@ import { ApiServiceService } from 'src/app/api-service.service';
 import { LoggerService } from 'src/app/Services/logger.service';
 import { LayoutInfo } from 'src/app/Models/layout';
 import { SearchResultsLayout } from 'src/app/Models/helper';
+import { JobDetailsComponent } from '../job-details/job-details.component';
 
 @Component({
   selector: 'app-job-header',
@@ -30,7 +31,8 @@ export class JobHeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private ApiService: ApiServiceService,
-    private logger: LoggerService
+    private logger: LoggerService,
+    private jobdetails: JobDetailsComponent
   ) {}
 
   ngOnInit(): void {
@@ -48,27 +50,24 @@ export class JobHeaderComponent implements OnInit {
     });
   }
   openmodel(event: string) {
-    this.passingEvent = event;    
+    this.passingEvent = event;
     this.openModal = true;
-    if(this.passingEvent==="Requeue")
-    {
-
-    }
-    else if(this.passingEvent==="Pending_Reason")
-    {
-
-    }
-    else if(this.passingEvent==="Cancel")
-    {
-
-    }
-    else if(this.passingEvent==="Submit")
-    {
-
-    }
-    else if(this.passingEvent==="Priority")
-    {
-
+    switch (this.passingEvent) {
+      case 'Priority': {
+        this.jobdetails.SetJobPriority();
+        break;
+      }
+      case 'Requeue': {
+        break;
+      }
+      case 'Pending_Reason': {
+        break;
+      }
+      case 'Cancel': {
+        break;
+      }
+      case 'Submit': {
+      }
     }
   }
   onNodeGroupChange(event: Event) {

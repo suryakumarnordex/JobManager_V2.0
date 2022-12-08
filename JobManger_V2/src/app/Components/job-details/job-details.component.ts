@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
-import { SearchResultsLayout, SearchTaskResultsLayout,} from 'src/app/Models/helper';
+import {
+  SearchResultsLayout,
+  SearchTaskResultsLayout,
+} from 'src/app/Models/helper';
 import { LayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
 
 import { LoggerService } from 'src/app/Services/logger.service';
@@ -15,7 +18,6 @@ import { JobDetaillocalstorage } from './job-detail-Localstorage';
   styleUrls: ['./job-details.component.css'],
 })
 export class JobDetailsComponent implements OnInit {
-
   layouts: LayoutInfo[];
 
   @Input() recordPerPage: number = 10;
@@ -28,92 +30,89 @@ export class JobDetailsComponent implements OnInit {
   detailTaskID: any;
   pageSize: number = 1;
   dataloading: boolean = false;
-
+  JobDetailsLocalStoragehtml: JobDetaillocalstorage;
   constructor(
     private ApiService: ApiServiceService,
     private router: Router,
     private logger: LoggerService,
     private localstorage: LocalStorageService,
-    private JobDetailsLocalStorage : JobDetaillocalstorage,
-
+    private JobDetailsLocalStorage: JobDetaillocalstorage
   ) {}
 
   ngOnInit(): void {
-   this.GetJobDetails(this.recordPerPage, this.pageSize);
-   
+    this.GetJobDetails(this.recordPerPage, this.pageSize);
   }
-public ColumnResized(event: any, colType: String)
-{  
-  switch(colType) { 
-    case 'idcolumnwidth': { 
-    this.JobDetailsLocalStorage.setidcolumnWidthValue(event);
-    console.log(this.JobDetailsLocalStorage.idcolumnWidthValue,colType);
-    
-       break; 
-    } 
-    case 'cockpitcolumnWidth': { 
-      this.JobDetailsLocalStorage.setcockpitcolumnWidthValue(event);
-      console.log(this.JobDetailsLocalStorage.cockpitcolumnWidthValue,colType);
-       break; 
-    } 
-    case 'runcolumnWidth': { 
-      this.JobDetailsLocalStorage.setruncolumnWidthValue(event);
-      console.log(this.JobDetailsLocalStorage.runcolumnWidthValue,colType);
-      break; 
-   } 
-   case 'typecolumnWidth': { 
-    this.JobDetailsLocalStorage.settypecolumnWidthValue(event);
-    break; 
- } 
- case 'topiccolumnWidth': { 
-  this.JobDetailsLocalStorage.settopiccolumnWidthValue(event);
-  break; 
-} 
-case 'statuscolumnWidth': { 
-  this.JobDetailsLocalStorage.setstatuscolumnWidthValue(event);
-  break; 
-} 
-case 'progresscolumnWidth': { 
-  this.JobDetailsLocalStorage.setprogresscolumnWidthValue(event);
-  break; 
-} 
-case 'prioritycolumnWidth': { 
-  this.JobDetailsLocalStorage.setprioritycolumnWidthValue(event);
-  break; 
-} 
-case 'notaskcolumnWidth': { 
-  this.JobDetailsLocalStorage.setnotaskcolumnWidthValue(event);
-  break; 
-} 
-case 'runningTaskcolumnWidth': { 
-  this.JobDetailsLocalStorage.setRunningTaskcolumnWidthValue(event);
-  break; 
-} 
-case 'queuedTaskcolumnWidth': { 
-  this.JobDetailsLocalStorage.setQueuedTaskcolumnWidthValue(event);
-  break; 
-} 
-case 'starttimecolumnWidth': { 
-  this.JobDetailsLocalStorage.setstarttimecolumnWidthValue(event);
-  break; 
-} 
-case 'endtimecolumnWidth': { 
-  this.JobDetailsLocalStorage.setendtimecolumnWidthValue(event);
-  break; 
-} 
-case 'submittimecolumnWidth': { 
-  this.JobDetailsLocalStorage.setsubmittimecolumnWidth(event);
-  break; 
-} 
-case 'elapsedtimecolumnWidth': { 
-  this.JobDetailsLocalStorage.setelapsedtimecolumnWidthValue(event);
-  break; 
-    } 
- } 
+  public ColumnResized(event: any, colType: String) {
+    switch (colType) {
+      case 'idcolumnwidth': {
+        this.JobDetailsLocalStorage.setidcolumnWidthValue(event);
+        console.log(this.JobDetailsLocalStorage.idcolumnWidthValue, colType);
+        break;
+      }
+      case 'cockpitcolumnWidth': {
+        this.JobDetailsLocalStorage.setcockpitcolumnWidthValue(event);
+        console.log(
+          this.JobDetailsLocalStorage.cockpitcolumnWidthValue,
+          colType
+        );
+        break;
+      }
+      case 'runcolumnWidth': {
+        this.JobDetailsLocalStorage.setruncolumnWidthValue(event);
+        console.log(this.JobDetailsLocalStorage.runcolumnWidthValue, colType);
+        break;
+      }
+      case 'typecolumnWidth': {
+        this.JobDetailsLocalStorage.settypecolumnWidthValue(event);
+        break;
+      }
+      case 'topiccolumnWidth': {
+        this.JobDetailsLocalStorage.settopiccolumnWidthValue(event);
+        break;
+      }
+      case 'statuscolumnWidth': {
+        this.JobDetailsLocalStorage.setstatuscolumnWidthValue(event);
+        break;
+      }
+      case 'progresscolumnWidth': {
+        this.JobDetailsLocalStorage.setprogresscolumnWidthValue(event);
+        break;
+      }
+      case 'prioritycolumnWidth': {
+        this.JobDetailsLocalStorage.setprioritycolumnWidthValue(event);
+        break;
+      }
+      case 'notaskcolumnWidth': {
+        this.JobDetailsLocalStorage.setnotaskcolumnWidthValue(event);
+        break;
+      }
+      case 'runningTaskcolumnWidth': {
+        this.JobDetailsLocalStorage.setRunningTaskcolumnWidthValue(event);
+        break;
+      }
+      case 'queuedTaskcolumnWidth': {
+        this.JobDetailsLocalStorage.setQueuedTaskcolumnWidthValue(event);
+        break;
+      }
+      case 'starttimecolumnWidth': {
+        this.JobDetailsLocalStorage.setstarttimecolumnWidthValue(event);
+        break;
+      }
+      case 'endtimecolumnWidth': {
+        this.JobDetailsLocalStorage.setendtimecolumnWidthValue(event);
+        break;
+      }
+      case 'submittimecolumnWidth': {
+        this.JobDetailsLocalStorage.setsubmittimecolumnWidth(event);
+        break;
+      }
+      case 'elapsedtimecolumnWidth': {
+        this.JobDetailsLocalStorage.setelapsedtimecolumnWidthValue(event);
+        break;
+      }
+    }
+  }
 
-
-}
- 
   GetJobDetails(recordPerPage: number, pageSize: number) {
     this.pageSize = pageSize;
     this.recordPerPage = recordPerPage;
@@ -195,9 +194,16 @@ case 'elapsedtimecolumnWidth': {
     document.execCommand('copy');
     document.removeEventListener('copy', create_copy);
   }
-  
+
+  selectionChanged(event: any[]) {
+    this.JobDetailsLocalStorage.SetSelectedjobId(
+      event.map((e) => e.jobIdFragment)
+    );
+    console.log(this.JobDetailsLocalStorage.SelectedjobId);
+  }
+  // JobManager Actions
   SetJobPriority() {
-    this.ApiService.SetJobPriority([], '').subscribe({
+    this.ApiService.SetJobPriority([56819], 'Normal+100').subscribe({
       next: (res: any) => {
         console.log(res);
       },
@@ -206,8 +212,45 @@ case 'elapsedtimecolumnWidth': {
       },
     });
   }
-  selectionChanged(event: any[]) {   
-    this.JobDetailsLocalStorage.SetSelectedjobId(event.map((e) => e.jobIdFragment));
-    console.log(this.JobDetailsLocalStorage.SelectedjobId);
+
+  setRequeue() {
+    this.ApiService.SetRequeue([]).subscribe({
+      next: (res: any) => {
+        console.log(res);
+      },
+      error: (error: string) => {
+        console.log(error);
+      },
+    });
+  }
+  getPendingReasons() {
+    this.ApiService.GetPendingReason([]).subscribe({
+      next: (res: any) => {
+        console.log(res);
+      },
+      error: (error: string) => {
+        console.log(error);
+      },
+    });
+  }
+  setCancel() {
+    this.ApiService.SetCancel([]).subscribe({
+      next: (res: any) => {
+        console.log(res);
+      },
+      error: (error: string) => {
+        console.log(error);
+      },
+    });
+  }
+  setSubmit() {
+    this.ApiService.SetSubmit([]).subscribe({
+      next: (res: any) => {
+        console.log(res);
+      },
+      error: (error: string) => {
+        console.log(error);
+      },
+    });
   }
 }
