@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
-import { SearchResultsLayout, SearchTaskResultsLayout } from 'src/app/Models/helper';
+import {
+  SearchResultsLayout,
+  SearchTaskResultsLayout,
+} from 'src/app/Models/helper';
 import { LayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
 import { JobDetailsModules } from 'src/app/Modules/JobDetailsModules';
 import { LoggerService } from 'src/app/Services/logger.service';
@@ -12,16 +15,13 @@ import { LoggerService } from 'src/app/Services/logger.service';
   styleUrls: ['./job-details.component.css'],
 })
 export class JobDetailsComponent implements OnInit {
-
   layouts: LayoutInfo[];
-  taskLayout:TaskLayoutInfo[];
+  taskLayout: TaskLayoutInfo[];
   selected = [] as any;
   total = 0;
-
   loading = true;
-  detailTaskID:any;
-  dataloading:boolean=false;
-
+  detailTaskID: any;
+  dataloading: boolean = false;
   QuickerViewNavigation = [] as any;
 
   public Nodelist: Array<string> = [
@@ -44,12 +44,12 @@ export class JobDetailsComponent implements OnInit {
     this.ApiService.getNavigations().subscribe((res) => {
       this.QuickerViewNavigation = res;
     });
-  } 
+  }
   nodeListPage() {
     this.router.navigate(['nodelist']);
   }
   GetJobDetails() {
-    this.dataloading =true;
+    this.dataloading = true;
     this.ApiService.searchLayout(
       '',
       [],
@@ -68,36 +68,37 @@ export class JobDetailsComponent implements OnInit {
       1,
       100,
       false
-    ).subscribe({      
-      next: (res: SearchResultsLayout) => {      
+    ).subscribe({
+      next: (res: SearchResultsLayout) => {
         this.layouts = res.results;
-        this.total = res.totalResults;                     
-        this.dataloading=false;
+        this.total = res.totalResults;
+        this.dataloading = false;
       },
       error: (error) => {
         this.logger.reportError(error);
         this.dataloading = false;
-      },     
+      },
     });
   }
   onDetailOpen(event: any) {
-  
-    if (event !== null) {  
-      this.detailTaskID = event.jobIdFragment;        
-      this.ApiService.searchTaskLayout(this.detailTaskID,
-      '',
-      '',
-      [],
-      '',
-      '',
-      '',
-      '',
-      1,
-      10,
-      false).subscribe({
+    if (event !== null) {
+      this.detailTaskID = event.jobIdFragment;
+      this.ApiService.searchTaskLayout(
+        this.detailTaskID,
+        '',
+        '',
+        [],
+        '',
+        '',
+        '',
+        '',
+        1,
+        10,
+        false
+      ).subscribe({
         next: (res: SearchTaskResultsLayout) => {
           this.taskLayout = res.results;
-          this.total = res.totalResults;         
+          this.total = res.totalResults;
           this.dataloading = false;
         },
         error: (error) => {
@@ -111,7 +112,7 @@ export class JobDetailsComponent implements OnInit {
     const create_copy = (e: ClipboardEvent) => {
       e.clipboardData?.setData('text/plain', selectedItem.CockpitFolder);
       e.preventDefault();
-            if (
+      if (
         selectedItem.CockpitFolder != '' &&
         selectedItem.CockpitFolder != null
       ) {
@@ -125,16 +126,16 @@ export class JobDetailsComponent implements OnInit {
     document.removeEventListener('copy', create_copy);
   }
   onNodeGroupChange(event: any) {
-    this.dataloading=true;
-    let selectedNodeGroup='';
-    let statusList:Array<string>=[] ;   
+    this.dataloading = true;
+    let selectedNodeGroup = '';
+    let statusList: Array<string> = [];
     if (event.target.value.includes('Queue')) {
       selectedNodeGroup = event.target.value.replace('Queue ', '');
-      statusList = ['Queued','Finished'];
+      statusList = ['Queued', 'Finished'];
     } else {
-      selectedNodeGroup ='';
-    }       
-    if (event !== null) {  
+      selectedNodeGroup = '';
+    }
+    if (event !== null) {
       this.ApiService.searchLayout(
         '',
         [],
@@ -153,16 +154,16 @@ export class JobDetailsComponent implements OnInit {
         1,
         100,
         false
-      ).subscribe({      
-        next: (res: SearchResultsLayout) => {      
+      ).subscribe({
+        next: (res: SearchResultsLayout) => {
           this.layouts = res.results;
-          this.total = res.totalResults;         
-          this.dataloading=false;
+          this.total = res.totalResults;
+          this.dataloading = false;
         },
         error: (error) => {
           this.logger.reportError(error);
           this.dataloading = false;
-        },     
+        },
       });
     }
   }
