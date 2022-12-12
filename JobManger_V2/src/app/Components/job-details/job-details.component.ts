@@ -6,6 +6,7 @@ import { LayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
 import { LoggerService } from 'src/app/Services/logger.service';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetaillocalstorage } from './job-detail-Localstorage';
+import { id } from '@cds/core/internal';
 
 @Component({
   selector: 'app-job-details',
@@ -35,10 +36,9 @@ export class JobDetailsComponent implements OnInit {
 
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
    this.GetJobDetails(this.recordPerPage, this.pageSize);
-   this.GetLocalStorageColumnValue();
-   
+   this.GetLocalStorageColumnValue();   
   }
 public ColumnResized(event: any, colType: string)
 {   
@@ -193,7 +193,6 @@ case 'elapsedtimecolumnWidth': {
     document.execCommand('copy');
     document.removeEventListener('copy', create_copy);
   }
-  
   SetJobPriority() {
     this.ApiService.SetJobPriority([], '').subscribe({
       next: (res: any) => {
@@ -210,6 +209,7 @@ case 'elapsedtimecolumnWidth': {
   }
   GetLocalStorageColumnValue()
   {
+    
     this.JobDetailsLocalStorage.idcolumnWidthValue = this.localstorage.get('idcolumnwidth');
     this.JobDetailsLocalStorage.usercolumnWidthValue = this.localstorage.get('usercolumnwidth');
     this.JobDetailsLocalStorage.cockpitcolumnWidthValue = this.localstorage.get('cockpitcolumnwidth');
@@ -220,8 +220,8 @@ case 'elapsedtimecolumnWidth': {
     this.JobDetailsLocalStorage.progresscolumnWidthValue = this.localstorage.get('progresscolumnwidth');
     this.JobDetailsLocalStorage.prioritycolumnWidthValue = this.localstorage.get('prioritycolumnwidth');
     this.JobDetailsLocalStorage.notaskcolumnWidthValue = this.localstorage.get('notaskcolumnwidth');
-    this.JobDetailsLocalStorage.RunningTaskcolumnWidthValue = this.localstorage.get('runningtaskcolumnwidth');
-    this.JobDetailsLocalStorage.QueuedTaskcolumnWidthValue = this.localstorage.get('Queuedtaskcolumnwidth');
+    this.JobDetailsLocalStorage.runningTaskcolumnWidthValue = this.localstorage.get('runningtaskcolumnwidth');
+    this.JobDetailsLocalStorage.queuedTaskcolumnWidthValue = this.localstorage.get('queuedtaskcolumnwidth');
     this.JobDetailsLocalStorage.starttimecolumnWidthValue = this.localstorage.get('starttimecolumnwidth');
     this.JobDetailsLocalStorage.endtimecolumnWidthValue = this.localstorage.get('endtimecolumnwidth');
     this.JobDetailsLocalStorage.elapsedtimecolumnWidthValue = this.localstorage.get('elapsedtimecolumnwidth');

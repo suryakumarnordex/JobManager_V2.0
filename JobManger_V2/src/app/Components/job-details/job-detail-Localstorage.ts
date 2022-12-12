@@ -10,8 +10,8 @@ public  statuscolumnWidthValue: string;
 public  progresscolumnWidthValue: string;
 public  prioritycolumnWidthValue: string;
 public  notaskcolumnWidthValue: string;
-public  RunningTaskcolumnWidthValue: string;
-public  QueuedTaskcolumnWidthValue: string;
+public  runningTaskcolumnWidthValue: string;
+public  queuedTaskcolumnWidthValue: string;
 public  starttimecolumnWidthValue: string;
 public  endtimecolumnWidthValue: string;
 public  submittimecolumnWidthValue: string;
@@ -84,16 +84,16 @@ setnotaskcolumnWidthValue(value: string) {
   this.notaskcolumnWidthValue = value;
 }
 getRunningTaskcolumnWidthValue(): string {
-  return this.RunningTaskcolumnWidthValue;
+  return this.runningTaskcolumnWidthValue;
 }
 setRunningTaskcolumnWidthValue(value: string) {
-  this.RunningTaskcolumnWidthValue = value;
+  this.runningTaskcolumnWidthValue = value;
 }
 getQueuedTaskcolumnWidthValue(): string {
-  return this.QueuedTaskcolumnWidthValue;
+  return this.queuedTaskcolumnWidthValue;
 }
 setQueuedTaskcolumnWidthValue(value: string) {
-  this.QueuedTaskcolumnWidthValue = value;
+  this.queuedTaskcolumnWidthValue = value;
 }
 getstarttimecolumnWidthValue(): string {
   return this.starttimecolumnWidthValue;

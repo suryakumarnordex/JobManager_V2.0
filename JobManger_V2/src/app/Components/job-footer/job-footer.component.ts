@@ -22,24 +22,38 @@ export class JobFooterComponent implements OnInit {
   ngOnInit(): void {}
   
   goTofirstPage() {
-    this.currentPage = 1;
+    if( this.currentPage!=1)
+    {
+       this.currentPage = 1;
     this.GetFooterDetails(this.requestFromJob);
+    }
+   
   
   }
   goTonextPage() {
-    this.currentPage = this.currentPage + 1;
+    if( this.currentPage!= this.totalPage)
+    {
+       this.currentPage = this.currentPage + 1;
     this.totalPage = Math.ceil(this.totalRecords / this.recordPerPagerequest);
     this.GetFooterDetails(this.requestFromJob);
+    }
+   
    
   }
   goTopriviousPage() {
-    this.currentPage = this.currentPage - 1;
+    if( this.currentPage!= 1)
+    { this.currentPage = this.currentPage - 1;
     this.totalPage = Math.ceil(this.totalRecords / this.recordPerPagerequest);
     this.GetFooterDetails(this.requestFromJob);
+    }
+   
   }
   goTolastPage() {
-    this.currentPage = Math.ceil(this.totalRecords / this.recordPerPagerequest);
+    if( this.currentPage!= this.totalPage)
+    { this.currentPage = Math.ceil(this.totalRecords / this.recordPerPagerequest);
     this.GetFooterDetails(this.requestFromJob);
+    }
+   
   }
   GetFooterDetails(isjob: boolean) {
     isjob

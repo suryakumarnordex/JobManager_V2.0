@@ -9,14 +9,41 @@
   &nbsp; {{ currentPage }} / {{ totalPage }} Pages of {{ totalRecords }} Records
   &nbsp;
 
-  <button type="button" (click)="goTofirstPage()" class="btn btn-icon">
+  <button
+    type="button"
+    *ngIf="this.currentPage > 1"
+    (click)="goTofirstPage()"
+    class="btn btn-icon"
+  >
     |<
   </button>
-  <button type="button" (click)="goTopriviousPage()" class="btn btn-icon">
+  <button
+    type="button"
+    *ngIf="this.currentPage > 1"
+    (click)="goTopriviousPage()"
+    class="btn btn-icon"
+  >
     <
   </button>
 
-  <button type="button" (click)="goTonextPage()" class="btn btn-icon">></button>
+  <button
+    type="button"
+    *ngIf="this.totalPage != this.currentPage; else elseblock"
+    (click)="goTonextPage()"
+    class="btn btn-icon"
+  >
+    >
+  </button>
+  <ng-template #elseblock
+    ><button
+      type="button"
+      class="btn btn-icon"
+      (click)="goTonextPage()"
+      disabled
+    >
+      >
+    </button></ng-template
+  >
 
   <button type="button" (click)="goTolastPage()" class="btn btn-icon">
     >|
