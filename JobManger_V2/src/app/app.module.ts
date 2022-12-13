@@ -13,6 +13,7 @@ import { JobFooterComponent } from './Components/job-footer/job-footer.component
 import { JobHeaderComponent } from './Components/job-header/job-header.component';
 import { PopupModalsComponent } from './Components/popup-modals/popup-modals.component';
 import {JobDetaillocalstorage} from './Components/job-details/job-detail-Localstorage'
+import { JobDetailsLocalVariable } from './Components/job-details/job-details-localvariables';
 
 @NgModule({
   imports: [
@@ -32,7 +33,7 @@ import {JobDetaillocalstorage} from './Components/job-details/job-detail-Localst
     PopupModalsComponent,
     
   ],
-  providers: [UtcConverterService, TaskDetailsComponent,JobDetaillocalstorage],
+  providers: [UtcConverterService, TaskDetailsComponent,JobDetaillocalstorage,JobDetailsLocalVariable],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

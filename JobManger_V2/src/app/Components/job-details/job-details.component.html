@@ -2,93 +2,96 @@
   <app-job-header></app-job-header>
 
   <clr-datagrid
-    [(clrDgSelected)]="selected"
-    [clrDgLoading]="dataloading"
+    [(clrDgSelected)]="this.JobDetailsLocalVariable.selected"
+    [clrDgLoading]="this.JobDetailsLocalVariable.dataloading"
     (clrDgSelectedChange)="selectionChanged($event)"
   >
     <clr-dg-column
-      [style.width.px]="idcolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.idcolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'idcolumnwidth')"
       style="align-content: space-around"
       >ID</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="usercolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.usercolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'usercolumnwidth')"
       >User</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="cockpitcolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.cockpitcolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'cockpitcolumnwidth')"
       >Cockpit Id</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="runcolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.runcolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'runcolumnwidth')"
       >Run</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="typecolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.typecolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'typecolumnwidth')"
       >Type</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="topiccolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.topiccolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'topiccolumnwidth')"
       >Topic</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="statuscolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.statuscolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'statuscolumnwidth')"
       >Status</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="progresscolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.progresscolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'progresscolumnwidth')"
       >Progress</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="prioritycolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.prioritycolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'prioritycolumnwidth')"
       >Job Priority</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="notaskcolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.notaskcolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'notaskcolumnwidth')"
       >Number Of Tasks</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="runningTaskcolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.runningTaskcolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'runningTaskcolumnwidth')"
       >Running Tasks</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="queuedTaskcolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.queuedTaskcolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'queuedTaskcolumnwidth')"
       >Queued Tasks</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="starttimecolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.starttimecolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'starttimecolumnwidth')"
       >Start Time (yy/mm/dd HH:mm)</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="endtimecolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.endtimecolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'endtimecolumnwidth')"
       >End Time (yy/mm/dd HH:mm)</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="submittimecolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.submittimecolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'submittimecolumnwidth')"
       >Submit Time (yy/mm/dd HH:mm)</clr-dg-column
     >
     <clr-dg-column
-      [style.width.px]="elapsedtimecolumnWidthValue"
+      [style.width.px]="JobDetailsLocalStorage.elapsedtimecolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'elapsedtimecolumnwidth')"
       >Elapsed Time (HH:mm:ss)</clr-dg-column
     >
 
-    <clr-dg-row *ngFor="let job of layouts" [clrDgItem]="job">
+    <clr-dg-row
+      *ngFor="let job of this.JobDetailsLocalVariable.layouts"
+      [clrDgItem]="job"
+    >
       <clr-dg-cell>{{ job.jobIdFragment }}</clr-dg-cell>
       <clr-dg-cell>{{ job.userFragment }}</clr-dg-cell>
       <clr-dg-cell style="text-align: left">
@@ -235,18 +238,18 @@
       (clrIfDetailChange)="onDetailOpen($event)"
     >
       <app-task-details
-        [taskLayout]="taskLayout"
-        [JobIDFragement]="detailTaskID"
+        [taskLayout]="this.JobDetailsLocalVariable.taskLayout"
+        [JobIDFragement]="this.JobDetailsLocalVariable.detailTaskID"
       >
       </app-task-details>
     </ng-template>
     <clr-dg-footer>
       <app-job-footer
         [requestFromJob]="true"
-        [totalRecords]="jobCount"
+        [totalRecords]="this.JobDetailsLocalVariable.jobCount"
         [recordPerPagerequest]="recordPerPage"
-        [currentPage]="pageSize"
-        [totalPage]="totalPage"
+        [currentPage]="this.JobDetailsLocalVariable.pageSize"
+        [totalPage]="this.JobDetailsLocalVariable.totalPage"
       ></app-job-footer>
     </clr-dg-footer>
   </clr-datagrid>
