@@ -41,16 +41,7 @@ export class JobHeaderComponent implements OnInit {
   }
   openmodel(event: string) {
     this.passingEvent = event;
-    this.JobDetailsLocalVariable.openModal = true;
-    switch (this.passingEvent) {
-      case 'Priority': {       
-        break;
-      }
-      default : {
-        this.JobDetailsComponent.ButtonEvents(this.passingEvent);
-        break;
-      }     
-    }
+    this.JobDetailsLocalVariable.openModal = true;   
   }
   onNodeGroupChange(event: Event) {
     this.JobDetailsLocalVariable.dataloading = true;

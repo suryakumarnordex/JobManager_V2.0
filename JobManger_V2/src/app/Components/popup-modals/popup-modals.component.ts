@@ -14,6 +14,8 @@ export class PopupModalsComponent implements OnInit {
   get parentChildConnection(): boolean {
     return this.isOpen;
   }
+  @Input()
+ngSwitchCase: any
   @Input() set parentChildConnection(setting: boolean) {
     this.isOpen = setting;
     if (setting === false) {
@@ -29,9 +31,22 @@ export class PopupModalsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-   updatepriority() {
+   PopupEvent() {
     this.JobDetailsLocalVariable.dataloading = true;
-    this.JobDetailsLocalVariable.priorityValue = this.JobDetailsLocalVariable.priorityValue.replace('+', '%2B');    
-    this.JobDetailscomponent.SetJobPriority();
+    switch (this.passingEvent) {
+      case 'Priority': { 
+        this.JobDetailsLocalVariable.priorityValue = this.JobDetailsLocalVariable.priorityValue.replace('+', '%2B');    
+        this.JobDetailscomponent.SetJobPriority();      
+        break;
+      }
+      default : {
+        this.JobDetailscomponent.ButtonEvents(this.passingEvent);
+        break;
+      }     
+    }
+
+   
+   
   }
+  
 }

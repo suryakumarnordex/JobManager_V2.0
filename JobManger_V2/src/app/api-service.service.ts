@@ -20,7 +20,6 @@ export class ApiServiceService {
     let url = 'http://ldms/navigations.json';
     return this.http.get(url);
   }
-
   searchLayout(
     jobIdFragment: string = '',
     userFragment: Array<string> = [],
@@ -147,7 +146,6 @@ export class ApiServiceService {
         })
       );
   }
-
   SetJobPriority(jobIds: Array<number>, priority: string) {
     let params = new HttpParams();
     jobIds.forEach((jobId: any) => {
