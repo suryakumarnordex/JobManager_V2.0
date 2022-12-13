@@ -27,6 +27,25 @@ export class JobDetailsComponent implements OnInit {
   pageSize: number = 1;
   dataloading: boolean = false;
 
+  idcolumnWidthValue: string;
+  usercolumnWidthValue: string;
+  cockpitcolumnWidthValue: string;
+  runcolumnWidthValue: string;
+  typecolumnWidthValue: string;
+  topiccolumnWidthValue: string;
+  statuscolumnWidthValue: string;
+  progresscolumnWidthValue: string;
+  prioritycolumnWidthValue: string;
+  notaskcolumnWidthValue: string;
+  runningTaskcolumnWidthValue: string;
+  queuedTaskcolumnWidthValue: string;
+  starttimecolumnWidthValue: string;
+  endtimecolumnWidthValue: string;
+  submittimecolumnWidthValue: string;
+  elapsedtimecolumnWidthValue: string;
+  pendingreasoncolumnWidthValue: string;
+  recordPerPageValue: Number = 10;
+
   constructor(
     private ApiService: ApiServiceService,
     private router: Router,
@@ -49,59 +68,59 @@ public ColumnResized(event: any, colType: string)
     this.JobDetailsLocalStorage.setidcolumnWidthValue(event);  
        break; 
     } 
-    case 'cockpitcolumnWidth': { 
+    case 'cockpitcolumnwidth': { 
       this.JobDetailsLocalStorage.setcockpitcolumnWidthValue(event);     
        break; 
     } 
-    case 'runcolumnWidth': { 
+    case 'runcolumnwidth': { 
       this.JobDetailsLocalStorage.setruncolumnWidthValue(event);   
       break; 
    } 
-   case 'typecolumnWidth': { 
+   case 'typecolumnwidth': { 
     this.JobDetailsLocalStorage.settypecolumnWidthValue(event);
     break; 
  } 
- case 'topiccolumnWidth': { 
+ case 'topiccolumnwidth': { 
   this.JobDetailsLocalStorage.settopiccolumnWidthValue(event);
   break; 
 } 
-case 'statuscolumnWidth': { 
+case 'statuscolumnwidth': { 
   this.JobDetailsLocalStorage.setstatuscolumnWidthValue(event);
   break; 
 } 
-case 'progresscolumnWidth': { 
+case 'progresscolumnwidth': { 
   this.JobDetailsLocalStorage.setprogresscolumnWidthValue(event);
   break; 
 } 
-case 'prioritycolumnWidth': { 
+case 'prioritycolumnwidth': { 
   this.JobDetailsLocalStorage.setprioritycolumnWidthValue(event);
   break; 
 } 
-case 'notaskcolumnWidth': { 
+case 'notaskcolumnwidth': { 
   this.JobDetailsLocalStorage.setnotaskcolumnWidthValue(event);
   break; 
 } 
-case 'runningTaskcolumnWidth': { 
+case 'runningTaskcolumnwidth': { 
   this.JobDetailsLocalStorage.setRunningTaskcolumnWidthValue(event);
   break; 
 } 
-case 'queuedTaskcolumnWidth': { 
+case 'queuedTaskcolumnwidth': { 
   this.JobDetailsLocalStorage.setQueuedTaskcolumnWidthValue(event);
   break; 
 } 
-case 'starttimecolumnWidth': { 
+case 'starttimecolumnwidth': { 
   this.JobDetailsLocalStorage.setstarttimecolumnWidthValue(event);
   break; 
 } 
-case 'endtimecolumnWidth': { 
+case 'endtimecolumnwidth': { 
   this.JobDetailsLocalStorage.setendtimecolumnWidthValue(event);
   break; 
 } 
-case 'submittimecolumnWidth': { 
+case 'submittimecolumnwidth': { 
   this.JobDetailsLocalStorage.setsubmittimecolumnWidth(event);
   break; 
 } 
-case 'elapsedtimecolumnWidth': { 
+case 'elapsedtimecolumnwidth': { 
   this.JobDetailsLocalStorage.setelapsedtimecolumnWidthValue(event);
   break; 
     } 
@@ -208,25 +227,24 @@ case 'elapsedtimecolumnWidth': {
     console.log(this.JobDetailsLocalStorage.SelectedjobId);
   }
   GetLocalStorageColumnValue()
-  {
-    
-    this.JobDetailsLocalStorage.idcolumnWidthValue = this.localstorage.get('idcolumnwidth');
-    this.JobDetailsLocalStorage.usercolumnWidthValue = this.localstorage.get('usercolumnwidth');
-    this.JobDetailsLocalStorage.cockpitcolumnWidthValue = this.localstorage.get('cockpitcolumnwidth');
-    this.JobDetailsLocalStorage.runcolumnWidthValue = this.localstorage.get('runcolumnwidth');
-    this.JobDetailsLocalStorage.typecolumnWidthValue = this.localstorage.get('typecolumnwidth');
-    this.JobDetailsLocalStorage.topiccolumnWidthValue = this.localstorage.get('topiccolumnwidth');
-    this.JobDetailsLocalStorage.statuscolumnWidthValue = this.localstorage.get('statuscolumnwidth');
-    this.JobDetailsLocalStorage.progresscolumnWidthValue = this.localstorage.get('progresscolumnwidth');
-    this.JobDetailsLocalStorage.prioritycolumnWidthValue = this.localstorage.get('prioritycolumnwidth');
-    this.JobDetailsLocalStorage.notaskcolumnWidthValue = this.localstorage.get('notaskcolumnwidth');
-    this.JobDetailsLocalStorage.runningTaskcolumnWidthValue = this.localstorage.get('runningtaskcolumnwidth');
-    this.JobDetailsLocalStorage.queuedTaskcolumnWidthValue = this.localstorage.get('queuedtaskcolumnwidth');
-    this.JobDetailsLocalStorage.starttimecolumnWidthValue = this.localstorage.get('starttimecolumnwidth');
-    this.JobDetailsLocalStorage.endtimecolumnWidthValue = this.localstorage.get('endtimecolumnwidth');
-    this.JobDetailsLocalStorage.elapsedtimecolumnWidthValue = this.localstorage.get('elapsedtimecolumnwidth');
-    this.JobDetailsLocalStorage.submittimecolumnWidthValue = this.localstorage.get('submittimecolumnwidth');
-    this.JobDetailsLocalStorage.pendingreasoncolumnWidthValue = this.localstorage.get('pendingreasoncolumnwidth');
-    this.JobDetailsLocalStorage.recordPerPageValue = this.localstorage.get('recordperpage');
+  {    
+    this.idcolumnWidthValue = this.localstorage.get('idcolumnwidth');
+    this.usercolumnWidthValue = this.localstorage.get('usercolumnwidth');
+    this.cockpitcolumnWidthValue = this.localstorage.get('cockpitcolumnwidth');
+    this.runcolumnWidthValue = this.localstorage.get('runcolumnwidth');
+    this.typecolumnWidthValue = this.localstorage.get('typecolumnwidth');
+    this.topiccolumnWidthValue = this.localstorage.get('topiccolumnwidth');
+    this.statuscolumnWidthValue = this.localstorage.get('statuscolumnwidth');
+    this.progresscolumnWidthValue = this.localstorage.get('progresscolumnwidth');
+    this.prioritycolumnWidthValue = this.localstorage.get('prioritycolumnwidth');
+    this.notaskcolumnWidthValue = this.localstorage.get('notaskcolumnwidth');
+    this.runningTaskcolumnWidthValue = this.localstorage.get('runningtaskcolumnwidth');
+    this.queuedTaskcolumnWidthValue = this.localstorage.get('queuedtaskcolumnwidth');
+    this.starttimecolumnWidthValue = this.localstorage.get('starttimecolumnwidth');
+    this.endtimecolumnWidthValue = this.localstorage.get('endtimecolumnwidth');
+    this.elapsedtimecolumnWidthValue = this.localstorage.get('elapsedtimecolumnwidth');
+    this.submittimecolumnWidthValue = this.localstorage.get('submittimecolumnwidth');
+    this.pendingreasoncolumnWidthValue = this.localstorage.get('pendingreasoncolumnwidth');
+    this.recordPerPageValue = this.localstorage.get('recordperpage');
   }
 }

@@ -17,6 +17,7 @@ public  endtimecolumnWidthValue: string;
 public  submittimecolumnWidthValue: string;
 public  elapsedtimecolumnWidthValue: string;
 public  pendingreasoncolumnWidthValue: string;
+
 public  recordPerPageValue: Number = 10;
 public  pageSize: Number;
 public  SelectedjobId: Array<number>;

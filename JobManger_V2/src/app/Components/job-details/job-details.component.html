@@ -7,68 +7,84 @@
     (clrDgSelectedChange)="selectionChanged($event)"
   >
     <clr-dg-column
-      [style.width.px]=""
+      [style.width.px]="idcolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'idcolumnwidth')"
       style="align-content: space-around"
       >ID</clr-dg-column
     >
     <clr-dg-column
-      (clrDgColumnResize)="ColumnResized($event, 'usercolumnWidth')"
+      [style.width.px]="usercolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'usercolumnwidth')"
       >User</clr-dg-column
     >
     <clr-dg-column
-      (clrDgColumnResize)="ColumnResized($event, 'cockpitcolumnWidth')"
+      [style.width.px]="cockpitcolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'cockpitcolumnwidth')"
       >Cockpit Id</clr-dg-column
     >
-    <clr-dg-column (clrDgColumnResize)="ColumnResized($event, 'runcolumnWidth')"
+    <clr-dg-column
+      [style.width.px]="runcolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'runcolumnwidth')"
       >Run</clr-dg-column
     >
     <clr-dg-column
-      (clrDgColumnResize)="ColumnResized($event, 'typecolumnWidth')"
+      [style.width.px]="typecolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'typecolumnwidth')"
       >Type</clr-dg-column
     >
     <clr-dg-column
-      (clrDgColumnResize)="ColumnResized($event, 'topiccolumnWidth')"
+      [style.width.px]="topiccolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'topiccolumnwidth')"
       >Topic</clr-dg-column
     >
     <clr-dg-column
-      (clrDgColumnResize)="ColumnResized($event, 'statuscolumnWidth')"
+      [style.width.px]="statuscolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'statuscolumnwidth')"
       >Status</clr-dg-column
     >
     <clr-dg-column
-      (clrDgColumnResize)="ColumnResized($event, 'progresscolumnWidth')"
+      [style.width.px]="progresscolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'progresscolumnwidth')"
       >Progress</clr-dg-column
     >
     <clr-dg-column
-      (clrDgColumnResize)="ColumnResized($event, 'prioritycolumnWidth')"
+      [style.width.px]="prioritycolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'prioritycolumnwidth')"
       >Job Priority</clr-dg-column
     >
     <clr-dg-column
-      (clrDgColumnResize)="ColumnResized($event, 'notaskcolumnWidth')"
+      [style.width.px]="notaskcolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'notaskcolumnwidth')"
       >Number Of Tasks</clr-dg-column
     >
     <clr-dg-column
-      (clrDgColumnResize)="ColumnResized($event, 'runningTaskcolumnWidth')"
+      [style.width.px]="runningTaskcolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'runningTaskcolumnwidth')"
       >Running Tasks</clr-dg-column
     >
     <clr-dg-column
-      (clrDgColumnResize)="ColumnResized($event, 'queuedTaskcolumnWidth')"
+      [style.width.px]="queuedTaskcolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'queuedTaskcolumnwidth')"
       >Queued Tasks</clr-dg-column
     >
     <clr-dg-column
-      (clrDgColumnResize)="ColumnResized($event, 'starttimecolumnWidth')"
+      [style.width.px]="starttimecolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'starttimecolumnwidth')"
       >Start Time (yy/mm/dd HH:mm)</clr-dg-column
     >
     <clr-dg-column
-      (clrDgColumnResize)="ColumnResized($event, 'endtimecolumnWidth')"
+      [style.width.px]="endtimecolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'endtimecolumnwidth')"
       >End Time (yy/mm/dd HH:mm)</clr-dg-column
     >
     <clr-dg-column
-      (clrDgColumnResize)="ColumnResized($event, 'submittimecolumnWidth')"
+      [style.width.px]="submittimecolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'submittimecolumnwidth')"
       >Submit Time (yy/mm/dd HH:mm)</clr-dg-column
     >
     <clr-dg-column
-      (clrDgColumnResize)="ColumnResized($event, 'elapsedtimecolumnWidth')"
+      [style.width.px]="elapsedtimecolumnWidthValue"
+      (clrDgColumnResize)="ColumnResized($event, 'elapsedtimecolumnwidth')"
       >Elapsed Time (HH:mm:ss)</clr-dg-column
     >
 
