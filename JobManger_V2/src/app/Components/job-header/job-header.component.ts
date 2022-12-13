@@ -5,6 +5,7 @@ import { LoggerService } from 'src/app/Services/logger.service';
 import { LayoutInfo } from 'src/app/Models/layout';
 import { SearchResultsLayout } from 'src/app/Models/helper';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
+import {JobDetailsComponent } from '../job-details/job-details.component'
 
 @Component({
   selector: 'app-job-header',
@@ -20,6 +21,7 @@ export class JobHeaderComponent implements OnInit {
     private router: Router,
     private ApiService: ApiServiceService,
     private logger: LoggerService,
+    private JobDetailsComponent : JobDetailsComponent,
     public JobDetailsLocalVariable : JobDetailsLocalVariable 
   ) {}
 
@@ -38,27 +40,17 @@ export class JobHeaderComponent implements OnInit {
     });
   }
   openmodel(event: string) {
-    this.passingEvent = event;    
+    this.passingEvent = event;
     this.JobDetailsLocalVariable.openModal = true;
-    if(this.passingEvent==="Requeue")
-    {
-
-    }
-    else if(this.passingEvent==="Pending_Reason")
-    {
-
-    }
-    else if(this.passingEvent==="Cancel")
-    {
-
-    }
-    else if(this.passingEvent==="Submit")
-    {
-
-    }
-    else if(this.passingEvent==="Priority")
-    {
-
+    switch (this.passingEvent) {
+      case 'Priority': {
+       
+        break;
+      }
+      default : {
+        this.JobDetailsComponent.ButtonEvents(this.passingEvent);
+        break;
+      }     
     }
   }
   onNodeGroupChange(event: Event) {

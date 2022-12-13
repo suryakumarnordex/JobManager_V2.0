@@ -182,19 +182,9 @@ case 'elapsedtimecolumnwidth': {
     document.execCommand('copy');
     document.removeEventListener('copy', create_copy);
   }
-  SetJobPriority() {
-    this.ApiService.SetJobPriority([], '').subscribe({
-      next: (res: any) => {
-        console.log(res);
-      },
-      error: (error: string) => {
-        console.log(error);
-      },
-    });
-  }
   selectionChanged(event: any[]) {   
-    this.JobDetailsLocalStorage.SelectedjobId=(event.map((e) => e.jobIdFragment));
-    console.log(this.JobDetailsLocalStorage.SelectedjobId);
+    this.JobDetailsLocalVariable.SelectedjobId=(event.map((e) => e.jobIdFragment));
+    console.log(this.JobDetailsLocalVariable.SelectedjobId);
   }
   GetLocalStorageColumnValue()
   {    
@@ -217,4 +207,60 @@ case 'elapsedtimecolumnwidth': {
     this.JobDetailsLocalStorage.pendingreasoncolumnWidthValue = this.localstorage.get('pendingreasoncolumnwidth');
     this.JobDetailsLocalStorage.recordPerPageValue = this.localstorage.get('recordperpage');
   }
+ public SetJobPriority() {
+    this.ApiService.SetJobPriority(this.JobDetailsLocalVariable.SelectedjobId,this.JobDetailsLocalVariable.priorityValue)
+    // .subscribe({
+    //   next: (res: any) => {
+    //     console.log(res);
+    //   },
+    //   error: (error: string) => {
+    //     console.log(error);
+    //   },
+    // });
+  } 
+  ButtonEvents(EventStr:string)
+  {
+    switch (EventStr) {      
+      case 'Requeue': {
+        this.ApiService.SetRequeue(this.JobDetailsLocalVariable.SelectedjobId).subscribe({
+          next: (res: any) => {
+            console.log(res);
+          },
+          error: (error: string) => {
+            console.log(error);
+          },
+        });
+        break;
+      }
+      case 'Pending_Reason': {
+        this.ApiService.GetPendingReason(this.JobDetailsLocalVariable.SelectedjobId).subscribe({
+          next: (res: any) => { console.log(res); },
+          error: (error: string) => {
+            console.log(error);
+          },
+        });
+        break;
+      }
+      case 'Cancel': {
+        this.ApiService.SetCancel(this.JobDetailsLocalVariable.SelectedjobId).subscribe({
+          next: (res: any) => {  console.log(res);
+          },
+          error: (error: string) => {
+            console.log(error);
+          },
+        });
+        break;
+      }
+      case 'Submit': {
+        this.ApiService.SetSubmit(this.JobDetailsLocalVariable.SelectedjobId).subscribe({
+          next: (res: any) => { console.log(res);
+          },
+          error: (error: string) => {
+            console.log(error);
+          },
+        });
+        break;
+      }
+  }
+}
 }

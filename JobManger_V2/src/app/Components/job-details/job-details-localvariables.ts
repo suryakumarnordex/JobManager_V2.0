@@ -14,7 +14,8 @@ export class JobDetailsLocalVariable
     public detailTaskID: any;
     public pageSize: number = 1;
     public dataloading: boolean = false;
-
+    public priorityValue: string;
+    public SelectedjobId: Array<number>;
     public JobManageerNavigation = [] as any;    
     public openModal = false;
     

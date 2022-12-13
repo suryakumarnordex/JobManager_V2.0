@@ -1,10 +1,13 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
+import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
+import { JobDetailsComponent } from '../job-details/job-details.component';
 @Component({
   selector: 'app-popup-modals',
   templateUrl: './popup-modals.component.html',
   styleUrls: ['./popup-modals.component.css'],
 })
+
 export class PopupModalsComponent implements OnInit {
   @Input() passingEvent: string;
   isOpen: boolean = false;
@@ -19,5 +22,16 @@ export class PopupModalsComponent implements OnInit {
   }
   @Output() modalClosed: EventEmitter<void> = new EventEmitter<void>();
 
+  constructor(  
+    public JobDetailsLocalVariable : JobDetailsLocalVariable,
+    private  JobDetailscomponent : JobDetailsComponent,
+  ) {}
+
   ngOnInit(): void {}
+
+   updatepriority() {
+    this.JobDetailsLocalVariable.dataloading = true;
+    this.JobDetailsLocalVariable.priorityValue = this.JobDetailsLocalVariable.priorityValue.replace('+', '%2B');    
+    this.JobDetailscomponent.SetJobPriority();
+  }
 }

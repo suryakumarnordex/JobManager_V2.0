@@ -149,17 +149,89 @@ export class ApiServiceService {
   }
 
   SetJobPriority(jobIds: Array<number>, priority: string) {
-    let params = new HttpParams().set('priority', priority);
+    let params = new HttpParams();
     jobIds.forEach((jobId: any) => {
       params = params.append('jobIds', jobId);
     });
-
-    console.log(this.apiurl + 'SetPriorityBand', {
+    params = params.append('priority', priority);
+    console.log(this.apiurl + 'SetPriorityBandHPCRestAPI', {
+      headers: this.headers,
+      params: params,
+    });    
+    return this.http.post(
+      this.apiurl + 'SetPriorityBandHPCRestAPI',
+      {},
+      {
+        headers: this.headers,
+        params: params,
+      }
+    );
+  }
+  SetRequeue(jobIds: Array<number>) {
+    let params = new HttpParams();
+    jobIds.forEach((jobId: any) => {
+      params = params.append('jobIds', jobId);
+    });
+    console.log(this.apiurl + 'HPCRestAPIJobrequeue', {
       headers: this.headers,
       params: params,
     });
     return this.http.post(
-      this.apiurl + 'SetPriorityBand',
+      this.apiurl + 'HPCRestAPIJobrequeue',
+      {},
+      {
+        headers: this.headers,
+        params: params,
+      }
+    );
+  }
+  GetPendingReason(jobIds: Array<number>) {
+    let params = new HttpParams();
+    jobIds.forEach((jobId: any) => {
+      params = params.append('jobIds', jobId);
+    });
+    console.log(this.apiurl + 'SearchLayout', {
+      headers: this.headers,
+      params: params,
+    });
+    return this.http.post(
+      this.apiurl + 'SearchLayout',
+      {},
+      {
+        headers: this.headers,
+        params: params,
+      }
+    );
+  }
+  SetCancel(jobIds: Array<number>) {
+    let params = new HttpParams();
+    jobIds.forEach((jobId: any) => {
+      params = params.append('jobIds', jobId);
+    });
+    console.log(this.apiurl + 'HPCRestAPIJobcancel', {
+      headers: this.headers,
+      params: params,
+    });
+    return this.http.post(
+      this.apiurl + 'HPCRestAPIJobcancel',
+      {},
+      {
+        headers: this.headers,
+        params: params,
+      }
+    );
+  }
+  SetSubmit(jobIds: Array<number>) {
+    let params = new HttpParams();
+    jobIds.forEach((jobId: any) => {
+      params = params.append('jobIds', jobId);
+    });
+    console.log(this.apiurl + 'HPCPackJobSubmit', {
+      headers: this.headers,
+      params: params,
+    });
+    return this.http.post(
+      this.apiurl + 'HPCPackJobSubmit',
       {},
       {
         headers: this.headers,
@@ -168,30 +240,6 @@ export class ApiServiceService {
     );
   }
 
-  jobRequeue(parameterers: any) {
-    let url = 
-    environment.webAppApiUrl + `HPCPackJob`;      
-    return this.http.post<string>(url, {}, { params: parameterers });
-  }
 
-  jobSubmit(parameterers: any) {
-    let url = 
-    environment.webAppApiUrl + `HPCPackJobSubmit`;   
-    return this.http.post<string>(url, {}, { params: parameterers });
-  }
-
-  jobPendingreason(tempArrayIds: any) {
-    let url = 
-    environment.webAppApiUrl + `SearchLayout?JobIdFragment=${tempArrayIds}&waitForChange=false`;  
-    this.logger.log(url);
-      return this.http.get(url);
-  }
-  
-  jobCancel(parameterers: any) {
-    let url = 
-    environment.webAppApiUrl + `HPCPackJob`;  
-    this.logger.log(url);
-      return this.http.delete<string>(url, { params: parameterers });
-  }
 
 }

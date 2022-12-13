@@ -16,7 +16,13 @@
       <div class="modal-body" *ngIf="passingEvent == 'Priority'">
         <clr-input-container>
           <label>Enter Priority</label>
-          <input clrInput type="text" id="Priority" name="Priority" />
+          <input
+            clrInput
+            type="text"
+            id="Priority"
+            name="Priority"
+            [(ngModel)]="JobDetailsLocalVariable.priorityValue"
+          />
         </clr-input-container>
         <br />
         <clr-signpost>
@@ -34,7 +40,12 @@
           </clr-signpost-content>
         </clr-signpost>
 
-        <button style="float: right" class="btn btn-outline" type="button">
+        <button
+          style="float: right"
+          class="btn btn-outline"
+          type="button"
+          (click)="updatepriority()"
+        >
           Update
         </button>
       </div>
