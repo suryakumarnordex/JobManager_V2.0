@@ -30,8 +30,7 @@ import { JobDetailsLocalVariable } from './Components/job-details/job-details-lo
     TaskDetailsComponent,
     JobFooterComponent,
     JobHeaderComponent,
-    PopupModalsComponent,
-    
+    PopupModalsComponent,    
   ],
   providers: [UtcConverterService, TaskDetailsComponent,JobDetaillocalstorage,JobDetailsLocalVariable],
   bootstrap: [AppComponent],

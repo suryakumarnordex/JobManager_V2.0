@@ -26,9 +26,7 @@ export class JobFooterComponent implements OnInit {
     {
        this.currentPage = 1;
     this.GetFooterDetails(this.requestFromJob);
-    }
-   
-  
+    } 
   }
   goTonextPage() {
     if( this.currentPage!= this.totalPage)

@@ -4,6 +4,7 @@ import { ApiServiceService } from 'src/app/api-service.service';
 import { LoggerService } from 'src/app/Services/logger.service';
 import { LayoutInfo } from 'src/app/Models/layout';
 import { SearchResultsLayout } from 'src/app/Models/helper';
+import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
 
 @Component({
   selector: 'app-job-header',
@@ -13,24 +14,13 @@ import { SearchResultsLayout } from 'src/app/Models/helper';
 export class JobHeaderComponent implements OnInit {
   @Input() recordPerPage: number = 10;
   @Input() recordPerPagerequest: number;
-
   @Input() passingEvent: string;
-  JobManageerNavigation = [] as any;
-  dataloading: boolean = false;
-  layouts: LayoutInfo[];
-  jobCount = 0;
-  openModal = false;
-
-  public Nodelist: Array<string> = [
-    'All jobs',
-    'Queue Simulation',
-    'Queue BladedSimulation',
-    'Queue PrePostProcessing',
-  ];
+ 
   constructor(
     private router: Router,
     private ApiService: ApiServiceService,
-    private logger: LoggerService
+    private logger: LoggerService,
+    public JobDetailsLocalVariable : JobDetailsLocalVariable 
   ) {}
 
   ngOnInit(): void {
@@ -40,16 +30,16 @@ export class JobHeaderComponent implements OnInit {
     this.router.navigate(['nodelist']);
   }
   onModalClose() {
-    this.openModal = false;
+    this.JobDetailsLocalVariable.openModal = false;
   }
   getNavigationsList(): void {
     this.ApiService.getNavigations().subscribe((res) => {
-      this.JobManageerNavigation = res;
+      this.JobDetailsLocalVariable.JobManageerNavigation = res;
     });
   }
   openmodel(event: string) {
     this.passingEvent = event;    
-    this.openModal = true;
+    this.JobDetailsLocalVariable.openModal = true;
     if(this.passingEvent==="Requeue")
     {
 
@@ -72,7 +62,7 @@ export class JobHeaderComponent implements OnInit {
     }
   }
   onNodeGroupChange(event: Event) {
-    this.dataloading = true;
+    this.JobDetailsLocalVariable.dataloading = true;
     let selectedNodeGroup = '';
     let val = event.target as HTMLInputElement;
     let statusList: Array<string> = [];
@@ -103,13 +93,13 @@ export class JobHeaderComponent implements OnInit {
         false
       ).subscribe({
         next: (res: SearchResultsLayout) => {
-          this.layouts = res.results;
-          this.jobCount = res.totalResults;
-          this.dataloading = false;
+          this.JobDetailsLocalVariable.layouts = res.results;
+          this.JobDetailsLocalVariable.jobCount = res.totalResults;
+          this.JobDetailsLocalVariable.dataloading = false;
         },
         error: (error) => {
           this.logger.reportError(error);
-          this.dataloading = false;
+          this.JobDetailsLocalVariable.dataloading = false;
         },
       });
     }

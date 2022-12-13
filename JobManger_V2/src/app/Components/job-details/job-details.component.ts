@@ -7,7 +7,7 @@ import { LoggerService } from 'src/app/Services/logger.service';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetaillocalstorage } from './job-detail-Localstorage';
 import { JobDetailsLocalVariable } from './job-details-localvariables';
-import { id } from '@cds/core/internal';
+
 
 @Component({
   selector: 'app-job-details',
@@ -98,10 +98,7 @@ case 'elapsedtimecolumnwidth': {
   break; 
     } 
  } 
-
-
-}
- 
+} 
   GetJobDetails(recordPerPage: number, pageSize: number) {
     this.JobDetailsLocalVariable.pageSize = pageSize;
     this.recordPerPage = recordPerPage;
