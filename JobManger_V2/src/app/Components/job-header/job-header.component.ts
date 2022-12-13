@@ -43,8 +43,7 @@ export class JobHeaderComponent implements OnInit {
     this.passingEvent = event;
     this.JobDetailsLocalVariable.openModal = true;
     switch (this.passingEvent) {
-      case 'Priority': {
-       
+      case 'Priority': {       
         break;
       }
       default : {
