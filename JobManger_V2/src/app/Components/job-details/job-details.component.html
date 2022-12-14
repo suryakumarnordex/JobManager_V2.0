@@ -2,28 +2,33 @@
   <app-job-header></app-job-header>
 
   <clr-datagrid
-    [(clrDgSelected)]="this.JobDetailsLocalVariable.selected"
-    [clrDgLoading]="this.JobDetailsLocalVariable.dataloading"
+    [(clrDgSelected)]="JobDetailsLocalVariable.selected"
+    (clrDgRefresh)="refresh($event)"
+    [clrDgLoading]="JobDetailsLocalVariable.dataloading"
     (clrDgSelectedChange)="selectionChanged($event)"
   >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.idcolumnWidthValue"
+      [clrDgField]="'jobIdFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'idcolumnwidth')"
       style="align-content: space-around"
       >ID</clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.usercolumnWidthValue"
+  
       (clrDgColumnResize)="ColumnResized($event, 'usercolumnwidth')"
       >User</clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.cockpitcolumnWidthValue"
+      [clrDgField]="'cockpitIdFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'cockpitcolumnwidth')"
       >Cockpit Id</clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.runcolumnWidthValue"
+      [clrDgField]="'runnoFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'runcolumnwidth')"
       >Run</clr-dg-column
     >
@@ -34,6 +39,7 @@
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.topiccolumnWidthValue"
+      [clrDgField]="'topicFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'topiccolumnwidth')"
       >Topic</clr-dg-column
     >
@@ -54,6 +60,7 @@
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.notaskcolumnWidthValue"
+      [clrDgField]="'numberOfTasksFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'notaskcolumnwidth')"
       >Number Of Tasks</clr-dg-column
     >

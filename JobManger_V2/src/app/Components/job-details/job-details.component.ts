@@ -7,6 +7,7 @@ import { LoggerService } from 'src/app/Services/logger.service';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetaillocalstorage } from './job-detail-Localstorage';
 import { JobDetailsLocalVariable } from './job-details-localvariables';
+import { ClrDatagridStateInterface, ClrNavLevel } from '@clr/angular';
 
 
 @Component({
@@ -99,6 +100,87 @@ case 'elapsedtimecolumnwidth': {
     } 
  } 
 } 
+refresh(state: ClrDatagridStateInterface){
+  this.JobDetailsLocalVariable.dataloading = true;
+  let jobIdFragment = '';
+  // userFragment: Array<string> = [],
+  // typeFragment: Array<string> = [],
+  let topicFragment = '';
+  let cockpitIdFragment = '';
+  let runnoFragment='';
+  // statusFragment: Array<string> = [],
+  // priorityFragment: string = '',
+  // progressFragment: string = '',
+  let numberOfTasksFragment= '';
+  let orderDescending=false;
+  let waitForChange = false;
+  // nodeGroupFragment: string = '',
+  // pendingReasonFragment: string = '',
+  // orderBy: string = '';
+  let PageNo = 1;
+  // PageSize: number = 10;
+
+  if (state.filters) {
+    for (const filter of state.filters) {
+      const { property, value } = <{ property: string; value: string }>filter;
+      switch (property) {
+        case 'jobIdFragment': {
+          jobIdFragment = value;
+          console.log(jobIdFragment);
+          break;
+        }
+        case 'cockpitIdFragment': {
+          cockpitIdFragment = value;
+          console.log(cockpitIdFragment);
+          break;
+        }
+        case 'runnoFragment':{
+          runnoFragment = value;
+          console.log(runnoFragment);
+          break;
+        }
+        case 'topicFragment':{
+          topicFragment = value;
+          console.log(topicFragment);
+          break;
+        }
+        case 'numberOfTasksFragment':{
+          numberOfTasksFragment = value;
+          console.log(numberOfTasksFragment);
+        }
+      }
+    }
+  }
+  this.ApiService.searchLayout(jobIdFragment,
+  [],
+  [],
+  topicFragment,
+  cockpitIdFragment,
+  runnoFragment,
+  [],
+  '',
+  '',
+  numberOfTasksFragment,
+  '',
+  '',
+  '',
+  orderDescending,
+  PageNo,
+  this.recordPerPage,
+  waitForChange).subscribe({
+    next: (res: SearchResultsLayout) => {
+      this.JobDetailsLocalVariable.layouts = res.results;
+      this.JobDetailsLocalVariable.jobCount = res.totalResults;
+      this.JobDetailsLocalVariable.dataloading = false;
+      this.JobDetailsLocalVariable.totalPage = Math.ceil(this.JobDetailsLocalVariable.jobCount / this.recordPerPage);
+    },
+    error: (error) => {
+      this.logger.reportError(error);
+      this.JobDetailsLocalVariable.dataloading = false;
+    },
+  });
+  
+}
   GetJobDetails(recordPerPage: number, pageSize: number) {
     this.JobDetailsLocalVariable.pageSize = pageSize;
     this.recordPerPage = recordPerPage;
@@ -184,7 +266,6 @@ case 'elapsedtimecolumnwidth': {
   }
   selectionChanged(event: any[]) {   
     this.JobDetailsLocalVariable.SelectedjobId=(event.map((e) => e.jobIdFragment));
-    console.log(this.JobDetailsLocalVariable.SelectedjobId);
   }
   GetLocalStorageColumnValue()
   {    
@@ -206,6 +287,7 @@ case 'elapsedtimecolumnwidth': {
     this.JobDetailsLocalStorage.submittimecolumnWidthValue = this.localstorage.get('submittimecolumnwidth');
     this.JobDetailsLocalStorage.pendingreasoncolumnWidthValue = this.localstorage.get('pendingreasoncolumnwidth');
     this.JobDetailsLocalStorage.recordPerPageValue = this.localstorage.get('recordperpage');
+    
   }
  public SetJobPriority() {
     this.ApiService.SetJobPriority(this.JobDetailsLocalVariable.SelectedjobId,this.JobDetailsLocalVariable.priorityValue)
