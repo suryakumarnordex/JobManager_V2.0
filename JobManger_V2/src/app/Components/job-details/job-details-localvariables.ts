@@ -18,7 +18,11 @@ export class JobDetailsLocalVariable
     public SelectedjobId: Array<number>;
     public JobManageerNavigation = [] as any;    
     public openModal = false;
-    
+    public recordperpagejob:number=10;
+    public currentpage:number=1;
+    public AvailableUserName :{ key: string; value: string }[] = [];
+    public AvailableState: { key: string; value: string }[] = [];
+    public AvailableType: { key: string; value: string }[] = [];
     public Nodelist: Array<string> = [
         'All jobs',
         'Queue Simulation',

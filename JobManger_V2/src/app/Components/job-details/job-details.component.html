@@ -3,7 +3,7 @@
 
   <clr-datagrid
     [(clrDgSelected)]="JobDetailsLocalVariable.selected"
-    (clrDgRefresh)="refresh($event)"
+    (clrDgRefresh)="Columnfilters($event)"
     [clrDgLoading]="JobDetailsLocalVariable.dataloading"
     (clrDgSelectedChange)="selectionChanged($event)"
   >
@@ -55,6 +55,8 @@
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.prioritycolumnWidthValue"
+      [clrDgField]="'priorityFragment'"
+      
       (clrDgColumnResize)="ColumnResized($event, 'prioritycolumnwidth')"
       >Job Priority</clr-dg-column
     >

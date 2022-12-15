@@ -19,7 +19,6 @@ export class JobDetailsComponent implements OnInit {
 
   @Input() recordPerPage: number = 10;
 
-
   constructor(
     private ApiService: ApiServiceService,
     private router: Router,
@@ -27,11 +26,11 @@ export class JobDetailsComponent implements OnInit {
     private localstorage: LocalStorageService,
     public JobDetailsLocalStorage : JobDetaillocalstorage,
     public JobDetailsLocalVariable : JobDetailsLocalVariable
-  ) {}
+  ) {   }
 
   ngOnInit(): void {    
-   this.GetJobDetails(this.recordPerPage, this.JobDetailsLocalVariable.pageSize);
-   this.GetLocalStorageColumnValue();   
+  //  this.GetJobDetails(this.recordPerPage, this.JobDetailsLocalVariable.pageSize);
+   this.GetLocalStorageColumnValue();
   }
 public ColumnResized(event: any, colType: string)
 {   
@@ -100,8 +99,9 @@ case 'elapsedtimecolumnwidth': {
     } 
  } 
 } 
-refresh(state: ClrDatagridStateInterface){
+Columnfilters(state: ClrDatagridStateInterface){
   this.JobDetailsLocalVariable.dataloading = true;
+ 
   let jobIdFragment = '';
   // userFragment: Array<string> = [],
   // typeFragment: Array<string> = [],
@@ -109,7 +109,7 @@ refresh(state: ClrDatagridStateInterface){
   let cockpitIdFragment = '';
   let runnoFragment='';
   // statusFragment: Array<string> = [],
-  // priorityFragment: string = '',
+  let priorityFragment = '';
   // progressFragment: string = '',
   let numberOfTasksFragment= '';
   let orderDescending=false;
@@ -119,9 +119,9 @@ refresh(state: ClrDatagridStateInterface){
   // orderBy: string = '';
   let PageNo = 1;
   // PageSize: number = 10;
-
   if (state.filters) {
     for (const filter of state.filters) {
+      this.JobDetailsLocalVariable.currentpage = 1;
       const { property, value } = <{ property: string; value: string }>filter;
       switch (property) {
         case 'jobIdFragment': {
@@ -147,6 +147,12 @@ refresh(state: ClrDatagridStateInterface){
         case 'numberOfTasksFragment':{
           numberOfTasksFragment = value;
           console.log(numberOfTasksFragment);
+          break;
+        }
+        case 'priorityFragment':{
+          priorityFragment = value;
+          console.log(priorityFragment);
+          break;
         }
       }
     }
@@ -158,15 +164,15 @@ refresh(state: ClrDatagridStateInterface){
   cockpitIdFragment,
   runnoFragment,
   [],
-  '',
+  priorityFragment,
   '',
   numberOfTasksFragment,
   '',
   '',
   '',
   orderDescending,
-  PageNo,
-  this.recordPerPage,
+  this.JobDetailsLocalVariable.currentpage,
+  this.JobDetailsLocalVariable.recordperpagejob,
   waitForChange).subscribe({
     next: (res: SearchResultsLayout) => {
       this.JobDetailsLocalVariable.layouts = res.results;
@@ -181,44 +187,77 @@ refresh(state: ClrDatagridStateInterface){
   });
   
 }
-  GetJobDetails(recordPerPage: number, pageSize: number) {
-    this.JobDetailsLocalVariable.pageSize = pageSize;
-    this.recordPerPage = recordPerPage;
-    this.JobDetailsLocalStorage.recordPerPageValue=(recordPerPage);
-    this.JobDetailsLocalStorage.pageSize=(pageSize);
-    this.JobDetailsLocalVariable.dataloading = true;
+  // GetJobDetails(recordPerPage: number, pageSize: number) {
+  //   this.JobDetailsLocalVariable.pageSize = pageSize;
+  //   this.recordPerPage = recordPerPage;
+  //   this.JobDetailsLocalStorage.recordPerPageValue=(recordPerPage);
+  //   this.JobDetailsLocalStorage.pageSize=(pageSize);
+  //   this.JobDetailsLocalVariable.dataloading = true;
 
-    this.ApiService.searchLayout(
-      '',
-      [],
-      [],
-      '',
-      '',
-      '',
-      [],
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      false,
-      this.JobDetailsLocalVariable.pageSize,
-      this.recordPerPage,
-      false
-    ).subscribe({
-      next: (res: SearchResultsLayout) => {
-        this.JobDetailsLocalVariable.layouts = res.results;
-        this.JobDetailsLocalVariable.jobCount = res.totalResults;
-        this.JobDetailsLocalVariable.dataloading = false;
-        this.JobDetailsLocalVariable.totalPage = Math.ceil(this.JobDetailsLocalVariable.jobCount / this.recordPerPage);
-      },
-      error: (error) => {
-        this.logger.reportError(error);
-        this.JobDetailsLocalVariable.dataloading = false;
-      },
-    });
-  }
+  //   this.ApiService.searchLayout(
+  //     '',
+  //     [],
+  //     [],
+  //     '',
+  //     '',
+  //     '',
+  //     [],
+  //     '',
+  //     '',
+  //     '',
+  //     '',
+  //     '',
+  //     '',
+  //     false,
+  //     this.JobDetailsLocalVariable.pageSize,
+  //     this.recordPerPage,
+  //     false
+  //   ).subscribe({
+  //     next: (res: SearchResultsLayout) => {
+  //       this.JobDetailsLocalVariable.layouts = res.results;
+  //       this.JobDetailsLocalVariable.jobCount = res.totalResults;
+  //       this.JobDetailsLocalVariable.dataloading = false;
+  //       // UserName
+  //   //   let usernames =  this.JobDetailsLocalVariable.layouts
+  //   //   .map((e: { userFragment: any }) => e.userFragment)
+  //   //   .filter((v: any, i: any, a: any) => a.indexOf(v) === i);
+  //   //   const NullValue = usernames.indexOf('');
+  //   //   if (NullValue > -1) {
+  //   //     usernames.splice(NullValue, 1);
+  //   //   }
+  //   //   usernames.forEach( (c: any) => {
+  //   //     this.JobDetailsLocalVariable.AvailableUserName.push({ key: c, value: c });
+  //   //   });
+  //   //   this.JobDetailsLocalVariable.AvailableUserName =  this.JobDetailsLocalVariable.AvailableUserName.sort((a, b) =>
+  //   //   a.key > b.key ? 1 : -1
+  //   // );
+  //   //   console.log(this.JobDetailsLocalVariable.AvailableUserName);
+      
+  //     // Type
+  //     //  let types =  this.JobDetailsLocalVariable.layouts
+  //     // .map((e: { typeFragment: any }) => e.typeFragment)
+  //     // .filter((v: any, i: any, a: any) => a.indexOf(v) === i);
+  //     // types.forEach( (c: any) => {
+  //     //   this.JobDetailsLocalVariable.AvailableType.push({ key: c, value: c });
+  //     // });
+  //     // console.log(this.JobDetailsLocalVariable.AvailableType);
+      
+  //     // // Status
+  //     // let status =  this.JobDetailsLocalVariable.layouts
+  //     // .map((e: { statusFragment: any }) => e.statusFragment)
+  //     // .filter((v: any, i: any, a: any) => a.indexOf(v) === i);
+  //     // status.forEach( (c: any) => {
+  //     //   this.JobDetailsLocalVariable.AvailableState.push({ key: c, value: c });
+  //     // });
+  //     // console.log(this.JobDetailsLocalVariable.AvailableState);
+  //     //   this.JobDetailsLocalVariable.totalPage = Math.ceil(this.JobDetailsLocalVariable.jobCount / this.recordPerPage);
+  //     },
+  //     error: (error) => {
+  //       this.logger.reportError(error);
+  //       this.JobDetailsLocalVariable.dataloading = false;
+  //     },
+  //   });
+  // }
   onDetailOpen(event: any) {
     if (event !== null) {
       this.JobDetailsLocalVariable.detailTaskID = event.jobIdFragment;
