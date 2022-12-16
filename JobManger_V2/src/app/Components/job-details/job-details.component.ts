@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
 import { SearchResultsLayout, SearchTaskResultsLayout,} from 'src/app/Models/helper';
@@ -7,8 +7,9 @@ import { LoggerService } from 'src/app/Services/logger.service';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetaillocalstorage } from './job-detail-Localstorage';
 import { JobDetailsLocalVariable } from './job-details-localvariables';
-import { ClrDatagridStateInterface, ClrNavLevel } from '@clr/angular';
-
+import { ClrDatagridColumn, ClrDatagridStateInterface, ClrNavLevel } from '@clr/angular';
+import { CheckboxListFilterComponent } from './checkbox-list-filter.component';
+import { FiltersProvider } from '@clr/angular/data/datagrid/providers/filters';
 
 @Component({
   selector: 'app-job-details',
@@ -18,7 +19,8 @@ import { ClrDatagridStateInterface, ClrNavLevel } from '@clr/angular';
 export class JobDetailsComponent implements OnInit {
 
   @Input() recordPerPage: number = 10;
-
+  @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
+  @ViewChildren(CheckboxListFilterComponent)   buildincolumns: QueryList<CheckboxListFilterComponent>;
   constructor(
     private ApiService: ApiServiceService,
     private router: Router,
@@ -104,12 +106,11 @@ Columnfilters(state: ClrDatagridStateInterface){
  
  
   let jobIdFragment = '';
-  // userFragment: Array<string> = [],
-  // typeFragment: Array<string> = [],
+  let userFragment: Array<string> = [];
+  let typeFragment: Array<string> = [];
   let topicFragment = '';
   let cockpitIdFragment = '';
   let runnoFragment='';
-  // statusFragment: Array<string> = [],
   let priorityFragment = '';
   // progressFragment: string = '',
   let numberOfTasksFragment= '';
@@ -120,12 +121,27 @@ Columnfilters(state: ClrDatagridStateInterface){
   // orderBy: string = '';
   let PageNo = 1;
   // PageSize: number = 10;
- 
+  console.log(state);
+  
   if (state.filters) {
     this.JobDetailsLocalVariable.dataloading = true;
     for (const filter of state.filters) {
       this.JobDetailsLocalVariable.currentpage = 1;
+      
       const { property, value } = <{ property: string; value: string }>filter;
+      
+      if(filter.filterParamName=="typeFragment"){
+        typeFragment = filter.selectedItems.map((e: any) => e.value);
+        console.log(typeFragment);  
+      }
+      else if(filter.filterParamName=="userFragment"){
+        userFragment = filter.selectedItems.map((e: any) => e.value);
+        console.log(userFragment);
+      }
+      else if(filter.filterParamName=="statusFragment"){
+        this.JobDetailsLocalVariable.statusList = filter.selectedItems.map((e: any) => e.value);
+        console.log(this.JobDetailsLocalVariable.statusList);
+      }
       switch (property) {
         case 'jobIdFragment': {
           jobIdFragment = value;
@@ -137,6 +153,7 @@ Columnfilters(state: ClrDatagridStateInterface){
           console.log(cockpitIdFragment);
           break;
         }
+       
         case 'runnoFragment':{
           runnoFragment = value;
           console.log(runnoFragment);
@@ -161,8 +178,8 @@ Columnfilters(state: ClrDatagridStateInterface){
     }
   }
   this.ApiService.searchLayout(jobIdFragment,
-  [],
-  [],
+  userFragment,
+  typeFragment,
   topicFragment,
   cockpitIdFragment,
   runnoFragment,
