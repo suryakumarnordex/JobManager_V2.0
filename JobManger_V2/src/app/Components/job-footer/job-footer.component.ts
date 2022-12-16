@@ -25,6 +25,7 @@ export class JobFooterComponent implements OnInit {
   goTofirstPage() {
     if( this.JobDetailsLocalVariable.currentpage !=1)
     {
+      this.JobDetailsLocalVariable.dataloading = true;
        this.JobDetailsLocalVariable.currentpage = 1;
     this.GetFooterDetails(this.requestFromJob);
     } 
@@ -32,6 +33,7 @@ export class JobFooterComponent implements OnInit {
   goTonextPage() {
     if( this.JobDetailsLocalVariable.currentpage != this.JobDetailsLocalVariable.totalPage)
     {
+      this.JobDetailsLocalVariable.dataloading = true;
       this.JobDetailsLocalVariable.currentpage = this.JobDetailsLocalVariable.currentpage + 1;
       this.JobDetailsLocalVariable.totalPage = Math.ceil(this.JobDetailsLocalVariable.jobCount / this.JobDetailsLocalVariable.recordperpagejob);
     this.GetFooterDetails(this.requestFromJob);
@@ -39,14 +41,18 @@ export class JobFooterComponent implements OnInit {
   }
   goTopriviousPage() {
     if( this.JobDetailsLocalVariable.currentpage!= 1)
-    { this.JobDetailsLocalVariable.currentpage = this.JobDetailsLocalVariable.currentpage - 1;
+    { 
+      this.JobDetailsLocalVariable.dataloading = true;
+      this.JobDetailsLocalVariable.currentpage = this.JobDetailsLocalVariable.currentpage - 1;
       this.JobDetailsLocalVariable.totalPage = Math.ceil(this.JobDetailsLocalVariable.jobCount / this.JobDetailsLocalVariable.recordperpagejob);
     this.GetFooterDetails(this.requestFromJob);
     } 
   }
   goTolastPage() {
     if( this.JobDetailsLocalVariable.currentpage!= this.JobDetailsLocalVariable.totalPage)
-    { this.JobDetailsLocalVariable.currentpage = Math.ceil(this.JobDetailsLocalVariable.jobCount / this.JobDetailsLocalVariable.recordperpagejob);
+    { 
+      this.JobDetailsLocalVariable.dataloading = true;
+      this.JobDetailsLocalVariable.currentpage = Math.ceil(this.JobDetailsLocalVariable.jobCount / this.JobDetailsLocalVariable.recordperpagejob);
     this.GetFooterDetails(this.requestFromJob);
     }
   }
@@ -61,6 +67,7 @@ export class JobFooterComponent implements OnInit {
   onSelected(value: string) {
     this.recordPerPagerequest = Number(value);
     this.JobDetailsLocalVariable.recordperpagejob = Number(value);
+    this.JobDetailsLocalVariable.dataloading = true;
     this.JobDetailsLocalVariable.currentpage = 1;
     if (this.requestFromJob) {
       this.jobdetails.Columnfilters({});

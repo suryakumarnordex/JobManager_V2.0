@@ -43,16 +43,19 @@ export class JobHeaderComponent implements OnInit {
     this.passingEvent = event;
     this.JobDetailsLocalVariable.openModal = true;   
   }
-  onNodeGroupChange(event: Event) {
+  onNodeGroupChange(event: any) {
     this.JobDetailsLocalVariable.dataloading = true;
-    let selectedNodeGroup = '';
-    let val = event.target as HTMLInputElement;
-    let statusList: Array<string> = [];
-    if (val.name.includes('Queue')) {
-      selectedNodeGroup = val.name.replace('Queue ', '');
-      statusList = ['Queued', 'Finished'];
+    let val = event.target.value;
+   
+ 
+    if (val.includes('Queue')) {
+      this.JobDetailsLocalVariable.nodeGroupFragment=val.replace('Queue ', '');
+      this.JobDetailsLocalVariable.statusList = ['Queued', 'Finished'];
+      this.JobDetailsLocalVariable.currentpage  =1;
     } else {
-      selectedNodeGroup = '';
+      this.JobDetailsLocalVariable.nodeGroupFragment = '';
+      this.JobDetailsLocalVariable.statusList = [];
+      this.JobDetailsLocalVariable.currentpage  =1;
     }
     if (event !== null) {
       this.ApiService.searchLayout(
@@ -62,11 +65,11 @@ export class JobHeaderComponent implements OnInit {
         '',
         '',
         '',
-        statusList,
+        this.JobDetailsLocalVariable.statusList,
         '',
         '',
         '',
-        selectedNodeGroup,
+        this.JobDetailsLocalVariable.nodeGroupFragment,
         '',
         '',
         false,

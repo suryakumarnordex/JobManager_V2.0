@@ -29,6 +29,7 @@ export class JobDetailsComponent implements OnInit {
   ) {   }
 
   ngOnInit(): void {    
+    this.JobDetailsLocalVariable.dataloading = true;
   //  this.GetJobDetails(this.recordPerPage, this.JobDetailsLocalVariable.pageSize);
    this.GetLocalStorageColumnValue();
   }
@@ -100,7 +101,7 @@ case 'elapsedtimecolumnwidth': {
  } 
 } 
 Columnfilters(state: ClrDatagridStateInterface){
-  this.JobDetailsLocalVariable.dataloading = true;
+ 
  
   let jobIdFragment = '';
   // userFragment: Array<string> = [],
@@ -119,7 +120,9 @@ Columnfilters(state: ClrDatagridStateInterface){
   // orderBy: string = '';
   let PageNo = 1;
   // PageSize: number = 10;
+ 
   if (state.filters) {
+    this.JobDetailsLocalVariable.dataloading = true;
     for (const filter of state.filters) {
       this.JobDetailsLocalVariable.currentpage = 1;
       const { property, value } = <{ property: string; value: string }>filter;
@@ -163,11 +166,11 @@ Columnfilters(state: ClrDatagridStateInterface){
   topicFragment,
   cockpitIdFragment,
   runnoFragment,
-  [],
+  this.JobDetailsLocalVariable.statusList,
   priorityFragment,
   '',
   numberOfTasksFragment,
-  '',
+  this.JobDetailsLocalVariable.nodeGroupFragment,
   '',
   '',
   orderDescending,
@@ -175,6 +178,7 @@ Columnfilters(state: ClrDatagridStateInterface){
   this.JobDetailsLocalVariable.recordperpagejob,
   waitForChange).subscribe({
     next: (res: SearchResultsLayout) => {
+     
       this.JobDetailsLocalVariable.layouts = res.results;
       this.JobDetailsLocalVariable.jobCount = res.totalResults;
       this.JobDetailsLocalVariable.dataloading = false;
