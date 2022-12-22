@@ -9,11 +9,10 @@ export class JobDetailsLocalVariable
     public statusList: Array<string> = [];
     public requestFromJOb: boolean = true;
     public selected = [] as any;
-    public jobCount = 0;
+    public jobCount:number = 0;
     public totalPage: number;
     public loading = true;
     public detailTaskID: any;
-    public pageSize: number = 1;
     public dataloading: boolean = false;
     public priorityValue: string;
     public SelectedjobId: Array<number>;

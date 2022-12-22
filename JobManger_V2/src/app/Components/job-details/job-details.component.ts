@@ -17,7 +17,9 @@ import { FiltersProvider } from '@clr/angular/data/datagrid/providers/filters';
   styleUrls: ['./job-details.component.css'],
 })
 export class JobDetailsComponent implements OnInit {
-
+  @Input() pageSize: number = 1;
+  @Input() totalPage:number;
+  @Input() jobCount:number;
   @Input() recordPerPage: number = 10;
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
   @ViewChildren(CheckboxListFilterComponent)   buildincolumns: QueryList<CheckboxListFilterComponent>;
@@ -194,12 +196,11 @@ Columnfilters(state: ClrDatagridStateInterface){
   this.JobDetailsLocalVariable.currentpage,
   this.JobDetailsLocalVariable.recordperpagejob,
   waitForChange).subscribe({
-    next: (res: SearchResultsLayout) => {
-     
+    next: (res: SearchResultsLayout) => {   
       this.JobDetailsLocalVariable.layouts = res.results;
-      this.JobDetailsLocalVariable.jobCount = res.totalResults;
+      this.jobCount = res.totalResults;   
       this.JobDetailsLocalVariable.dataloading = false;
-      this.JobDetailsLocalVariable.totalPage = Math.ceil(this.JobDetailsLocalVariable.jobCount / this.recordPerPage);
+      this.totalPage = Math.ceil(this.jobCount / this.JobDetailsLocalVariable.recordperpagejob);
     },
     error: (error) => {
       this.logger.reportError(error);

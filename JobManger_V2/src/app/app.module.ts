@@ -16,6 +16,7 @@ import { PopupModalsComponent } from './Components/popup-modals/popup-modals.com
 import {JobDetaillocalstorage} from './Components/job-details/job-detail-Localstorage'
 import { JobDetailsLocalVariable } from './Components/job-details/job-details-localvariables';
 import { CheckboxListFilterComponent} from './Components/job-details/checkbox-list-filter.component' 
+import { TaskDetailsLocalVariable } from './Components/task-details/task-details-localvariable';
 @NgModule({
   imports: [
     BrowserModule,
@@ -35,7 +36,7 @@ import { CheckboxListFilterComponent} from './Components/job-details/checkbox-li
     PopupModalsComponent, 
     CheckboxListFilterComponent   
   ],
-  providers: [UtcConverterService, TaskDetailsComponent,JobDetaillocalstorage,JobDetailsLocalVariable],
+  providers: [UtcConverterService, TaskDetailsComponent,JobDetaillocalstorage,JobDetailsLocalVariable,TaskDetailsLocalVariable],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
