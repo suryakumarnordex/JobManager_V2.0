@@ -10,7 +10,9 @@ import { JobDetailsLocalVariable } from './job-details-localvariables';
 import { ClrDatagridColumn, ClrDatagridStateInterface, ClrNavLevel } from '@clr/angular';
 import { CheckboxListFilterComponent } from './checkbox-list-filter.component';
 import { FiltersProvider } from '@clr/angular/data/datagrid/providers/filters';
-
+import { User } from '../../Models/user';
+import { ActivatedRoute } from '@angular/router';
+import { LoginService } from '../../Services/login.service';
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-details.component.html',
@@ -20,6 +22,7 @@ export class JobDetailsComponent implements OnInit {
   @Input() pageSize: number = 1;
   @Input() totalPage:number;
   @Input() jobCount:number;
+
   @Input() recordPerPage: number = 10;
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
   @ViewChildren(CheckboxListFilterComponent)   buildincolumns: QueryList<CheckboxListFilterComponent>;
@@ -29,13 +32,17 @@ export class JobDetailsComponent implements OnInit {
     private logger: LoggerService,
     private localstorage: LocalStorageService,
     public JobDetailsLocalStorage : JobDetaillocalstorage,
-    public JobDetailsLocalVariable : JobDetailsLocalVariable
-  ) {   }
+    public JobDetailsLocalVariable : JobDetailsLocalVariable,
 
+    private route: ActivatedRoute
+  ) {   }
+  loginModal = false;
   ngOnInit(): void {    
     this.JobDetailsLocalVariable.dataloading = true;
   //  this.GetJobDetails(this.recordPerPage, this.JobDetailsLocalVariable.pageSize);
-   this.GetLocalStorageColumnValue();
+     
+  
+  
   }
 public ColumnResized(event: any, colType: string)
 {   
