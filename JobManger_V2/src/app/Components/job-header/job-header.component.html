@@ -49,8 +49,7 @@
         </div>
       </li>
       <div class="btn-group">
-        <button
-          type="button"
+        <button *ngIf="isRole=='internal'"
           class="btn btn-sm btn-secondary"
           (click)="openmodel('Priority')"
         >
@@ -59,7 +58,7 @@
       </div>
       <div class="btn-group">
         <button
-          type="button"
+          type="button" 
           class="btn btn-sm btn-secondary"
           (click)="openmodel('Requeue')"
         >

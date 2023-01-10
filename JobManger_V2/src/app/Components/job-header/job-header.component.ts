@@ -7,7 +7,7 @@ import { SearchResultsLayout } from 'src/app/Models/helper';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
 import { JobDetailsComponent } from '../job-details/job-details.component';
 import { LoginService } from 'src/app/Services/login.service';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-job-header',
   templateUrl: './job-header.component.html',
@@ -18,13 +18,15 @@ export class JobHeaderComponent implements OnInit {
   @Input() recordPerPagerequest: number;
   @Input() passingEvent: string;
   username: string = 'KumarSu';
+  isRole:string = 'internal';
   displayName: string;
   spinnerInlineloader: boolean = true;
   hostName: string;
-
+  loginModal = false;
   constructor(
     private router: Router,
     private ApiService: ApiServiceService,
+    private route: ActivatedRoute,
     private logger: LoggerService,
     private JobDetailsComponent: JobDetailsComponent,
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
@@ -33,6 +35,11 @@ export class JobHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getNavigationsList();
+    this.route.queryParams.subscribe(params => {
+      // this.loginModal = params.login;
+      console.log(params,"PARAMS");
+      
+    });
 
     this.loginService.user(this.username).subscribe({
       next: (user: any) => {
