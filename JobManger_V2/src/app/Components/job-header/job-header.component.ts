@@ -17,7 +17,7 @@ export class JobHeaderComponent implements OnInit {
   @Input() recordPerPage: number = 10;
   @Input() recordPerPagerequest: number;
   @Input() passingEvent: string;
-  username: string = 'KumarSu';
+  // username: string = 'KumarSu';
   isRole:string = 'internal';
   displayName: string;
   spinnerInlineloader: boolean = true;
@@ -41,7 +41,7 @@ export class JobHeaderComponent implements OnInit {
       
     });
 
-    this.loginService.user(this.username).subscribe({
+    this.loginService.user().subscribe({
       next: (user: any) => {
         this.displayName = user.displayName;
         console.log(this.displayName);

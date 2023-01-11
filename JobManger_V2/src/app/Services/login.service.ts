@@ -11,10 +11,10 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-  user(userName:string):Observable<User>
+  user(userName:string | null = null ):Observable<User>
    {
     return this.http.get('http://ldms.nordex-ag.com/QuickerViewApi_Beta/api/v1/Login/UserName',{ params: { 'userName': userName ? userName : '' } }).pipe(
-        map((resp: any) => { 
+        map((resp) => { 
           return new User().deserialize(resp);
         }));
    }
