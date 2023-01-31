@@ -14,6 +14,7 @@ export class PopupModalsComponent implements OnInit {
   get parentChildConnection(): boolean {
     return this.isOpen;
   }
+
   @Input()
 ngSwitchCase: any
   @Input() set parentChildConnection(setting: boolean) {
@@ -22,6 +23,7 @@ ngSwitchCase: any
       this.modalClosed.emit();
     }
   }
+  
   @Output() modalClosed: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(  
@@ -36,17 +38,14 @@ ngSwitchCase: any
     switch (this.passingEvent) {
       case 'Priority': { 
         this.JobDetailsLocalVariable.priorityValue = this.JobDetailsLocalVariable.priorityValue.replace('+', '%2B');    
-        this.JobDetailscomponent.SetJobPriority();      
+        console.log(this.JobDetailscomponent.SetJobPriority());    
         break;
-      }
+     }
       default : {
-        this.JobDetailscomponent.ButtonEvents(this.passingEvent);
+        console.log(this.JobDetailscomponent.ButtonEvents(this.passingEvent));   
         break;
       }     
     }
-
-   
-   
-  }
-  
+    this.JobDetailsLocalVariable.dataloading = false;   
+  }  
 }

@@ -44,7 +44,7 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsLocalVariable.openModal = true;   
   }
   onNodeGroupChange(event: any) {
-   
+   console.log('onNodeGroupChange');
     this.JobDetailsLocalVariable.dataloading = true;
     let selectedNodeGroup = '';
     let val = event.target.value;   

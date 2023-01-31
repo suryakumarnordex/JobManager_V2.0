@@ -55,7 +55,7 @@
         *ngIf="passingEvent != 'Priority' && passingEvent != 'Pending_Reason'"
       >
         <div *ngIf="passingEvent != 'Pending_Reason'">
-          If you want to {{ passingEvent }}
+          Are you sure you want to requeue the {{ passingEvent }}
           {{ JobDetailsLocalVariable.SelectedjobId }} ?
         </div>
         <div class="modal-footer">

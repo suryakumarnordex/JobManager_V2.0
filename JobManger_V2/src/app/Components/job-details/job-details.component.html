@@ -4,6 +4,8 @@
   <clr-datagrid
     [(clrDgSelected)]="this.JobDetailsLocalVariable.selected"
     [clrDgLoading]="this.JobDetailsLocalVariable.dataloading"
+    HorizontalAlignment="auto"
+    VerticalAlignment="auto"
     (clrDgSelectedChange)="selectionChanged($event)"
   >
     <clr-dg-column
@@ -89,11 +91,14 @@
     >
 
     <clr-dg-row
+      style="word-break: break-all"
       *ngFor="let job of this.JobDetailsLocalVariable.layouts"
       [clrDgItem]="job"
+      class="align"
     >
       <clr-dg-cell>{{ job.jobIdFragment }}</clr-dg-cell>
       <clr-dg-cell>{{ job.userFragment }}</clr-dg-cell>
+
       <clr-dg-cell style="text-align: left">
         <div style="display: flex; justify-content: space-evenly">
           <div>
