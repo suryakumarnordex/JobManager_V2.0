@@ -21,6 +21,7 @@ import { TokenInterceptor } from './Services/token.interceptor';
 import { ErrorInterceptor } from './Services/error.interceptor';
 import { WINDOW_PROVIDERS } from './Services/window.providers';
 import { exec } from 'child_process';
+import { TaskHeaderComponent } from './Components/task-header/task-header.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -38,7 +39,7 @@ import { exec } from 'child_process';
     JobFooterComponent,
     JobHeaderComponent,
     PopupModalsComponent, 
-    CheckboxListFilterComponent,   
+    CheckboxListFilterComponent, TaskHeaderComponent,   
   ],
   providers: [UtcConverterService, TaskDetailsComponent,JobDetaillocalstorage,JobDetailsLocalVariable,TaskDetailsLocalVariable,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

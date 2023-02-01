@@ -219,6 +219,26 @@ export class ApiServiceService {
       }
     );
   }
+  SetTaskRequeue(jobIds: string, TaskIds: Array<number>){
+    let params = new HttpParams();
+    params = params.append('jobIds',jobIds);
+    TaskIds.forEach((taskid: any) => {
+      params = params.append('taskIds', taskid);
+    });
+    // params = params.append('taskIds',1)
+    console.log(this.apiurl + 'HPCRestAPITaskrequeue', {
+      headers: this.headers,
+      params: params,
+    });
+    return this.http.post(
+      this.apiurl + 'HPCRestAPITaskrequeue',
+      {},
+      {
+        headers: this.headers,
+        params: params,
+      }
+    );
+  }
   SetSubmit(jobIds: Array<number>) {
     let params = new HttpParams();
     jobIds.forEach((jobId: any) => {

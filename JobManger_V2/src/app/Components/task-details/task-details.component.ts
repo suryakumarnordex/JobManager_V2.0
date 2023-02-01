@@ -35,7 +35,7 @@ export class TaskDetailsComponent implements OnInit {
 
     this.dataloading = true;
     console.log(this.JobIDFragement);
-
+    this.TaskDetailsLocalVariable.SelectedJobIDFragement = this.JobIDFragement;
     this.ApiService.searchTaskLayout(
       this.JobIDFragement,
       '',
@@ -60,5 +60,28 @@ export class TaskDetailsComponent implements OnInit {
         this.dataloading = false;
       },
     });
+  }
+  selectionChanged(event: any[]) {   
+    // console.log(event);
+    this.TaskDetailsLocalVariable.SelectedtaskId = (event.map((e) => e.taskIdFragment));
+    console.log(this.TaskDetailsLocalVariable.SelectedJobIDFragement);
+    
+    console.log(this.TaskDetailsLocalVariable.SelectedtaskId);
+    
+    // this.JobDetailsLocalVariable.SelectedjobId=(event.map((e) => e.jobIdFragment));
+  }
+  setRequeue(){
+    this.ApiService.SetTaskRequeue(this.TaskDetailsLocalVariable.SelectedJobIDFragement,this.TaskDetailsLocalVariable.SelectedtaskId)
+    .subscribe({
+      next:(res:any)=>{
+        console.log(res);
+        this.TaskDetailsLocalVariable.loading = false;
+      },
+      error:(error:any)=>{
+        console.log(error);
+        this.TaskDetailsLocalVariable.loading = false;
+      }
+    })
+    
   }
 }

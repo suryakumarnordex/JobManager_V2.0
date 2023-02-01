@@ -1,4 +1,6 @@
-<clr-datagrid [(clrDgSelected)]="selected" [clrDgLoading]="this.dataloading">
+<app-task-header></app-task-header>
+<clr-datagrid [(clrDgSelected)]="selected" [clrDgLoading]="this.dataloading"
+(clrDgSelectedChange)="selectionChanged($event)">
   <clr-dg-column>Task ID</clr-dg-column>
   <clr-dg-column>Task Name</clr-dg-column>
   <clr-dg-column>Task State</clr-dg-column>
