@@ -3,13 +3,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
 import { JobDetailsComponent } from '../job-details/job-details.component';
 import { TaskDetailsLocalVariable } from '../task-details/task-details-localvariable';
-import { TaskDetailsComponent } from '../task-details/task-details.component'
+import { TaskDetailsComponent } from '../task-details/task-details.component';
 @Component({
   selector: 'app-popup-modals',
   templateUrl: './popup-modals.component.html',
   styleUrls: ['./popup-modals.component.css'],
 })
-
 export class PopupModalsComponent implements OnInit {
   @Input() passingEvent: string;
   isOpen: boolean = false;
@@ -17,7 +16,7 @@ export class PopupModalsComponent implements OnInit {
     return this.isOpen;
   }
   @Input()
-ngSwitchCase: any
+  ngSwitchCase: any;
   @Input() set parentChildConnection(setting: boolean) {
     this.isOpen = setting;
     if (setting === false) {
@@ -26,39 +25,45 @@ ngSwitchCase: any
   }
   @Output() modalClosed: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(  
-    public JobDetailsLocalVariable : JobDetailsLocalVariable,
-    public TaskDetailsLocalVariable:TaskDetailsLocalVariable,
-    private  JobDetailscomponent : JobDetailsComponent,
-    private TaskDetailsComponent:TaskDetailsComponent
+  constructor(
+    public JobDetailsLocalVariable: JobDetailsLocalVariable,
+    public TaskDetailsLocalVariable: TaskDetailsLocalVariable,
+    private JobDetailscomponent: JobDetailsComponent,
+    private TaskDetailsComponent: TaskDetailsComponent
   ) {}
 
   ngOnInit(): void {}
 
-   PopupEvent() {
-   
+  PopupEvent() {
     switch (this.passingEvent) {
-      case 'Priority': { 
+      case 'Priority': {
         this.JobDetailsLocalVariable.dataloading = true;
-        this.JobDetailsLocalVariable.priorityValue = this.JobDetailsLocalVariable.priorityValue.replace('+', '%2B');    
-        this.JobDetailscomponent.SetJobPriority();      
+        this.JobDetailsLocalVariable.priorityValue =
+          this.JobDetailsLocalVariable.priorityValue.replace('+', '%2B');
+        this.JobDetailscomponent.SetJobPriority();
         break;
       }
-      case 'TaskRequeue':{
+      case 'TaskRequeue': {
         this.TaskDetailsLocalVariable.loading = true;
-        console.log("Task Rqueue Click!");
+        console.log('Task Rqueue Click!');
         this.TaskDetailsComponent.setRequeue();
         break;
       }
-      default : {
+      default: {
         this.JobDetailsLocalVariable.dataloading = true;
+        this.JobDetailscomponent.ButtonEvents(this.passingEvent)
+          .then((res) => {
+            console.log(res,"final value!got it");
+            
+          })
+          .catch((error) => {
+            console.log(error,"final value!got it");
+          });
+
+        this.JobDetailsLocalVariable.dataloading = false;
         this.JobDetailscomponent.ButtonEvents(this.passingEvent);
         break;
-      }     
+      }
     }
-
-   
-   
   }
-  
 }
