@@ -7,6 +7,8 @@ import { LoggerService } from 'src/app/Services/logger.service';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetaillocalstorage } from './job-detail-Localstorage';
 import { JobDetailsLocalVariable } from './job-details-localvariables';
+import { resolve } from 'dns';
+import { rejects } from 'assert';
 
 
 @Component({
@@ -211,7 +213,7 @@ case 'elapsedtimecolumnwidth': {
   }
 
  public SetJobPriority() {
-    this.ApiService.SetJobPriority(this.JobDetailsLocalVariable.SelectedjobId,this.JobDetailsLocalVariable.priorityValue)
+   return this.ApiService.SetJobPriority(this.JobDetailsLocalVariable.SelectedjobId,this.JobDetailsLocalVariable.priorityValue)
     .subscribe({
       next: (res: any) => {
         console.log(res);
@@ -222,52 +224,71 @@ case 'elapsedtimecolumnwidth': {
     });
   } 
 
-  ButtonEvents(EventStr:string)
-  {
-    switch (EventStr) {      
-      case 'Requeue': {
-      return  this.ApiService.SetRequeue(this.JobDetailsLocalVariable.SelectedjobId)
-        .subscribe({
-          next: (res: any) => {
-            console.log(res);
-          },
-          error: (error: string) => {
-            console.log(error);
-          },
-        });
-        break;
-      }
-      case 'Pending_Reason': {
-        return this.ApiService.GetPendingReason(this.JobDetailsLocalVariable.SelectedjobId).subscribe({
-          next: (res: any) => { console.log(res); },
-          error: (error: string) => {
-            console.log(error);
-          },
-        });
-        break;
-      }
-      case 'Cancel': {
-        return  this.ApiService.SetCancel(this.JobDetailsLocalVariable.SelectedjobId)
-        .subscribe({
-          next: (res: any) => {  console.log(res);
-          },
-          error: (error: string) => {
-            console.log(error);
-          },
-        });
-        break;
-      }
-      case 'Submit': {
-        return this.ApiService.SetSubmit(this.JobDetailsLocalVariable.SelectedjobId)
-        .subscribe({
-          next: (res: any) => { console.log(res);
-          },
-          error: (error: string) => {
-            console.log(error);
-          },
-        });
-        break;
-      }
-  }
-}
+  ButtonEvents(EventStr: string): Promise<any> {
+      return new Promise((resolve, reject) => {
+        switch (EventStr) {
+          case 'Requeue': {
+            this.ApiService.SetRequeue(
+              this.JobDetailsLocalVariable.SelectedjobId
+            ).subscribe({
+              next: (res: any) => {
+                console.log(res);
+                resolve(res);
+              },
+              error: (error: string) => {
+                console.log(error);
+                this.JobDetailsLocalVariable.dataloading = false;
+                reject(error);
+              },
+            });
+            break;
+          }
+          case 'Pending_Reason': {
+            this.ApiService.GetPendingReason(
+              this.JobDetailsLocalVariable.SelectedjobId
+            ).subscribe({
+              next: (res: any) => {
+                console.log(res);
+                resolve(res);
+              },
+              error: (error: string) => {
+                console.log(error);
+                reject(error);
+              },
+            });
+            break;
+          }
+          case 'Cancel': {
+            this.ApiService.SetCancel(
+              this.JobDetailsLocalVariable.SelectedjobId
+            ).subscribe({
+              next: (res: any) => {
+                console.log(res);
+                resolve(res);
+              },
+              error: (error: string) => {
+                console.log(error);
+                reject(error);
+              },
+            });
+            break;
+          }
+          case 'Submit': {
+            this.ApiService.SetSubmit(
+              this.JobDetailsLocalVariable.SelectedjobId
+            ).subscribe({
+              next: (res: any) => {
+                console.log(res);
+                resolve(res);
+              },
+              error: (error: string) => {
+                console.log(error);
+                reject(error);
+              },
+            });
+            break;
+          }
+        }
+      });
+    }
 }

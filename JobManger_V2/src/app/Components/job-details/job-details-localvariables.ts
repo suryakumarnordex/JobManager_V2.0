@@ -18,7 +18,8 @@ export class JobDetailsLocalVariable
     public SelectedjobId: Array<number>;
     public JobManageerNavigation = [] as any;    
     public openModal = false;
-    
+    public IsSuccess:boolean = false;
+    public Result:any;
     public Nodelist: Array<string> = [
         'All jobs',
         'Queue Simulation',

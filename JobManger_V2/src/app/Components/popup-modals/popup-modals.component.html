@@ -55,14 +55,60 @@
         *ngIf="passingEvent != 'Priority' && passingEvent != 'Pending_Reason'"
       >
         <div *ngIf="passingEvent != 'Pending_Reason'">
-          Are you sure you want to requeue the {{ passingEvent }}
+          Are you sure you want to {{ passingEvent }} the
           {{ JobDetailsLocalVariable.SelectedjobId }} ?
         </div>
+
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="
+            JobDetailsLocalVariable.IsSuccess == false &&
+            JobDetailsLocalVariable.Result != undefined
+          "
+        >
+          <div class="alert-items">
+            <div class="alert-item static">
+              <div class="alert-icon-wrapper">
+                <clr-icon
+                  class="alert-icon"
+                  shape="exclamation-circle"
+                ></clr-icon>
+              </div>
+
+              <span class="alert-text">
+                {{ JobDetailsLocalVariable.Result }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="alert alert-success"
+          role="alert"
+          *ngIf="
+            JobDetailsLocalVariable.IsSuccess == true &&
+            JobDetailsLocalVariable.Result != undefined
+          "
+        >
+          <div class="alert-items">
+            <div class="alert-item static">
+              <div class="alert-icon-wrapper">
+                <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+              </div>
+
+              <span class="alert-text">
+                {{ JobDetailsLocalVariable.Result }}
+              </span>
+            </div>
+          </div>
+        </div>
+
         <div class="modal-footer">
           <button
             type="button"
             class="btn btn-outline"
-            (click)="parentChildConnection = false"
+            (click)="PopupModelClose()"
           >
             Cancel
           </button>
