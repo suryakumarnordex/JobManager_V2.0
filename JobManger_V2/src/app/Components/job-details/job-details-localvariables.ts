@@ -47,10 +47,4 @@ export class JobDetailsLocalVariable {
     { key: 'Failed', value: 'Failed' },
     { key: 'Queued', value: 'Queued' },
   ];
-
-  s() {
-    this.Statuslist.forEach((status) => {
-      console.log(status.key);
-    });
-  }
 }

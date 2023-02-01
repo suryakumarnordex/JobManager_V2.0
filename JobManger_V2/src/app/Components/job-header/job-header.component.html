@@ -16,18 +16,24 @@
         [href]="NavigationUrl.url"
       >
         <span class="nav-text">{{ NavigationUrl.name }}</span>
-        
       </a>
-      <span *ngIf="!spinnerInlineloader" style="font-size: 20px;">
+      <span
+        *ngIf="!spinnerInlineloader"
+        style="
+          font-size: 17px;
+          position: absolute;
+          color: #e7e2e1;
+          top: 15px;
+          right: 20px;
+        "
+      >
         <clr-icon shape="user"></clr-icon>
         {{ displayName }}
       </span>
       <span *ngIf="spinnerInlineloader">
-        <span class="spinner spinner-inline">
-        </span>
+        <span class="spinner spinner-inline"> </span>
       </span>
     </div>
-   
   </header>
 
   <nav class="subnav">
@@ -49,7 +55,8 @@
         </div>
       </li>
       <div class="btn-group">
-        <button *ngIf="isRole=='internal'"
+        <button
+          *ngIf="isRole == 'internal'"
           class="btn btn-sm btn-secondary"
           (click)="openmodel('Priority')"
         >
@@ -58,7 +65,7 @@
       </div>
       <div class="btn-group">
         <button
-          type="button" 
+          type="button"
           class="btn btn-sm btn-secondary"
           (click)="openmodel('Requeue')"
         >
