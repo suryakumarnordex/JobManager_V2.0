@@ -52,7 +52,7 @@
 
       <div
         class="modal-body"
-        *ngIf="passingEvent != 'Priority' && passingEvent != 'Pending_Reason'"
+        *ngIf="passingEvent != 'TaskRequeue' && passingEvent != 'Priority' && passingEvent != 'Pending_Reason'"
       >
         <div *ngIf="passingEvent != 'Pending_Reason'">
           Are you sure you want to {{ passingEvent }} the
@@ -117,6 +117,29 @@
           </button>
         </div>
       </div>
+
+      <!-- Task Headers-->
+      <div
+      class="modal-body"
+      *ngIf="passingEvent == 'TaskRequeue'"
+    >
+     
+        If you want to Requeue the Task
+        {{ TaskDetailsLocalVariable.SelectedtaskId }} ?
+  
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline"
+          (click)="parentChildConnection = false"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-outline" (click)="PopupEvent()">
+          OK
+        </button>
+      </div>
+    </div>
       <br />
     </div>
   </div>

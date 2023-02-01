@@ -2,6 +2,8 @@ import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
 import { JobDetailsComponent } from '../job-details/job-details.component';
+import { TaskDetailsLocalVariable } from '../task-details/task-details-localvariable';
+import { TaskDetailsComponent } from '../task-details/task-details.component';
 @Component({
   selector: 'app-popup-modals',
   templateUrl: './popup-modals.component.html',
@@ -27,7 +29,9 @@ export class PopupModalsComponent implements OnInit {
 
   constructor(
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
-    private JobDetailscomponent: JobDetailsComponent
+    public TaskDetailsLocalVariable: TaskDetailsLocalVariable,
+    private JobDetailscomponent: JobDetailsComponent,
+    private TaskDetailsComponent: TaskDetailsComponent
   ) {}
 
   ngOnInit(): void {}

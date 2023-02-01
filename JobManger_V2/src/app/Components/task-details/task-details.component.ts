@@ -3,7 +3,7 @@ import { ApiServiceService } from 'src/app/api-service.service';
 import { SearchTaskResultsLayout } from 'src/app/Models/helper';
 import { TaskLayoutInfo } from 'src/app/Models/layout';
 import { LoggerService } from 'src/app/Services/logger.service';
-
+import {TaskDetailsLocalVariable} from './task-details-localvariable'
 @Component({
   selector: 'app-task-details',
   templateUrl: './task-details.component.html',
@@ -13,6 +13,7 @@ export class TaskDetailsComponent implements OnInit {
   @Input() recordPerPage: number = 10;
   @Input() taskLayout: TaskLayoutInfo[];
   @Input() JobIDFragement: string;
+  
   requestFromTask: boolean = true;
   selected = [] as any;
   pageSize: number = 1;
@@ -22,19 +23,19 @@ export class TaskDetailsComponent implements OnInit {
 
   constructor(
     private ApiService: ApiServiceService,
-    private logger: LoggerService
+    private logger: LoggerService,
+    public TaskDetailsLocalVariable:TaskDetailsLocalVariable
   ) {}
 
   ngOnInit(): void {
-    this.GetTaskDetails(this.recordPerPage, this.pageSize);
+    this.GetTaskDetails();
   }
 
-  GetTaskDetails(recordPerPage: number, pageSize: number) {
-    this.pageSize = pageSize;
-    this.recordPerPage = recordPerPage;
+  GetTaskDetails() {
+
     this.dataloading = true;
     console.log(this.JobIDFragement);
-
+    this.TaskDetailsLocalVariable.SelectedJobIDFragement = this.JobIDFragement;
     this.ApiService.searchTaskLayout(
       this.JobIDFragement,
       '',
@@ -44,15 +45,14 @@ export class TaskDetailsComponent implements OnInit {
       '',
       '',
       '',
-      this.pageSize,
-      this.recordPerPage,
+      this.TaskDetailsLocalVariable.currentpagetask,
+      this.TaskDetailsLocalVariable.recordperpagetask,
       false
     ).subscribe({
       next: (res: SearchTaskResultsLayout) => {
         this.taskLayout = res.results;
         this.totalRecords = res.totalResults;
-        console.log(this.totalRecords);
-        this.totalPage = Math.ceil(this.totalRecords / this.recordPerPage);
+        this.totalPage = Math.ceil(this.totalRecords / this.TaskDetailsLocalVariable.recordperpagetask);
         this.dataloading = false;
       },
       error: (error) => {
@@ -60,5 +60,28 @@ export class TaskDetailsComponent implements OnInit {
         this.dataloading = false;
       },
     });
+  }
+  selectionChanged(event: any[]) {   
+    // console.log(event);
+    this.TaskDetailsLocalVariable.SelectedtaskId = (event.map((e) => e.taskIdFragment));
+    console.log(this.TaskDetailsLocalVariable.SelectedJobIDFragement);
+    
+    console.log(this.TaskDetailsLocalVariable.SelectedtaskId);
+    
+    // this.JobDetailsLocalVariable.SelectedjobId=(event.map((e) => e.jobIdFragment));
+  }
+  setRequeue(){
+    this.ApiService.SetTaskRequeue(this.TaskDetailsLocalVariable.SelectedJobIDFragement,this.TaskDetailsLocalVariable.SelectedtaskId)
+    .subscribe({
+      next:(res:any)=>{
+        console.log(res);
+        this.TaskDetailsLocalVariable.loading = false;
+      },
+      error:(error:any)=>{
+        console.log(error);
+        this.TaskDetailsLocalVariable.loading = false;
+      }
+    })
+    
   }
 }

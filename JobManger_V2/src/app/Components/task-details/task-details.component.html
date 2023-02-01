@@ -1,4 +1,6 @@
-<clr-datagrid [(clrDgSelected)]="selected" [clrDgLoading]="this.dataloading">
+<app-task-header></app-task-header>
+<clr-datagrid [(clrDgSelected)]="selected" [clrDgLoading]="this.dataloading"
+(clrDgSelectedChange)="selectionChanged($event)">
   <clr-dg-column>Task ID</clr-dg-column>
   <clr-dg-column>Task Name</clr-dg-column>
   <clr-dg-column>Task State</clr-dg-column>
@@ -79,10 +81,10 @@
   <clr-dg-footer>
     <app-job-footer
       [requestFromJob]="false"
-      [totalRecords]="totalRecords"
-      [recordPerPagerequest]="recordPerPage"
-      [currentPage]="pageSize"
-      [totalPage]="totalPage"
+      [totalRecordstask]="totalRecords"
+      [recordPerPagerequesttask]="recordPerPage"
+      [currentPagetask]="pageSize"
+      [totalPagetask]="totalPage"
     ></app-job-footer>
   </clr-dg-footer>
 </clr-datagrid>

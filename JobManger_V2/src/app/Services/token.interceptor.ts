@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 export class TokenInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (request.url !== environment.navigationsUrl) {
-            request = request.clone({
+            var request = request.clone({
                 withCredentials: true
             });
         }

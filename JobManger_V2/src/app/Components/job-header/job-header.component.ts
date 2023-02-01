@@ -5,8 +5,9 @@ import { LoggerService } from 'src/app/Services/logger.service';
 import { LayoutInfo } from 'src/app/Models/layout';
 import { SearchResultsLayout } from 'src/app/Models/helper';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
-import {JobDetailsComponent } from '../job-details/job-details.component'
-
+import { JobDetailsComponent } from '../job-details/job-details.component';
+import { LoginService } from 'src/app/Services/login.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-job-header',
   templateUrl: './job-header.component.html',
@@ -16,18 +17,43 @@ export class JobHeaderComponent implements OnInit {
   @Input() recordPerPage: number = 10;
   @Input() recordPerPagerequest: number;
   @Input() passingEvent: string;
- 
+  // username: string = 'KumarSu';
+  isRole: string = 'internal';
+  displayName: string;
+  spinnerInlineloader: boolean = true;
+  hostName: string;
+  loginModal = false;
   constructor(
     private router: Router,
     private ApiService: ApiServiceService,
+    private route: ActivatedRoute,
     private logger: LoggerService,
-    private JobDetailsComponent : JobDetailsComponent,
-    public JobDetailsLocalVariable : JobDetailsLocalVariable 
+    private JobDetailsComponent: JobDetailsComponent,
+    public JobDetailsLocalVariable: JobDetailsLocalVariable,
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
     this.getNavigationsList();
+    this.route.queryParams.subscribe((params) => {
+      // this.loginModal = params.login;
+      console.log(params, 'PARAMS');
+    });
+
+    this.loginService.user().subscribe({
+      next: (user: any) => {
+        this.displayName = user.displayName;
+        console.log(this.displayName);
+        this.spinnerInlineloader = false;
+      },
+      error: (error) => {
+        console.log(error);
+        this.displayName = 'Unknown User';
+        this.spinnerInlineloader = false;
+      },
+    });
   }
+
   nodeListPage() {
     this.router.navigate(['nodelist']);
   }
@@ -41,19 +67,21 @@ export class JobHeaderComponent implements OnInit {
   }
   openmodel(event: string) {
     this.passingEvent = event;
-    this.JobDetailsLocalVariable.openModal = true;   
+    this.JobDetailsLocalVariable.openModal = true;
   }
   onNodeGroupChange(event: any) {
-   console.log('onNodeGroupChange');
+    console.log('onNodeGroupChange');
     this.JobDetailsLocalVariable.dataloading = true;
     let selectedNodeGroup = '';
-    let val = event.target.value;   
+    let val = event.target.value;
     let statusList: Array<string> = [];
     if (val.includes('Queue')) {
       selectedNodeGroup = val.replace('Queue ', '');
       statusList = ['Queued', 'Finished'];
     } else {
-      selectedNodeGroup = '';
+      this.JobDetailsLocalVariable.nodeGroupFragment = '';
+      this.JobDetailsLocalVariable.statusList = [];
+      this.JobDetailsLocalVariable.currentpage = 1;
     }
     if (event !== null) {
       this.ApiService.searchLayout(
@@ -63,11 +91,11 @@ export class JobHeaderComponent implements OnInit {
         '',
         '',
         '',
-        statusList,
+        this.JobDetailsLocalVariable.statusList,
         '',
         '',
         '',
-        selectedNodeGroup,
+        this.JobDetailsLocalVariable.nodeGroupFragment,
         '',
         '',
         false,

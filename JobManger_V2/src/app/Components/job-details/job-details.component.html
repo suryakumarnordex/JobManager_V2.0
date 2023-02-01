@@ -2,47 +2,77 @@
   <app-job-header></app-job-header>
 
   <clr-datagrid
-    [(clrDgSelected)]="this.JobDetailsLocalVariable.selected"
-    [clrDgLoading]="this.JobDetailsLocalVariable.dataloading"
-    HorizontalAlignment="auto"
-    VerticalAlignment="auto"
+    [(clrDgSelected)]="JobDetailsLocalVariable.selected"
+    (clrDgRefresh)="Columnfilters($event)"
+    [clrDgLoading]="JobDetailsLocalVariable.dataloading"
     (clrDgSelectedChange)="selectionChanged($event)"
   >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.idcolumnWidthValue"
+      [clrDgField]="'jobIdFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'idcolumnwidth')"
       style="align-content: space-around"
       >ID</clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.usercolumnWidthValue"
+      [clrDgField]="'userFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'usercolumnwidth')"
-      >User</clr-dg-column
     >
+      <ng-container> User </ng-container>
+      <clr-dg-filter [clrDgFilter]="cockpitusernameFilter" [scrollLeft]="true">
+        <checkbox-list-filter
+          #cockpitusernameFilter
+          [filterParamName]="'userFragment'"
+          [items]="JobDetailsLocalVariable.Userlist"
+        ></checkbox-list-filter>
+      </clr-dg-filter>
+    </clr-dg-column>
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.cockpitcolumnWidthValue"
+      [clrDgField]="'cockpitIdFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'cockpitcolumnwidth')"
       >Cockpit Id</clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.runcolumnWidthValue"
+      [clrDgField]="'runnoFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'runcolumnwidth')"
       >Run</clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.typecolumnWidthValue"
+      [clrDgField]="'typeFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'typecolumnwidth')"
-      >Type</clr-dg-column
+    >
+      <clr-dg-filter [clrDgFilter]="typeFilter" [scrollLeft]="true">
+        <checkbox-list-filter
+          #typeFilter
+          [filterParamName]="'typeFragment'"
+          [items]="JobDetailsLocalVariable.Typelist"
+        ></checkbox-list-filter>
+      </clr-dg-filter>
+      Type</clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.topiccolumnWidthValue"
+      [clrDgField]="'topicFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'topiccolumnwidth')"
       >Topic</clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.statuscolumnWidthValue"
+      [clrDgField]="'statusFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'statuscolumnwidth')"
-      >Status</clr-dg-column
+    >
+      <clr-dg-filter [clrDgFilter]="statusFilter" [scrollLeft]="true">
+        <checkbox-list-filter
+          #statusFilter
+          [filterParamName]="'statusFragment'"
+          [items]="JobDetailsLocalVariable.Statuslist"
+        ></checkbox-list-filter>
+      </clr-dg-filter>
+      Status</clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.progresscolumnWidthValue"
@@ -51,11 +81,13 @@
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.prioritycolumnWidthValue"
+      [clrDgField]="'priorityFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'prioritycolumnwidth')"
       >Job Priority</clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.notaskcolumnWidthValue"
+      [clrDgField]="'numberOfTasksFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'notaskcolumnwidth')"
       >Number Of Tasks</clr-dg-column
     >
@@ -251,10 +283,10 @@
     <clr-dg-footer>
       <app-job-footer
         [requestFromJob]="true"
-        [totalRecords]="this.JobDetailsLocalVariable.jobCount"
+        [totalRecords]="jobCount"
         [recordPerPagerequest]="recordPerPage"
-        [currentPage]="this.JobDetailsLocalVariable.pageSize"
-        [totalPage]="this.JobDetailsLocalVariable.totalPage"
+        [currentPage]="pageSize"
+        [totalPage]="totalPage"
       ></app-job-footer>
     </clr-dg-footer>
   </clr-datagrid>

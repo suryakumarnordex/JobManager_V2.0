@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="requestFromJob;else task">
   Records per page
   <select style="height: 30px" #teams (change)="onSelected(teams.value)">
     <option>10</option>
@@ -6,12 +6,12 @@
     <option>50</option>
     <option>100</option>
   </select>
-  &nbsp; {{ currentPage }} / {{ totalPage }} Pages of {{ totalRecords }} Records
+  &nbsp; {{ this.JobDetailsLocalVariable.currentpage }} / {{ totalPage }} Pages of {{ this.totalRecords }} Records
   &nbsp;
 
   <button
     type="button"
-    *ngIf="this.currentPage > 1"
+    *ngIf="this.JobDetailsLocalVariable.currentpage > 1"
     (click)="goTofirstPage()"
     class="btn btn-icon"
   >
@@ -19,7 +19,7 @@
   </button>
   <button
     type="button"
-    *ngIf="this.currentPage > 1"
+    *ngIf="this.JobDetailsLocalVariable.currentpage > 1"
     (click)="goTopriviousPage()"
     class="btn btn-icon"
   >
@@ -28,7 +28,7 @@
 
   <button
     type="button"
-    *ngIf="this.totalPage != this.currentPage; else elseblock"
+    *ngIf="JobDetailsLocalVariable.totalPage != this.JobDetailsLocalVariable.currentpage; else elseblock"
     (click)="goTonextPage()"
     class="btn btn-icon"
   >
@@ -49,3 +49,54 @@
     >|
   </button>
 </div>
+<ng-template #task>
+  Records per page
+  <select style="height: 30px" #teams (change)="onSelected(teams.value)">
+    <option>10</option>
+    <option>20</option>
+    <option>50</option>
+    <option>100</option>
+  </select>
+  &nbsp; {{ this.TaskDetailsLocalVariable.currentpagetask }} / {{ totalPagetask }} Pages of {{ this.totalRecordstask }} Records
+  &nbsp;
+
+  <button
+    type="button"
+    *ngIf="TaskDetailsLocalVariable.currentpagetask > 1"
+    (click)="goTofirstPage()"
+    class="btn btn-icon"
+  >
+    |<
+  </button>
+  <button
+    type="button"
+    *ngIf="TaskDetailsLocalVariable.currentpagetask > 1"
+    (click)="goTopriviousPage()"
+    class="btn btn-icon"
+  >
+    <
+  </button>
+
+  <button
+    type="button"
+    *ngIf="totalPagetask != TaskDetailsLocalVariable.currentpagetask; else elseblock"
+    (click)="goTonextPage()"
+    class="btn btn-icon"
+  >
+    >
+  </button>
+  <ng-template #elseblock
+    ><button
+      type="button"
+      class="btn btn-icon"
+      (click)="goTonextPage()"
+      disabled
+    >
+      >
+    </button></ng-template
+  >
+
+  <button type="button" (click)="goTolastPage()" class="btn btn-icon">
+    >|
+  </button>
+</ng-template>
