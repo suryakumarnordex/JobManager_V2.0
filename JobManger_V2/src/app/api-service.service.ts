@@ -155,7 +155,7 @@ export class ApiServiceService {
     console.log(this.apiurl + 'SetPriorityBandHPCRestAPI', {
       headers: this.headers,
       params: params,
-    });    
+    });
     return this.http.post(
       this.apiurl + 'SetPriorityBandHPCRestAPI',
       {},
@@ -219,9 +219,9 @@ export class ApiServiceService {
       }
     );
   }
-  SetTaskRequeue(jobIds: string, TaskIds: Array<number>){
+  SetTaskRequeue(jobIds: string, TaskIds: Array<number>) {
     let params = new HttpParams();
-    params = params.append('jobIds',jobIds);
+    params = params.append('jobIds', jobIds);
     TaskIds.forEach((taskid: any) => {
       params = params.append('taskIds', taskid);
     });
@@ -244,10 +244,12 @@ export class ApiServiceService {
     jobIds.forEach((jobId: any) => {
       params = params.append('jobIds', jobId);
     });
+
     console.log(this.apiurl + 'HPCPackJobSubmit', {
       headers: this.headers,
       params: params,
     });
+
     return this.http.post(
       this.apiurl + 'HPCPackJobSubmit',
       {},
@@ -258,6 +260,12 @@ export class ApiServiceService {
     );
   }
 
-
-
+  getFilePath(filepath: any) {
+    let params = new HttpParams();
+    params = params.append('FilePath', filepath);
+    return this.http.get(this.apiurl + 'GetTextFileContents', {
+      headers: this.headers,
+      params: params,
+    });
+  }
 }

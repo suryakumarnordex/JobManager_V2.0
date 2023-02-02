@@ -1,6 +1,9 @@
 <app-task-header></app-task-header>
-<clr-datagrid [(clrDgSelected)]="selected" [clrDgLoading]="this.dataloading"
-(clrDgSelectedChange)="selectionChanged($event)">
+<clr-datagrid
+  [(clrDgSelected)]="selected"
+  [clrDgLoading]="this.dataloading"
+  (clrDgSelectedChange)="selectionChanged($event)"
+>
   <clr-dg-column>Task ID</clr-dg-column>
   <clr-dg-column>Task Name</clr-dg-column>
   <clr-dg-column>Task State</clr-dg-column>
@@ -50,30 +53,53 @@
       </div>
     </clr-dg-cell>
 
-    <clr-dg-cell>
-      <div>
-        <a
-          href="javascript:void(0)"
-          role="tooltip"
-          aria-haspopup="true"
-          class="tooltip tooltip-lg tooltip-bottom-left"
-        >
-          <clr-icon
-            shape="copy-to-clipboard"
-            class="is-solid has-badge-info"
-          ></clr-icon>
-          <span class="tooltip-content" style="width: auto"
-            >Link To Standard Output</span
+    <!-- <clr-dg-cell>
+      <button
+        class="btn btn-outline btn-sm"
+        (click)="showFileData(task.standardOutput)"
+      >
+        Link To Standard Output
+      </button>
+    </clr-dg-cell> -->
+
+    <clr-dg-cell style="text-align: left">
+      <div style="display: flex; justify-content: space-evenly">
+        <div>
+          <div
+            role="tooltip"
+            aria-haspopup="true"
+            class="tooltip tooltip-sm tooltip tooltip-right"
+            style="text-align: center"
           >
-        </a>
+            Link To Standard Output
+            <span class="tooltip-content">{{ task.standardOutput }} </span>
+          </div>
+        </div>
+        <div>
+          <div (click)="showFileData(task.standardOutput)">
+            <a
+              href="javascript:void(0)"
+              role="tooltip"
+              aria-haspopup="true"
+              class="tooltip tooltip-sm tooltip tooltip-right"
+            >
+              <clr-icon
+                shape="copy-to-clipboard"
+                class="is-solid has-badge-info"
+                *ngIf="task.standardOutput != undefined"
+              ></clr-icon>
+              <span class="tooltip-content">{{ task.standardOutput }}</span>
+            </a>
+          </div>
+        </div>
       </div>
     </clr-dg-cell>
 
     <clr-dg-cell>{{
-      task.startTimeFragment | utcToLocalTime: "short"
+      task.startTimeFragment | utcToLocalTime : "short"
     }}</clr-dg-cell>
     <clr-dg-cell>{{
-      task.endTimeFragment | utcToLocalTime: "short"
+      task.endTimeFragment | utcToLocalTime : "short"
     }}</clr-dg-cell>
     <clr-dg-cell>{{ task.allocatedNodesFragment }}</clr-dg-cell>
     <clr-dg-cell>{{ task.commandLineFragment }}</clr-dg-cell>
@@ -88,3 +114,17 @@
     ></app-job-footer>
   </clr-dg-footer>
 </clr-datagrid>
+<clr-modal
+  [(clrModalOpen)]="this.TaskDetailsLocalVariable.openModal"
+  [clrModalSize]="'lg'"
+  [clrModalSkipAnimation]="'true'"
+>
+  <div
+    class="modal-body"
+    *ngFor="let item of this.TaskDetailsLocalVariable.LogFileData"
+  >
+    <ul style="list-style-type: none">
+      <li>{{ item }}</li>
+    </ul>
+  </div>
+</clr-modal>

@@ -24,7 +24,7 @@ export class LayoutInfo implements Deserializable, Serializable {
   submitTime: string;
   failedTasksCount: number;
   runningTasksCount: number;
-  queuedTasksCount:number;
+  queuedTasksCount: number;
   finishedTasksCount: number;
   clipboardtext: string;
   // PageNo: number;
@@ -38,7 +38,7 @@ export class LayoutInfo implements Deserializable, Serializable {
     this.topicFragment = input.runTopic;
     this.cockpitIdFragment = input.cockpitId;
     this.runnoFragment = input.runNumber;
-    this.runFolderFragment= input.runFolder;
+    this.runFolderFragment = input.runFolder;
     this.statusFragment = input.state;
     this.priorityFragment = input.priority;
     this.progressFragment = input.progress;
@@ -96,6 +96,7 @@ export class TaskLayoutInfo implements Deserializable, Serializable {
   startTimeFragment: string;
   endTimeFragment: string;
   allocatedNodesFragment: string;
+  standardOutput: string;
 
   commandLineFragment: string;
 
@@ -109,6 +110,7 @@ export class TaskLayoutInfo implements Deserializable, Serializable {
     this.startTimeFragment = input.startTime;
     this.endTimeFragment = input.endTime;
     this.allocatedNodesFragment = input.allocatedNodes;
+    this.standardOutput = input.standardOutput;
     this.commandLineFragment = input.commandLine;
     return this;
   }
@@ -123,6 +125,7 @@ export class TaskLayoutInfo implements Deserializable, Serializable {
       startTimeFragment: this.startTimeFragment,
       endTimeFragment: this.endTimeFragment,
       allocatedNodesFragment: this.allocatedNodesFragment,
+      standardOutput: this.standardOutput,
       commandLineFragment: this.commandLineFragment,
     };
   }
