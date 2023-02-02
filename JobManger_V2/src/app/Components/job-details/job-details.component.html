@@ -1,8 +1,11 @@
 <div class="main-container">
   <app-job-header></app-job-header>
-
   <clr-datagrid
     [(clrDgSelected)]="JobDetailsLocalVariable.selected"
+    class="datagrid-compact"
+    style="right: 0px; bottom: 4%; position: fixed; left: 0px; top: 82px"
+    HorizontalAlignment="auto"
+    VerticalAlignment="auto"
     (clrDgRefresh)="Columnfilters($event)"
     [clrDgLoading]="JobDetailsLocalVariable.dataloading"
     (clrDgSelectedChange)="selectionChanged($event)"
@@ -128,10 +131,14 @@
       [clrDgItem]="job"
       class="align"
     >
-      <clr-dg-cell>{{ job.jobIdFragment }}</clr-dg-cell>
-      <clr-dg-cell>{{ job.userFragment }}</clr-dg-cell>
+      <clr-dg-cell style="text-align: left">{{ job.jobIdFragment }}</clr-dg-cell>
+      <clr-dg-cell [style.width.px]="300" style="text-align: left"><div class="hidden">
+        <span title="{{ job.userFragment }}"
+          >{{ job.userFragment }}
+        </span>
+      </div></clr-dg-cell>
 
-      <clr-dg-cell style="text-align: left">
+      <clr-dg-cell [style.width.px]="300" style="text-align: left">
         <div style="display: flex; justify-content: space-evenly">
           <div>
             <div
@@ -194,8 +201,15 @@
         </div>
       </clr-dg-cell>
 
-      <clr-dg-cell>{{ job.typeFragment }}</clr-dg-cell>
-      <clr-dg-cell>{{ job.topicFragment }}</clr-dg-cell>
+      <clr-dg-cell [style.width.px]="500" style="text-align: left">
+        <div class="hidden">
+          <span title="{{ job.typeFragment }}">{{ job.typeFragment }} </span>
+        </div></clr-dg-cell>
+      <clr-dg-cell [style.width.px]="800" style="text-align: left">
+        <div class="hidden">
+          <span title="{{ job.topicFragment }}">{{ job.topicFragment }} </span>
+        </div>
+        </clr-dg-cell>
       <clr-dg-cell
         [style.color]="
           job.statusFragment == 'Failed'
@@ -260,14 +274,31 @@
         </a>
       </clr-dg-cell>
 
-      <clr-dg-cell>{{ job.priorityFragment }}</clr-dg-cell>
-      <clr-dg-cell>{{ job.numberOfTasksFragment }}</clr-dg-cell>
-      <clr-dg-cell>{{ job.runningTasksCount }}</clr-dg-cell>
-      <clr-dg-cell>{{ job.queuedTasksCount }}</clr-dg-cell>
-      <clr-dg-cell>{{ job.startTime | utcToLocalTime : "short" }}</clr-dg-cell>
-      <clr-dg-cell>{{ job.endTime | utcToLocalTime : "short" }}</clr-dg-cell>
-      <clr-dg-cell>{{ job.submitTime | utcToLocalTime : "short" }}</clr-dg-cell>
-      <clr-dg-cell>{{ job.elapsedTime }}</clr-dg-cell>
+      <clr-dg-cell  style="text-align: left" [ngStyle]="{
+        color: job.priorityFragment == 'Highest-100' ? 'red' : 'green'
+      }"
+      [style.width.px]="180"><div class="hidden">
+        <span title="{{ job.priorityFragment }}">{{ job.priorityFragment }} </span>
+      </div></clr-dg-cell>
+      <clr-dg-cell [style.width.px]="200" style="text-align: left">{{ job.numberOfTasksFragment }}</clr-dg-cell>
+      <clr-dg-cell [style.width.px]="200" style="text-align: left">{{ job.runningTasksCount }}</clr-dg-cell>
+      <clr-dg-cell [style.width.px]="200" style="text-align: left">{{ job.queuedTasksCount }}</clr-dg-cell>
+      <clr-dg-cell [style.width.px]="500" style="text-align: left">
+        <div class="hidden">
+          <span title="{{ job.startTime | utcToLocalTime : 'short' }}"
+            >{{ job.startTime | utcToLocalTime : "short" }}
+          </span>
+        </div></clr-dg-cell>
+      <clr-dg-cell [style.width.px]="500" style="text-align: left"> <div class="hidden">
+        <span title="{{ job.endTime | utcToLocalTime : 'short' }}">
+          {{ job.endTime | utcToLocalTime : "short" }}
+        </span></div></clr-dg-cell>
+      <clr-dg-cell [style.width.px]="500" style="text-align: left"><div class="hidden">
+        <span title="{{ job.submitTime | utcToLocalTime : 'short' }}">
+          {{ job.submitTime | utcToLocalTime : "short" }}
+        </span>
+      </div></clr-dg-cell>
+      <clr-dg-cell [style.width.px]="500" style="text-align: left">{{ job.elapsedTime }}</clr-dg-cell>
     </clr-dg-row>
     <ng-template
       clrIfDetail
