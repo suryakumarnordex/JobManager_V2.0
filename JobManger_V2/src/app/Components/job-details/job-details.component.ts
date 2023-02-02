@@ -11,7 +11,6 @@ import {
   SearchResultsLayout,
   SearchTaskResultsLayout,
 } from 'src/app/Models/helper';
-import { LayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
 import { LoggerService } from 'src/app/Services/logger.service';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetaillocalstorage } from './job-detail-Localstorage';
@@ -53,7 +52,33 @@ export class JobDetailsComponent implements OnInit {
   loginModal = false;
   ngOnInit(): void {
     this.JobDetailsLocalVariable.dataloading = true;
-    //  this.GetJobDetails(this.recordPerPage, this.JobDetailsLocalVariable.pageSize);
+    this.ApiService.GetUserNameList().subscribe({
+      next: (res: any) => {
+        this.JobDetailsLocalVariable.AvailableUserName = res;
+        console.log(res);
+      },
+      error: (error: string) => {
+        console.log(error);
+      },
+    });
+
+    this.ApiService.GetTypeList().subscribe({
+      next: (res: any) => {
+        this.JobDetailsLocalVariable.AvailableType = res;
+      },
+      error: (error: string) => {
+        console.log(error);
+      },
+    });
+
+    this.ApiService.GetStatusList().subscribe({
+      next: (res: any) => {
+        this.JobDetailsLocalVariable.AvailableState = res;
+      },
+      error: (error: string) => {
+        console.log(error);
+      },
+    });
   }
   public ColumnResized(event: any, colType: string) {
     this.localstorage.set(colType, event);
@@ -226,7 +251,6 @@ export class JobDetailsComponent implements OnInit {
       },
     });
   }
-
   onDetailOpen(event: any) {
     if (event !== null) {
       this.JobDetailsLocalVariable.detailTaskID = event.jobIdFragment;
@@ -327,6 +351,11 @@ export class JobDetailsComponent implements OnInit {
         console.log(error);
       },
     });
+  }
+  openmodel(event: string, selectedJobId: any) {
+    //this.passingEvent = event;
+    this.JobDetailsLocalVariable.SelectedjobId = selectedJobId;
+    this.JobDetailsLocalVariable.openModal = true;
   }
 
   ButtonEvents(EventStr: string): Promise<any> {

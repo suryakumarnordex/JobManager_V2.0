@@ -17,7 +17,6 @@ export class JobHeaderComponent implements OnInit {
   @Input() recordPerPage: number = 10;
   @Input() recordPerPagerequest: number;
   @Input() passingEvent: string;
-  // username: string = 'KumarSu';
   isRole: string = 'internal';
   displayName: string;
   spinnerInlineloader: boolean = true;

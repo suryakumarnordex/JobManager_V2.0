@@ -259,13 +259,28 @@ export class ApiServiceService {
       }
     );
   }
-
   getFilePath(filepath: any) {
     let params = new HttpParams();
     params = params.append('FilePath', filepath);
     return this.http.get(this.apiurl + 'GetTextFileContents', {
       headers: this.headers,
       params: params,
+    });
+  }
+
+  GetUserNameList() {
+    return this.http.get(this.apiurl + 'GetUsersList', {
+      headers: this.headers,
+    });
+  }
+  GetTypeList() {
+    return this.http.get(this.apiurl + 'GetTypeList', {
+      headers: this.headers,
+    });
+  }
+  GetStatusList() {
+    return this.http.get(this.apiurl + 'GetStatusList', {
+      headers: this.headers,
     });
   }
 }

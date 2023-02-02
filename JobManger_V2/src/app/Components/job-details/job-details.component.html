@@ -24,7 +24,7 @@
         <checkbox-list-filter
           #cockpitusernameFilter
           [filterParamName]="'userFragment'"
-          [items]="JobDetailsLocalVariable.Userlist"
+          [items]="JobDetailsLocalVariable.AvailableUserName"
         ></checkbox-list-filter>
       </clr-dg-filter>
     </clr-dg-column>
@@ -49,7 +49,7 @@
         <checkbox-list-filter
           #typeFilter
           [filterParamName]="'typeFragment'"
-          [items]="JobDetailsLocalVariable.Typelist"
+          [items]="JobDetailsLocalVariable.AvailableType"
         ></checkbox-list-filter>
       </clr-dg-filter>
       Type</clr-dg-column
@@ -69,7 +69,7 @@
         <checkbox-list-filter
           #statusFilter
           [filterParamName]="'statusFragment'"
-          [items]="JobDetailsLocalVariable.Statuslist"
+          [items]="JobDetailsLocalVariable.AvailableState"
         ></checkbox-list-filter>
       </clr-dg-filter>
       Status</clr-dg-column
@@ -128,6 +128,40 @@
       [clrDgItem]="job"
       class="align"
     >
+      <clr-dg-action-overflow>
+        <button
+          class="action-item"
+          (click)="openmodel('Priority', job.jobIdFragment)"
+        >
+          Priority
+        </button>
+        <button
+          class="action-item"
+          (click)="openmodel('Requeue', job.jobIdFragment)"
+        >
+          Requeue
+        </button>
+        <!-- pending reason -->
+        <button
+          class="action-item"
+          (click)="openmodel('Pending_Reason', job.jobIdFragment)"
+        >
+          Pending Reason
+        </button>
+        <!-- Ends -->
+        <button
+          class="action-item"
+          (click)="openmodel('Cancel', job.jobIdFragment)"
+        >
+          Cancel
+        </button>
+        <button
+          class="action-item"
+          (click)="openmodel('Submit', job.jobIdFragment)"
+        >
+          Submit
+        </button>
+      </clr-dg-action-overflow>
       <clr-dg-cell>{{ job.jobIdFragment }}</clr-dg-cell>
       <clr-dg-cell>{{ job.userFragment }}</clr-dg-cell>
 
