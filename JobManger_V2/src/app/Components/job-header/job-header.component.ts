@@ -39,7 +39,6 @@ export class JobHeaderComponent implements OnInit {
     this.loginService.user().subscribe({
       next: (user: any) => {
         this.displayName = user.displayName;
-        console.log(this.displayName);
         this.spinnerInlineloader = false;
       },
       error: (error) => {

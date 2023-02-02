@@ -34,7 +34,7 @@ export class JobDetailsComponent implements OnInit {
   @Input() pageSize: number = 1;
   @Input() totalPage: number;
   @Input() jobCount: number;
-
+  @Input() passingEvent: string;
   @Input() recordPerPage: number = 10;
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
   @ViewChildren(CheckboxListFilterComponent)
@@ -353,7 +353,7 @@ export class JobDetailsComponent implements OnInit {
     });
   }
   openmodel(event: string, selectedJobId: any) {
-    //this.passingEvent = event;
+    this.passingEvent = event;
     this.JobDetailsLocalVariable.SelectedjobId = selectedJobId;
     this.JobDetailsLocalVariable.openModal = true;
   }
