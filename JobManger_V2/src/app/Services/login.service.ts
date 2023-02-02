@@ -7,16 +7,17 @@ import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
-//   private apiUrl = environment.loginApiUrl;
+  private UserapiUrl = environment.userLoginUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  user(userName:string | null = null ):Observable<User>
-   {
-    return this.http.get('http://ldms.nordex-ag.com/QuickerViewApi_Beta/api/v1/Login/UserName',{ params: { 'userName': userName ? userName : '' } }).pipe(
-        map((resp) => { 
+  user(userName: string | null = null): Observable<User> {
+    return this.http
+      .get(this.UserapiUrl, { params: { userName: userName ? userName : '' } })
+      .pipe(
+        map((resp) => {
           return new User().deserialize(resp);
-        }));
-   }
-  
+        })
+      );
+  }
 }

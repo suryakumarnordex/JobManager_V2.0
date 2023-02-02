@@ -35,10 +35,7 @@ export class JobHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getNavigationsList();
-    this.route.queryParams.subscribe((params) => {
-      // this.loginModal = params.login;
-      console.log(params, 'PARAMS');
-    });
+    this.route.queryParams.subscribe((params) => {});
 
     this.loginService.user().subscribe({
       next: (user: any) => {

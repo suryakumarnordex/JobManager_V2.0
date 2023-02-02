@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  webAppApiUrl: 'http://ldms.nordex-ag.com/JobManagerApi/swagger/ui/index#/JobManager',
+  webAppApiUrl:
+    'http://ldms.nordex-ag.com/NET6/JobManagerApi/swagger/ui/index#/JobManager',
+  userLoginUrl:
+    'http://ldms.nordex-ag.com/NET6/JobManagerAPI/api/v1/Login/UserName',
   navigationsUrl: 'http://ldms.nordex-ag.com/navigations.json',
 };
 
