@@ -67,14 +67,15 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsLocalVariable.openModal = true;
   }
   onNodeGroupChange(event: any) {
-    console.log('onNodeGroupChange');
     this.JobDetailsLocalVariable.dataloading = true;
-    let selectedNodeGroup = '';
     let val = event.target.value;
-    let statusList: Array<string> = [];
+
     if (val.includes('Queue')) {
-      selectedNodeGroup = val.replace('Queue ', '');
-      statusList = ['Queued', 'Finished'];
+      this.JobDetailsLocalVariable.nodeGroupFragment = val.replace(
+        'Queue ',
+        ''
+      );
+      this.JobDetailsLocalVariable.statusList = ['Queued', 'Finished'];
     } else {
       this.JobDetailsLocalVariable.nodeGroupFragment = '';
       this.JobDetailsLocalVariable.statusList = [];
