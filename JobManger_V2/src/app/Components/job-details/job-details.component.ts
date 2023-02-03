@@ -192,16 +192,15 @@ export class JobDetailsComponent implements OnInit {
     let cockpitIdFragment = '';
     let runnoFragment = '';
     let priorityFragment = '';
-    // progressFragment: string = '',
     let numberOfTasksFragment = '';
     let orderDescending = false;
     let waitForChange = false;
     // nodeGroupFragment: string = '',
     // pendingReasonFragment: string = '',
     // orderBy: string = '';
-    let PageNo = 1;
+    // let PageNo = 1;
+    // progressFragment: string = '',
     // PageSize: number = 10;
-    console.log(state,"STATE");
     this.JobDetailsLocalVariable.state = state;
     if (state.filters) {
       this.JobDetailsLocalVariable.dataloading = true;
