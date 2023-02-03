@@ -58,6 +58,7 @@ export class JobDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.JobDetailsLocalVariable.dataloading = true;
     this.GetMultipleSelectFiltersData();
+    this.GetLocalStorageColumnValue();
   }
   GetMultipleSelectFiltersData() {
     this.JobDetailsLocalVariable.AvailableUserName = [];
@@ -291,7 +292,6 @@ export class JobDetailsComponent implements OnInit {
       },
     });
   }
-
   loadDatas() {
     this.JobDetailsLocalVariable.dataloading = true;
     this.ApiService.searchLayout(
@@ -331,7 +331,6 @@ export class JobDetailsComponent implements OnInit {
       },
     });
   }
-
   nodeGroupchange(
     event: any,
     statusList: Array<string>,
@@ -419,7 +418,6 @@ export class JobDetailsComponent implements OnInit {
     document.execCommand('copy');
     document.removeEventListener('copy', create_copy);
   }
-
   selectionChanged(event: any[]) {
     let finishedCount = 0;
     let canceledCount = 0;
@@ -519,7 +517,6 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.SelectedjobId = selectedJobId;
     this.JobDetailsLocalVariable.openModal = true;
   }
-
   ButtonEvents(EventStr: string): Promise<any> {
     return new Promise((resolve, reject) => {
       switch (EventStr) {
