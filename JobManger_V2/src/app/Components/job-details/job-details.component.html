@@ -298,10 +298,10 @@
     <clr-dg-footer>
       <app-job-footer
         [requestFromJob]="true"
-        [totalRecords]="jobCount"
-        [recordPerPagerequest]="recordPerPage"
-        [currentPage]="pageSize"
-        [totalPage]="totalPage"
+        [totalRecords]="JobDetailsLocalVariable.jobCount"
+        [recordPerPagerequest]="JobDetailsLocalVariable.recordperpagejob"
+        [currentPage]="JobDetailsLocalVariable.currentpage"
+        [totalPage]="JobDetailsLocalVariable.totalPage"
       ></app-job-footer>
     </clr-dg-footer>
   </clr-datagrid>

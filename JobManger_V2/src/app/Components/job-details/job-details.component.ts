@@ -34,14 +34,14 @@ import { JobHeaderComponent } from '../job-header/job-header.component';
 })
 export class JobDetailsComponent implements OnInit {
   @Input() pageSize: number = 1;
-  @Input() totalPage: number;
-  @Input() jobCount: number;
   totalJobCount: number;
+
+
+  
   priorityDisable: boolean;
   requeueDisable: boolean;
   cancelDisable: boolean;
   submitDisable: boolean;
-  @Input() recordPerPage: number = 10;
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
   @ViewChildren(CheckboxListFilterComponent)
   buildincolumns: QueryList<CheckboxListFilterComponent>;
@@ -218,10 +218,10 @@ export class JobDetailsComponent implements OnInit {
     ).subscribe({
       next: (res: SearchResultsLayout) => {
         this.JobDetailsLocalVariable.layouts = res.results;
-        this.jobCount = res.totalResults;
+        this.JobDetailsLocalVariable.jobCount = res.totalResults;
         this.JobDetailsLocalVariable.dataloading = false;
-        this.totalPage = Math.ceil(
-          this.jobCount / this.JobDetailsLocalVariable.recordperpagejob
+        this.JobDetailsLocalVariable.totalPage = Math.ceil(
+          this.JobDetailsLocalVariable.jobCount / this.JobDetailsLocalVariable.recordperpagejob
         );
       },
       error: (error) => {
@@ -257,10 +257,10 @@ export class JobDetailsComponent implements OnInit {
         this.JobDetailsLocalVariable.layouts = res.results;
         console.log(this.JobDetailsLocalVariable.layouts, 'Datas');
 
-        this.jobCount = res.totalResults;
+        this.JobDetailsLocalVariable.jobCount = res.totalResults;
         this.JobDetailsLocalVariable.dataloading = false;
-        this.totalPage = Math.ceil(
-          this.jobCount / this.JobDetailsLocalVariable.recordperpagejob
+        this.JobDetailsLocalVariable.totalPage = Math.ceil(
+          this.JobDetailsLocalVariable.jobCount / this.JobDetailsLocalVariable.recordperpagejob
         );
         this.JobDetailsLocalVariable.dataloading = false;
       },
@@ -293,15 +293,15 @@ export class JobDetailsComponent implements OnInit {
         '',
         false,
         1,
-        this.recordPerPage,
+        this.JobDetailsLocalVariable.recordperpagejob,
         false
       ).subscribe({
         next: (res: SearchResultsLayout) => {
           this.JobDetailsLocalVariable.layouts = res.results;
-          this.jobCount = res.totalResults;
+          this.JobDetailsLocalVariable.jobCount = res.totalResults;
           this.JobDetailsLocalVariable.dataloading = false;
-          this.totalPage = Math.ceil(
-            this.jobCount / this.JobDetailsLocalVariable.recordperpagejob
+          this.JobDetailsLocalVariable.totalPage = Math.ceil(
+            this.JobDetailsLocalVariable.jobCount / this.JobDetailsLocalVariable.recordperpagejob
           );
 
           this.JobDetailsLocalVariable.dataloading = false;
