@@ -517,7 +517,6 @@ export class JobDetailsComponent implements OnInit {
       },
     });
   }
-
   ButtonEvents(EventStr: string): Promise<any> {
     return new Promise((resolve, reject) => {
       switch (EventStr) {
