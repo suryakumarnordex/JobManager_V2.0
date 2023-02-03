@@ -8,15 +8,51 @@
   VerticalAlignment="auto"
   (clrDgSelectedChange)="selectionChanged($event)"
 >
-  <clr-dg-column>Task ID</clr-dg-column>
-  <clr-dg-column>Task Name</clr-dg-column>
-  <clr-dg-column>Task State</clr-dg-column>
-  <clr-dg-column>Exit Code</clr-dg-column>
-  <clr-dg-column>Log</clr-dg-column>
-  <clr-dg-column>Start Time (yy/mm/dd HH:mm)</clr-dg-column>
-  <clr-dg-column>End Time (yy/mm/dd HH:mm)</clr-dg-column>
-  <clr-dg-column>Allocated Nodes</clr-dg-column>
-  <clr-dg-column>Command Line</clr-dg-column>
+  <clr-dg-column
+    [style.width.px]="TaskDetailsLocalStorage.taskidcolumnWidthValue"
+    (clrDgColumnResize)="TaskColumnResized($event, 'taskidcolumnwidth')"
+    >Task ID</clr-dg-column
+  >
+  <clr-dg-column
+    [style.width.px]="TaskDetailsLocalStorage.tasknamecolumnWidthValue"
+    (clrDgColumnResize)="TaskColumnResized($event, 'tasknamecolumnwidth')"
+    >Task Name</clr-dg-column
+  >
+  <clr-dg-column
+    [style.width.px]="TaskDetailsLocalStorage.taskstatecolumnWidthValue"
+    (clrDgColumnResize)="TaskColumnResized($event, 'taskstatecolumnwidth')"
+    >Task State</clr-dg-column
+  >
+  <clr-dg-column
+    [style.width.px]="TaskDetailsLocalStorage.exitcodecolumnWidthValue"
+    (clrDgColumnResize)="TaskColumnResized($event, 'exitcodecolumnwidth')"
+    >Exit Code</clr-dg-column
+  >
+  <clr-dg-column
+    [style.width.px]="TaskDetailsLocalStorage.tasklogcolumnWidthValue"
+    (clrDgColumnResize)="TaskColumnResized($event, 'tasklogcolumnwidth')"
+    >Log</clr-dg-column
+  >
+  <clr-dg-column
+    [style.width.px]="TaskDetailsLocalStorage.taskstartcolumnWidthValue"
+    (clrDgColumnResize)="TaskColumnResized($event, 'taskstarttimecolumnwidth')"
+    >Start Time (yy/mm/dd HH:mm)</clr-dg-column
+  >
+  <clr-dg-column
+    [style.width.px]="TaskDetailsLocalStorage.taskendcolumnWidthValue"
+    (clrDgColumnResize)="TaskColumnResized($event, 'taskendtimecolumnwidth')"
+    >End Time (yy/mm/dd HH:mm)</clr-dg-column
+  >
+  <clr-dg-column
+    [style.width.px]="TaskDetailsLocalStorage.allocatednodescolumnWidthValue"
+    (clrDgColumnResize)="TaskColumnResized($event, 'allocatednodecolumnwidth')"
+    >Allocated Nodes</clr-dg-column
+  >
+  <clr-dg-column
+    [style.width.px]="TaskDetailsLocalStorage.commandlinecolumnWidthValue"
+    (clrDgColumnResize)="TaskColumnResized($event, 'commandlinecolumnwidth')"
+    >Command Line</clr-dg-column
+  >
 
   <clr-dg-row *ngFor="let task of taskLayout" [clrDgItem]="task">
     <clr-dg-cell
@@ -85,7 +121,10 @@
             class="tooltip tooltip-sm tooltip tooltip-right"
             style="text-align: center"
           >
-            Link To Standard Output
+            <div class="hidden">
+              <span title="{{ task.standardOutput }}"> </span>
+            </div>
+
             <span class="tooltip-content">{{ task.standardOutput }} </span>
           </div>
         </div>
@@ -102,7 +141,7 @@
                 class="is-solid has-badge-info"
                 *ngIf="task.standardOutput != undefined"
               ></clr-icon>
-              <span class="tooltip-content">{{ task.standardOutput }}</span>
+              <span class="tooltip-content">Link to standard output</span>
             </a>
           </div>
         </div>
@@ -130,7 +169,7 @@
         </span>
       </div></clr-dg-cell
     >
-    <clr-dg-cell
+    <clr-dg-cell [style.width.px]="200"
       ><div class="hidden">
         <span title="{{ task.commandLineFragment }}"
           >{{ task.commandLineFragment }}

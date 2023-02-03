@@ -4,6 +4,8 @@ import { SearchTaskResultsLayout } from 'src/app/Models/helper';
 import { TaskLayoutInfo } from 'src/app/Models/layout';
 import { LoggerService } from 'src/app/Services/logger.service';
 import { TaskDetailsLocalVariable } from './task-details-localvariable';
+import { TaskDetaillocalstorage } from '../task-header/task-detail-Localstorage';
+import { LocalStorageService } from 'src/app/local-storage.service';
 @Component({
   selector: 'app-task-details',
   templateUrl: './task-details.component.html',
@@ -24,7 +26,9 @@ export class TaskDetailsComponent implements OnInit {
   constructor(
     private ApiService: ApiServiceService,
     private logger: LoggerService,
-    public TaskDetailsLocalVariable: TaskDetailsLocalVariable
+    public TaskDetailsLocalVariable: TaskDetailsLocalVariable,
+    public TaskDetailsLocalStorage: TaskDetaillocalstorage,
+    private localstorage: LocalStorageService
   ) {}
 
   ngOnInit(): void {
@@ -84,6 +88,68 @@ export class TaskDetailsComponent implements OnInit {
     console.log(this.TaskDetailsLocalVariable.SelectedtaskId);
 
     // this.JobDetailsLocalVariable.SelectedjobId=(event.map((e) => e.jobIdFragment));
+  }
+  public TaskColumnResized(event: any, colType: string) {
+    this.localstorage.set(colType, event);
+
+    switch (colType) {
+      case 'taskidcolumnwidth': {
+        this.TaskDetailsLocalStorage.taskidcolumnWidthValue = event;
+        break;
+      }
+      case 'tasknamecolumnwidth': {
+        this.TaskDetailsLocalStorage.tasknamecolumnWidthValue = event;
+        break;
+      }
+      case 'taskstatecolumnwidth': {
+        this.TaskDetailsLocalStorage.taskstatecolumnWidthValue = event;
+        break;
+      }
+      case 'exitcodecolumnwidth': {
+        this.TaskDetailsLocalStorage.exitcodecolumnWidthValue = event;
+        break;
+      }
+      case 'tasklogcolumnwidth': {
+        this.TaskDetailsLocalStorage.tasklogcolumnWidthValue = event;
+        break;
+      }
+      case 'taskstarttimecolumnwidth': {
+        this.TaskDetailsLocalStorage.taskstartcolumnWidthValue = event;
+        break;
+      }
+      case 'taskendtimecolumnwidth': {
+        this.TaskDetailsLocalStorage.taskendcolumnWidthValue = event;
+        break;
+      }
+      case 'allocatednodecolumnwidth': {
+        this.TaskDetailsLocalStorage.allocatednodescolumnWidthValue = event;
+        break;
+      }
+      case 'commandlinecolumnwidth': {
+        this.TaskDetailsLocalStorage.commandlinecolumnWidthValue = event;
+        break;
+      }
+    }
+  }
+  GetTaskLocalStorageColumnValue() {
+    this.TaskDetailsLocalStorage.taskidcolumnWidthValue =
+      this.localstorage.get('taskidcolumnwidth');
+    this.TaskDetailsLocalStorage.tasknamecolumnWidthValue =
+      this.localstorage.get('tasknamecolumnwidth');
+    this.TaskDetailsLocalStorage.taskstatecolumnWidthValue =
+      this.localstorage.get('taskstatecolumnwidth');
+    this.TaskDetailsLocalStorage.exitcodecolumnWidthValue =
+      this.localstorage.get('exitcodecolumnwidth');
+    this.TaskDetailsLocalStorage.tasklogcolumnWidthValue =
+      this.localstorage.get('tasklogcolumnwidth');
+    this.TaskDetailsLocalStorage.taskstartcolumnWidthValue =
+      this.localstorage.get('taskstarttimecolumnwidth');
+    this.TaskDetailsLocalStorage.taskendcolumnWidthValue =
+      this.localstorage.get('taskendtimecolumnwidth');
+    this.TaskDetailsLocalStorage.allocatednodescolumnWidthValue =
+      this.localstorage.get('allocatednodecolumnwidth');
+    this.TaskDetailsLocalStorage.commandlinecolumnWidthValue =
+      this.localstorage.get('commandlinecolumnwidth');
   }
   setRequeue() {
     this.ApiService.SetTaskRequeue(
