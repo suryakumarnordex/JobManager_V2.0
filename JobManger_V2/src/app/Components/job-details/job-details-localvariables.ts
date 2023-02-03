@@ -9,6 +9,7 @@ export class JobDetailsLocalVariable {
   public taskLayout: TaskLayoutInfo[];
   public statusList: Array<string> = [];
 
+  public state:any;
   //Grid properties
   public requestFromJOb: boolean = true;
   public dataloading: boolean = false;

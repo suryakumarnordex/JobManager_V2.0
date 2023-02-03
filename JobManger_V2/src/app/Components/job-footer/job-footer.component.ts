@@ -111,7 +111,7 @@ export class JobFooterComponent implements OnInit {
       this.JobDetailsLocalVariable.recordperpagejob = Number(value);
       this.JobDetailsLocalVariable.dataloading = true;
       this.JobDetailsLocalVariable.currentpage = 1;
-      this.jobdetails.Columnfilters({});
+      this.jobdetails.Columnfilters(this.JobDetailsLocalVariable.state);
     } else {
       this.TaskDetailsLocalVariable.loading = true;
       this.TaskDetailsLocalVariable.recordperpagetask = Number(value);

@@ -201,7 +201,8 @@ export class JobDetailsComponent implements OnInit {
     // orderBy: string = '';
     let PageNo = 1;
     // PageSize: number = 10;
-
+    console.log(state,"STATE");
+    this.JobDetailsLocalVariable.state = state;
     if (state.filters) {
       this.JobDetailsLocalVariable.dataloading = true;
       for (const filter of state.filters) {
