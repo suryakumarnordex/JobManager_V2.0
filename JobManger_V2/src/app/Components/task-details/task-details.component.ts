@@ -33,6 +33,7 @@ export class TaskDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetTaskDetails();
+    this.GetTaskLocalStorageColumnValue();
   }
   showFileData(log: any) {
     this.TaskDetailsLocalVariable.LogFileData = null;
