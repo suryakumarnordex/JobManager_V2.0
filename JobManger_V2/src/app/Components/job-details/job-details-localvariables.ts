@@ -31,20 +31,4 @@ export class JobDetailsLocalVariable {
     'Queue BladedSimulation',
     'Queue PrePostProcessing',
   ];
-
-  public Typelist = [
-    { key: 'Reporting', value: 'Reporting' },
-    { key: 'Simulation', value: 'Simulation' },
-    { key: 'SimulationPro', value: 'SimulationPro' },
-  ];
-  public Userlist = [
-    { key: 'PleusS', value: 'PleusS' },
-    { key: 'SchenkJ', value: 'SchenkJ' },
-    { key: 'MartinezA3', value: 'MartinezA3' },
-  ];
-  public Statuslist = [
-    { key: 'Configuring', value: 'Configuring' },
-    { key: 'Failed', value: 'Failed' },
-    { key: 'Queued', value: 'Queued' },
-  ];
 }

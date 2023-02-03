@@ -49,13 +49,25 @@ export class JobDetailsComponent implements OnInit {
 
     private route: ActivatedRoute
   ) {}
-  loginModal = false;
+
   ngOnInit(): void {
     this.JobDetailsLocalVariable.dataloading = true;
+    this.GetMultipleSelectFiltersData();
+  }
+  GetMultipleSelectFiltersData() {
     this.ApiService.GetUserNameList().subscribe({
       next: (res: any) => {
-        this.JobDetailsLocalVariable.AvailableUserName = res;
-        console.log(res);
+        res.forEach((UserName: any) => {
+          if (!this.JobDetailsLocalVariable.AvailableUserName)
+            this.JobDetailsLocalVariable.AvailableUserName = [
+              { key: UserName, value: UserName },
+            ];
+          else
+            this.JobDetailsLocalVariable.AvailableUserName.push({
+              key: UserName,
+              value: UserName,
+            });
+        });
       },
       error: (error: string) => {
         console.log(error);
@@ -64,7 +76,17 @@ export class JobDetailsComponent implements OnInit {
 
     this.ApiService.GetTypeList().subscribe({
       next: (res: any) => {
-        this.JobDetailsLocalVariable.AvailableType = res;
+        res.forEach((Type: any) => {
+          if (!this.JobDetailsLocalVariable.AvailableType)
+            this.JobDetailsLocalVariable.AvailableType = [
+              { key: Type, value: Type },
+            ];
+          else
+            this.JobDetailsLocalVariable.AvailableType.push({
+              key: Type,
+              value: Type,
+            });
+        });
       },
       error: (error: string) => {
         console.log(error);
@@ -73,7 +95,17 @@ export class JobDetailsComponent implements OnInit {
 
     this.ApiService.GetStatusList().subscribe({
       next: (res: any) => {
-        this.JobDetailsLocalVariable.AvailableState = res;
+        res.forEach((state: any) => {
+          if (!this.JobDetailsLocalVariable.AvailableState)
+            this.JobDetailsLocalVariable.AvailableState = [
+              { key: state, value: state },
+            ];
+          else
+            this.JobDetailsLocalVariable.AvailableState.push({
+              key: state,
+              value: state,
+            });
+        });
       },
       error: (error: string) => {
         console.log(error);
