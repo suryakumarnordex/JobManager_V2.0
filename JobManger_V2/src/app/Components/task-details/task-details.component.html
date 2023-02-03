@@ -1,7 +1,11 @@
 <app-task-header></app-task-header>
 <clr-datagrid
+  class="datagrid-compact"
   [(clrDgSelected)]="selected"
   [clrDgLoading]="this.dataloading"
+  style="height: 500px"
+  HorizontalAlignment="auto"
+  VerticalAlignment="auto"
   (clrDgSelectedChange)="selectionChanged($event)"
 >
   <clr-dg-column>Task ID</clr-dg-column>
@@ -15,8 +19,18 @@
   <clr-dg-column>Command Line</clr-dg-column>
 
   <clr-dg-row *ngFor="let task of taskLayout" [clrDgItem]="task">
-    <clr-dg-cell>{{ task.taskIdFragment }}</clr-dg-cell>
-    <clr-dg-cell>{{ task.nameFragment }}</clr-dg-cell>
+    <clr-dg-cell
+      ><div class="hidden">
+        <span title="{{ task.taskIdFragment }}"
+          >{{ task.taskIdFragment }}
+        </span>
+      </div></clr-dg-cell
+    >
+    <clr-dg-cell
+      ><div class="hidden">
+        <span title="{{ task.nameFragment }}">{{ task.nameFragment }} </span>
+      </div></clr-dg-cell
+    >
     <clr-dg-cell
       [style.color]="
         task.statusFragment == 'Failed'
@@ -95,14 +109,34 @@
       </div>
     </clr-dg-cell>
 
-    <clr-dg-cell>{{
-      task.startTimeFragment | utcToLocalTime : "short"
-    }}</clr-dg-cell>
-    <clr-dg-cell>{{
-      task.endTimeFragment | utcToLocalTime : "short"
-    }}</clr-dg-cell>
-    <clr-dg-cell>{{ task.allocatedNodesFragment }}</clr-dg-cell>
-    <clr-dg-cell>{{ task.commandLineFragment }}</clr-dg-cell>
+    <clr-dg-cell
+      ><div class="hidden">
+        <span title="{{ task.startTimeFragment | utcToLocalTime : 'short' }}"
+          >{{ task.startTimeFragment | utcToLocalTime : "short" }}
+        </span>
+      </div></clr-dg-cell
+    >
+    <clr-dg-cell
+      ><div class="hidden">
+        <span title="{{ task.endTimeFragment | utcToLocalTime : 'short' }}"
+          >{{ task.endTimeFragment | utcToLocalTime : "short" }}
+        </span>
+      </div></clr-dg-cell
+    >
+    <clr-dg-cell
+      ><div class="hidden">
+        <span title="{{ task.allocatedNodesFragment }}"
+          >{{ task.allocatedNodesFragment }}
+        </span>
+      </div></clr-dg-cell
+    >
+    <clr-dg-cell
+      ><div class="hidden">
+        <span title="{{ task.commandLineFragment }}"
+          >{{ task.commandLineFragment }}
+        </span>
+      </div></clr-dg-cell
+    >
   </clr-dg-row>
   <clr-dg-footer>
     <app-job-footer
