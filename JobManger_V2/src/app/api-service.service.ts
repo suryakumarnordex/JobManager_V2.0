@@ -6,7 +6,8 @@ import { environment } from 'src/environments/environment.beta';
 import { LoggerService } from './Services/logger.service';
 import { JobDetailsModules } from './Modules/JobDetailsModules';
 import { SearchResultsLayout, SearchTaskResultsLayout } from './Models/helper';
-
+import { JobDetailsLocalVariable } from './Components/job-details/job-details-localvariables';
+import { JobDetaillocalstorage } from './Components/job-details/job-detail-Localstorage';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,7 +15,11 @@ export class ApiServiceService {
   private apiurl = environment.webAppApiUrl;
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  constructor(private http: HttpClient, private logger: LoggerService) {}
+  constructor(
+    private http: HttpClient,
+    private logger: LoggerService,
+    public JobDetailsLocalVariable: JobDetailsLocalVariable
+  ) {}
 
   getNavigations() {
     let url = 'http://ldms/navigations.json';
@@ -35,8 +40,8 @@ export class ApiServiceService {
     pendingReasonFragment: string = '',
     orderBy: string = '',
     orderDescending: boolean,
-    PageNo: number = 1,
-    PageSize: number = 10,
+    PageNo: number = this.JobDetailsLocalVariable.recordperpagejob,
+    PageSize: number = this.JobDetailsLocalVariable.currentpage,
     waitForChange: boolean = false
   ): Observable<SearchResultsLayout> {
     let params = new HttpParams()

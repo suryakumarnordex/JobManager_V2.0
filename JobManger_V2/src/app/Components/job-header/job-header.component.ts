@@ -76,6 +76,8 @@ export class JobHeaderComponent implements OnInit {
   }
   refreshData() {
     this.JobDetailsComponent.loadDatas();
+    this.JobDetailsComponent.GetLocalStorageColumnValue();
+    this.JobDetailsComponent.GetMultipleSelectFiltersData();
   }
   onNodeGroupChange(event: any) {
     this.JobDetailsLocalVariable.dataloading = true;
