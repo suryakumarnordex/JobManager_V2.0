@@ -15,6 +15,7 @@ export class JobDetailsLocalVariable {
   public dataloading: boolean = false;
   public priorityValue: string;
   public SelectedjobId: Array<number>;
+  public SelectedjobIdStatus: Array<number>;
   public JobManageerNavigation = [] as any;
   public openModal = false;
   public IsSuccess: boolean = false;

@@ -13,7 +13,7 @@ export class TaskDetailsComponent implements OnInit {
   @Input() recordPerPage: number = 10;
   @Input() taskLayout: TaskLayoutInfo[];
   @Input() JobIDFragement: string;
-
+  @Input() taskLength: number;
   requestFromTask: boolean = true;
   selected = [] as any;
   pageSize: number = 1;
@@ -75,13 +75,12 @@ export class TaskDetailsComponent implements OnInit {
     });
   }
   selectionChanged(event: any[]) {
-    // console.log(event);
     this.TaskDetailsLocalVariable.SelectedtaskId = event.map(
       (e) => e.taskIdFragment
     );
     console.log(this.TaskDetailsLocalVariable.SelectedJobIDFragement);
-
-    console.log(this.TaskDetailsLocalVariable.SelectedtaskId);
+    this.taskLength = this.TaskDetailsLocalVariable.SelectedtaskId.length;
+    console.log(this.taskLength);
 
     // this.JobDetailsLocalVariable.SelectedjobId=(event.map((e) => e.jobIdFragment));
   }

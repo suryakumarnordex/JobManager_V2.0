@@ -35,6 +35,11 @@ export class JobDetailsComponent implements OnInit {
   @Input() totalPage: number;
   @Input() jobCount: number;
   @Input() passingEvent: string;
+  totalJobCount: number;
+  priorityDisable: boolean;
+  requeueDisable: boolean;
+  cancelDisable: boolean;
+  submitDisable: boolean;
   @Input() recordPerPage: number = 10;
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
   @ViewChildren(CheckboxListFilterComponent)
@@ -286,6 +291,89 @@ export class JobDetailsComponent implements OnInit {
       },
     });
   }
+
+  loadDatas() {
+    this.JobDetailsLocalVariable.dataloading = true;
+    this.ApiService.searchLayout(
+      '',
+      [],
+      [],
+      '',
+      '',
+      '',
+      this.JobDetailsLocalVariable.statusList,
+      '',
+      '',
+      '',
+      this.JobDetailsLocalVariable.nodeGroupFragment,
+      '',
+      '',
+      false,
+      this.JobDetailsLocalVariable.currentpage,
+      this.JobDetailsLocalVariable.recordperpagejob,
+      false
+    ).subscribe({
+      next: (res: SearchResultsLayout) => {
+        console.log(res, 'Inside Refresh');
+        this.JobDetailsLocalVariable.layouts = res.results;
+        console.log(this.JobDetailsLocalVariable.layouts, 'Datas');
+
+        this.jobCount = res.totalResults;
+        this.JobDetailsLocalVariable.dataloading = false;
+        this.totalPage = Math.ceil(
+          this.jobCount / this.JobDetailsLocalVariable.recordperpagejob
+        );
+        this.JobDetailsLocalVariable.dataloading = false;
+      },
+      error: (error) => {
+        this.logger.reportError(error);
+        this.JobDetailsLocalVariable.dataloading = false;
+      },
+    });
+  }
+
+  nodeGroupchange(
+    event: any,
+    statusList: Array<string>,
+    nodeGroupFragment: string
+  ) {
+    if (event !== null) {
+      this.ApiService.searchLayout(
+        '',
+        [],
+        [],
+        '',
+        '',
+        '',
+        statusList,
+        '',
+        '',
+        '',
+        nodeGroupFragment,
+        '',
+        '',
+        false,
+        1,
+        this.recordPerPage,
+        false
+      ).subscribe({
+        next: (res: SearchResultsLayout) => {
+          this.JobDetailsLocalVariable.layouts = res.results;
+          this.jobCount = res.totalResults;
+          this.JobDetailsLocalVariable.dataloading = false;
+          this.totalPage = Math.ceil(
+            this.jobCount / this.JobDetailsLocalVariable.recordperpagejob
+          );
+
+          this.JobDetailsLocalVariable.dataloading = false;
+        },
+        error: (error) => {
+          this.logger.reportError(error);
+          this.JobDetailsLocalVariable.dataloading = false;
+        },
+      });
+    }
+  }
   onDetailOpen(event: any) {
     if (event !== null) {
       this.JobDetailsLocalVariable.detailTaskID = event.jobIdFragment;
@@ -331,10 +419,49 @@ export class JobDetailsComponent implements OnInit {
     document.execCommand('copy');
     document.removeEventListener('copy', create_copy);
   }
+
   selectionChanged(event: any[]) {
+    let finishedCount = 0;
+    let canceledCount = 0;
+    let failedCount = 0;
+    let queuedCount = 0;
+    let configuringCount = 0;
     this.JobDetailsLocalVariable.SelectedjobId = event.map(
       (e) => e.jobIdFragment
     );
+    this.totalJobCount = this.JobDetailsLocalVariable.SelectedjobId.length;
+    this.JobDetailsLocalVariable.SelectedjobIdStatus = event.map(
+      (e) => e.statusFragment
+    );
+    console.log(this.JobDetailsLocalVariable.SelectedjobIdStatus);
+
+    this.JobDetailsLocalVariable.SelectedjobIdStatus.forEach(function (status) {
+      if (status.toString() == 'Finished') {
+        finishedCount += 1;
+      } else if (status.toString() == 'Failed') {
+        failedCount += 1;
+      } else if (status.toString() == 'Canceled') {
+        canceledCount += 1;
+      } else if (status.toString() == 'Queued') {
+        queuedCount += 1;
+      } else if (status.toString() == 'Configuring') {
+        configuringCount += 1;
+      }
+    });
+    finishedCount >= 1
+      ? (this.priorityDisable = true)
+      : (this.priorityDisable = false);
+    failedCount >= 1 || canceledCount >= 1
+      ? (this.requeueDisable = false)
+      : (this.requeueDisable = true);
+    queuedCount >= 1 || configuringCount >= 1
+      ? (this.cancelDisable = false)
+      : (this.cancelDisable = true);
+    configuringCount >= 1
+      ? (this.submitDisable = false)
+      : (this.submitDisable = true);
+
+    // console.log(finishedCount, this.totalJobCount, this.priorityEnable);
   }
   GetLocalStorageColumnValue() {
     this.JobDetailsLocalStorage.idcolumnWidthValue =

@@ -56,24 +56,28 @@
       </li>
       <div class="btn-group">
         <button
-          *ngIf="isRole == 'internal'"
+          *ngIf="jobCountLength >= 1"
           class="btn btn-sm btn-secondary"
           (click)="openmodel('Priority')"
+          [disabled]="this.priorityDisable"
         >
           <clr-icon shape="pencil"></clr-icon>&nbsp;Priority
         </button>
       </div>
       <div class="btn-group">
         <button
+        *ngIf="jobCountLength >=1" 
           type="button"
           class="btn btn-sm btn-secondary"
           (click)="openmodel('Requeue')"
+          [disabled]="this.requeueDisable"
         >
           <clr-icon shape="history"></clr-icon>&nbsp;Requeue
         </button>
       </div>
       <div class="btn-group">
         <button
+        *ngIf="jobCountLength >=1 "
           type="button"
           class="btn btn-sm btn-secondary"
           (click)="openmodel('Pending_Reason')"
@@ -83,21 +87,35 @@
       </div>
       <div class="btn-group">
         <button
+          *ngIf="jobCountLength >=1 "
           type="button"
           class="btn btn-sm btn btn-warning-outline"
           (click)="openmodel('Cancel')"
+          [disabled]="this.cancelDisable"
         >
           <clr-icon shape="times"></clr-icon>&nbsp;Cancel
         </button>
       </div>
       <div class="btn-group">
         <button
+        *ngIf="jobCountLength >=1 "
           type="button"
           class="btn btn-sm btn btn-success-outline"
           (click)="openmodel('Submit')"
+          [disabled]="this.submitDisable"
         >
           <clr-icon shape="thumbs-up"></clr-icon>&nbsp;Submit
         </button>
+      </div>
+      <div class="btn-group">
+        <button
+            style="right: 0"
+            type="button"
+            class="btn btn-sm btn-secondary"
+            (click)="refreshData()"
+          >
+            <clr-icon shape="refresh"></clr-icon>&nbsp;Refresh
+          </button>
       </div>
     </ul>
   </nav>

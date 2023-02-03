@@ -7,6 +7,7 @@ import {TaskDetailsLocalVariable } from '../task-details/task-details-localvaria
 })
 export class TaskHeaderComponent implements OnInit {
   @Input() passingEvent: string;
+  @Input() taskLength:number;
   constructor(public TaskDetailsLocalVariable:TaskDetailsLocalVariable) { }
 
   ngOnInit(): void {
