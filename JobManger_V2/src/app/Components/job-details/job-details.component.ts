@@ -36,8 +36,6 @@ export class JobDetailsComponent implements OnInit {
   @Input() pageSize: number = 1;
   totalJobCount: number;
 
-
-  
   priorityDisable: boolean;
   requeueDisable: boolean;
   cancelDisable: boolean;
@@ -221,7 +219,8 @@ export class JobDetailsComponent implements OnInit {
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
         this.JobDetailsLocalVariable.dataloading = false;
         this.JobDetailsLocalVariable.totalPage = Math.ceil(
-          this.JobDetailsLocalVariable.jobCount / this.JobDetailsLocalVariable.recordperpagejob
+          this.JobDetailsLocalVariable.jobCount /
+            this.JobDetailsLocalVariable.recordperpagejob
         );
       },
       error: (error) => {
@@ -230,7 +229,6 @@ export class JobDetailsComponent implements OnInit {
       },
     });
   }
-
   loadDatas() {
     this.JobDetailsLocalVariable.dataloading = true;
     this.ApiService.searchLayout(
@@ -260,7 +258,8 @@ export class JobDetailsComponent implements OnInit {
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
         this.JobDetailsLocalVariable.dataloading = false;
         this.JobDetailsLocalVariable.totalPage = Math.ceil(
-          this.JobDetailsLocalVariable.jobCount / this.JobDetailsLocalVariable.recordperpagejob
+          this.JobDetailsLocalVariable.jobCount /
+            this.JobDetailsLocalVariable.recordperpagejob
         );
         this.JobDetailsLocalVariable.dataloading = false;
       },
@@ -270,7 +269,6 @@ export class JobDetailsComponent implements OnInit {
       },
     });
   }
-
   nodeGroupchange(
     event: any,
     statusList: Array<string>,
@@ -301,7 +299,8 @@ export class JobDetailsComponent implements OnInit {
           this.JobDetailsLocalVariable.jobCount = res.totalResults;
           this.JobDetailsLocalVariable.dataloading = false;
           this.JobDetailsLocalVariable.totalPage = Math.ceil(
-            this.JobDetailsLocalVariable.jobCount / this.JobDetailsLocalVariable.recordperpagejob
+            this.JobDetailsLocalVariable.jobCount /
+              this.JobDetailsLocalVariable.recordperpagejob
           );
 
           this.JobDetailsLocalVariable.dataloading = false;
@@ -358,7 +357,6 @@ export class JobDetailsComponent implements OnInit {
     document.execCommand('copy');
     document.removeEventListener('copy', create_copy);
   }
-
   selectionChanged(event: any[]) {
     let finishedCount = 0;
     let canceledCount = 0;
@@ -458,7 +456,6 @@ export class JobDetailsComponent implements OnInit {
       },
     });
   }
-
   ButtonEvents(EventStr: string): Promise<any> {
     return new Promise((resolve, reject) => {
       switch (EventStr) {
