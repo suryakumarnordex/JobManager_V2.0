@@ -1,5 +1,6 @@
 import { Component, OnInit,Input } from '@angular/core';
-import {TaskDetailsLocalVariable } from '../task-details/task-details-localvariable'
+import {TaskDetailsLocalVariable } from '../task-details/task-details-localvariable';
+import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables'
 @Component({
   selector: 'app-task-header',
   templateUrl: './task-header.component.html',
@@ -8,12 +9,12 @@ import {TaskDetailsLocalVariable } from '../task-details/task-details-localvaria
 export class TaskHeaderComponent implements OnInit {
   @Input() passingEvent: string;
   @Input() taskLength:number;
-  constructor(public TaskDetailsLocalVariable:TaskDetailsLocalVariable) { }
+  constructor(public TaskDetailsLocalVariable:TaskDetailsLocalVariable,public JobDetailsLocalVariable:JobDetailsLocalVariable) { }
 
   ngOnInit(): void {
   }
   openmodel(event: string) {
-    this.passingEvent = event;
+    this.JobDetailsLocalVariable.passingEvent = event;
     this.TaskDetailsLocalVariable.openModal = true;
   }
   onModalClose() {

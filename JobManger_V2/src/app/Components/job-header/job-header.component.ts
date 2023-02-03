@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Injectable, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
 import { LoggerService } from 'src/app/Services/logger.service';
@@ -14,6 +14,7 @@ import { event } from '@cds/core/internal';
   templateUrl: './job-header.component.html',
   styleUrls: ['./job-header.component.css'],
 })
+@Injectable()
 export class JobHeaderComponent implements OnInit {
   @Input() jobCountLength: number;
   @Input() priorityDisable: boolean;
@@ -23,6 +24,7 @@ export class JobHeaderComponent implements OnInit {
   @Input() recordPerPage: number = 10;
   @Input() recordPerPagerequest: number;
   @Input() passingEvent: string;
+
   jobCount: number;
   totalPage: number;
   totalJobCount: number;
@@ -71,7 +73,7 @@ export class JobHeaderComponent implements OnInit {
     });
   }
   openmodel(event: string) {
-    this.passingEvent = event;
+    this.JobDetailsLocalVariable.passingEvent = event;
     this.JobDetailsLocalVariable.openModal = true;
   }
   refreshData() {

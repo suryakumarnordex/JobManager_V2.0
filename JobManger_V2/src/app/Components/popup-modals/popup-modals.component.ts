@@ -38,7 +38,8 @@ export class PopupModalsComponent implements OnInit {
 
   PopupEvent() {
     this.JobDetailsLocalVariable.dataloading = true;
-    switch (this.passingEvent) {
+    this.passingEvent = this.JobDetailsLocalVariable.passingEvent;
+    switch (this.JobDetailsLocalVariable.passingEvent) {
       case 'Priority': {
         this.JobDetailsLocalVariable.priorityValue =
           this.JobDetailsLocalVariable.priorityValue.replace('+', '%2B');
@@ -48,7 +49,7 @@ export class PopupModalsComponent implements OnInit {
         break;
       }
       default: {
-        this.JobDetailscomponent.ButtonEvents(this.passingEvent)
+        this.JobDetailscomponent.ButtonEvents(this.JobDetailsLocalVariable.passingEvent)
           .then((res) => {
             Object.keys(res).forEach((key) => {
               if (this.JobDetailsLocalVariable.Result == undefined) {
