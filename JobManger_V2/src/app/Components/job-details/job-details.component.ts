@@ -55,6 +55,9 @@ export class JobDetailsComponent implements OnInit {
     this.GetMultipleSelectFiltersData();
   }
   GetMultipleSelectFiltersData() {
+    this.JobDetailsLocalVariable.AvailableUserName = [];
+    this.JobDetailsLocalVariable.AvailableType = [];
+    this.JobDetailsLocalVariable.AvailableState = [];
     this.ApiService.GetUserNameList().subscribe({
       next: (res: any) => {
         res.forEach((UserName: any) => {
