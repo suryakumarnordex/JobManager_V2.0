@@ -1,4 +1,6 @@
-<app-task-header></app-task-header>
+<app-task-header
+[taskLength]="this.taskLength" 
+></app-task-header>
 <clr-datagrid [(clrDgSelected)]="selected" [clrDgLoading]="this.dataloading"
 (clrDgSelectedChange)="selectionChanged($event)">
   <clr-dg-column>Task ID</clr-dg-column>

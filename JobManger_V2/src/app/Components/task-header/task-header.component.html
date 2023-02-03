@@ -1,7 +1,7 @@
 <div class="head">
   <nav class="subnav">
     <div class="btn-group">
-      <button class="btn btn-sm btn-secondary" (click)="openmodel('TaskRequeue')">
+      <button *ngIf="taskLength>=1" class="btn btn-sm btn-secondary" (click)="openmodel('TaskRequeue')">
         <clr-icon shape="pencil"></clr-icon>&nbsp;Task Requeue
       </button>
     </div>

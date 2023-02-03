@@ -1,5 +1,11 @@
 <div class="main-container">
-  <app-job-header></app-job-header>
+  <app-job-header 
+  [jobCountLength]="this.totalJobCount"
+  [priorityDisable]="this.priorityDisable"
+  [requeueDisable]="this.requeueDisable"
+  [cancelDisable]="this.cancelDisable"
+  [submitDisable]="this.submitDisable"
+  ></app-job-header>
 
   <clr-datagrid
     [(clrDgSelected)]="JobDetailsLocalVariable.selected"
