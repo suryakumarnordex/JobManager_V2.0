@@ -26,6 +26,7 @@ import { FiltersProvider } from '@clr/angular/data/datagrid/providers/filters';
 import { User } from '../../Models/user';
 import { ActivatedRoute } from '@angular/router';
 import { LoginService } from '../../Services/login.service';
+import { JobHeaderComponent } from '../job-header/job-header.component';
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-details.component.html',
@@ -51,7 +52,6 @@ export class JobDetailsComponent implements OnInit {
     private localstorage: LocalStorageService,
     public JobDetailsLocalStorage: JobDetaillocalstorage,
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
-
     private route: ActivatedRoute
   ) {}
   loginModal = false;
@@ -230,7 +230,7 @@ export class JobDetailsComponent implements OnInit {
       },
     });
   }
-  
+
   loadDatas() {
     this.JobDetailsLocalVariable.dataloading = true;
     this.ApiService.searchLayout(
@@ -401,6 +401,11 @@ export class JobDetailsComponent implements OnInit {
       : (this.submitDisable = true);
 
     // console.log(finishedCount, this.totalJobCount, this.priorityEnable);
+  }
+  openmodel(action: string, jobId: number) {
+    this.JobDetailsLocalVariable.SelectedjobId = [jobId];
+    this.JobDetailsLocalVariable.passingEvent = action;
+    this.JobDetailsLocalVariable.openModal = true;
   }
   GetLocalStorageColumnValue() {
     this.JobDetailsLocalStorage.idcolumnWidthValue =

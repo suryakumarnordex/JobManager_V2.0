@@ -18,6 +18,7 @@ export class JobDetailsLocalVariable {
   public SelectedjobIdStatus: Array<number>;
   public JobManageerNavigation = [] as any;
   public openModal = false;
+  public passingEvent:string='';
   public IsSuccess: boolean = false;
   public Result: any;
   public recordperpagejob: number = 10;

@@ -63,11 +63,7 @@ export class TaskDetailsComponent implements OnInit {
   }
   selectionChanged(event: any[]) {   
     this.TaskDetailsLocalVariable.SelectedtaskId = (event.map((e) => e.taskIdFragment));
-    console.log(this.TaskDetailsLocalVariable.SelectedJobIDFragement);
     this.taskLength = this.TaskDetailsLocalVariable.SelectedtaskId.length;
-    console.log(this.taskLength);
-    
-    // this.JobDetailsLocalVariable.SelectedjobId=(event.map((e) => e.jobIdFragment));
   }
   setRequeue(){
     this.ApiService.SetTaskRequeue(this.TaskDetailsLocalVariable.SelectedJobIDFragement,this.TaskDetailsLocalVariable.SelectedtaskId)

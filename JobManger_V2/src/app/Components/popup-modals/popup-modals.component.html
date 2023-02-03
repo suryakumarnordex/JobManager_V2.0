@@ -10,7 +10,8 @@
         >
           <clr-icon aria-hidden="true" shape="close"></clr-icon>
         </button>
-        <h3 class="modal-title">{{ passingEvent }}</h3>
+        <h3 class="modal-title">{{ JobDetailsLocalVariable.passingEvent }}</h3>
+
       </div>
 
       <div class="modal-body" *ngIf="passingEvent == 'Priority'">
@@ -52,10 +53,10 @@
 
       <div
         class="modal-body"
-        *ngIf="passingEvent != 'TaskRequeue' && passingEvent != 'Priority' && passingEvent != 'Pending_Reason'"
+        *ngIf="JobDetailsLocalVariable.passingEvent != 'TaskRequeue' && JobDetailsLocalVariable.passingEvent != 'Priority' && JobDetailsLocalVariable.passingEvent != 'Pending_Reason'"
       >
-        <div *ngIf="passingEvent != 'Pending_Reason'">
-          Are you sure you want to {{ passingEvent }} the
+        <div *ngIf="JobDetailsLocalVariable.passingEvent != 'Pending_Reason'">
+          Are you sure you want to {{ this.JobDetailsLocalVariable.passingEvent }} the
           {{ JobDetailsLocalVariable.SelectedjobId }} ?
         </div>
 
@@ -121,7 +122,7 @@
       <!-- Task Headers-->
       <div
       class="modal-body"
-      *ngIf="passingEvent == 'TaskRequeue'"
+      *ngIf="JobDetailsLocalVariable.passingEvent == 'TaskRequeue'"
     >
      
         If you want to Requeue the Task

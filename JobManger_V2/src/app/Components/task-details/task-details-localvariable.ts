@@ -9,5 +9,6 @@ export class TaskDetailsLocalVariable
     public loading:boolean=false;
     public SelectedtaskId: Array<number>;
     public SelectedJobIDFragement:string;
+    public passingEvent:string;
     public openModal = false;
 }

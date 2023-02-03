@@ -1,10 +1,10 @@
 <div class="main-container">
-  <app-job-header 
-  [jobCountLength]="this.totalJobCount"
-  [priorityDisable]="this.priorityDisable"
-  [requeueDisable]="this.requeueDisable"
-  [cancelDisable]="this.cancelDisable"
-  [submitDisable]="this.submitDisable"
+  <app-job-header
+    [jobCountLength]="this.totalJobCount"
+    [priorityDisable]="this.priorityDisable"
+    [requeueDisable]="this.requeueDisable"
+    [cancelDisable]="this.cancelDisable"
+    [submitDisable]="this.submitDisable"
   ></app-job-header>
 
   <clr-datagrid
@@ -134,11 +134,20 @@
       [clrDgItem]="job"
       class="align"
     >
+      <clr-dg-action-overflow>
+        <button class="action-item" (click)="openmodel('Priority',job.jobIdFragment)">Priority</button>
+        <button class="action-item" (click)="openmodel('Requeue',job.jobIdFragment)" >Requeue</button>
+        <!-- pending reason -->
+        <button class="action-item" (click)="openmodel('Pending_Reason',job.jobIdFragment)">Pending Reason</button>
+        <!-- Ends -->
+        <button class="action-item" (click)="openmodel('Cancel',job.jobIdFragment)">Cancel</button>
+        <button class="action-item" (click)="openmodel('Submit',job.jobIdFragment)">Submit</button>
+      </clr-dg-action-overflow>
       <clr-dg-cell>{{ job.jobIdFragment }}</clr-dg-cell>
       <clr-dg-cell>{{ job.userFragment }}</clr-dg-cell>
 
       <clr-dg-cell style="text-align: left">
-        <div style="display: flex; justify-content: space-evenly">
+        <div style="display: flex; justify-content: space-evenly">s
           <div>
             <div
               role="tooltip"
