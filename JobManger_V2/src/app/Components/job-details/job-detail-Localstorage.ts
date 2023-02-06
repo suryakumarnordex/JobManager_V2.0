@@ -1,30 +1,25 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable()
-export class JobDetaillocalstorage
-{
-public  idcolumnWidthValue: string;
-public  usercolumnWidthValue: string;
-public  cockpitcolumnWidthValue: string;
-public  runcolumnWidthValue: string;
-public  typecolumnWidthValue: string;
-public  topiccolumnWidthValue: string;
-public  statuscolumnWidthValue: string;
-public  progresscolumnWidthValue: string;
-public  prioritycolumnWidthValue: string;
-public  notaskcolumnWidthValue: string;
-public  runningTaskcolumnWidthValue: string;
-public  queuedTaskcolumnWidthValue: string;
-public  starttimecolumnWidthValue: string;
-public  endtimecolumnWidthValue: string;
-public  submittimecolumnWidthValue: string;
-public  elapsedtimecolumnWidthValue: string;
-public  pendingreasoncolumnWidthValue: string;
+export class JobDetaillocalstorage {
+  public idcolumnWidthValue: string;
+  public usercolumnWidthValue: string;
+  public cockpitcolumnWidthValue: string;
+  public runcolumnWidthValue: string;
+  public typecolumnWidthValue: string;
+  public topiccolumnWidthValue: string;
+  public statuscolumnWidthValue: string;
+  public progresscolumnWidthValue: string;
+  public prioritycolumnWidthValue: string;
+  public notaskcolumnWidthValue: string;
+  public runningTaskcolumnWidthValue: string;
+  public queuedTaskcolumnWidthValue: string;
+  public starttimecolumnWidthValue: string;
+  public endtimecolumnWidthValue: string;
+  public submittimecolumnWidthValue: string;
+  public elapsedtimecolumnWidthValue: string;
+  public pendingreasoncolumnWidthValue: string;
 
-
-
-public  recordPerPageValue: Number = 10;
-public  pageSize: Number;
-
-
+  public recordPerPageValue: Number = 10;
+  public pageSize: Number;
 }
