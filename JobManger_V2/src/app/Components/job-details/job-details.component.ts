@@ -285,9 +285,11 @@ export class JobDetailsComponent implements OnInit {
       },
     });
   }
-  loadDatas() {
+  clearallFilters(){
     this.JobDetailsLocalVariable.dataloading = true;
     this.columns.forEach(column => column.filterValue = "");
+    console.log(this.JobDetailsLocalVariable.state,"STATE");
+    
     this.JobDetailsLocalVariable.currentpage=1;
     this.ApiService.searchLayout(
       '',
@@ -302,6 +304,48 @@ export class JobDetailsComponent implements OnInit {
       '',
       this.JobDetailsLocalVariable.nodeGroupFragment,
       '',
+      '',
+      false,
+      this.JobDetailsLocalVariable.currentpage,
+      this.JobDetailsLocalVariable.recordperpagejob,
+      false
+    ).subscribe({
+      next: (res: SearchResultsLayout) => {
+        console.log(res, 'Inside Refresh');
+        this.JobDetailsLocalVariable.layouts = res.results;
+        console.log(this.JobDetailsLocalVariable.layouts, 'Datas');
+
+        this.JobDetailsLocalVariable.jobCount = res.totalResults;
+        this.JobDetailsLocalVariable.dataloading = false;
+        this.JobDetailsLocalVariable.totalPage = Math.ceil(
+          this.JobDetailsLocalVariable.jobCount /
+            this.JobDetailsLocalVariable.recordperpagejob
+        );
+        this.JobDetailsLocalVariable.dataloading = false;
+      },
+      error: (error) => {
+        this.logger.reportError(error);
+        this.JobDetailsLocalVariable.dataloading = false;
+      },
+    });
+  }
+  loadDatas() {
+    this.JobDetailsLocalVariable.dataloading = true;
+    // this.columns.forEach(column => column.filterValue = "");
+
+     this.ApiService.searchLayout(
+      this.JobDetailsLocalVariable.filterJobid,
+      this.JobDetailsLocalVariable.selectedUsername,
+      this.JobDetailsLocalVariable.selectedType,
+      this.JobDetailsLocalVariable.filterTopic,
+      this.JobDetailsLocalVariable.filterCockpit,
+      this.JobDetailsLocalVariable.filterrunno,
+      this.JobDetailsLocalVariable.statusList,
+      this.JobDetailsLocalVariable.filterpriority,
+      '',
+      '',
+      this.JobDetailsLocalVariable.nodeGroupFragment,
+      this.JobDetailsLocalVariable.filternooftasks,
       '',
       false,
       this.JobDetailsLocalVariable.currentpage,

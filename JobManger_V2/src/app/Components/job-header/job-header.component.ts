@@ -1,4 +1,4 @@
-import { Component, Injectable, Input, OnInit } from '@angular/core';
+import { Component, Injectable, Input, OnInit,  QueryList,  ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
 import { LoggerService } from 'src/app/Services/logger.service';
@@ -9,6 +9,11 @@ import { JobDetailsComponent } from '../job-details/job-details.component';
 import { LoginService } from 'src/app/Services/login.service';
 import { ActivatedRoute } from '@angular/router';
 import { event } from '@cds/core/internal';
+import {
+  ClrDatagridColumn,
+  ClrDatagridStateInterface,
+  ClrNavLevel,
+} from '@clr/angular';
 @Component({
   selector: 'app-job-header',
   templateUrl: './job-header.component.html',
@@ -24,7 +29,7 @@ export class JobHeaderComponent implements OnInit {
   @Input() recordPerPage: number = 10;
   @Input() recordPerPagerequest: number;
   @Input() passingEvent: string;
-
+  @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
   jobCount: number;
   totalPage: number;
   totalJobCount: number;
@@ -79,6 +84,11 @@ export class JobHeaderComponent implements OnInit {
   }
   refreshData() {
     this.JobDetailsComponent.loadDatas();
+    this.JobDetailsComponent.GetLocalStorageColumnValue();
+    this.JobDetailsComponent.GetMultipleSelectFiltersData();
+  }
+  clearAllfilters(){
+    this.JobDetailsComponent.clearallFilters();
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     this.JobDetailsComponent.GetMultipleSelectFiltersData();
   }
