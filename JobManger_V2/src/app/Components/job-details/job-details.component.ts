@@ -11,6 +11,7 @@ import {
   SearchResultsLayout,
   SearchTaskResultsLayout,
 } from 'src/app/Models/helper';
+import {ClrDatagridSortOrder} from '@clr/angular';
 import { LoggerService } from 'src/app/Services/logger.service';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetaillocalstorage } from './job-detail-Localstorage';
@@ -269,6 +270,8 @@ export class JobDetailsComponent implements OnInit {
     ).subscribe({
       next: (res: SearchResultsLayout) => {
         this.JobDetailsLocalVariable.layouts = res.results;
+        console.log( this.JobDetailsLocalVariable.layouts,"RES");
+        
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
         this.JobDetailsLocalVariable.dataloading = false;
         this.JobDetailsLocalVariable.totalPage = Math.ceil(
@@ -293,7 +296,7 @@ export class JobDetailsComponent implements OnInit {
       '',
       '',
       '',
-      [],
+      this.JobDetailsLocalVariable.statusList,
       '',
       '',
       '',
