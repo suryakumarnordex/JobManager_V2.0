@@ -35,8 +35,11 @@ export class JobDetailsLocalVariable {
 
   //Filter properties
   public AvailableUserName: { key: string; value: string }[] = [];
+  public selectedUsername:Array<string>=[]
   public AvailableState: { key: string; value: string }[] = [];
+  public selectedState:Array<string>=[]
   public AvailableType: { key: string; value: string }[] = [];
+  public selectedType:Array<string>=[]
 
   public Nodelist: Array<string> = [
     'All jobs',

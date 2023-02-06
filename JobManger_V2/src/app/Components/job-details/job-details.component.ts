@@ -184,7 +184,8 @@ export class JobDetailsComponent implements OnInit {
       }
     }
   }
-  Columnfilters(state: ClrDatagridStateInterface) {
+  Columnfilters(state: ClrDatagridStateInterface) {  
+
     let jobIdFragment = '';
     let userFragment: Array<string> = [];
     let typeFragment: Array<string> = [];
@@ -208,18 +209,17 @@ export class JobDetailsComponent implements OnInit {
         this.JobDetailsLocalVariable.currentpage = 1;
 
         const { property, value } = <{ property: string; value: string }>filter;
-
         if (filter.filterParamName == 'typeFragment') {
           typeFragment = filter.selectedItems.map((e: any) => e.value);
-          console.log(typeFragment);
+          this.JobDetailsLocalVariable.selectedType = typeFragment;
         } else if (filter.filterParamName == 'userFragment') {
           userFragment = filter.selectedItems.map((e: any) => e.value);
-          console.log(userFragment);
+          this.JobDetailsLocalVariable.selectedUsername = userFragment;
         } else if (filter.filterParamName == 'statusFragment') {
           this.JobDetailsLocalVariable.statusList = filter.selectedItems.map(
             (e: any) => e.value
           );
-          console.log(this.JobDetailsLocalVariable.statusList);
+          this.JobDetailsLocalVariable.selectedState = this.JobDetailsLocalVariable.statusList;
         }
         switch (property) {
           case 'jobIdFragment': {
@@ -256,14 +256,15 @@ export class JobDetailsComponent implements OnInit {
         }
       }
     }
+  
     this.ApiService.searchLayout(
       jobIdFragment,
-      userFragment,
-      typeFragment,
+      this.JobDetailsLocalVariable.selectedUsername,
+      this.JobDetailsLocalVariable.selectedType,
       topicFragment,
       cockpitIdFragment,
       runnoFragment,
-      this.JobDetailsLocalVariable.statusList,
+      this.JobDetailsLocalVariable.selectedState,
       priorityFragment,
       '',
       numberOfTasksFragment,
@@ -294,12 +295,12 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.dataloading = true;
     this.ApiService.searchLayout(
       '',
-      [],
-      [],
+      this.JobDetailsLocalVariable.selectedUsername,
+      this.JobDetailsLocalVariable.selectedType,
       '',
       '',
       '',
-      this.JobDetailsLocalVariable.statusList,
+      this.JobDetailsLocalVariable.selectedState,
       '',
       '',
       '',
@@ -431,8 +432,6 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.SelectedjobIdStatus = event.map(
       (e) => e.statusFragment
     );
-    console.log(this.JobDetailsLocalVariable.SelectedjobIdStatus);
-
     this.JobDetailsLocalVariable.SelectedjobIdStatus.forEach(function (status) {
       if (status.toString() == 'Finished') {
         finishedCount += 1;

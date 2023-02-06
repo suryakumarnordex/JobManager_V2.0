@@ -25,6 +25,7 @@ export class ApiServiceService {
     let url = 'http://ldms/navigations.json';
     return this.http.get(url);
   }
+  // public AvailableUserName: { key: string; value: string }[] = [];
   searchLayout(
     jobIdFragment: string = '',
     userFragment: Array<string> = [],
