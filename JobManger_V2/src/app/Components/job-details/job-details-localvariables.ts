@@ -17,6 +17,12 @@ export class JobDetailsLocalVariable {
   public loading = true;
   public SelectedjobId: Array<number>;
   public SelectedjobIdStatus: Array<number>;
+  public filterJobid:string='';
+  public filterTopic:string='';
+  public filterCockpit:string='';
+  public filterrunno:string=''
+  public filterpriority:string='';
+  public filternooftasks:string='';
 
   public detailTaskID: any;
   public priorityValue: string;
@@ -32,6 +38,8 @@ export class JobDetailsLocalVariable {
   public totalPage: number;
   public jobCount: number = 0;
   public nodeGroupFragment: string = '';
+
+
 
   //Filter properties
   public AvailableUserName: { key: string; value: string }[] = [];

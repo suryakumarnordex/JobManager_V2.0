@@ -186,14 +186,10 @@ export class JobDetailsComponent implements OnInit {
   }
   Columnfilters(state: ClrDatagridStateInterface) {  
 
-    let jobIdFragment = '';
+    // let jobIdFragment = '';
     let userFragment: Array<string> = [];
     let typeFragment: Array<string> = [];
-    let topicFragment = '';
-    let cockpitIdFragment = '';
-    let runnoFragment = '';
-    let priorityFragment = '';
-    let numberOfTasksFragment = '';
+    // let topicFragment = '';
     let orderDescending = false;
     let waitForChange = false;
     // nodeGroupFragment: string = '',
@@ -223,34 +219,29 @@ export class JobDetailsComponent implements OnInit {
         }
         switch (property) {
           case 'jobIdFragment': {
-            jobIdFragment = value;
-            console.log(jobIdFragment);
+            this.JobDetailsLocalVariable.filterJobid = value;
+            console.log(this.JobDetailsLocalVariable.filterJobid);
             break;
           }
           case 'cockpitIdFragment': {
-            cockpitIdFragment = value;
-            console.log(cockpitIdFragment);
+            this.JobDetailsLocalVariable.filterCockpit = value;
             break;
           }
 
           case 'runnoFragment': {
-            runnoFragment = value;
-            console.log(runnoFragment);
+            this.JobDetailsLocalVariable.filterrunno = value;
             break;
           }
           case 'topicFragment': {
-            topicFragment = value;
-            console.log(topicFragment);
+            this.JobDetailsLocalVariable.filterTopic = value;
             break;
           }
           case 'numberOfTasksFragment': {
-            numberOfTasksFragment = value;
-            console.log(numberOfTasksFragment);
+            this.JobDetailsLocalVariable.filternooftasks = value;
             break;
           }
           case 'priorityFragment': {
-            priorityFragment = value;
-            console.log(priorityFragment);
+            this.JobDetailsLocalVariable.filterpriority = value;
             break;
           }
         }
@@ -258,16 +249,16 @@ export class JobDetailsComponent implements OnInit {
     }
   
     this.ApiService.searchLayout(
-      jobIdFragment,
+      this.JobDetailsLocalVariable.filterJobid ,
       this.JobDetailsLocalVariable.selectedUsername,
       this.JobDetailsLocalVariable.selectedType,
-      topicFragment,
-      cockpitIdFragment,
-      runnoFragment,
+      this.JobDetailsLocalVariable.filterTopic,
+      this.JobDetailsLocalVariable.filterCockpit,
+      this.JobDetailsLocalVariable.filterrunno,
       this.JobDetailsLocalVariable.selectedState,
-      priorityFragment,
+      this.JobDetailsLocalVariable.filterpriority ,
       '',
-      numberOfTasksFragment,
+      this.JobDetailsLocalVariable.filternooftasks,
       this.JobDetailsLocalVariable.nodeGroupFragment,
       '',
       '',
@@ -293,14 +284,15 @@ export class JobDetailsComponent implements OnInit {
   }
   loadDatas() {
     this.JobDetailsLocalVariable.dataloading = true;
+    this.JobDetailsLocalVariable.currentpage=1;
     this.ApiService.searchLayout(
       '',
-      this.JobDetailsLocalVariable.selectedUsername,
-      this.JobDetailsLocalVariable.selectedType,
+      [],
+      [],
       '',
       '',
       '',
-      this.JobDetailsLocalVariable.selectedState,
+      [],
       '',
       '',
       '',
