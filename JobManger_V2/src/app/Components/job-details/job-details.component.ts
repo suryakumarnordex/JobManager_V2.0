@@ -284,6 +284,7 @@ export class JobDetailsComponent implements OnInit {
   }
   loadDatas() {
     this.JobDetailsLocalVariable.dataloading = true;
+    this.columns.forEach(column => column.filterValue = "");
     this.JobDetailsLocalVariable.currentpage=1;
     this.ApiService.searchLayout(
       '',
