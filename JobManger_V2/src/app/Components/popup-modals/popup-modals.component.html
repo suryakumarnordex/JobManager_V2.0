@@ -6,15 +6,17 @@
           aria-label="Close"
           class="close"
           type="button"
-          (click)="parentChildConnection = false"
+          (click)="PopupModelClose()"
         >
           <clr-icon aria-hidden="true" shape="close"></clr-icon>
         </button>
         <h3 class="modal-title">{{ JobDetailsLocalVariable.passingEvent }}</h3>
-
       </div>
 
-      <div class="modal-body" *ngIf="JobDetailsLocalVariable.passingEvent == 'Priority'">
+      <div
+        class="modal-body"
+        *ngIf="JobDetailsLocalVariable.passingEvent == 'Priority'"
+      >
         <clr-input-container>
           <label>Enter Priority</label>
           <input
@@ -53,10 +55,15 @@
 
       <div
         class="modal-body"
-        *ngIf="JobDetailsLocalVariable.passingEvent != 'TaskRequeue' && JobDetailsLocalVariable.passingEvent != 'Priority' && JobDetailsLocalVariable.passingEvent != 'Pending_Reason'"
+        *ngIf="
+          JobDetailsLocalVariable.passingEvent != 'TaskRequeue' &&
+          JobDetailsLocalVariable.passingEvent != 'Priority' &&
+          JobDetailsLocalVariable.passingEvent != 'Pending_Reason'
+        "
       >
         <div *ngIf="JobDetailsLocalVariable.passingEvent != 'Pending_Reason'">
-          Are you sure you want to {{ this.JobDetailsLocalVariable.passingEvent }} the
+          Are you sure you want to
+          {{ this.JobDetailsLocalVariable.passingEvent }} the
           {{ JobDetailsLocalVariable.SelectedjobId }} ?
         </div>
 
@@ -105,6 +112,9 @@
           </div>
         </div>
 
+        <div>
+          {{ JobDetailsLocalVariable.Result }}
+        </div>
         <div class="modal-footer">
           <button
             type="button"
@@ -113,7 +123,14 @@
           >
             Cancel
           </button>
-          <button type="button" class="btn btn-outline" (click)="PopupEvent()">
+          <button
+            type="button"
+            class="btn btn-outline"
+            [disabled]="this.JobDetailsLocalVariable.disableButton"
+            (click)="
+              PopupEvent(); this.JobDetailsLocalVariable.disableButton = true
+            "
+          >
             OK
           </button>
         </div>
@@ -121,26 +138,25 @@
 
       <!-- Task Headers-->
       <div
-      class="modal-body"
-      *ngIf="JobDetailsLocalVariable.passingEvent == 'TaskRequeue'"
-    >
-     
+        class="modal-body"
+        *ngIf="JobDetailsLocalVariable.passingEvent == 'TaskRequeue'"
+      >
         If you want to Requeue the Task
         {{ TaskDetailsLocalVariable.SelectedtaskId }} ?
-  
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-outline"
-          (click)="parentChildConnection = false"
-        >
-          Cancel
-        </button>
-        <button type="button" class="btn btn-outline" (click)="PopupEvent()">
-          OK
-        </button>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-outline"
+            (click)="parentChildConnection = false"
+          >
+            Cancel
+          </button>
+          <button type="button" class="btn btn-outline" (click)="PopupEvent()">
+            OK
+          </button>
+        </div>
       </div>
-    </div>
       <br />
     </div>
   </div>

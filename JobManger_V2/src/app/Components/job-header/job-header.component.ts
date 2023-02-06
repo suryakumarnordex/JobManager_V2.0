@@ -50,7 +50,7 @@ export class JobHeaderComponent implements OnInit {
 
     this.loginService.user().subscribe({
       next: (user: any) => {
-        console.log(user,"User");
+        console.log(user, 'User');
         this.displayName = user.displayName;
         this.spinnerInlineloader = false;
       },

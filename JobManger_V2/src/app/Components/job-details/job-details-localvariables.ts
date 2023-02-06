@@ -3,18 +3,17 @@ import { LayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
 
 @Injectable()
 export class JobDetailsLocalVariable {
-
   //Data properties
   public layouts: LayoutInfo[];
   public taskLayout: TaskLayoutInfo[];
   public statusList: Array<string> = [];
-
-  public state:any;
+  public disableButton = false;
+  public state: any;
   //Grid properties
   public requestFromJOb: boolean = true;
   public dataloading: boolean = false;
   public selected = [] as any;
-  public loading = true;
+  public loading = false;
   public SelectedjobId: Array<number>;
   public SelectedjobIdStatus: Array<number>;
 
@@ -22,7 +21,8 @@ export class JobDetailsLocalVariable {
   public priorityValue: string;
   public JobManageerNavigation = [] as any;
   public openModal = false;
-  public passingEvent:string='';
+
+  public passingEvent: string = '';
   public IsSuccess: boolean = false;
   public Result: any;
 
