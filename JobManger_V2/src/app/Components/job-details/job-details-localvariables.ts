@@ -13,7 +13,7 @@ export class JobDetailsLocalVariable {
   public requestFromJOb: boolean = true;
   public dataloading: boolean = false;
   public selected = [] as any;
-  public loading = false;
+  public loading: boolean = false;
   public SelectedjobId: Array<number>;
   public SelectedjobIdStatus: Array<number>;
 

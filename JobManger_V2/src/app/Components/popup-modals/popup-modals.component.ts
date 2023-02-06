@@ -34,7 +34,9 @@ export class PopupModalsComponent implements OnInit {
     private TaskDetailsComponent: TaskDetailsComponent
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.JobDetailsLocalVariable.loading = true;
+  }
 
   PopupEvent() {
     this.passingEvent = this.JobDetailsLocalVariable.passingEvent;
@@ -78,6 +80,7 @@ export class PopupModalsComponent implements OnInit {
       }
     }
     this.JobDetailsLocalVariable.dataloading = false;
+    this.JobDetailsLocalVariable.loading = false;
   }
 
   PopupModelClose() {

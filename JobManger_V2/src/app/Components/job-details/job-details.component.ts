@@ -54,6 +54,7 @@ export class JobDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.JobDetailsLocalVariable.dataloading = true;
+    this.JobDetailsLocalVariable.loading = true;
     this.GetMultipleSelectFiltersData();
     this.GetLocalStorageColumnValue();
   }
