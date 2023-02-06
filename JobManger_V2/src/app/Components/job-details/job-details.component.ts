@@ -298,7 +298,7 @@ export class JobDetailsComponent implements OnInit {
       '',
       '',
       '',
-      this.JobDetailsLocalVariable.statusList,
+      [],
       '',
       '',
       '',
