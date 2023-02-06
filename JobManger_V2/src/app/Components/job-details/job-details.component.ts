@@ -402,6 +402,21 @@ export class JobDetailsComponent implements OnInit {
       });
     }
   }
+
+  copyRunClipboard(selectedItem: any) {
+    const create_copy = (e: ClipboardEvent) => {
+      e.clipboardData?.setData('text/plain', selectedItem.runFolder);
+      e.preventDefault();
+      if (selectedItem.runFolder != '' && selectedItem.runFolder != null) {
+        selectedItem.text = 'copied';
+      } else {
+        selectedItem.text = 'no data to copy';
+      }
+    };
+    document.addEventListener('copy', create_copy);
+    document.execCommand('copy');
+    document.removeEventListener('copy', create_copy);
+  }
   copyClipboard(selectedItem: any) {
     const create_copy = (e: ClipboardEvent) => {
       e.clipboardData?.setData('text/plain', selectedItem.CockpitFolder);

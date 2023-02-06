@@ -13,9 +13,10 @@ import { UtcConverterService } from './Components/utc-converter.service/utc-conv
 import { JobFooterComponent } from './Components/job-footer/job-footer.component';
 import { JobHeaderComponent } from './Components/job-header/job-header.component';
 import { PopupModalsComponent } from './Components/popup-modals/popup-modals.component';
-import {JobDetaillocalstorage} from './Components/job-details/job-detail-Localstorage'
+import { JobDetaillocalstorage } from './Components/job-details/job-detail-Localstorage';
+import { TaskDetaillocalstorage } from './Components/task-header/task-detail-Localstorage';
 import { JobDetailsLocalVariable } from './Components/job-details/job-details-localvariables';
-import { CheckboxListFilterComponent} from './Components/job-details/checkbox-list-filter.component' 
+import { CheckboxListFilterComponent } from './Components/job-details/checkbox-list-filter.component';
 import { TaskDetailsLocalVariable } from './Components/task-details/task-details-localvariable';
 import { TokenInterceptor } from './Services/token.interceptor';
 import { ErrorInterceptor } from './Services/error.interceptor';
@@ -38,12 +39,21 @@ import { TaskHeaderComponent } from './Components/task-header/task-header.compon
     TaskDetailsComponent,
     JobFooterComponent,
     JobHeaderComponent,
-    PopupModalsComponent, 
-    CheckboxListFilterComponent, TaskHeaderComponent,   
+    PopupModalsComponent,
+    CheckboxListFilterComponent,
+    TaskHeaderComponent,
   ],
-  providers: [UtcConverterService, TaskDetailsComponent,JobDetaillocalstorage,JobDetailsLocalVariable,TaskDetailsLocalVariable,
+  providers: [
+    UtcConverterService,
+    TaskDetailsComponent,
+    JobDetaillocalstorage,
+    JobDetailsLocalVariable,
+    TaskDetailsLocalVariable,
+    TaskDetaillocalstorage,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },WINDOW_PROVIDERS],
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    WINDOW_PROVIDERS,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
