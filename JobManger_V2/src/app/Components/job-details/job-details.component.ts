@@ -285,7 +285,13 @@ export class JobDetailsComponent implements OnInit {
   }
 
   clear(){
-    this.columns.forEach(column => column.filterValue = "");
+    this.columns.forEach(column => column.filterValue = '');
+    // this.columns.forEach(column => 
+    //   {
+    //     if(column.filterValue != ''){
+    //       column.filterValue = ''
+    //     }
+    // });
   }
   clearallFilters(){
     this.JobDetailsLocalVariable.dataloading = true;
