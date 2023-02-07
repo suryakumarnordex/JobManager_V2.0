@@ -11,7 +11,7 @@ import {
   SearchResultsLayout,
   SearchTaskResultsLayout,
 } from 'src/app/Models/helper';
-import {ClrDatagridSortOrder} from '@clr/angular';
+import { ClrDatagridSortOrder } from '@clr/angular';
 import { LoggerService } from 'src/app/Services/logger.service';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetaillocalstorage } from './job-detail-Localstorage';
@@ -35,7 +35,6 @@ import { JobHeaderComponent } from '../job-header/job-header.component';
 export class JobDetailsComponent implements OnInit {
   @Input() pageSize: number = 1;
   totalJobCount: number;
-
   priorityDisable: boolean;
   requeueDisable: boolean;
   cancelDisable: boolean;
@@ -185,13 +184,12 @@ export class JobDetailsComponent implements OnInit {
       }
     }
   }
-  Columnfilters(state: ClrDatagridStateInterface) {  
-
+  Columnfilters(state: ClrDatagridStateInterface) {
     // let jobIdFragment = '';
     let userFragment: Array<string> = [];
     let typeFragment: Array<string> = [];
     // let topicFragment = '';
-    let orderDescending = false;
+    //let orderDescending = false;
     let waitForChange = false;
     // nodeGroupFragment: string = '',
     // pendingReasonFragment: string = '',
@@ -200,78 +198,131 @@ export class JobDetailsComponent implements OnInit {
     // progressFragment: string = '',
     // PageSize: number = 10;
     this.JobDetailsLocalVariable.state = state;
+
     if (state.filters) {
       this.JobDetailsLocalVariable.dataloading = true;
       for (const filter of state.filters) {
         this.JobDetailsLocalVariable.currentpage = 1;
-
         const { property, value } = <{ property: string; value: string }>filter;
         if (filter.filterParamName == 'typeFragment') {
           typeFragment = filter.selectedItems.map((e: any) => e.value);
           this.JobDetailsLocalVariable.selectedType = typeFragment;
+          this.JobDetailsLocalVariable.OrderBy = 'type';
         } else if (filter.filterParamName == 'userFragment') {
           userFragment = filter.selectedItems.map((e: any) => e.value);
           this.JobDetailsLocalVariable.selectedUsername = userFragment;
+          this.JobDetailsLocalVariable.OrderBy = 'cockpitusername';
         } else if (filter.filterParamName == 'statusFragment') {
           this.JobDetailsLocalVariable.statusList = filter.selectedItems.map(
             (e: any) => e.value
           );
-          this.JobDetailsLocalVariable.selectedState = this.JobDetailsLocalVariable.statusList;
+          this.JobDetailsLocalVariable.selectedState =
+            this.JobDetailsLocalVariable.statusList;
+          this.JobDetailsLocalVariable.OrderBy = 'status';
         }
         switch (property) {
           case 'jobIdFragment': {
             this.JobDetailsLocalVariable.filterJobid = value;
+            this.JobDetailsLocalVariable.OrderBy = 'id';
             console.log(this.JobDetailsLocalVariable.filterJobid);
             break;
           }
           case 'cockpitIdFragment': {
             this.JobDetailsLocalVariable.filterCockpit = value;
+            this.JobDetailsLocalVariable.OrderBy = 'cockpitid';
             break;
           }
 
           case 'runnoFragment': {
             this.JobDetailsLocalVariable.filterrunno = value;
+            this.JobDetailsLocalVariable.OrderBy = 'runnumber';
             break;
           }
           case 'topicFragment': {
             this.JobDetailsLocalVariable.filterTopic = value;
+            this.JobDetailsLocalVariable.OrderBy = 'runtopic';
             break;
           }
           case 'numberOfTasksFragment': {
             this.JobDetailsLocalVariable.filternooftasks = value;
+            this.JobDetailsLocalVariable.OrderBy = 'numberoftasks';
             break;
           }
           case 'priorityFragment': {
             this.JobDetailsLocalVariable.filterpriority = value;
+            this.JobDetailsLocalVariable.OrderBy = 'priority';
             break;
           }
         }
       }
     }
-  
+    if (state.sort?.by !== undefined) {
+      switch (state.sort?.by) {
+        case 'typeFragment': {
+          this.JobDetailsLocalVariable.OrderBy = 'type';
+          break;
+        }
+        case 'userFragment': {
+          this.JobDetailsLocalVariable.OrderBy = 'cockpitusername';
+          break;
+        }
+        case 'statusFragment': {
+          this.JobDetailsLocalVariable.OrderBy = 'status';
+          break;
+        }
+        case 'jobIdFragment': {
+          this.JobDetailsLocalVariable.OrderBy = 'id';
+          break;
+        }
+        case 'cockpitIdFragment': {
+          this.JobDetailsLocalVariable.OrderBy = 'cockpitid';
+          break;
+        }
+        case 'runnoFragment': {
+          this.JobDetailsLocalVariable.OrderBy = 'runnumber';
+          break;
+        }
+        case 'topicFragment': {
+          this.JobDetailsLocalVariable.OrderBy = 'runtopic';
+          break;
+        }
+        case 'numberOfTasksFragment': {
+          this.JobDetailsLocalVariable.OrderBy = 'numberoftasks';
+          break;
+        }
+        case 'priorityFragment': {
+          this.JobDetailsLocalVariable.OrderBy = 'priority';
+          break;
+        }
+      }
+    }
+    let ColumnName = state.sort?.reverse;
+    ColumnName == undefined
+      ? (this.JobDetailsLocalVariable.orderDescending = false)
+      : (this.JobDetailsLocalVariable.orderDescending = ColumnName);
     this.ApiService.searchLayout(
-      this.JobDetailsLocalVariable.filterJobid ,
+      this.JobDetailsLocalVariable.filterJobid,
       this.JobDetailsLocalVariable.selectedUsername,
       this.JobDetailsLocalVariable.selectedType,
       this.JobDetailsLocalVariable.filterTopic,
       this.JobDetailsLocalVariable.filterCockpit,
       this.JobDetailsLocalVariable.filterrunno,
       this.JobDetailsLocalVariable.selectedState,
-      this.JobDetailsLocalVariable.filterpriority ,
+      this.JobDetailsLocalVariable.filterpriority,
       '',
       this.JobDetailsLocalVariable.filternooftasks,
       this.JobDetailsLocalVariable.nodeGroupFragment,
       '',
-      '',
-      orderDescending,
+      this.JobDetailsLocalVariable.OrderBy,
+      this.JobDetailsLocalVariable.orderDescending,
       this.JobDetailsLocalVariable.currentpage,
       this.JobDetailsLocalVariable.recordperpagejob,
       waitForChange
     ).subscribe({
       next: (res: SearchResultsLayout) => {
         this.JobDetailsLocalVariable.layouts = res.results;
-        console.log( this.JobDetailsLocalVariable.layouts,"RES");
-        
+        console.log(this.JobDetailsLocalVariable.layouts, 'RES');
+
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
         this.JobDetailsLocalVariable.dataloading = false;
         this.JobDetailsLocalVariable.totalPage = Math.ceil(
@@ -285,12 +336,12 @@ export class JobDetailsComponent implements OnInit {
       },
     });
   }
-  clearallFilters(){
+  clearallFilters() {
     this.JobDetailsLocalVariable.dataloading = true;
-    this.columns.forEach(column => column.filterValue = "");
-    console.log(this.JobDetailsLocalVariable.state,"STATE");
-    
-    this.JobDetailsLocalVariable.currentpage=1;
+    this.columns.forEach((column) => (column.filterValue = ''));
+    console.log(this.JobDetailsLocalVariable.state, 'STATE');
+
+    this.JobDetailsLocalVariable.currentpage = 1;
     this.ApiService.searchLayout(
       '',
       [],
@@ -333,7 +384,7 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.dataloading = true;
     // this.columns.forEach(column => column.filterValue = "");
 
-     this.ApiService.searchLayout(
+    this.ApiService.searchLayout(
       this.JobDetailsLocalVariable.filterJobid,
       this.JobDetailsLocalVariable.selectedUsername,
       this.JobDetailsLocalVariable.selectedType,
@@ -475,6 +526,7 @@ export class JobDetailsComponent implements OnInit {
     document.removeEventListener('copy', create_copy);
   }
   selectionChanged(event: any[]) {
+    console.log(event, 'selectionChanged');
     let finishedCount = 0;
     let canceledCount = 0;
     let failedCount = 0;
@@ -637,5 +689,9 @@ export class JobDetailsComponent implements OnInit {
         }
       }
     });
+  }
+
+  SortByColumn(event: any) {
+    console.log(event, 'event');
   }
 }

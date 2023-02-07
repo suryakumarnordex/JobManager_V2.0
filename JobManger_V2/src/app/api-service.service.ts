@@ -39,12 +39,16 @@ export class ApiServiceService {
     numberOfTasksFragment: string = '',
     nodeGroupFragment: string = '',
     pendingReasonFragment: string = '',
-    orderBy: string = '',
+    orderBy: string = this.JobDetailsLocalVariable.OrderBy,
     orderDescending: boolean,
     PageNo: number = this.JobDetailsLocalVariable.recordperpagejob,
     PageSize: number = this.JobDetailsLocalVariable.currentpage,
     waitForChange: boolean = false
   ): Observable<SearchResultsLayout> {
+    console.log(
+      this.JobDetailsLocalVariable.OrderBy,
+      'this.JobDetailsLocalVariable.OrderBy'
+    );
     let params = new HttpParams()
       .set('jobIdFragment', jobIdFragment ? jobIdFragment : '')
       .set('topicFragment', topicFragment ? topicFragment : '')

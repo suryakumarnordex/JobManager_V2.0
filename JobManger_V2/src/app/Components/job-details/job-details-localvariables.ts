@@ -3,13 +3,12 @@ import { LayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
 
 @Injectable()
 export class JobDetailsLocalVariable {
-
   //Data properties
   public layouts: LayoutInfo[];
   public taskLayout: TaskLayoutInfo[];
   public statusList: Array<string> = [];
 
-  public state:any;
+  public state: any;
   //Grid properties
   public requestFromJOb: boolean = true;
   public dataloading: boolean = false;
@@ -17,18 +16,21 @@ export class JobDetailsLocalVariable {
   public loading = true;
   public SelectedjobId: Array<number>;
   public SelectedjobIdStatus: Array<number>;
-  public filterJobid:string='';
-  public filterTopic:string='';
-  public filterCockpit:string='';
-  public filterrunno:string=''
-  public filterpriority:string='';
-  public filternooftasks:string='';
+  public filterJobid: string = '';
+  public filterTopic: string = '';
+  public filterCockpit: string = '';
+  public filterrunno: string = '';
+  public filterpriority: string = '';
+  public filternooftasks: string = '';
+
+  public OrderBy: string = '';
+  public orderDescending: boolean = false;
 
   public detailTaskID: any;
   public priorityValue: string;
   public JobManageerNavigation = [] as any;
   public openModal = false;
-  public passingEvent:string='';
+  public passingEvent: string = '';
   public IsSuccess: boolean = false;
   public Result: any;
 
@@ -39,15 +41,13 @@ export class JobDetailsLocalVariable {
   public jobCount: number = 0;
   public nodeGroupFragment: string = '';
 
-
-
   //Filter properties
   public AvailableUserName: { key: string; value: string }[] = [];
-  public selectedUsername:Array<string>=[]
+  public selectedUsername: Array<string> = [];
   public AvailableState: { key: string; value: string }[] = [];
-  public selectedState:Array<string>=[]
+  public selectedState: Array<string> = [];
   public AvailableType: { key: string; value: string }[] = [];
-  public selectedType:Array<string>=[]
+  public selectedType: Array<string> = [];
 
   public Nodelist: Array<string> = [
     'All jobs',
