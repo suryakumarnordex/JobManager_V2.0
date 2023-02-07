@@ -43,7 +43,7 @@ export class JobDetailsLocalVariable {
 
   //Filter properties
   public AvailableUserName: { key: string; value: string }[] = [];
-  public selectedUsername:Array<string>=[]
+  public selectedUsername:Array<string>=[];
   public AvailableState: { key: string; value: string }[] = [];
   public selectedState:Array<string>=[]
   public AvailableType: { key: string; value: string }[] = [];

@@ -84,8 +84,8 @@ export class JobHeaderComponent implements OnInit {
   }
   refreshData() {
     this.JobDetailsComponent.loadDatas();
-    this.JobDetailsComponent.GetLocalStorageColumnValue();
-    this.JobDetailsComponent.GetMultipleSelectFiltersData();
+    // this.JobDetailsComponent.GetLocalStorageColumnValue();
+    // this.JobDetailsComponent.GetMultipleSelectFiltersData();
   }
   clearAllfilters(){
     this.JobDetailsComponent.clearallFilters();

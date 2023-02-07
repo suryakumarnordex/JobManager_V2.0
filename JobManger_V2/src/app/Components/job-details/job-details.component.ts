@@ -11,7 +11,7 @@ import {
   SearchResultsLayout,
   SearchTaskResultsLayout,
 } from 'src/app/Models/helper';
-import {ClrDatagridSortOrder} from '@clr/angular';
+import { ClrDatagridSortOrder } from '@clr/angular';
 import { LoggerService } from 'src/app/Services/logger.service';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetaillocalstorage } from './job-detail-Localstorage';
@@ -185,11 +185,11 @@ export class JobDetailsComponent implements OnInit {
       }
     }
   }
-  Columnfilters(state: ClrDatagridStateInterface) {  
-
+  Columnfilters(state: ClrDatagridStateInterface) {
     // let jobIdFragment = '';
     let userFragment: Array<string> = [];
     let typeFragment: Array<string> = [];
+    let stateFragment: Array<string> = [];
     // let topicFragment = '';
     let orderDescending = false;
     let waitForChange = false;
@@ -213,10 +213,8 @@ export class JobDetailsComponent implements OnInit {
           userFragment = filter.selectedItems.map((e: any) => e.value);
           this.JobDetailsLocalVariable.selectedUsername = userFragment;
         } else if (filter.filterParamName == 'statusFragment') {
-          this.JobDetailsLocalVariable.statusList = filter.selectedItems.map(
-            (e: any) => e.value
-          );
-          this.JobDetailsLocalVariable.selectedState = this.JobDetailsLocalVariable.statusList;
+          stateFragment = filter.selectedItems.map((e: any) => e.value);
+          this.JobDetailsLocalVariable.selectedState = stateFragment;
         }
         switch (property) {
           case 'jobIdFragment': {
@@ -248,16 +246,16 @@ export class JobDetailsComponent implements OnInit {
         }
       }
     }
-  
+
     this.ApiService.searchLayout(
-      this.JobDetailsLocalVariable.filterJobid ,
-      this.JobDetailsLocalVariable.selectedUsername,
-      this.JobDetailsLocalVariable.selectedType,
+      this.JobDetailsLocalVariable.filterJobid,
+      userFragment,
+      typeFragment,
       this.JobDetailsLocalVariable.filterTopic,
       this.JobDetailsLocalVariable.filterCockpit,
       this.JobDetailsLocalVariable.filterrunno,
-      this.JobDetailsLocalVariable.selectedState,
-      this.JobDetailsLocalVariable.filterpriority ,
+      stateFragment,
+      this.JobDetailsLocalVariable.filterpriority,
       '',
       this.JobDetailsLocalVariable.filternooftasks,
       this.JobDetailsLocalVariable.nodeGroupFragment,
@@ -270,8 +268,8 @@ export class JobDetailsComponent implements OnInit {
     ).subscribe({
       next: (res: SearchResultsLayout) => {
         this.JobDetailsLocalVariable.layouts = res.results;
-        console.log( this.JobDetailsLocalVariable.layouts,"RES");
-        
+        console.log(this.JobDetailsLocalVariable.layouts, 'RES');
+
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
         this.JobDetailsLocalVariable.dataloading = false;
         this.JobDetailsLocalVariable.totalPage = Math.ceil(
@@ -285,11 +283,14 @@ export class JobDetailsComponent implements OnInit {
       },
     });
   }
+
+  clear(){
+    this.columns.forEach(column => column.filterValue = "");
+  }
   clearallFilters(){
     this.JobDetailsLocalVariable.dataloading = true;
-    this.columns.forEach(column => column.filterValue = "");
+    this.clear();
     console.log(this.JobDetailsLocalVariable.state,"STATE");
-    
     this.JobDetailsLocalVariable.currentpage=1;
     this.ApiService.searchLayout(
       '',
@@ -311,9 +312,9 @@ export class JobDetailsComponent implements OnInit {
       false
     ).subscribe({
       next: (res: SearchResultsLayout) => {
-        console.log(res, 'Inside Refresh');
+        // console.log(res, 'Inside Refresh');
         this.JobDetailsLocalVariable.layouts = res.results;
-        console.log(this.JobDetailsLocalVariable.layouts, 'Datas');
+        // console.log(this.JobDetailsLocalVariable.layouts, 'Datas');
 
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
         this.JobDetailsLocalVariable.dataloading = false;
@@ -329,11 +330,13 @@ export class JobDetailsComponent implements OnInit {
       },
     });
   }
+  
+
   loadDatas() {
     this.JobDetailsLocalVariable.dataloading = true;
     // this.columns.forEach(column => column.filterValue = "");
 
-     this.ApiService.searchLayout(
+    this.ApiService.searchLayout(
       this.JobDetailsLocalVariable.filterJobid,
       this.JobDetailsLocalVariable.selectedUsername,
       this.JobDetailsLocalVariable.selectedType,
