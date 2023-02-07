@@ -16,7 +16,7 @@ export class JobDetailsLocalVariable {
   public selected = [] as any;
   public loading = true;
   public SelectedjobId: Array<number>;
-  public SelectedjobIdStatus: Array<number>;
+  public SelectedjobIdStatus: Array<string>;
   public filterJobid:string='';
   public filterTopic:string='';
   public filterCockpit:string='';

@@ -9,6 +9,7 @@ import { JobDetailsLocalVariable } from '../job-details/job-details-localvariabl
 export class TaskHeaderComponent implements OnInit {
   @Input() passingEvent: string;
   @Input() taskLength:number;
+  @Input() taskRequeueDisable:boolean;
   constructor(public TaskDetailsLocalVariable:TaskDetailsLocalVariable,public JobDetailsLocalVariable:JobDetailsLocalVariable) { }
 
   ngOnInit(): void {

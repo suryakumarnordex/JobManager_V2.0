@@ -11,4 +11,6 @@ export class TaskDetailsLocalVariable {
   public passingEvent: string;
   public openModal = false;
   public LogFileData: any;
+
+  public Selectedtasktatus:Array<string>
 }

@@ -1,9 +1,11 @@
 <div class="btn-group" style="margin-top: 20px; margin-left: 70px">
    
   <button
+  *ngIf="taskLength >= 1"
     style="margin-right: 50px"
     class="btn btn-sm btn-secondary"
     (click)="openmodel('TaskRequeue')"
+    [disabled]="taskRequeueDisable"
   >
         <clr-icon shape="pencil"></clr-icon>&nbsp;Task Requeue 
   </button>

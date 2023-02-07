@@ -6,6 +6,7 @@ import { LoggerService } from 'src/app/Services/logger.service';
 import { TaskDetailsLocalVariable } from './task-details-localvariable';
 import { TaskDetaillocalstorage } from '../task-header/task-detail-Localstorage';
 import { LocalStorageService } from 'src/app/local-storage.service';
+import { stat } from 'fs';
 @Component({
   selector: 'app-task-details',
   templateUrl: './task-details.component.html',
@@ -15,7 +16,8 @@ export class TaskDetailsComponent implements OnInit {
   @Input() recordPerPage: number = 10;
   @Input() taskLayout: TaskLayoutInfo[];
   @Input() JobIDFragement: string;
-  @Input() taskLength: number;
+  taskRequeueDisable:boolean;
+  taskLength: number;
   requestFromTask: boolean = true;
   selected = [] as any;
   pageSize: number = 1;
@@ -80,10 +82,19 @@ export class TaskDetailsComponent implements OnInit {
     });
   }
   selectionChanged(event: any[]) {
+    let failedCount =0;
     this.TaskDetailsLocalVariable.SelectedtaskId = event.map(
       (e) => e.taskIdFragment
     );
     this.taskLength = this.TaskDetailsLocalVariable.SelectedtaskId.length;
+    console.log(this.taskLength,"TL");
+    this.TaskDetailsLocalVariable.Selectedtasktatus = event.map((e)=>e.statusFragment)
+    this.TaskDetailsLocalVariable.Selectedtasktatus.forEach(function (status){
+      if(status == 'Failed'){
+        failedCount += 1;
+      }
+    })
+    failedCount >=1?this.taskRequeueDisable=false:this.taskRequeueDisable=true;
   }
   public TaskColumnResized(event: any, colType: string) {
     this.localstorage.set(colType, event);
