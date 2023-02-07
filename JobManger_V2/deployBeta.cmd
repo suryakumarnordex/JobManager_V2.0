@@ -7,5 +7,5 @@ REM call ng build --prod --base-href /JobManagerAPIBeta/ --build-optimizer=false
 call ng build --base-href /JobManagerBeta/
 
 copy src\web.config dist
-xcopy dist\JobManagerUI\* \\kghapp83v\c$\inetpub\wwwroot\JobManagerBeta /s /e /y
+xcopy dist\job-manger-v2\* \\kghapp83v\c$\inetpub\wwwroot\JobManagerBeta /s /e /y
 pause
