@@ -87,7 +87,6 @@ export class TaskDetailsComponent implements OnInit {
       (e) => e.taskIdFragment
     );
     this.taskLength = this.TaskDetailsLocalVariable.SelectedtaskId.length;
-    console.log(this.taskLength,"TL");
     this.TaskDetailsLocalVariable.Selectedtasktatus = event.map((e)=>e.statusFragment)
     this.TaskDetailsLocalVariable.Selectedtasktatus.forEach(function (status){
       if(status == 'Failed'){
