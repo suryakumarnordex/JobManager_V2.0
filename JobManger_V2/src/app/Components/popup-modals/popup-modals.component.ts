@@ -34,10 +34,11 @@ export class PopupModalsComponent implements OnInit {
     private TaskDetailsComponent: TaskDetailsComponent
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.JobDetailsLocalVariable.loading = true;
+  }
 
   PopupEvent() {
-    this.JobDetailsLocalVariable.dataloading = true;
     this.passingEvent = this.JobDetailsLocalVariable.passingEvent;
     switch (this.JobDetailsLocalVariable.passingEvent) {
       case 'Priority': {
@@ -49,10 +50,14 @@ export class PopupModalsComponent implements OnInit {
         break;
       }
       default: {
-        this.JobDetailscomponent.ButtonEvents(this.JobDetailsLocalVariable.passingEvent)
+        this.JobDetailscomponent.ButtonEvents(
+          this.JobDetailsLocalVariable.passingEvent
+        )
           .then((res) => {
             Object.keys(res).forEach((key) => {
               if (this.JobDetailsLocalVariable.Result == undefined) {
+                this.JobDetailsLocalVariable.loading = true;
+                console.log(this.JobDetailsLocalVariable.loading);
                 this.JobDetailsLocalVariable.Result =
                   'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
               } else {
@@ -75,10 +80,12 @@ export class PopupModalsComponent implements OnInit {
       }
     }
     this.JobDetailsLocalVariable.dataloading = false;
+    this.JobDetailsLocalVariable.loading = false;
   }
 
   PopupModelClose() {
     this.parentChildConnection = false;
+    this.JobDetailsLocalVariable.disableButton = false;
     this.JobDetailsLocalVariable.IsSuccess = false;
     this.JobDetailsLocalVariable.Result = undefined;
   }

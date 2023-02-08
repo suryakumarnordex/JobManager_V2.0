@@ -6,7 +6,7 @@
           aria-label="Close"
           class="close"
           type="button"
-          (click)="parentChildConnection = false"
+          (click)="PopupModelClose()"
         >
           <clr-icon aria-hidden="true" shape="close"></clr-icon>
         </button>
@@ -123,8 +123,10 @@
           <button
             type="button"
             class="btn btn-outline"
-            (click)="PopupEvent()"
-            [clrLoading]="JobDetailsLocalVariable.dataloading"
+            [disabled]="this.JobDetailsLocalVariable.disableButton"
+            (click)="
+              PopupEvent(); this.JobDetailsLocalVariable.disableButton = true
+            "
           >
             OK
           </button>

@@ -7,13 +7,13 @@ export class JobDetailsLocalVariable {
   public layouts: LayoutInfo[];
   public taskLayout: TaskLayoutInfo[];
   public statusList: Array<string> = [];
-
+  public disableButton = false;
   public state: any;
   //Grid properties
   public requestFromJOb: boolean = true;
   public dataloading: boolean = false;
   public selected = [] as any;
-  public loading = true;
+  public loading: boolean = false;
   public SelectedjobId: Array<number>;
   public SelectedjobIdStatus: Array<number>;
 
