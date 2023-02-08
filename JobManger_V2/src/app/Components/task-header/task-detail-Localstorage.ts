@@ -12,6 +12,6 @@ export class TaskDetaillocalstorage {
   public allocatednodescolumnWidthValue: string;
   public commandlinecolumnWidthValue: string;
 
-  public recordPerPageValue: Number = 10;
-  public pageSize: Number;
+  public recordPerPageValue: number = 10;
+  public pageSize: number;
 }
