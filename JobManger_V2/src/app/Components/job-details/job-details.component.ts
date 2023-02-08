@@ -190,8 +190,8 @@ export class JobDetailsComponent implements OnInit {
   }
   Columnfilters(state: ClrDatagridStateInterface) {
     // let jobIdFragment = '';
-    let userFragment: Array<string> = [];
-    let typeFragment: Array<string> = [];
+    // let userFragment: Array<string> = [];
+    // let typeFragment: Array<string> = [];
     // let topicFragment = '';
     //let orderDescending = false;
     let waitForChange = false;
@@ -205,6 +205,7 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.selectedType = [];
     this.JobDetailsLocalVariable.selectedUsername = [];
     this.JobDetailsLocalVariable.statusList = [];
+
     if (state.filters) {
       this.JobDetailsLocalVariable.dataloading = true;
 
@@ -213,16 +214,21 @@ export class JobDetailsComponent implements OnInit {
         const { property, value } = <{ property: string; value: string }>filter;
 
         if (filter.filterParamName == 'typeFragment') {
-          typeFragment = filter.selectedItems.map((e: any) => e.value);
-          this.JobDetailsLocalVariable.selectedType = typeFragment;
+          this.JobDetailsLocalVariable.selectedType = filter.selectedItems.map(
+            (e: any) => e.key
+          );
           this.JobDetailsLocalVariable.OrderBy = 'type';
         } else if (filter.filterParamName == 'userFragment') {
-          userFragment = filter.selectedItems.map((e: any) => e.value);
-          this.JobDetailsLocalVariable.selectedUsername = userFragment;
+          console.log(
+            filter.selectedItems.map((e: any) => e.key),
+            ' filter.selectedItems.map((e: any) => e.key)'
+          );
+          this.JobDetailsLocalVariable.selectedUsername =
+            filter.selectedItems.map((e: any) => e.key);
           this.JobDetailsLocalVariable.OrderBy = 'cockpitusername';
         } else if (filter.filterParamName == 'statusFragment') {
           this.JobDetailsLocalVariable.statusList = filter.selectedItems.map(
-            (e: any) => e.value
+            (e: any) => e.key
           );
           this.JobDetailsLocalVariable.selectedState =
             this.JobDetailsLocalVariable.statusList;
@@ -312,6 +318,7 @@ export class JobDetailsComponent implements OnInit {
     ColumnName == undefined
       ? (this.JobDetailsLocalVariable.orderDescending = true)
       : (this.JobDetailsLocalVariable.orderDescending = ColumnName);
+
     this.ApiService.searchLayout(
       this.JobDetailsLocalVariable.filterJobid,
       this.JobDetailsLocalVariable.selectedUsername,
@@ -533,7 +540,7 @@ export class JobDetailsComponent implements OnInit {
     let failedCount = 0;
     let queuedCount = 0;
     let configuringCount = 0;
-    console.log(event, 'selectionChanged');
+
     this.JobDetailsLocalVariable.SelectedjobId = event.map(
       (e) => e.jobIdFragment
     );

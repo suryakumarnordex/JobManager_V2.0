@@ -79,6 +79,7 @@ export class PopupModalsComponent implements OnInit {
         break;
       }
     }
+    console.log('refreshdata called');
     this.JobDetailsLocalVariable.dataloading = false;
     this.JobDetailsLocalVariable.loading = false;
   }
@@ -88,5 +89,8 @@ export class PopupModalsComponent implements OnInit {
     this.JobDetailsLocalVariable.disableButton = false;
     this.JobDetailsLocalVariable.IsSuccess = false;
     this.JobDetailsLocalVariable.Result = undefined;
+    this.JobDetailscomponent.loadDatas();
+    this.JobDetailscomponent.GetLocalStorageColumnValue();
+    this.JobDetailscomponent.GetMultipleSelectFiltersData();
   }
 }
