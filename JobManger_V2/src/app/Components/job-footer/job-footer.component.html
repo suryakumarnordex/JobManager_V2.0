@@ -1,17 +1,57 @@
-<div *ngIf="requestFromJob;else task">
+<div *ngIf="requestFromJob; else task">
   Records per page
-  <select style="height: 30px" #teams (change)="onSelected(teams.value)">
-    <option>10</option>
+
+  <select
+    *ngIf="this.JobDetaillocalstorage.recordperpagejob == 10"
+    style="height: 30px"
+    #teams
+    (change)="onSelected(teams.value)"
+  >
+    <option [selected]="true">10</option>
     <option>20</option>
     <option>50</option>
     <option>100</option>
   </select>
-  &nbsp; {{ this.JobDetailsLocalVariable.currentpage }} / {{ totalPage }} Pages of {{ this.totalRecords }} Records
-  &nbsp;
+
+  <select
+    *ngIf="this.JobDetaillocalstorage.recordperpagejob == 20"
+    style="height: 30px"
+    #teams
+    (change)="onSelected(teams.value)"
+  >
+    <option>10</option>
+    <option [selected]="true">20</option>
+    <option>50</option>
+    <option>100</option>
+  </select>
+  <select
+    *ngIf="this.JobDetaillocalstorage.recordperpagejob == 50"
+    style="height: 30px"
+    #teams
+    (change)="onSelected(teams.value)"
+  >
+    <option>10</option>
+    <option>20</option>
+    <option [selected]="true">50</option>
+    <option>100</option>
+  </select>
+  <select
+    *ngIf="this.JobDetaillocalstorage.recordperpagejob == 100"
+    style="height: 30px"
+    #teams
+    (change)="onSelected(teams.value)"
+  >
+    <option>10</option>
+    <option>20</option>
+    <option>50</option>
+    <option [selected]="true">100</option>
+  </select>
+  &nbsp; {{ this.JobDetaillocalstorage.currentpage }} / {{ totalPage }} Pages of
+  {{ this.totalRecords }} Records &nbsp;
 
   <button
     type="button"
-    *ngIf="this.JobDetailsLocalVariable.currentpage > 1"
+    *ngIf="this.JobDetaillocalstorage.currentpage > 1"
     (click)="goTofirstPage()"
     class="btn btn-icon"
   >
@@ -19,7 +59,7 @@
   </button>
   <button
     type="button"
-    *ngIf="this.JobDetailsLocalVariable.currentpage > 1"
+    *ngIf="this.JobDetaillocalstorage.currentpage > 1"
     (click)="goTopriviousPage()"
     class="btn btn-icon"
   >
@@ -28,7 +68,11 @@
 
   <button
     type="button"
-    *ngIf="JobDetailsLocalVariable.totalPage != this.JobDetailsLocalVariable.currentpage; else elseblock"
+    *ngIf="
+      JobDetailsLocalVariable.totalPage !=
+        this.JobDetaillocalstorage.currentpage;
+      else elseblock
+    "
     (click)="goTonextPage()"
     class="btn btn-icon"
   >
@@ -49,16 +93,57 @@
     >|
   </button>
 </div>
+
 <ng-template #task>
   Records per page
-  <select style="height: 30px" #teams (change)="onSelected(teams.value)">
-    <option>10</option>
+
+  <select
+    *ngIf="this.TaskDetaillocalstorage.recordPerPageValue == 10"
+    style="height: 30px"
+    #teams
+    (change)="onSelected(teams.value)"
+  >
+    <option [selected]="true">10</option>
     <option>20</option>
     <option>50</option>
     <option>100</option>
   </select>
-  &nbsp; {{ this.TaskDetailsLocalVariable.currentpagetask }} / {{ totalPagetask }} Pages of {{ this.totalRecordstask }} Records
-  &nbsp;
+
+  <select
+    *ngIf="this.TaskDetaillocalstorage.recordPerPageValue == 20"
+    style="height: 30px"
+    #teams
+    (change)="onSelected(teams.value)"
+  >
+    <option>10</option>
+    <option [selected]="true">20</option>
+    <option>50</option>
+    <option>100</option>
+  </select>
+  <select
+    *ngIf="this.TaskDetaillocalstorage.recordPerPageValue == 50"
+    style="height: 30px"
+    #teams
+    (change)="onSelected(teams.value)"
+  >
+    <option>10</option>
+    <option>20</option>
+    <option [selected]="true">50</option>
+    <option>100</option>
+  </select>
+  <select
+    *ngIf="this.TaskDetaillocalstorage.recordPerPageValue == 100"
+    style="height: 30px"
+    #teams
+    (change)="onSelected(teams.value)"
+  >
+    <option>10</option>
+    <option>20</option>
+    <option>50</option>
+    <option [selected]="true">100</option>
+  </select>
+  &nbsp; {{ this.TaskDetailsLocalVariable.currentpagetask }} /
+  {{ totalPagetask }} Pages of {{ this.totalRecordstask }} Records &nbsp;
 
   <button
     type="button"
@@ -79,7 +164,10 @@
 
   <button
     type="button"
-    *ngIf="totalPagetask != TaskDetailsLocalVariable.currentpagetask; else elseblock"
+    *ngIf="
+      totalPagetask != TaskDetailsLocalVariable.currentpagetask;
+      else elseblock
+    "
     (click)="goTonextPage()"
     class="btn btn-icon"
   >

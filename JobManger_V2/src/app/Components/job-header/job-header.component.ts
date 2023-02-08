@@ -1,4 +1,11 @@
-import { Component, Injectable, Input, OnInit,  QueryList,  ViewChildren } from '@angular/core';
+import {
+  Component,
+  Injectable,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
 import { LoggerService } from 'src/app/Services/logger.service';
@@ -9,6 +16,7 @@ import { JobDetailsComponent } from '../job-details/job-details.component';
 import { LoginService } from 'src/app/Services/login.service';
 import { ActivatedRoute } from '@angular/router';
 import { event } from '@cds/core/internal';
+import { JobDetaillocalstorage } from '../job-details/job-detail-Localstorage';
 import {
   ClrDatagridColumn,
   ClrDatagridStateInterface,
@@ -46,6 +54,8 @@ export class JobHeaderComponent implements OnInit {
     private logger: LoggerService,
     private JobDetailsComponent: JobDetailsComponent,
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
+    public JobDetaillocalstorage: JobDetaillocalstorage,
+
     private loginService: LoginService
   ) {}
 
@@ -55,7 +65,6 @@ export class JobHeaderComponent implements OnInit {
 
     this.loginService.user().subscribe({
       next: (user: any) => {
-        console.log(user,"User");
         this.displayName = user.displayName;
         this.spinnerInlineloader = false;
       },
@@ -87,7 +96,18 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     this.JobDetailsComponent.GetMultipleSelectFiltersData();
   }
-  clearAllfilters(){
+  clearAllfilters() {
+    this.JobDetailsLocalVariable.filterJobid = '';
+    this.JobDetailsLocalVariable.filterTopic = '';
+    this.JobDetailsLocalVariable.filterCockpit = '';
+    this.JobDetailsLocalVariable.filterrunno = '';
+    this.JobDetailsLocalVariable.filterpriority = '';
+    this.JobDetailsLocalVariable.filternooftasks = '';
+    this.JobDetailsLocalVariable.SelectedjobId = [];
+    this.JobDetailsLocalVariable.SelectedjobIdStatus = [];
+    this.JobDetailsLocalVariable.selectedUsername = [];
+    this.JobDetailsLocalVariable.selectedState = [];
+    this.JobDetailsLocalVariable.selectedType = [];
     this.JobDetailsComponent.clearallFilters();
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     this.JobDetailsComponent.GetMultipleSelectFiltersData();
@@ -104,7 +124,7 @@ export class JobHeaderComponent implements OnInit {
     } else {
       this.JobDetailsLocalVariable.nodeGroupFragment = '';
       this.JobDetailsLocalVariable.statusList = [];
-      this.JobDetailsLocalVariable.currentpage = 1;
+      this.JobDetaillocalstorage.currentpage = 1;
     }
 
     this.JobDetailsComponent.nodeGroupchange(

@@ -3,6 +3,9 @@ import { JobDetailsComponent } from '../job-details/job-details.component';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
 import { TaskDetailsLocalVariable } from '../../Components/task-details/task-details-localvariable';
+import { JobDetaillocalstorage } from '../job-details/job-detail-Localstorage';
+import { LocalStorageService } from 'src/app/local-storage.service';
+import { TaskDetaillocalstorage } from '../task-header/task-detail-Localstorage';
 @Component({
   selector: 'app-job-footer',
   templateUrl: './job-footer.component.html',
@@ -25,16 +28,19 @@ export class JobFooterComponent implements OnInit {
     private jobdetails: JobDetailsComponent,
     private taskdetails: TaskDetailsComponent,
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
-    public TaskDetailsLocalVariable: TaskDetailsLocalVariable
+    public TaskDetailsLocalVariable: TaskDetailsLocalVariable,
+    public JobDetaillocalstorage: JobDetaillocalstorage,
+    private localstorage: LocalStorageService,
+    public TaskDetaillocalstorage: TaskDetaillocalstorage
   ) {}
 
   ngOnInit(): void {}
 
   goTofirstPage() {
     if (this.requestFromJob) {
-      if (this.JobDetailsLocalVariable.currentpage != 1) {
+      if (this.JobDetaillocalstorage.currentpage != 1) {
         this.JobDetailsLocalVariable.dataloading = true;
-        this.JobDetailsLocalVariable.currentpage = 1;
+        this.JobDetaillocalstorage.currentpage = 1;
         this.GetFooterDetails(this.requestFromJob);
       }
     } else {
@@ -45,12 +51,12 @@ export class JobFooterComponent implements OnInit {
   }
   goTonextPage() {
     if (this.requestFromJob) {
-      if (this.JobDetailsLocalVariable.currentpage != this.totalPage) {
+      if (this.JobDetaillocalstorage.currentpage != this.totalPage) {
         this.JobDetailsLocalVariable.dataloading = true;
-        this.JobDetailsLocalVariable.currentpage =
-          this.JobDetailsLocalVariable.currentpage + 1;
+        this.JobDetaillocalstorage.currentpage =
+          this.JobDetaillocalstorage.currentpage + 1;
         this.totalPage = Math.ceil(
-          this.totalRecords / this.JobDetailsLocalVariable.recordperpagejob
+          this.totalRecords / this.JobDetaillocalstorage.recordperpagejob
         );
         this.GetFooterDetails(this.requestFromJob);
       }
@@ -65,12 +71,12 @@ export class JobFooterComponent implements OnInit {
   }
   goTopriviousPage() {
     if (this.requestFromJob) {
-      if (this.JobDetailsLocalVariable.currentpage != 1) {
+      if (this.JobDetaillocalstorage.currentpage != 1) {
         this.JobDetailsLocalVariable.dataloading = true;
-        this.JobDetailsLocalVariable.currentpage =
-          this.JobDetailsLocalVariable.currentpage - 1;
+        this.JobDetaillocalstorage.currentpage =
+          this.JobDetaillocalstorage.currentpage - 1;
         this.totalPage = Math.ceil(
-          this.totalRecords / this.JobDetailsLocalVariable.recordperpagejob
+          this.totalRecords / this.JobDetaillocalstorage.recordperpagejob
         );
         this.GetFooterDetails(this.requestFromJob);
       }
@@ -86,10 +92,10 @@ export class JobFooterComponent implements OnInit {
   }
   goTolastPage() {
     if (this.requestFromJob) {
-      if (this.JobDetailsLocalVariable.currentpage != this.totalPage) {
+      if (this.JobDetaillocalstorage.currentpage != this.totalPage) {
         this.JobDetailsLocalVariable.dataloading = true;
-        this.JobDetailsLocalVariable.currentpage = Math.ceil(
-          this.totalRecords / this.JobDetailsLocalVariable.recordperpagejob
+        this.JobDetaillocalstorage.currentpage = Math.ceil(
+          this.totalRecords / this.JobDetaillocalstorage.recordperpagejob
         );
         this.GetFooterDetails(this.requestFromJob);
       }
@@ -108,14 +114,16 @@ export class JobFooterComponent implements OnInit {
   }
   onSelected(value: string) {
     if (this.requestFromJob) {
-      this.JobDetailsLocalVariable.recordperpagejob = Number(value);
+      this.JobDetaillocalstorage.recordperpagejob = Number(value);
       this.JobDetailsLocalVariable.dataloading = true;
-      this.JobDetailsLocalVariable.currentpage = 1;
+      this.JobDetaillocalstorage.currentpage = 1;
       this.jobdetails.Columnfilters(this.JobDetailsLocalVariable.state);
+      this.localstorage.set('recordperpage', Number(value));
     } else {
       this.TaskDetailsLocalVariable.loading = true;
       this.TaskDetailsLocalVariable.recordperpagetask = Number(value);
       this.taskdetails.GetTaskDetails();
+      this.localstorage.set('taskrecordperpage', Number(value));
     }
   }
 }

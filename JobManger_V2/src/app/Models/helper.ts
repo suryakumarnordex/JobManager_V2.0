@@ -35,7 +35,6 @@ export class SearchTaskResultsLayout implements Deserializable {
     this.PageNo = input.page;
     this.PageSize = input.pageSize;
     this.totalResults = input.totalResults;
-    console.log(input.taskResults);
 
     this.results = [];
     for (const result of input.taskResults) {

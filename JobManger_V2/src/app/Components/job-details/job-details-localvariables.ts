@@ -16,15 +16,14 @@ export class JobDetailsLocalVariable {
   public loading = true;
   public SelectedjobId: Array<number>;
   public SelectedjobIdStatus: Array<number>;
+
+  //Filter Values
   public filterJobid: string = '';
   public filterTopic: string = '';
   public filterCockpit: string = '';
   public filterrunno: string = '';
   public filterpriority: string = '';
   public filternooftasks: string = '';
-
-  public OrderBy: string = '';
-  public orderDescending: boolean = false;
 
   public detailTaskID: any;
   public priorityValue: string;
@@ -35,11 +34,12 @@ export class JobDetailsLocalVariable {
   public Result: any;
 
   //footer properties
-  public recordperpagejob: number = 10;
-  public currentpage: number = 1;
+
   public totalPage: number;
   public jobCount: number = 0;
   public nodeGroupFragment: string = '';
+  public OrderBy: string = '';
+  public orderDescending: boolean = false;
 
   //Filter properties
   public AvailableUserName: { key: string; value: string }[] = [];

@@ -18,6 +18,7 @@ export class ApiServiceService {
   constructor(
     private http: HttpClient,
     private logger: LoggerService,
+    public JobDetaillocalstorage: JobDetaillocalstorage,
     public JobDetailsLocalVariable: JobDetailsLocalVariable
   ) {}
 
@@ -41,14 +42,10 @@ export class ApiServiceService {
     pendingReasonFragment: string = '',
     orderBy: string = this.JobDetailsLocalVariable.OrderBy,
     orderDescending: boolean,
-    PageNo: number = this.JobDetailsLocalVariable.recordperpagejob,
-    PageSize: number = this.JobDetailsLocalVariable.currentpage,
+    PageNo: number = this.JobDetaillocalstorage.currentpage,
+    PageSize: number = this.JobDetaillocalstorage.recordperpagejob,
     waitForChange: boolean = false
   ): Observable<SearchResultsLayout> {
-    console.log(
-      this.JobDetailsLocalVariable.OrderBy,
-      'this.JobDetailsLocalVariable.OrderBy'
-    );
     let params = new HttpParams()
       .set('jobIdFragment', jobIdFragment ? jobIdFragment : '')
       .set('topicFragment', topicFragment ? topicFragment : '')
@@ -67,8 +64,8 @@ export class ApiServiceService {
       )
       .set('orderBy', orderBy ? orderBy : '')
       .set('orderDescending', orderDescending.toString())
-      .set('page', PageNo.toFixed(0))
-      .set('PageSize', PageSize.toFixed(0))
+      .set('page', PageNo)
+      .set('PageSize', PageSize)
       .set('waitForChange', waitForChange ? waitForChange : false);
     statusFragment.forEach(function (status: string) {
       params = params.append('statusFragment', status);
@@ -79,10 +76,15 @@ export class ApiServiceService {
     typeFragment.forEach(function (types: string) {
       params = params.append('typeFragment', types);
     });
-    console.log(this.apiurl + 'SearchLayout', {
-      headers: this.headers,
-      params: params,
-    });
+    console.log(
+      this.apiurl + 'SearchLayout',
+      {
+        headers: this.headers,
+        params: params,
+        withCredentials: true,
+      },
+      'SearchLayout'
+    );
     return this.http
       .get(this.apiurl + 'SearchLayout', {
         headers: this.headers,
@@ -94,8 +96,6 @@ export class ApiServiceService {
           return new SearchResultsLayout().deserialize(resp);
         }),
         tap((results: SearchResultsLayout) => {
-          console.log();
-
           this.logger.log(
             `fetched ${results.results.length} search results for jobIdFragment=${jobIdFragment}, orderBy=${orderBy}, orderDescending=${orderDescending}, PageNo=${PageNo}, pageSize=${PageSize}`
           );
@@ -111,8 +111,8 @@ export class ApiServiceService {
     endTimeFragment: string = '',
     allocatedNodesFragment: string = '',
     commandLineFragment: string = '',
-    PageNo: number = 1,
-    PageSize: number = 10,
+    PageNo: Number = 1,
+    PageSize: Number = 10,
     orderDescending: boolean
   ): Observable<SearchTaskResultsLayout> {
     let params = new HttpParams()
@@ -135,10 +135,7 @@ export class ApiServiceService {
     statusFragment.forEach(function (status: string) {
       params = params.append('statusFragment', status);
     });
-    console.log(this.apiurl + 'SearchTaskLayout', {
-      headers: this.headers,
-      params: params,
-    });
+
     return this.http
       .get(this.apiurl + 'SearchTaskLayout', {
         headers: this.headers,
@@ -162,10 +159,7 @@ export class ApiServiceService {
       params = params.append('jobIds', jobId);
     });
     params = params.append('priority', priority);
-    console.log(this.apiurl + 'SetPriorityBandHPCRestAPI', {
-      headers: this.headers,
-      params: params,
-    });
+
     return this.http.post(
       this.apiurl + 'SetPriorityBandHPCRestAPI',
       {},
@@ -180,10 +174,7 @@ export class ApiServiceService {
     jobIds.forEach((jobId: any) => {
       params = params.append('jobIds', jobId);
     });
-    console.log(this.apiurl + 'HPCRestAPIJobrequeue', {
-      headers: this.headers,
-      params: params,
-    });
+
     return this.http.post(
       this.apiurl + 'HPCRestAPIJobrequeue',
       {},
@@ -198,10 +189,7 @@ export class ApiServiceService {
     jobIds.forEach((jobId: any) => {
       params = params.append('jobIds', jobId);
     });
-    console.log(this.apiurl + 'SearchLayout', {
-      headers: this.headers,
-      params: params,
-    });
+
     return this.http.post(
       this.apiurl + 'SearchLayout',
       {},
@@ -216,10 +204,7 @@ export class ApiServiceService {
     jobIds.forEach((jobId: any) => {
       params = params.append('jobIds', jobId);
     });
-    console.log(this.apiurl + 'HPCRestAPIJobcancel', {
-      headers: this.headers,
-      params: params,
-    });
+
     return this.http.post(
       this.apiurl + 'HPCRestAPIJobcancel',
       {},
@@ -235,11 +220,7 @@ export class ApiServiceService {
     TaskIds.forEach((taskid: any) => {
       params = params.append('taskIds', taskid);
     });
-    // params = params.append('taskIds',1)
-    console.log(this.apiurl + 'HPCRestAPITaskrequeue', {
-      headers: this.headers,
-      params: params,
-    });
+
     return this.http.post(
       this.apiurl + 'HPCRestAPITaskrequeue',
       {},
@@ -253,11 +234,6 @@ export class ApiServiceService {
     let params = new HttpParams();
     jobIds.forEach((jobId: any) => {
       params = params.append('jobIds', jobId);
-    });
-
-    console.log(this.apiurl + 'HPCPackJobSubmit', {
-      headers: this.headers,
-      params: params,
     });
 
     return this.http.post(

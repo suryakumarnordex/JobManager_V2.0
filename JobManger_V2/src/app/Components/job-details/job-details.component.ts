@@ -27,6 +27,7 @@ import { User } from '../../Models/user';
 import { ActivatedRoute } from '@angular/router';
 import { LoginService } from '../../Services/login.service';
 import { JobHeaderComponent } from '../job-header/job-header.component';
+import { FormControl, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-details.component.html',
@@ -34,14 +35,16 @@ import { JobHeaderComponent } from '../job-header/job-header.component';
 })
 export class JobDetailsComponent implements OnInit {
   @Input() pageSize: number = 1;
-  totalJobCount: number;
-  priorityDisable: boolean;
-  requeueDisable: boolean;
-  cancelDisable: boolean;
-  submitDisable: boolean;
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
   @ViewChildren(CheckboxListFilterComponent)
   buildincolumns: QueryList<CheckboxListFilterComponent>;
+
+  totalJobCount: number;
+  priorityDisable: boolean = false;
+  requeueDisable: boolean = false;
+  cancelDisable: boolean = false;
+  submitDisable: boolean = false;
+
   constructor(
     private ApiService: ApiServiceService,
     private router: Router,
@@ -54,13 +57,15 @@ export class JobDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.JobDetailsLocalVariable.dataloading = true;
-    this.GetMultipleSelectFiltersData();
     this.GetLocalStorageColumnValue();
+    this.GetMultipleSelectFiltersData();
   }
   GetMultipleSelectFiltersData() {
     this.JobDetailsLocalVariable.AvailableUserName = [];
     this.JobDetailsLocalVariable.AvailableType = [];
     this.JobDetailsLocalVariable.AvailableState = [];
+
+    //Get Available User name list
     this.ApiService.GetUserNameList().subscribe({
       next: (res: any) => {
         res.forEach((UserName: any) => {
@@ -79,7 +84,7 @@ export class JobDetailsComponent implements OnInit {
         console.log(error);
       },
     });
-
+    //Get Available Type name list
     this.ApiService.GetTypeList().subscribe({
       next: (res: any) => {
         res.forEach((Type: any) => {
@@ -98,7 +103,7 @@ export class JobDetailsComponent implements OnInit {
         console.log(error);
       },
     });
-
+    //Get Available Status list
     this.ApiService.GetStatusList().subscribe({
       next: (res: any) => {
         res.forEach((state: any) => {
@@ -120,7 +125,6 @@ export class JobDetailsComponent implements OnInit {
   }
   public ColumnResized(event: any, colType: string) {
     this.localstorage.set(colType, event);
-
     switch (colType) {
       case 'idcolumnwidth': {
         this.JobDetailsLocalStorage.idcolumnWidthValue = event;
@@ -198,12 +202,16 @@ export class JobDetailsComponent implements OnInit {
     // progressFragment: string = '',
     // PageSize: number = 10;
     this.JobDetailsLocalVariable.state = state;
-
+    this.JobDetailsLocalVariable.selectedType = [];
+    this.JobDetailsLocalVariable.selectedUsername = [];
+    this.JobDetailsLocalVariable.statusList = [];
     if (state.filters) {
       this.JobDetailsLocalVariable.dataloading = true;
+
       for (const filter of state.filters) {
-        this.JobDetailsLocalVariable.currentpage = 1;
+        this.JobDetailsLocalStorage.currentpage = 1;
         const { property, value } = <{ property: string; value: string }>filter;
+
         if (filter.filterParamName == 'typeFragment') {
           typeFragment = filter.selectedItems.map((e: any) => e.value);
           this.JobDetailsLocalVariable.selectedType = typeFragment;
@@ -220,11 +228,12 @@ export class JobDetailsComponent implements OnInit {
             this.JobDetailsLocalVariable.statusList;
           this.JobDetailsLocalVariable.OrderBy = 'status';
         }
+
         switch (property) {
           case 'jobIdFragment': {
             this.JobDetailsLocalVariable.filterJobid = value;
             this.JobDetailsLocalVariable.OrderBy = 'id';
-            console.log(this.JobDetailsLocalVariable.filterJobid);
+
             break;
           }
           case 'cockpitIdFragment': {
@@ -252,6 +261,9 @@ export class JobDetailsComponent implements OnInit {
             this.JobDetailsLocalVariable.filterpriority = value;
             this.JobDetailsLocalVariable.OrderBy = 'priority';
             break;
+          }
+          default: {
+            this.JobDetailsLocalVariable.OrderBy = 'id';
           }
         }
       }
@@ -298,7 +310,7 @@ export class JobDetailsComponent implements OnInit {
     }
     let ColumnName = state.sort?.reverse;
     ColumnName == undefined
-      ? (this.JobDetailsLocalVariable.orderDescending = false)
+      ? (this.JobDetailsLocalVariable.orderDescending = true)
       : (this.JobDetailsLocalVariable.orderDescending = ColumnName);
     this.ApiService.searchLayout(
       this.JobDetailsLocalVariable.filterJobid,
@@ -315,19 +327,17 @@ export class JobDetailsComponent implements OnInit {
       '',
       this.JobDetailsLocalVariable.OrderBy,
       this.JobDetailsLocalVariable.orderDescending,
-      this.JobDetailsLocalVariable.currentpage,
-      this.JobDetailsLocalVariable.recordperpagejob,
+      this.JobDetailsLocalStorage.currentpage,
+      this.JobDetailsLocalStorage.recordperpagejob,
       waitForChange
     ).subscribe({
       next: (res: SearchResultsLayout) => {
         this.JobDetailsLocalVariable.layouts = res.results;
-        console.log(this.JobDetailsLocalVariable.layouts, 'RES');
-
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
         this.JobDetailsLocalVariable.dataloading = false;
         this.JobDetailsLocalVariable.totalPage = Math.ceil(
           this.JobDetailsLocalVariable.jobCount /
-            this.JobDetailsLocalVariable.recordperpagejob
+            this.JobDetailsLocalStorage.recordperpagejob
         );
       },
       error: (error) => {
@@ -339,9 +349,8 @@ export class JobDetailsComponent implements OnInit {
   clearallFilters() {
     this.JobDetailsLocalVariable.dataloading = true;
     this.columns.forEach((column) => (column.filterValue = ''));
-    console.log(this.JobDetailsLocalVariable.state, 'STATE');
+    this.JobDetailsLocalStorage.currentpage = 1;
 
-    this.JobDetailsLocalVariable.currentpage = 1;
     this.ApiService.searchLayout(
       '',
       [],
@@ -357,20 +366,17 @@ export class JobDetailsComponent implements OnInit {
       '',
       '',
       false,
-      this.JobDetailsLocalVariable.currentpage,
-      this.JobDetailsLocalVariable.recordperpagejob,
+      this.JobDetailsLocalStorage.currentpage,
+      this.JobDetailsLocalStorage.recordperpagejob,
       false
     ).subscribe({
       next: (res: SearchResultsLayout) => {
-        console.log(res, 'Inside Refresh');
         this.JobDetailsLocalVariable.layouts = res.results;
-        console.log(this.JobDetailsLocalVariable.layouts, 'Datas');
-
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
         this.JobDetailsLocalVariable.dataloading = false;
         this.JobDetailsLocalVariable.totalPage = Math.ceil(
           this.JobDetailsLocalVariable.jobCount /
-            this.JobDetailsLocalVariable.recordperpagejob
+            this.JobDetailsLocalStorage.recordperpagejob
         );
         this.JobDetailsLocalVariable.dataloading = false;
       },
@@ -382,8 +388,6 @@ export class JobDetailsComponent implements OnInit {
   }
   loadDatas() {
     this.JobDetailsLocalVariable.dataloading = true;
-    // this.columns.forEach(column => column.filterValue = "");
-
     this.ApiService.searchLayout(
       this.JobDetailsLocalVariable.filterJobid,
       this.JobDetailsLocalVariable.selectedUsername,
@@ -399,20 +403,17 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.filternooftasks,
       '',
       false,
-      this.JobDetailsLocalVariable.currentpage,
-      this.JobDetailsLocalVariable.recordperpagejob,
+      this.JobDetailsLocalStorage.currentpage,
+      this.JobDetailsLocalStorage.recordperpagejob,
       false
     ).subscribe({
       next: (res: SearchResultsLayout) => {
-        console.log(res, 'Inside Refresh');
         this.JobDetailsLocalVariable.layouts = res.results;
-        console.log(this.JobDetailsLocalVariable.layouts, 'Datas');
-
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
         this.JobDetailsLocalVariable.dataloading = false;
         this.JobDetailsLocalVariable.totalPage = Math.ceil(
           this.JobDetailsLocalVariable.jobCount /
-            this.JobDetailsLocalVariable.recordperpagejob
+            this.JobDetailsLocalStorage.recordperpagejob
         );
         this.JobDetailsLocalVariable.dataloading = false;
       },
@@ -428,6 +429,7 @@ export class JobDetailsComponent implements OnInit {
     nodeGroupFragment: string
   ) {
     if (event !== null) {
+      this.JobDetailsLocalVariable.nodeGroupFragment = nodeGroupFragment;
       this.ApiService.searchLayout(
         '',
         [],
@@ -439,12 +441,12 @@ export class JobDetailsComponent implements OnInit {
         '',
         '',
         '',
-        nodeGroupFragment,
+        this.JobDetailsLocalVariable.nodeGroupFragment,
         '',
         '',
         false,
         1,
-        this.JobDetailsLocalVariable.recordperpagejob,
+        this.JobDetailsLocalStorage.recordperpagejob,
         false
       ).subscribe({
         next: (res: SearchResultsLayout) => {
@@ -453,7 +455,7 @@ export class JobDetailsComponent implements OnInit {
           this.JobDetailsLocalVariable.dataloading = false;
           this.JobDetailsLocalVariable.totalPage = Math.ceil(
             this.JobDetailsLocalVariable.jobCount /
-              this.JobDetailsLocalVariable.recordperpagejob
+              this.JobDetailsLocalStorage.recordperpagejob
           );
 
           this.JobDetailsLocalVariable.dataloading = false;
@@ -493,7 +495,6 @@ export class JobDetailsComponent implements OnInit {
       });
     }
   }
-
   copyRunClipboard(selectedItem: any) {
     const create_copy = (e: ClipboardEvent) => {
       e.clipboardData?.setData('text/plain', selectedItem.runFolder);
@@ -514,7 +515,8 @@ export class JobDetailsComponent implements OnInit {
       e.preventDefault();
       if (
         selectedItem.CockpitFolder != '' &&
-        selectedItem.CockpitFolder != null
+        selectedItem.CockpitFolder != null &&
+        selectedItem.CockpitFolder != undefined
       ) {
         selectedItem.text = 'copied';
       } else {
@@ -526,46 +528,56 @@ export class JobDetailsComponent implements OnInit {
     document.removeEventListener('copy', create_copy);
   }
   selectionChanged(event: any[]) {
-    console.log(event, 'selectionChanged');
     let finishedCount = 0;
     let canceledCount = 0;
     let failedCount = 0;
     let queuedCount = 0;
     let configuringCount = 0;
+    console.log(event, 'selectionChanged');
     this.JobDetailsLocalVariable.SelectedjobId = event.map(
       (e) => e.jobIdFragment
     );
+
     this.totalJobCount = this.JobDetailsLocalVariable.SelectedjobId.length;
     this.JobDetailsLocalVariable.SelectedjobIdStatus = event.map(
       (e) => e.statusFragment
     );
-    this.JobDetailsLocalVariable.SelectedjobIdStatus.forEach(function (status) {
-      if (status.toString() == 'Finished') {
-        finishedCount += 1;
-      } else if (status.toString() == 'Failed') {
-        failedCount += 1;
-      } else if (status.toString() == 'Canceled') {
-        canceledCount += 1;
-      } else if (status.toString() == 'Queued') {
-        queuedCount += 1;
-      } else if (status.toString() == 'Configuring') {
-        configuringCount += 1;
+
+    this.JobDetailsLocalVariable.SelectedjobIdStatus.forEach((status) => {
+      switch (status.toString()) {
+        case 'Finished': {
+          this.priorityDisable = true;
+          this.requeueDisable = true;
+          this.submitDisable = true;
+          this.cancelDisable = true;
+          break;
+        }
+        case 'Running': {
+          this.requeueDisable = true;
+          this.submitDisable = true;
+          break;
+        }
+        case 'Queued': {
+          this.requeueDisable = true;
+          this.submitDisable = true;
+          break;
+        }
+        case 'Failed': {
+          this.cancelDisable = true;
+          this.submitDisable = true;
+          break;
+        }
+        case 'Cancelled': {
+          this.cancelDisable = true;
+          this.submitDisable = true;
+          break;
+        }
+        case 'Configuring': {
+          this.requeueDisable = true;
+          break;
+        }
       }
     });
-    finishedCount >= 1
-      ? (this.priorityDisable = true)
-      : (this.priorityDisable = false);
-    failedCount >= 1 || canceledCount >= 1
-      ? (this.requeueDisable = false)
-      : (this.requeueDisable = true);
-    queuedCount >= 1 || configuringCount >= 1
-      ? (this.cancelDisable = false)
-      : (this.cancelDisable = true);
-    configuringCount >= 1
-      ? (this.submitDisable = false)
-      : (this.submitDisable = true);
-
-    // console.log(finishedCount, this.totalJobCount, this.priorityEnable);
   }
   openmodel(action: string, jobId: number) {
     this.JobDetailsLocalVariable.SelectedjobId = [jobId];
@@ -607,7 +619,7 @@ export class JobDetailsComponent implements OnInit {
       this.localstorage.get('submittimecolumnwidth');
     this.JobDetailsLocalStorage.pendingreasoncolumnWidthValue =
       this.localstorage.get('pendingreasoncolumnwidth');
-    this.JobDetailsLocalStorage.recordPerPageValue =
+    this.JobDetailsLocalStorage.recordperpagejob =
       this.localstorage.get('recordperpage');
   }
   public SetJobPriority() {
@@ -689,9 +701,5 @@ export class JobDetailsComponent implements OnInit {
         }
       }
     });
-  }
-
-  SortByColumn(event: any) {
-    console.log(event, 'event');
   }
 }

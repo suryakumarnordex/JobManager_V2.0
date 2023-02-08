@@ -13,14 +13,12 @@ export class LoginService {
   constructor(private http: HttpClient) {}
 
   user(userName: string | null = null): Observable<User> {
-
     return this.http
-      .get(`${this.UserapiUrl}/UserName`, { params: { 'userName': userName ? userName : '' } })
+      .get(`${this.UserapiUrl}/UserName`, {
+        params: { userName: userName ? userName : '' },
+      })
       .pipe(
         map((resp) => {
-          console.log(`${this.UserapiUrl}/UserName`, {
-            params: { 'userName': userName ? userName : '' },
-          });
           return new User().deserialize(resp);
         })
       );

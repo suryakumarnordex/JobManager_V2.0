@@ -32,13 +32,15 @@ export class TaskDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.GetTaskDetails();
     this.GetTaskLocalStorageColumnValue();
+    this.GetTaskDetails();
   }
   showFileData(log: any) {
     this.TaskDetailsLocalVariable.LogFileData = null;
     this.getFilepath(log);
-    this.TaskDetailsLocalVariable.openModal = true;
+    if (this.TaskDetailsLocalVariable.LogFileData !== null) {
+      this.TaskDetailsLocalVariable.openModal = true;
+    }
   }
   getFilepath(filepath: any) {
     this.ApiService.getFilePath(filepath).subscribe((data) => {
@@ -50,8 +52,8 @@ export class TaskDetailsComponent implements OnInit {
 
   GetTaskDetails() {
     this.dataloading = true;
-    console.log(this.JobIDFragement);
     this.TaskDetailsLocalVariable.SelectedJobIDFragement = this.JobIDFragement;
+
     this.ApiService.searchTaskLayout(
       this.JobIDFragement,
       '',
@@ -62,7 +64,7 @@ export class TaskDetailsComponent implements OnInit {
       '',
       '',
       this.TaskDetailsLocalVariable.currentpagetask,
-      this.TaskDetailsLocalVariable.recordperpagetask,
+      this.TaskDetailsLocalStorage.recordPerPageValue,
       false
     ).subscribe({
       next: (res: SearchTaskResultsLayout) => {
@@ -146,6 +148,8 @@ export class TaskDetailsComponent implements OnInit {
       this.localstorage.get('allocatednodecolumnwidth');
     this.TaskDetailsLocalStorage.commandlinecolumnWidthValue =
       this.localstorage.get('commandlinecolumnwidth');
+    this.TaskDetailsLocalStorage.recordPerPageValue =
+      this.localstorage.get('taskrecordperpage');
   }
   setRequeue() {
     this.ApiService.SetTaskRequeue(
