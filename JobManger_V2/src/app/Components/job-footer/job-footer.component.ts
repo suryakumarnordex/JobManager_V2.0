@@ -120,6 +120,7 @@ export class JobFooterComponent implements OnInit {
     } else {
       this.TaskDetailsLocalVariable.loading = true;
       this.TaskDetailsLocalVariable.recordperpagetask = Number(value);
+      this.TaskDetaillocalstorage.recordPerPageValue = Number(value);
       this.taskdetails.GetTaskDetails();
       this.localstorage.set('taskrecordperpage', Number(value));
     }

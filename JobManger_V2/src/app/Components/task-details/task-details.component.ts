@@ -64,7 +64,7 @@ export class TaskDetailsComponent implements OnInit {
       '',
       '',
       this.TaskDetailsLocalVariable.currentpagetask,
-      this.TaskDetailsLocalStorage.recordPerPageValue,
+      this.TaskDetailsLocalVariable.recordperpagetask,
       false
     ).subscribe({
       next: (res: SearchTaskResultsLayout) => {
@@ -150,6 +150,8 @@ export class TaskDetailsComponent implements OnInit {
       this.localstorage.get('commandlinecolumnwidth');
     this.TaskDetailsLocalStorage.recordPerPageValue =
       this.localstorage.get('taskrecordperpage');
+    this.TaskDetailsLocalVariable.recordperpagetask =
+      this.TaskDetailsLocalStorage.recordPerPageValue;
   }
   setRequeue() {
     this.ApiService.SetTaskRequeue(
