@@ -189,57 +189,69 @@ export class JobDetailsComponent implements OnInit {
     }
   }
   Columnfilters(state: ClrDatagridStateInterface) {
-    // let jobIdFragment = '';
-    // let userFragment: Array<string> = [];
-    // let typeFragment: Array<string> = [];
-    // let topicFragment = '';
-    //let orderDescending = false;
     let waitForChange = false;
-    // nodeGroupFragment: string = '',
-    // pendingReasonFragment: string = '',
-    // orderBy: string = '';
-    // let PageNo = 1;
-    // progressFragment: string = '',
-    // PageSize: number = 10;
     this.JobDetailsLocalVariable.state = state;
     this.JobDetailsLocalVariable.selectedType = [];
     this.JobDetailsLocalVariable.selectedUsername = [];
     this.JobDetailsLocalVariable.statusList = [];
+    console.log(event, 'event');
 
     if (state.filters) {
       this.JobDetailsLocalVariable.dataloading = true;
+      this.JobDetailsLocalStorage.currentpage = 1;
 
-      for (const filter of state.filters) {
-        this.JobDetailsLocalStorage.currentpage = 1;
-        const { property, value } = <{ property: string; value: string }>filter;
-
-        if (filter.filterParamName == 'typeFragment') {
-          this.JobDetailsLocalVariable.selectedType = filter.selectedItems.map(
-            (e: any) => e.key
-          );
-          this.JobDetailsLocalVariable.OrderBy = 'type';
-        } else if (filter.filterParamName == 'userFragment') {
-          console.log(
-            filter.selectedItems.map((e: any) => e.key),
-            ' filter.selectedItems.map((e: any) => e.key)'
-          );
-          this.JobDetailsLocalVariable.selectedUsername =
-            filter.selectedItems.map((e: any) => e.key);
-          this.JobDetailsLocalVariable.OrderBy = 'cockpitusername';
-        } else if (filter.filterParamName == 'statusFragment') {
-          this.JobDetailsLocalVariable.statusList = filter.selectedItems.map(
-            (e: any) => e.key
-          );
-          this.JobDetailsLocalVariable.selectedState =
-            this.JobDetailsLocalVariable.statusList;
-          this.JobDetailsLocalVariable.OrderBy = 'status';
+      for (const filterctrl of state.filters) {
+        if (
+          filterctrl.filterParamName == 'typeFragment' ||
+          filterctrl.filterParamName == 'userFragment' ||
+          filterctrl.filterParamName == 'statusFragment'
+        ) {
+          if (filterctrl.changes.currentObservers !== null) {
+            if (filterctrl.filterParamName == 'typeFragment') {
+              filterctrl.selectedItems
+                .map((e: any) => e.value)
+                .forEach((value: string) => {
+                  if (
+                    !this.JobDetailsLocalVariable.selectedType.includes(value)
+                  ) {
+                    this.JobDetailsLocalVariable.selectedType.push(value);
+                  }
+                });
+            } else if (filterctrl.filterParamName == 'userFragment') {
+              filterctrl.selectedItems
+                .map((e: any) => e.value)
+                .forEach((value: string) => {
+                  if (
+                    !this.JobDetailsLocalVariable.selectedUsername.includes(
+                      value
+                    )
+                  ) {
+                    this.JobDetailsLocalVariable.selectedUsername.push(value);
+                  }
+                });
+            } else if (filterctrl.filterParamName == 'statusFragment') {
+              filterctrl.selectedItems
+                .map((e: any) => e.value)
+                .forEach((value: string) => {
+                  if (
+                    !this.JobDetailsLocalVariable.selectedState.includes(value)
+                  ) {
+                    this.JobDetailsLocalVariable.selectedState.push(value);
+                  }
+                });
+            }
+          }
         }
 
+        const { property, value } = <{ property: string; value: string }>(
+          filterctrl
+        );
+        console.log(property, 'property');
+        console.log(filterctrl, 'value');
         switch (property) {
           case 'jobIdFragment': {
             this.JobDetailsLocalVariable.filterJobid = value;
             this.JobDetailsLocalVariable.OrderBy = 'id';
-
             break;
           }
           case 'cockpitIdFragment': {
@@ -273,6 +285,15 @@ export class JobDetailsComponent implements OnInit {
           }
         }
       }
+    } else {
+      this.JobDetailsLocalVariable.filterJobid = '';
+      this.JobDetailsLocalVariable.filterrunno = '';
+      this.JobDetailsLocalVariable.filterTopic = '';
+      this.JobDetailsLocalVariable.filternooftasks = '';
+      this.JobDetailsLocalVariable.filterpriority = '';
+      this.JobDetailsLocalVariable.selectedType = [];
+      this.JobDetailsLocalVariable.selectedUsername = [];
+      this.JobDetailsLocalVariable.selectedState = [];
     }
     if (state.sort?.by !== undefined) {
       switch (state.sort?.by) {

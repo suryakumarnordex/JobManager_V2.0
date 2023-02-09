@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ClrDatagridFilterInterface } from '@clr/angular';
 import { Subject } from 'rxjs';
+import { JobDetailsLocalVariable } from './job-details-localvariables';
 
 @Component({
   moduleId: 'checkbox-list-filter',
@@ -15,7 +16,7 @@ import { Subject } from 'rxjs';
             <input
               type="checkbox"
               clrCheckbox
-              (change)="onItemChanged(item)"
+              (change)="onItemChanged(item, $event)"
               [checked]="item.checked"
               [disabled]="item.disabled"
             />
@@ -48,10 +49,11 @@ export class CheckboxListFilterComponent
     value: string;
   }> = [];
 
+  constructor(public JobDetailsLocalVariable: JobDetailsLocalVariable) {}
+
   public changes = new Subject<any>();
 
   public get state() {
-    // console.log('test');
     return this;
   }
 
@@ -76,13 +78,14 @@ export class CheckboxListFilterComponent
     this.changes.next(true);
   }
 
-  public onItemChanged(item: any) {
+  public onItemChanged(item: any, event: any) {
     if (!item.checked) {
       item.checked = true;
       this.selectedItems.push(item);
     } else {
       item.checked = false;
       let index = this.selectedItems.indexOf(item);
+
       if (index >= 0) {
         this.selectedItems.splice(index, 1);
       }
