@@ -108,6 +108,7 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsLocalVariable.selectedUsername = [];
     this.JobDetailsLocalVariable.selectedState = [];
     this.JobDetailsLocalVariable.selectedType = [];
+    this.JobDetailsLocalVariable.selected = [];
     this.JobDetailsComponent.clearallFilters();
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     this.JobDetailsComponent.GetMultipleSelectFiltersData();

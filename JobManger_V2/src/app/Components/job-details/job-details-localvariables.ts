@@ -49,7 +49,7 @@ export class JobDetailsLocalVariable {
   public AvailableType: { key: string; value: string }[] = [];
   public selectedType: Array<string> = [];
 
-  public Nodelist: Array<string> = [
+  public readonly Nodelist: Array<string> = [
     'All jobs',
     'Queue Simulation',
     'Queue BladedSimulation',

@@ -108,9 +108,7 @@ export class JobFooterComponent implements OnInit {
     }
   }
   GetFooterDetails(isjob: boolean) {
-    isjob
-      ? this.jobdetails.Columnfilters({})
-      : this.taskdetails.GetTaskDetails();
+    isjob ? this.jobdetails.loadDatas() : this.taskdetails.GetTaskDetails();
   }
   onSelected(value: string) {
     if (this.requestFromJob) {

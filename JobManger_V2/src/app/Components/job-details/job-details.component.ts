@@ -191,10 +191,6 @@ export class JobDetailsComponent implements OnInit {
   Columnfilters(state: ClrDatagridStateInterface) {
     let waitForChange = false;
     this.JobDetailsLocalVariable.state = state;
-    this.JobDetailsLocalVariable.selectedType = [];
-    this.JobDetailsLocalVariable.selectedUsername = [];
-    this.JobDetailsLocalVariable.statusList = [];
-    console.log(event, 'event');
 
     if (state.filters) {
       this.JobDetailsLocalVariable.dataloading = true;
@@ -246,8 +242,7 @@ export class JobDetailsComponent implements OnInit {
         const { property, value } = <{ property: string; value: string }>(
           filterctrl
         );
-        console.log(property, 'property');
-        console.log(filterctrl, 'value');
+
         switch (property) {
           case 'jobIdFragment': {
             this.JobDetailsLocalVariable.filterJobid = value;
@@ -291,6 +286,7 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.filterTopic = '';
       this.JobDetailsLocalVariable.filternooftasks = '';
       this.JobDetailsLocalVariable.filterpriority = '';
+
       this.JobDetailsLocalVariable.selectedType = [];
       this.JobDetailsLocalVariable.selectedUsername = [];
       this.JobDetailsLocalVariable.selectedState = [];
@@ -556,16 +552,9 @@ export class JobDetailsComponent implements OnInit {
     document.removeEventListener('copy', create_copy);
   }
   selectionChanged(event: any[]) {
-    let finishedCount = 0;
-    let canceledCount = 0;
-    let failedCount = 0;
-    let queuedCount = 0;
-    let configuringCount = 0;
-
     this.JobDetailsLocalVariable.SelectedjobId = event.map(
       (e) => e.jobIdFragment
     );
-
     this.totalJobCount = this.JobDetailsLocalVariable.SelectedjobId.length;
     this.JobDetailsLocalVariable.SelectedjobIdStatus = event.map(
       (e) => e.statusFragment
