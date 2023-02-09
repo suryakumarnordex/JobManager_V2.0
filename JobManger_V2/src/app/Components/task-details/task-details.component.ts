@@ -1,11 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ApiServiceService } from 'src/app/api-service.service';
-import { SearchTaskResultsLayout } from 'src/app/Models/helper';
+import {
+  SearchResultsLayout,
+  SearchTaskResultsLayout,
+} from 'src/app/Models/helper';
 import { TaskLayoutInfo } from 'src/app/Models/layout';
 import { LoggerService } from 'src/app/Services/logger.service';
 import { TaskDetailsLocalVariable } from './task-details-localvariable';
 import { TaskDetaillocalstorage } from '../task-header/task-detail-Localstorage';
 import { LocalStorageService } from 'src/app/local-storage.service';
+import { ClrDatagridStateInterface } from '@clr/angular';
 @Component({
   selector: 'app-task-details',
   templateUrl: './task-details.component.html',
@@ -22,6 +26,7 @@ export class TaskDetailsComponent implements OnInit {
   totalRecords = 0;
   totalPage: number;
   dataloading: boolean = false;
+  JobDetailsLocalVariable: any;
 
   constructor(
     private ApiService: ApiServiceService,
@@ -147,6 +152,112 @@ export class TaskDetailsComponent implements OnInit {
     this.TaskDetailsLocalStorage.commandlinecolumnWidthValue =
       this.localstorage.get('commandlinecolumnwidth');
   }
+
+  Columnfilters(state: ClrDatagridStateInterface) {
+    let waitForChange = false;
+
+    if (state.filters) {
+      this.TaskDetailsLocalVariable.dataloading = true;
+      for (const filter of state.filters) {
+        this.TaskDetailsLocalVariable.currentpage = 1;
+        const { property, value } = <{ property: string; value: string }>filter;
+
+        switch (property) {
+          case 'taskIdFragment': {
+            this.TaskDetailsLocalVariable.filterTaskid = value;
+            this.TaskDetailsLocalVariable.OrderBy = 'taskid';
+            console.log(this.TaskDetailsLocalVariable.filterTaskid);
+            break;
+          }
+          case 'nameFragment': {
+            this.TaskDetailsLocalVariable.filterTaskName = value;
+            this.TaskDetailsLocalVariable.OrderBy = 'taskname';
+            console.log(this.TaskDetailsLocalVariable.filterTaskName);
+            break;
+          }
+          // case 'TaskStateFragment': {
+          //   this.TaskDetailsLocalVariable.filterTaskState = value;
+          //   this.TaskDetailsLocalVariable.OrderBy = 'taskstate';
+          //   console.log(this.TaskDetailsLocalVariable.filterTaskState);
+          //   break;
+          // }
+          // case 'ExitCodeFragment': {
+          //   this.TaskDetailsLocalVariable.filterExitCode = value;
+          //   this.TaskDetailsLocalVariable.OrderBy = 'exitcode';
+          //   console.log(this.TaskDetailsLocalVariable.filterExitCode);
+          //   break;
+          // }
+          // case 'LogFragment': {
+          //   this.TaskDetailsLocalVariable.filterLog = value;
+          //   this.TaskDetailsLocalVariable.OrderBy = 'log';
+          //   console.log(this.TaskDetailsLocalVariable.filterLog);
+          //   break;
+          // }
+          case 'startTimeFragment': {
+            this.TaskDetailsLocalVariable.filterStartTime = value;
+            this.TaskDetailsLocalVariable.OrderBy = 'starttime';
+            console.log(this.TaskDetailsLocalVariable.filterStartTime);
+            break;
+          }
+          case 'endTimeFragment': {
+            this.TaskDetailsLocalVariable.filterEndTime = value;
+            this.TaskDetailsLocalVariable.OrderBy = 'endtime';
+            console.log(this.TaskDetailsLocalVariable.filterEndTime);
+            break;
+          }
+          case 'allocatedNodesFragment': {
+            this.TaskDetailsLocalVariable.filterAllocatedNodes = value;
+            this.TaskDetailsLocalVariable.OrderBy = 'allocatednode';
+            console.log(this.TaskDetailsLocalVariable.filterAllocatedNodes);
+            break;
+          }
+          case 'commandLineFragment': {
+            this.TaskDetailsLocalVariable.filterCommandLine = value;
+            this.TaskDetailsLocalVariable.OrderBy = 'commandline';
+            console.log(this.TaskDetailsLocalVariable.filterCommandLine);
+            break;
+          }
+        }
+      }
+      let ColumnName = state.sort?.reverse;
+      ColumnName == undefined
+        ? (this.TaskDetailsLocalVariable.orderDescending = false)
+        : (this.TaskDetailsLocalVariable.orderDescending = ColumnName);
+      this.ApiService.searchTaskLayout(
+        this.TaskDetailsLocalVariable.filterTaskid,
+        '',
+        this.TaskDetailsLocalVariable.filterTaskName,
+        this.TaskDetailsLocalVariable.selectedState,
+
+        this.TaskDetailsLocalVariable.filterStartTime,
+        this.TaskDetailsLocalVariable.filterEndTime,
+        this.TaskDetailsLocalVariable.filterAllocatedNodes,
+
+        this.TaskDetailsLocalVariable.filterCommandLine,
+        this.TaskDetailsLocalVariable.currentpage,
+
+        this.TaskDetailsLocalVariable.recordperpagetask,
+        this.TaskDetailsLocalVariable.orderDescending
+      ).subscribe({
+        next: (res: SearchTaskResultsLayout) => {
+          this.TaskDetailsLocalVariable.layouts = res.results;
+          console.log(this.TaskDetailsLocalVariable.layouts, 'RES');
+
+          this.TaskDetailsLocalVariable.taskCount = res.totalResults;
+          this.TaskDetailsLocalVariable.dataloading = false;
+          this.TaskDetailsLocalVariable.totalPage = Math.ceil(
+            this.TaskDetailsLocalVariable.taskCount /
+              this.TaskDetailsLocalVariable.recordperpagetask
+          );
+        },
+        error: (error) => {
+          this.logger.reportError(error);
+          this.TaskDetailsLocalVariable.dataloading = false;
+        },
+      });
+    }
+  }
+
   setRequeue() {
     this.ApiService.SetTaskRequeue(
       this.TaskDetailsLocalVariable.SelectedJobIDFragement,
@@ -162,4 +273,8 @@ export class TaskDetailsComponent implements OnInit {
       },
     });
   }
+}
+
+function elseif(arg0: boolean) {
+  throw new Error('Function not implemented.');
 }

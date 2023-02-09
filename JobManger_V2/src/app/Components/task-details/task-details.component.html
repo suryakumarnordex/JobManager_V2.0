@@ -2,6 +2,8 @@
 <clr-datagrid
   class="datagrid-compact"
   [(clrDgSelected)]="selected"
+  (clrDgRefresh)="Columnfilters($event)"
+  [clrDgLoading]="TaskDetailsLocalVariable.dataloading"
   [clrDgLoading]="this.dataloading"
   style="height: 500px"
   HorizontalAlignment="auto"
@@ -11,45 +13,60 @@
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.taskidcolumnWidthValue"
     (clrDgColumnResize)="TaskColumnResized($event, 'taskidcolumnwidth')"
-    >Task ID</clr-dg-column
-  >
+    [clrDgField]="'taskIdFragment'"
+    >Task ID
+  </clr-dg-column>
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.tasknamecolumnWidthValue"
     (clrDgColumnResize)="TaskColumnResized($event, 'tasknamecolumnwidth')"
+    [clrDgField]="'nameFragment'"
     >Task Name</clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.taskstatecolumnWidthValue"
+    [clrDgField]="'TaskStateFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'taskstatecolumnwidth')"
+    ><clr-dg-filter [clrDgFilter]="statusFilter" [scrollLeft]="true">
+      <checkbox-list-filter
+        #statusFilter
+        [filterParamName]="'statusFragment'"
+        [items]="TaskDetailsLocalVariable.AvailableState"
+      ></checkbox-list-filter> </clr-dg-filter
     >Task State</clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.exitcodecolumnWidthValue"
+    [clrDgField]="'ExitCodeFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'exitcodecolumnwidth')"
     >Exit Code</clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.tasklogcolumnWidthValue"
+    [clrDgField]="'LogFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'tasklogcolumnwidth')"
     >Log</clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.taskstartcolumnWidthValue"
+    [clrDgField]="'startTimeFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'taskstarttimecolumnwidth')"
     >Start Time (yy/mm/dd HH:mm)</clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.taskendcolumnWidthValue"
+    [clrDgField]="'endTimeFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'taskendtimecolumnwidth')"
     >End Time (yy/mm/dd HH:mm)</clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.allocatednodescolumnWidthValue"
+    [clrDgField]="'allocatedNodesFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'allocatednodecolumnwidth')"
     >Allocated Nodes</clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.commandlinecolumnWidthValue"
+    [clrDgField]="'commandLineFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'commandlinecolumnwidth')"
     >Command Line</clr-dg-column
   >
