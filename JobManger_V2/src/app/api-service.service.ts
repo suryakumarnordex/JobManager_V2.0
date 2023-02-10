@@ -111,8 +111,8 @@ export class ApiServiceService {
     endTimeFragment: string = '',
     allocatedNodesFragment: string = '',
     commandLineFragment: string = '',
-    PageNo: Number = 1,
-    PageSize: Number = 10,
+    PageNo: Number,
+    PageSize: Number,
     orderDescending: boolean
   ): Observable<SearchTaskResultsLayout> {
     let params = new HttpParams()
@@ -130,12 +130,20 @@ export class ApiServiceService {
         commandLineFragment ? commandLineFragment : ''
       )
       .set('orderDescending', orderDescending.toString())
-      .set('page', PageNo.toFixed(0))
-      .set('PageSize', PageSize.toFixed(0));
+      .set('page', Number(PageNo))
+      .set('PageSize', Number(PageSize));
     statusFragment.forEach(function (status: string) {
       params = params.append('statusFragment', status);
     });
-
+    console.log(
+      this.apiurl + 'SearchTaskLayout',
+      {
+        headers: this.headers,
+        params: params,
+        withCredentials: true,
+      },
+      'SearchLayout'
+    );
     return this.http
       .get(this.apiurl + 'SearchTaskLayout', {
         headers: this.headers,

@@ -22,12 +22,13 @@ import {
   ClrNavLevel,
 } from '@clr/angular';
 import { CheckboxListFilterComponent } from './checkbox-list-filter.component';
-import { FiltersProvider } from '@clr/angular/data/datagrid/providers/filters';
 import { User } from '../../Models/user';
 import { ActivatedRoute } from '@angular/router';
 import { LoginService } from '../../Services/login.service';
 import { JobHeaderComponent } from '../job-header/job-header.component';
 import { FormControl, FormGroup } from '@angular/forms';
+import { TaskDetailsComponent } from '../task-details/task-details.component';
+import { TaskDetaillocalstorage } from '../task-header/task-detail-Localstorage';
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-details.component.html',
@@ -52,7 +53,9 @@ export class JobDetailsComponent implements OnInit {
     private localstorage: LocalStorageService,
     public JobDetailsLocalStorage: JobDetaillocalstorage,
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public TaskDetailsComponent: TaskDetailsComponent,
+    public TaskDetaillocalstorage: TaskDetaillocalstorage
   ) {}
 
   ngOnInit(): void {
@@ -492,6 +495,7 @@ export class JobDetailsComponent implements OnInit {
     }
   }
   onDetailOpen(event: any) {
+    this.TaskDetailsComponent.GetTaskLocalStorageColumnValue();
     if (event !== null) {
       this.JobDetailsLocalVariable.detailTaskID = event.jobIdFragment;
       this.ApiService.searchTaskLayout(
@@ -504,10 +508,11 @@ export class JobDetailsComponent implements OnInit {
         '',
         '',
         1,
-        10,
+        this.TaskDetaillocalstorage.recordPerPageValue,
         false
       ).subscribe({
         next: (res: SearchTaskResultsLayout) => {
+          console.log(res, 'search task layout result');
           this.JobDetailsLocalVariable.taskLayout = res.results;
           this.JobDetailsLocalVariable.jobCount = res.totalResults;
           this.JobDetailsLocalVariable.dataloading = false;

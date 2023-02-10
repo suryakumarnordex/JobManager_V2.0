@@ -33,7 +33,7 @@ export class TaskDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetTaskLocalStorageColumnValue();
-    this.GetTaskDetails();
+    //this.GetTaskDetails();
   }
   showFileData(log: any) {
     this.TaskDetailsLocalVariable.LogFileData = null;
@@ -53,9 +53,9 @@ export class TaskDetailsComponent implements OnInit {
   GetTaskDetails() {
     this.dataloading = true;
     this.TaskDetailsLocalVariable.SelectedJobIDFragement = this.JobIDFragement;
-
+    this.TaskDetailsLocalStorage.recordPerPageValue;
     this.ApiService.searchTaskLayout(
-      this.JobIDFragement,
+      this.TaskDetailsLocalVariable.SelectedJobIDFragement,
       '',
       '',
       [],
@@ -64,7 +64,7 @@ export class TaskDetailsComponent implements OnInit {
       '',
       '',
       this.TaskDetailsLocalVariable.currentpagetask,
-      this.TaskDetailsLocalVariable.recordperpagetask,
+      this.TaskDetailsLocalStorage.recordPerPageValue,
       false
     ).subscribe({
       next: (res: SearchTaskResultsLayout) => {
@@ -152,6 +152,7 @@ export class TaskDetailsComponent implements OnInit {
       this.localstorage.get('taskrecordperpage');
     this.TaskDetailsLocalVariable.recordperpagetask =
       this.TaskDetailsLocalStorage.recordPerPageValue;
+    console.log(this.TaskDetailsLocalStorage.recordPerPageValue);
   }
   setRequeue() {
     this.ApiService.SetTaskRequeue(
