@@ -9,7 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
 import { LoggerService } from 'src/app/Services/logger.service';
-import { LayoutInfo } from 'src/app/Models/layout';
+import { JobLayoutInfo } from 'src/app/Models/layout';
 import { SearchResultsLayout } from 'src/app/Models/helper';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
 import { JobDetailsComponent } from '../job-details/job-details.component';
@@ -80,58 +80,46 @@ export class JobHeaderComponent implements OnInit {
     this.router.navigate(['nodelist']);
   }
   onModalClose() {
-    this.JobDetailsLocalVariable.openModal = false;
+    this.JobDetailsLocalVariable.openPopupModal = false;
   }
   getNavigationsList(): void {
     this.ApiService.getNavigations().subscribe((res) => {
-      this.JobDetailsLocalVariable.JobManageerNavigation = res;
+      this.JobDetailsLocalVariable.JobManagerNavigation = res;
     });
   }
   openmodel(event: string) {
-    this.JobDetailsLocalVariable.passingEvent = event;
-    this.JobDetailsLocalVariable.openModal = true;
+    this.JobDetailsLocalVariable.passingEventMsg = event;
+    this.JobDetailsLocalVariable.openPopupModal = true;
   }
   refreshData() {
-    this.JobDetailsComponent.loadDatas();
+    this.JobDetailsComponent.CallSearchlayout();
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     this.JobDetailsComponent.GetMultipleSelectFiltersData();
   }
   clearAllfilters() {
-    this.JobDetailsLocalVariable.filterJobid = '';
-    this.JobDetailsLocalVariable.filterTopic = '';
-    this.JobDetailsLocalVariable.filterCockpit = '';
-    this.JobDetailsLocalVariable.filterrunno = '';
-    this.JobDetailsLocalVariable.filterpriority = '';
-    this.JobDetailsLocalVariable.filternooftasks = '';
-    this.JobDetailsLocalVariable.SelectedjobId = [];
-    this.JobDetailsLocalVariable.SelectedjobIdStatus = [];
-    this.JobDetailsLocalVariable.selectedUsername = [];
-    this.JobDetailsLocalVariable.selectedState = [];
-    this.JobDetailsLocalVariable.selectedType = [];
-    this.JobDetailsLocalVariable.selected = [];
     this.JobDetailsComponent.clearallFilters();
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     this.JobDetailsComponent.GetMultipleSelectFiltersData();
   }
   onNodeGroupChange(event: any) {
+    let statusList: string[] = [];
     this.JobDetailsLocalVariable.dataloading = true;
     let val = event.target.value;
     if (val.includes('Queue')) {
-      this.JobDetailsLocalVariable.nodeGroupFragment = val.replace(
+      this.JobDetailsLocalVariable.SelectedNodeGroup = val.replace(
         'Queue ',
         ''
       );
-      this.JobDetailsLocalVariable.statusList = ['Queued', 'Finished'];
+      statusList = ['Queued', 'Finished'];
     } else {
-      this.JobDetailsLocalVariable.nodeGroupFragment = '';
-      this.JobDetailsLocalVariable.statusList = [];
-      this.JobDetaillocalstorage.currentpage = 1;
+      this.JobDetailsLocalVariable.SelectedNodeGroup = '';
+      statusList = [];
+      this.JobDetailsLocalVariable.currentpage = 1;
     }
-
     this.JobDetailsComponent.nodeGroupchange(
       event,
-      this.JobDetailsLocalVariable.statusList,
-      this.JobDetailsLocalVariable.nodeGroupFragment
+      statusList,
+      this.JobDetailsLocalVariable.SelectedNodeGroup
     );
   }
 }

@@ -1,7 +1,7 @@
 <app-task-header [taskLength]="this.taskLength"></app-task-header>
 <clr-datagrid
   class="datagrid-compact"
-  [(clrDgSelected)]="selected"
+  [(clrDgSelected)]="this.TaskDetailsLocalVariable.CheckboxofTaskRow"
   [clrDgLoading]="this.dataloading"
   style="height: 500px"
   HorizontalAlignment="auto"
@@ -180,22 +180,19 @@
   <clr-dg-footer>
     <app-job-footer
       [requestFromJob]="false"
-      [totalRecordstask]="totalRecords"
+      [totalRecordstask]="this.TaskDetailsLocalVariable.TaskCount"
       [recordPerPagerequesttask]="recordPerPage"
-      [currentPagetask]="pageSize"
-      [totalPagetask]="totalPage"
+      [currentPagetask]="this.TaskDetailsLocalVariable.recordperpage"
+      [totalPagetask]="this.TaskDetailsLocalVariable.totalPage"
     ></app-job-footer>
   </clr-dg-footer>
 </clr-datagrid>
 <clr-modal
-  [(clrModalOpen)]="this.TaskDetailsLocalVariable.openModal"
+  [(clrModalOpen)]="this.TaskDetailsLocalVariable.openPopupModal"
   [clrModalSize]="'lg'"
   [clrModalSkipAnimation]="'true'"
 >
-  <div
-    class="modal-body"
-    *ngFor="let item of this.TaskDetailsLocalVariable.LogFileData"
-  >
+  <div class="modal-body" *ngFor="let item of this.LogFileData">
     <ul style="list-style-type: none">
       <li>{{ item }}</li>
     </ul>

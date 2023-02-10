@@ -1,21 +1,31 @@
 import { Injectable } from '@angular/core';
-import { LayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
+import { JobLayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
 
 @Injectable()
 export class JobDetailsLocalVariable {
-  //Data properties
-  public layouts: LayoutInfo[];
+  //Layout info properties
+  public Joblayout: JobLayoutInfo[];
   public taskLayout: TaskLayoutInfo[];
-  public statusList: Array<string> = [];
+
+  //public statusList: Array<string> = [];
+
+  // Other properties
   public disableButton = false;
-  public state: any;
+  public ColumnProperties: any;
+
+  //Popup model properties
+  public openPopupModal = false;
+  public passingEventMsg: string = '';
+
+  public JobManagerNavigation = [] as any;
+
   //Grid properties
-  public requestFromJOb: boolean = true;
+
   public dataloading: boolean = false;
-  public selected = [] as any;
-  public loading: boolean = false;
-  public SelectedjobId: Array<number>;
-  public SelectedjobIdStatus: Array<number>;
+  public CheckboxofJobRow = [] as any;
+
+  public SelectedjobsId: Array<number>;
+  public SelectedJobId: string;
 
   //Filter Values
   public filterJobid: string = '';
@@ -25,21 +35,13 @@ export class JobDetailsLocalVariable {
   public filterpriority: string = '';
   public filternooftasks: string = '';
 
-  public detailTaskID: any;
-  public priorityValue: string;
-  public JobManageerNavigation = [] as any;
-  public openModal = false;
-  public passingEvent: string = '';
-  public IsSuccess: boolean = false;
-  public Result: any;
-
   //footer properties
-
   public totalPage: number;
   public jobCount: number = 0;
-  public nodeGroupFragment: string = '';
   public OrderBy: string = '';
   public orderDescending: boolean = false;
+  public recordperpagejob: number = 10;
+  public currentpage: number = 1;
 
   //Filter properties
   public AvailableUserName: { key: string; value: string }[] = [];
@@ -48,6 +50,8 @@ export class JobDetailsLocalVariable {
   public selectedState: Array<string> = [];
   public AvailableType: { key: string; value: string }[] = [];
   public selectedType: Array<string> = [];
+
+  public SelectedNodeGroup: string = '';
 
   public readonly Nodelist: Array<string> = [
     'All jobs',

@@ -1,6 +1,6 @@
 <div class="main-container">
   <app-job-header
-    [jobCountLength]="this.totalJobCount"
+    [jobCountLength]="this.JobDetailsLocalVariable.jobCount"
     [priorityDisable]="this.priorityDisable"
     [requeueDisable]="this.requeueDisable"
     [cancelDisable]="this.cancelDisable"
@@ -8,7 +8,7 @@
   ></app-job-header>
 
   <clr-datagrid
-    [(clrDgSelected)]="JobDetailsLocalVariable.selected"
+    [(clrDgSelected)]="JobDetailsLocalVariable.CheckboxofJobRow"
     class="datagrid-compact"
     style="right: 0px; bottom: 4%; position: fixed; left: 0px; top: 82px"
     HorizontalAlignment="auto"
@@ -134,7 +134,7 @@
 
     <clr-dg-row
       style="word-break: break-all"
-      *ngFor="let job of this.JobDetailsLocalVariable.layouts"
+      *ngFor="let job of this.JobDetailsLocalVariable.Joblayout"
       [clrDgItem]="job"
       class="align"
     >
@@ -193,7 +193,7 @@
             </div>
           </div>
           <div>
-            <div (click)="copyClipboard(job)">
+            <div (click)="CopyClipboard(false, job)">
               <a
                 href="javascript:void(0)"
                 role="tooltip"
@@ -225,7 +225,7 @@
             >
           </span>
           <div>
-            <div (click)="copyRunClipboard(job)">
+            <div (click)="CopyClipboard(true, job)">
               <a
                 href="javascript:void(0)"
                 role="tooltip"
@@ -371,7 +371,7 @@
     >
       <app-task-details
         [taskLayout]="this.JobDetailsLocalVariable.taskLayout"
-        [JobIDFragement]="this.JobDetailsLocalVariable.detailTaskID"
+        [JobIDFragement]="this.JobDetailsLocalVariable.SelectedJobId"
       >
       </app-task-details>
     </ng-template>
@@ -379,8 +379,8 @@
       <app-job-footer
         [requestFromJob]="true"
         [totalRecords]="JobDetailsLocalVariable.jobCount"
-        [recordPerPagerequest]="JobDetailsLocalStorage.recordperpagejob"
-        [currentPage]="JobDetailsLocalStorage.currentpage"
+        [recordPerPagerequest]="JobDetailsLocalVariable.recordperpagejob"
+        [currentPage]="JobDetailsLocalVariable.currentpage"
         [totalPage]="JobDetailsLocalVariable.totalPage"
       ></app-job-footer>
     </clr-dg-footer>

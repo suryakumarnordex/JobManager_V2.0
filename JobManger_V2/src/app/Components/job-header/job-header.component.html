@@ -9,8 +9,7 @@
       />
       <a
         *ngFor="
-          let NavigationUrl of this.JobDetailsLocalVariable
-            .JobManageerNavigation
+          let NavigationUrl of this.JobDetailsLocalVariable.JobManagerNavigation
         "
         class="nav-link"
         [href]="NavigationUrl.url"
@@ -133,7 +132,7 @@
 </div>
 <div>
   <app-popup-modals
-    [parentChildConnection]="JobDetailsLocalVariable.openModal"
+    [parentChildConnection]="JobDetailsLocalVariable.openPopupModal"
     (modalClosed)="onModalClose()"
     [passingEvent]="passingEvent"
   ></app-popup-modals>

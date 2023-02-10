@@ -1,6 +1,6 @@
 import { Deserializable, Serializable } from './helper';
 
-export class LayoutInfo implements Deserializable, Serializable {
+export class JobLayoutInfo implements Deserializable, Serializable {
   jobIdFragment: number;
   userFragment: string;
   typeFragment: string;

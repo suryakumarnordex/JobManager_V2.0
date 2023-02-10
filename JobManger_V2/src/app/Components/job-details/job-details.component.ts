@@ -40,7 +40,6 @@ export class JobDetailsComponent implements OnInit {
   @ViewChildren(CheckboxListFilterComponent)
   buildincolumns: QueryList<CheckboxListFilterComponent>;
 
-  totalJobCount: number;
   priorityDisable: boolean = false;
   requeueDisable: boolean = false;
   cancelDisable: boolean = false;
@@ -191,15 +190,13 @@ export class JobDetailsComponent implements OnInit {
       }
     }
   }
-  Columnfilters(state: ClrDatagridStateInterface) {
-    let waitForChange = false;
-    this.JobDetailsLocalVariable.state = state;
 
-    if (state.filters) {
+  Columnfilters(ColumnProperties: ClrDatagridStateInterface) {
+    this.JobDetailsLocalVariable.ColumnProperties = ColumnProperties;
+
+    if (ColumnProperties.filters) {
       this.JobDetailsLocalVariable.dataloading = true;
-      this.JobDetailsLocalStorage.currentpage = 1;
-
-      for (const filterctrl of state.filters) {
+      for (const filterctrl of ColumnProperties.filters) {
         if (
           filterctrl.filterParamName == 'typeFragment' ||
           filterctrl.filterParamName == 'userFragment' ||
@@ -294,8 +291,8 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.selectedUsername = [];
       this.JobDetailsLocalVariable.selectedState = [];
     }
-    if (state.sort?.by !== undefined) {
-      switch (state.sort?.by) {
+    if (ColumnProperties.sort?.by !== undefined) {
+      switch (ColumnProperties.sort?.by) {
         case 'typeFragment': {
           this.JobDetailsLocalVariable.OrderBy = 'type';
           break;
@@ -334,11 +331,17 @@ export class JobDetailsComponent implements OnInit {
         }
       }
     }
-    let ColumnName = state.sort?.reverse;
+    let ColumnName = ColumnProperties.sort?.reverse;
     ColumnName == undefined
       ? (this.JobDetailsLocalVariable.orderDescending = true)
       : (this.JobDetailsLocalVariable.orderDescending = ColumnName);
 
+    this.CallSearchlayout();
+  }
+
+  CallSearchlayout() {
+    let waitForChange = false;
+    this.JobDetailsLocalVariable.dataloading = true;
     this.ApiService.searchLayout(
       this.JobDetailsLocalVariable.filterJobid,
       this.JobDetailsLocalVariable.selectedUsername,
@@ -350,261 +353,149 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.filterpriority,
       '',
       this.JobDetailsLocalVariable.filternooftasks,
-      this.JobDetailsLocalVariable.nodeGroupFragment,
+      this.JobDetailsLocalVariable.SelectedNodeGroup,
       '',
       this.JobDetailsLocalVariable.OrderBy,
       this.JobDetailsLocalVariable.orderDescending,
-      this.JobDetailsLocalStorage.currentpage,
-      this.JobDetailsLocalStorage.recordperpagejob,
+      this.JobDetailsLocalVariable.currentpage,
+      this.JobDetailsLocalVariable.recordperpagejob,
       waitForChange
     ).subscribe({
       next: (res: SearchResultsLayout) => {
-        this.JobDetailsLocalVariable.layouts = res.results;
+        this.JobDetailsLocalVariable.Joblayout = res.results;
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
-        this.JobDetailsLocalVariable.dataloading = false;
+
         this.JobDetailsLocalVariable.totalPage = Math.ceil(
           this.JobDetailsLocalVariable.jobCount /
-            this.JobDetailsLocalStorage.recordperpagejob
+            this.JobDetailsLocalVariable.recordperpagejob
         );
       },
       error: (error) => {
         this.logger.reportError(error);
-        this.JobDetailsLocalVariable.dataloading = false;
       },
     });
+    this.JobDetailsLocalVariable.dataloading = false;
   }
+
   clearallFilters() {
     this.JobDetailsLocalVariable.dataloading = true;
     this.columns.forEach((column) => (column.filterValue = ''));
-    this.JobDetailsLocalStorage.currentpage = 1;
+    this.JobDetailsLocalVariable.currentpage = 1;
+    this.ClearAllLocalVariables();
+    this.CallSearchlayout();
+  }
 
-    this.ApiService.searchLayout(
-      '',
-      [],
-      [],
-      '',
-      '',
-      '',
-      [],
-      '',
-      '',
-      '',
-      this.JobDetailsLocalVariable.nodeGroupFragment,
-      '',
-      '',
-      false,
-      this.JobDetailsLocalStorage.currentpage,
-      this.JobDetailsLocalStorage.recordperpagejob,
-      false
-    ).subscribe({
-      next: (res: SearchResultsLayout) => {
-        this.JobDetailsLocalVariable.layouts = res.results;
-        this.JobDetailsLocalVariable.jobCount = res.totalResults;
-        this.JobDetailsLocalVariable.dataloading = false;
-        this.JobDetailsLocalVariable.totalPage = Math.ceil(
-          this.JobDetailsLocalVariable.jobCount /
-            this.JobDetailsLocalStorage.recordperpagejob
-        );
-        this.JobDetailsLocalVariable.dataloading = false;
-      },
-      error: (error) => {
-        this.logger.reportError(error);
-        this.JobDetailsLocalVariable.dataloading = false;
-      },
-    });
+  ClearAllLocalVariables() {
+    this.JobDetailsLocalVariable.filterJobid = '';
+    this.JobDetailsLocalVariable.filterTopic = '';
+    this.JobDetailsLocalVariable.filterCockpit = '';
+    this.JobDetailsLocalVariable.filterrunno = '';
+    this.JobDetailsLocalVariable.filterpriority = '';
+    this.JobDetailsLocalVariable.filternooftasks = '';
+    this.JobDetailsLocalVariable.SelectedNodeGroup = '';
+    this.JobDetailsLocalVariable.SelectedJobId = '';
+
+    this.JobDetailsLocalVariable.selectedUsername = [];
+    this.JobDetailsLocalVariable.selectedType = [];
+    this.JobDetailsLocalVariable.selectedState = [];
+
+    this.JobDetailsLocalVariable.OrderBy = '';
+    this.JobDetailsLocalVariable.orderDescending = false;
+    this.JobDetailsLocalVariable.currentpage = 1;
   }
-  loadDatas() {
-    this.JobDetailsLocalVariable.dataloading = true;
-    this.ApiService.searchLayout(
-      this.JobDetailsLocalVariable.filterJobid,
-      this.JobDetailsLocalVariable.selectedUsername,
-      this.JobDetailsLocalVariable.selectedType,
-      this.JobDetailsLocalVariable.filterTopic,
-      this.JobDetailsLocalVariable.filterCockpit,
-      this.JobDetailsLocalVariable.filterrunno,
-      this.JobDetailsLocalVariable.statusList,
-      this.JobDetailsLocalVariable.filterpriority,
-      '',
-      '',
-      this.JobDetailsLocalVariable.nodeGroupFragment,
-      this.JobDetailsLocalVariable.filternooftasks,
-      '',
-      false,
-      this.JobDetailsLocalStorage.currentpage,
-      this.JobDetailsLocalStorage.recordperpagejob,
-      false
-    ).subscribe({
-      next: (res: SearchResultsLayout) => {
-        this.JobDetailsLocalVariable.layouts = res.results;
-        this.JobDetailsLocalVariable.jobCount = res.totalResults;
-        this.JobDetailsLocalVariable.dataloading = false;
-        this.JobDetailsLocalVariable.totalPage = Math.ceil(
-          this.JobDetailsLocalVariable.jobCount /
-            this.JobDetailsLocalStorage.recordperpagejob
-        );
-        this.JobDetailsLocalVariable.dataloading = false;
-      },
-      error: (error) => {
-        this.logger.reportError(error);
-        this.JobDetailsLocalVariable.dataloading = false;
-      },
-    });
-  }
+
   nodeGroupchange(
     event: any,
     statusList: Array<string>,
     nodeGroupFragment: string
   ) {
     if (event !== null) {
-      this.JobDetailsLocalVariable.nodeGroupFragment = nodeGroupFragment;
-      this.ApiService.searchLayout(
-        '',
-        [],
-        [],
-        '',
-        '',
-        '',
-        statusList,
-        '',
-        '',
-        '',
-        this.JobDetailsLocalVariable.nodeGroupFragment,
-        '',
-        '',
-        false,
-        1,
-        this.JobDetailsLocalStorage.recordperpagejob,
-        false
-      ).subscribe({
-        next: (res: SearchResultsLayout) => {
-          this.JobDetailsLocalVariable.layouts = res.results;
-          this.JobDetailsLocalVariable.jobCount = res.totalResults;
-          this.JobDetailsLocalVariable.dataloading = false;
-          this.JobDetailsLocalVariable.totalPage = Math.ceil(
-            this.JobDetailsLocalVariable.jobCount /
-              this.JobDetailsLocalStorage.recordperpagejob
-          );
+      this.ClearAllLocalVariables();
+      this.JobDetailsLocalVariable.SelectedNodeGroup = nodeGroupFragment;
+      this.CallSearchlayout();
+    }
+  }
 
-          this.JobDetailsLocalVariable.dataloading = false;
-        },
-        error: (error) => {
-          this.logger.reportError(error);
-          this.JobDetailsLocalVariable.dataloading = false;
-        },
-      });
-    }
-  }
   onDetailOpen(event: any) {
-    this.TaskDetailsComponent.GetTaskLocalStorageColumnValue();
     if (event !== null) {
-      this.JobDetailsLocalVariable.detailTaskID = event.jobIdFragment;
-      this.ApiService.searchTaskLayout(
-        this.JobDetailsLocalVariable.detailTaskID,
-        '',
-        '',
-        [],
-        '',
-        '',
-        '',
-        '',
-        1,
-        this.TaskDetaillocalstorage.recordPerPageValue,
-        false
-      ).subscribe({
-        next: (res: SearchTaskResultsLayout) => {
-          console.log(res, 'search task layout result');
-          this.JobDetailsLocalVariable.taskLayout = res.results;
-          this.JobDetailsLocalVariable.jobCount = res.totalResults;
-          this.JobDetailsLocalVariable.dataloading = false;
-        },
-        error: (error) => {
-          this.logger.reportError(error);
-          this.JobDetailsLocalVariable.dataloading = false;
-        },
-      });
+      this.JobDetailsLocalVariable.SelectedJobId = event.jobIdFragment;
+      // Call Task searchlayout
     }
   }
-  copyRunClipboard(selectedItem: any) {
+
+  CopyClipboard(IsRun: boolean, selectedItem: any) {
+    let CtrlName: any;
+    if (IsRun) {
+      CtrlName = selectedItem.runFolder;
+    } else {
+      CtrlName = selectedItem.CockpitFolder;
+    }
     const create_copy = (e: ClipboardEvent) => {
-      e.clipboardData?.setData('text/plain', selectedItem.runFolder);
+      e.clipboardData?.setData('text/plain', CtrlName);
       e.preventDefault();
-      if (selectedItem.runFolder != '' && selectedItem.runFolder != null) {
-        selectedItem.text = 'copied';
+      if (CtrlName != '' && CtrlName != null && CtrlName != undefined) {
+        CtrlName.text = 'copied';
       } else {
-        selectedItem.text = 'no data to copy';
+        CtrlName.text = 'no data to copy';
       }
     };
     document.addEventListener('copy', create_copy);
     document.execCommand('copy');
     document.removeEventListener('copy', create_copy);
   }
-  copyClipboard(selectedItem: any) {
-    const create_copy = (e: ClipboardEvent) => {
-      e.clipboardData?.setData('text/plain', selectedItem.CockpitFolder);
-      e.preventDefault();
-      if (
-        selectedItem.CockpitFolder != '' &&
-        selectedItem.CockpitFolder != null &&
-        selectedItem.CockpitFolder != undefined
-      ) {
-        selectedItem.text = 'copied';
-      } else {
-        selectedItem.text = 'no data to copy';
-      }
-    };
-    document.addEventListener('copy', create_copy);
-    document.execCommand('copy');
-    document.removeEventListener('copy', create_copy);
-  }
+
   selectionChanged(event: any[]) {
-    this.JobDetailsLocalVariable.SelectedjobId = event.map(
+    this.JobDetailsLocalVariable.SelectedjobsId = event.map(
       (e) => e.jobIdFragment
     );
-    this.totalJobCount = this.JobDetailsLocalVariable.SelectedjobId.length;
-    this.JobDetailsLocalVariable.SelectedjobIdStatus = event.map(
-      (e) => e.statusFragment
-    );
+    this.priorityDisable = false;
+    this.requeueDisable = false;
+    this.submitDisable = false;
+    this.cancelDisable = false;
 
-    this.JobDetailsLocalVariable.SelectedjobIdStatus.forEach((status) => {
-      switch (status.toString()) {
-        case 'Finished': {
-          this.priorityDisable = true;
-          this.requeueDisable = true;
-          this.submitDisable = true;
-          this.cancelDisable = true;
-          break;
+    event
+      .map((e) => e.statusFragment)
+      .forEach((status) => {
+        console.log(status, 'selectionChanged');
+        switch (status.toString()) {
+          case 'Finished': {
+            this.priorityDisable = true;
+            this.requeueDisable = true;
+            this.submitDisable = true;
+            this.cancelDisable = true;
+            break;
+          }
+          case 'Running': {
+            this.requeueDisable = true;
+            this.submitDisable = true;
+            break;
+          }
+          case 'Queued': {
+            this.requeueDisable = true;
+            this.submitDisable = true;
+            break;
+          }
+          case 'Failed': {
+            this.cancelDisable = true;
+            this.submitDisable = true;
+            break;
+          }
+          case 'Cancelled': {
+            this.cancelDisable = true;
+            this.submitDisable = true;
+            break;
+          }
+          case 'Configuring': {
+            this.requeueDisable = true;
+            break;
+          }
         }
-        case 'Running': {
-          this.requeueDisable = true;
-          this.submitDisable = true;
-          break;
-        }
-        case 'Queued': {
-          this.requeueDisable = true;
-          this.submitDisable = true;
-          break;
-        }
-        case 'Failed': {
-          this.cancelDisable = true;
-          this.submitDisable = true;
-          break;
-        }
-        case 'Cancelled': {
-          this.cancelDisable = true;
-          this.submitDisable = true;
-          break;
-        }
-        case 'Configuring': {
-          this.requeueDisable = true;
-          break;
-        }
-      }
-    });
+      });
   }
   openmodel(action: string, jobId: number) {
-    this.JobDetailsLocalVariable.SelectedjobId = [jobId];
-    this.JobDetailsLocalVariable.passingEvent = action;
-    this.JobDetailsLocalVariable.openModal = true;
+    this.JobDetailsLocalVariable.SelectedjobsId = [jobId];
+    this.JobDetailsLocalVariable.passingEventMsg = action;
+    this.JobDetailsLocalVariable.openPopupModal = true;
   }
   GetLocalStorageColumnValue() {
     this.JobDetailsLocalStorage.idcolumnWidthValue =
@@ -641,28 +532,14 @@ export class JobDetailsComponent implements OnInit {
       this.localstorage.get('submittimecolumnwidth');
     this.JobDetailsLocalStorage.pendingreasoncolumnWidthValue =
       this.localstorage.get('pendingreasoncolumnwidth');
-    this.JobDetailsLocalStorage.recordperpagejob =
-      this.localstorage.get('recordperpage');
   }
-  public SetJobPriority() {
-    this.ApiService.SetJobPriority(
-      this.JobDetailsLocalVariable.SelectedjobId,
-      this.JobDetailsLocalVariable.priorityValue
-    ).subscribe({
-      next: (res: any) => {
-        console.log(res);
-      },
-      error: (error: string) => {
-        console.log(error);
-      },
-    });
-  }
+
   ButtonEvents(EventStr: string): Promise<any> {
     return new Promise((resolve, reject) => {
       switch (EventStr) {
         case 'Requeue': {
           this.ApiService.SetRequeue(
-            this.JobDetailsLocalVariable.SelectedjobId
+            this.JobDetailsLocalVariable.SelectedjobsId
           ).subscribe({
             next: (res: any) => {
               console.log(res);
@@ -678,7 +555,7 @@ export class JobDetailsComponent implements OnInit {
         }
         case 'Pending_Reason': {
           this.ApiService.GetPendingReason(
-            this.JobDetailsLocalVariable.SelectedjobId
+            this.JobDetailsLocalVariable.SelectedjobsId
           ).subscribe({
             next: (res: any) => {
               console.log(res);
@@ -693,7 +570,7 @@ export class JobDetailsComponent implements OnInit {
         }
         case 'Cancel': {
           this.ApiService.SetCancel(
-            this.JobDetailsLocalVariable.SelectedjobId
+            this.JobDetailsLocalVariable.SelectedjobsId
           ).subscribe({
             next: (res: any) => {
               console.log(res);
@@ -708,7 +585,7 @@ export class JobDetailsComponent implements OnInit {
         }
         case 'Submit': {
           this.ApiService.SetSubmit(
-            this.JobDetailsLocalVariable.SelectedjobId
+            this.JobDetailsLocalVariable.SelectedjobsId
           ).subscribe({
             next: (res: any) => {
               console.log(res);

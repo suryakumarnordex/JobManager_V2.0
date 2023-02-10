@@ -1,4 +1,4 @@
-import { LayoutInfo, TaskLayoutInfo } from './layout';
+import { JobLayoutInfo, TaskLayoutInfo } from './layout';
 export interface Deserializable {
   deserialize(input: any): this;
 }
@@ -11,7 +11,7 @@ export class SearchResultsLayout implements Deserializable {
   PageNo: number;
   PageSize: number;
   totalResults: number;
-  results: Array<LayoutInfo>;
+  results: Array<JobLayoutInfo>;
 
   deserialize(input: any): this {
     this.PageNo = input.page;
@@ -20,7 +20,7 @@ export class SearchResultsLayout implements Deserializable {
 
     this.results = [];
     for (const result of input.results) {
-      this.results.push(new LayoutInfo().deserialize(result));
+      this.results.push(new JobLayoutInfo().deserialize(result));
     }
     return this;
   }

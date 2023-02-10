@@ -2,7 +2,7 @@
   Records per page
 
   <select
-    *ngIf="this.JobDetaillocalstorage.recordperpagejob == 10"
+    *ngIf="this.JobDetailsLocalVariable.recordperpagejob == 10"
     style="height: 30px"
     #teams
     (change)="onSelected(teams.value)"
@@ -14,7 +14,7 @@
   </select>
 
   <select
-    *ngIf="this.JobDetaillocalstorage.recordperpagejob == 20"
+    *ngIf="this.JobDetailsLocalVariable.recordperpagejob == 20"
     style="height: 30px"
     #teams
     (change)="onSelected(teams.value)"
@@ -25,7 +25,7 @@
     <option>100</option>
   </select>
   <select
-    *ngIf="this.JobDetaillocalstorage.recordperpagejob == 50"
+    *ngIf="this.JobDetailsLocalVariable.recordperpagejob == 50"
     style="height: 30px"
     #teams
     (change)="onSelected(teams.value)"
@@ -36,7 +36,7 @@
     <option>100</option>
   </select>
   <select
-    *ngIf="this.JobDetaillocalstorage.recordperpagejob == 100"
+    *ngIf="this.JobDetailsLocalVariable.recordperpagejob == 100"
     style="height: 30px"
     #teams
     (change)="onSelected(teams.value)"
@@ -46,12 +46,12 @@
     <option>50</option>
     <option [selected]="true">100</option>
   </select>
-  &nbsp; {{ this.JobDetaillocalstorage.currentpage }} / {{ totalPage }} Pages of
-  {{ this.totalRecords }} Records &nbsp;
+  &nbsp; {{ this.JobDetailsLocalVariable.currentpage }} / {{ totalPage }} Pages
+  of {{ this.totalRecords }} Records &nbsp;
 
   <button
     type="button"
-    *ngIf="this.JobDetaillocalstorage.currentpage > 1"
+    *ngIf="this.JobDetailsLocalVariable.currentpage > 1"
     (click)="goTofirstPage()"
     class="btn btn-icon"
   >
@@ -59,7 +59,7 @@
   </button>
   <button
     type="button"
-    *ngIf="this.JobDetaillocalstorage.currentpage > 1"
+    *ngIf="this.JobDetailsLocalVariable.currentpage > 1"
     (click)="goTopriviousPage()"
     class="btn btn-icon"
   >
@@ -70,7 +70,7 @@
     type="button"
     *ngIf="
       JobDetailsLocalVariable.totalPage !=
-        this.JobDetaillocalstorage.currentpage;
+        this.JobDetailsLocalVariable.currentpage;
       else elseblock
     "
     (click)="goTonextPage()"
@@ -98,7 +98,7 @@
   Records per page
 
   <select
-    *ngIf="this.TaskDetaillocalstorage.recordPerPageValue == 10"
+    *ngIf="this.TaskDetailsLocalVariable.recordperpage == 10"
     style="height: 30px"
     #teams
     (change)="onSelected(teams.value)"
@@ -110,7 +110,7 @@
   </select>
 
   <select
-    *ngIf="this.TaskDetaillocalstorage.recordPerPageValue == 20"
+    *ngIf="this.TaskDetailsLocalVariable.recordperpage == 20"
     style="height: 30px"
     #teams
     (change)="onSelected(teams.value)"
@@ -121,7 +121,7 @@
     <option>100</option>
   </select>
   <select
-    *ngIf="this.TaskDetaillocalstorage.recordPerPageValue == 50"
+    *ngIf="this.TaskDetailsLocalVariable.recordperpage == 50"
     style="height: 30px"
     #teams
     (change)="onSelected(teams.value)"
@@ -132,7 +132,7 @@
     <option>100</option>
   </select>
   <select
-    *ngIf="this.TaskDetaillocalstorage.recordPerPageValue == 100"
+    *ngIf="this.TaskDetailsLocalVariable.recordperpage == 100"
     style="height: 30px"
     #teams
     (change)="onSelected(teams.value)"
@@ -142,12 +142,12 @@
     <option>50</option>
     <option [selected]="true">100</option>
   </select>
-  &nbsp; {{ this.TaskDetailsLocalVariable.currentpagetask }} /
+  &nbsp; {{ this.TaskDetailsLocalVariable.currentpage }} /
   {{ totalPagetask }} Pages of {{ this.totalRecordstask }} Records &nbsp;
 
   <button
     type="button"
-    *ngIf="TaskDetailsLocalVariable.currentpagetask > 1"
+    *ngIf="TaskDetailsLocalVariable.currentpage > 1"
     (click)="goTofirstPage()"
     class="btn btn-icon"
   >
@@ -155,7 +155,7 @@
   </button>
   <button
     type="button"
-    *ngIf="TaskDetailsLocalVariable.currentpagetask > 1"
+    *ngIf="TaskDetailsLocalVariable.currentpage > 1"
     (click)="goTopriviousPage()"
     class="btn btn-icon"
   >
@@ -165,7 +165,7 @@
   <button
     type="button"
     *ngIf="
-      totalPagetask != TaskDetailsLocalVariable.currentpagetask;
+      totalPagetask != TaskDetailsLocalVariable.currentpage;
       else elseblock
     "
     (click)="goTonextPage()"

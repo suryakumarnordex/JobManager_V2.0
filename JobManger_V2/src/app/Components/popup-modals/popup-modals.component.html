@@ -10,12 +10,14 @@
         >
           <clr-icon aria-hidden="true" shape="close"></clr-icon>
         </button>
-        <h3 class="modal-title">{{ JobDetailsLocalVariable.passingEvent }}</h3>
+        <h3 class="modal-title">
+          {{ JobDetailsLocalVariable.passingEventMsg }}
+        </h3>
       </div>
 
       <div
         class="modal-body"
-        *ngIf="JobDetailsLocalVariable.passingEvent == 'Priority'"
+        *ngIf="JobDetailsLocalVariable.passingEventMsg == 'Priority'"
       >
         <clr-input-container>
           <label>Enter Priority</label>
@@ -24,7 +26,7 @@
             type="text"
             id="Priority"
             name="Priority"
-            [(ngModel)]="JobDetailsLocalVariable.priorityValue"
+            [(ngModel)]="PriorityValue"
           />
         </clr-input-container>
         <br />
@@ -56,24 +58,23 @@
       <div
         class="modal-body"
         *ngIf="
-          JobDetailsLocalVariable.passingEvent != 'TaskRequeue' &&
-          JobDetailsLocalVariable.passingEvent != 'Priority' &&
-          JobDetailsLocalVariable.passingEvent != 'Pending_Reason'
+          JobDetailsLocalVariable.passingEventMsg != 'TaskRequeue' &&
+          JobDetailsLocalVariable.passingEventMsg != 'Priority' &&
+          JobDetailsLocalVariable.passingEventMsg != 'Pending_Reason'
         "
       >
-        <div *ngIf="JobDetailsLocalVariable.passingEvent != 'Pending_Reason'">
+        <div
+          *ngIf="JobDetailsLocalVariable.passingEventMsg != 'Pending_Reason'"
+        >
           Are you sure you want to
-          {{ this.JobDetailsLocalVariable.passingEvent }} the
-          {{ JobDetailsLocalVariable.SelectedjobId }} ?
+          {{ this.JobDetailsLocalVariable.passingEventMsg }} the
+          {{ JobDetailsLocalVariable.SelectedjobsId }} ?
         </div>
 
         <div
           class="alert alert-danger"
           role="alert"
-          *ngIf="
-            JobDetailsLocalVariable.IsSuccess == false &&
-            JobDetailsLocalVariable.Result != undefined
-          "
+          *ngIf="IsSuccess == false && PopupResult != undefined"
         >
           <div class="alert-items">
             <div class="alert-item static">
@@ -85,7 +86,7 @@
               </div>
 
               <span class="alert-text">
-                {{ JobDetailsLocalVariable.Result }}
+                {{ PopupResult }}
               </span>
             </div>
           </div>
@@ -94,10 +95,7 @@
         <div
           class="alert alert-success"
           role="alert"
-          *ngIf="
-            JobDetailsLocalVariable.IsSuccess == true &&
-            JobDetailsLocalVariable.Result != undefined
-          "
+          *ngIf="IsSuccess == true && PopupResult != undefined"
         >
           <div class="alert-items">
             <div class="alert-item static">
@@ -106,7 +104,7 @@
               </div>
 
               <span class="alert-text">
-                {{ JobDetailsLocalVariable.Result }}
+                {{ PopupResult }}
               </span>
             </div>
           </div>
@@ -136,7 +134,7 @@
       <!-- Task Headers-->
       <div
         class="modal-body"
-        *ngIf="JobDetailsLocalVariable.passingEvent == 'TaskRequeue'"
+        *ngIf="JobDetailsLocalVariable.passingEventMsg == 'TaskRequeue'"
       >
         If you want to Requeue the Task
         {{ TaskDetailsLocalVariable.SelectedtaskId }} ?

@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { ApiServiceService } from 'src/app/api-service.service';
 import { SearchTaskResultsLayout } from 'src/app/Models/helper';
 import { TaskLayoutInfo } from 'src/app/Models/layout';
@@ -6,6 +12,8 @@ import { LoggerService } from 'src/app/Services/logger.service';
 import { TaskDetailsLocalVariable } from './task-details-localvariable';
 import { TaskDetaillocalstorage } from '../task-header/task-detail-Localstorage';
 import { LocalStorageService } from 'src/app/local-storage.service';
+import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
+import { ClrDatagridColumn } from '@clr/angular';
 @Component({
   selector: 'app-task-details',
   templateUrl: './task-details.component.html',
@@ -16,11 +24,14 @@ export class TaskDetailsComponent implements OnInit {
   @Input() taskLayout: TaskLayoutInfo[];
   @Input() JobIDFragement: string;
   @Input() taskLength: number;
-  requestFromTask: boolean = true;
-  selected = [] as any;
-  pageSize: number = 1;
-  totalRecords = 0;
-  totalPage: number;
+  @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
+  LogFileData: any;
+
+  // requestFromTask: boolean = true;
+  // selected = [] as any;
+  // pageSize: number = 1;
+  // totalRecords = 0;
+  // totalPage: number;
   dataloading: boolean = false;
 
   constructor(
@@ -28,50 +39,55 @@ export class TaskDetailsComponent implements OnInit {
     private logger: LoggerService,
     public TaskDetailsLocalVariable: TaskDetailsLocalVariable,
     public TaskDetailsLocalStorage: TaskDetaillocalstorage,
-    private localstorage: LocalStorageService
+    private localstorage: LocalStorageService,
+    private JobDetailsLocalVariable: JobDetailsLocalVariable
   ) {}
 
   ngOnInit(): void {
     this.GetTaskLocalStorageColumnValue();
-    //this.GetTaskDetails();
+    this.GetTaskDetails();
   }
   showFileData(log: any) {
-    this.TaskDetailsLocalVariable.LogFileData = null;
+    this.LogFileData = null;
     this.getFilepath(log);
-    if (this.TaskDetailsLocalVariable.LogFileData !== null) {
-      this.TaskDetailsLocalVariable.openModal = true;
+    if (this.LogFileData !== null) {
+      this.TaskDetailsLocalVariable.openPopupModal = true;
     }
   }
   getFilepath(filepath: any) {
     this.ApiService.getFilePath(filepath).subscribe((data) => {
       if (data !== null) {
-        this.TaskDetailsLocalVariable.LogFileData = data;
+        this.LogFileData = data;
       }
     });
   }
 
   GetTaskDetails() {
     this.dataloading = true;
-    this.TaskDetailsLocalVariable.SelectedJobIDFragement = this.JobIDFragement;
-    this.TaskDetailsLocalStorage.recordPerPageValue;
+    this.CallSearchTaskLayout();
+  }
+
+  CallSearchTaskLayout() {
     this.ApiService.searchTaskLayout(
-      this.TaskDetailsLocalVariable.SelectedJobIDFragement,
+      this.JobDetailsLocalVariable.SelectedJobId,
+      this.TaskDetailsLocalVariable.SelectedtaskId,
+      this.TaskDetailsLocalVariable.filterName,
+      this.TaskDetailsLocalVariable.selectedState,
       '',
       '',
-      [],
       '',
-      '',
-      '',
-      '',
-      this.TaskDetailsLocalVariable.currentpagetask,
-      this.TaskDetailsLocalStorage.recordPerPageValue,
+      this.TaskDetailsLocalVariable.filterCommandLine,
+      this.TaskDetailsLocalVariable.currentpage,
+      this.TaskDetailsLocalVariable.recordperpage,
       false
     ).subscribe({
       next: (res: SearchTaskResultsLayout) => {
         this.taskLayout = res.results;
-        this.totalRecords = res.totalResults;
-        this.totalPage = Math.ceil(
-          this.totalRecords / this.TaskDetailsLocalVariable.recordperpagetask
+
+        this.TaskDetailsLocalVariable.TaskCount = res.totalResults;
+        this.TaskDetailsLocalVariable.totalPage = Math.ceil(
+          this.TaskDetailsLocalVariable.TaskCount /
+            this.TaskDetailsLocalVariable.recordperpage
         );
         this.dataloading = false;
       },
@@ -82,7 +98,7 @@ export class TaskDetailsComponent implements OnInit {
     });
   }
   selectionChanged(event: any[]) {
-    this.TaskDetailsLocalVariable.SelectedtaskId = event.map(
+    this.TaskDetailsLocalVariable.SelectedtasksId = event.map(
       (e) => e.taskIdFragment
     );
     this.taskLength = this.TaskDetailsLocalVariable.SelectedtaskId.length;
@@ -148,25 +164,39 @@ export class TaskDetailsComponent implements OnInit {
       this.localstorage.get('allocatednodecolumnwidth');
     this.TaskDetailsLocalStorage.commandlinecolumnWidthValue =
       this.localstorage.get('commandlinecolumnwidth');
-    this.TaskDetailsLocalStorage.recordPerPageValue =
-      this.localstorage.get('taskrecordperpage');
-    this.TaskDetailsLocalVariable.recordperpagetask =
-      this.TaskDetailsLocalStorage.recordPerPageValue;
-    console.log(this.TaskDetailsLocalStorage.recordPerPageValue);
   }
   setRequeue() {
     this.ApiService.SetTaskRequeue(
-      this.TaskDetailsLocalVariable.SelectedJobIDFragement,
-      this.TaskDetailsLocalVariable.SelectedtaskId
+      this.JobDetailsLocalVariable.SelectedJobId,
+      this.TaskDetailsLocalVariable.SelectedtasksId
     ).subscribe({
       next: (res: any) => {
         console.log(res);
-        this.TaskDetailsLocalVariable.loading = false;
+        this.dataloading = false;
       },
       error: (error: any) => {
         console.log(error);
-        this.TaskDetailsLocalVariable.loading = false;
+        this.dataloading = false;
       },
     });
+  }
+
+  clearallFilters() {
+    this.TaskDetailsLocalVariable.dataloading = true;
+    this.columns.forEach((column) => (column.filterValue = ''));
+    this.TaskDetailsLocalVariable.currentpage = 1;
+    this.ClearAllLocalVariables();
+    this.CallSearchTaskLayout();
+  }
+
+  ClearAllLocalVariables() {
+    this.TaskDetailsLocalVariable.filterTaskId = '';
+    this.TaskDetailsLocalVariable.filterCommandLine = '';
+    this.TaskDetailsLocalVariable.filterName = '';
+    this.TaskDetailsLocalVariable.selectedState = [];
+
+    this.TaskDetailsLocalVariable.OrderBy = '';
+    this.TaskDetailsLocalVariable.orderDescending = false;
+    this.TaskDetailsLocalVariable.currentpage = 1;
   }
 }

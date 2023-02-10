@@ -42,8 +42,8 @@ export class ApiServiceService {
     pendingReasonFragment: string = '',
     orderBy: string = this.JobDetailsLocalVariable.OrderBy,
     orderDescending: boolean,
-    PageNo: number = this.JobDetaillocalstorage.currentpage,
-    PageSize: number = this.JobDetaillocalstorage.recordperpagejob,
+    PageNo: number = this.JobDetailsLocalVariable.currentpage,
+    PageSize: number = this.JobDetailsLocalVariable.recordperpagejob,
     waitForChange: boolean = false
   ): Observable<SearchResultsLayout> {
     let params = new HttpParams()

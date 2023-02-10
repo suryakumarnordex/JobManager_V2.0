@@ -19,7 +19,4 @@ export class JobDetaillocalstorage {
   public submittimecolumnWidthValue: string;
   public elapsedtimecolumnWidthValue: string;
   public pendingreasoncolumnWidthValue: string;
-
-  public recordperpagejob: number = 10;
-  public currentpage: number = 1;
 }

@@ -1,14 +1,24 @@
 import { Injectable } from '@angular/core';
-import { LayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
 
 @Injectable()
 export class TaskDetailsLocalVariable {
-  public recordperpagetask: number = 10;
-  public currentpagetask: number = 1;
-  public loading: boolean = false;
-  public SelectedtaskId: Array<number>;
-  public SelectedJobIDFragement: string;
-  public passingEvent: string;
-  public openModal = false;
-  public LogFileData: any;
+  public filterTaskId: string = '';
+  public filterName: string = '';
+  public filterCommandLine: string = '';
+
+  public CheckboxofTaskRow = [] as any;
+  public selectedState: Array<string> = [];
+  public SelectedtasksId: Array<number>;
+  public SelectedtaskId: string;
+  public openPopupModal = false;
+
+  public dataloading: boolean = false;
+
+  //footer properties
+  public totalPage: number;
+  public TaskCount: number = 0;
+  public OrderBy: string = '';
+  public orderDescending: boolean = false;
+  public recordperpage: number = 10;
+  public currentpage: number = 1;
 }
