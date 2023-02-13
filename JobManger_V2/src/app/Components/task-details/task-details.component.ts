@@ -25,9 +25,12 @@ export class TaskDetailsComponent implements OnInit {
   @Input() JobIDFragement: string;
   @Input() taskLength: number;
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
-  LogFileData: any;
+
+  public LogFileData: any;
 
   dataloading: boolean = false;
+  TaskRequeueDisable: boolean = true;
+  LogModelOpen: boolean = false;
 
   constructor(
     private ApiService: ApiServiceService,
@@ -42,18 +45,18 @@ export class TaskDetailsComponent implements OnInit {
     this.GetTaskLocalStorageColumnValue();
   }
   showFileData(log: any) {
-    this.LogFileData = null;
+    this.LogFileData = '';
     this.getFilepath(log);
-    if (this.LogFileData !== null) {
-      this.TaskDetailsLocalVariable.openPopupModal = true;
-    } else {
-      this.TaskDetailsLocalVariable.openPopupModal = false;
-    }
   }
+
   getFilepath(filepath: any) {
     this.ApiService.getFilePath(filepath).subscribe((data) => {
       if (data !== null) {
         this.LogFileData = data;
+        this.LogModelOpen = true;
+      } else {
+        this.LogFileData = '';
+        this.LogModelOpen = false;
       }
     });
   }
@@ -100,6 +103,20 @@ export class TaskDetailsComponent implements OnInit {
         (e) => e.taskIdFragment
       );
       this.taskLength = this.TaskDetailsLocalVariable.SelectedtasksId.length;
+      event
+        .map((e) => e.statusFragment)
+        .forEach((status) => {
+          switch (status.toString()) {
+            case 'Failed' || 'Cancelled' || 'Running': {
+              this.TaskRequeueDisable = false;
+              break;
+            }
+            default: {
+              this.TaskRequeueDisable = true;
+              break;
+            }
+          }
+        });
     }
   }
   public TaskColumnResized(event: any, colType: string) {

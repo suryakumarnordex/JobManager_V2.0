@@ -40,6 +40,7 @@ export class JobDetailsComponent implements OnInit {
   @ViewChildren(CheckboxListFilterComponent)
   buildincolumns: QueryList<CheckboxListFilterComponent>;
 
+  public ClipBoardText: string = '';
   priorityDisable: boolean = true;
   requeueDisable: boolean = true;
   cancelDisable: boolean = true;
@@ -366,6 +367,8 @@ export class JobDetailsComponent implements OnInit {
       waitForChange
     ).subscribe({
       next: (res: SearchResultsLayout) => {
+        console.log(res, 'res: SearchResultsLayout');
+
         this.JobDetailsLocalVariable.Joblayout = res.results;
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
 
@@ -434,24 +437,28 @@ export class JobDetailsComponent implements OnInit {
   }
 
   CopyClipboard(IsRun: boolean, selectedItem: any) {
-    let CtrlName: any;
-    if (IsRun) {
-      CtrlName = selectedItem.runFolder;
-    } else {
-      CtrlName = selectedItem.CockpitFolder;
-    }
-    const create_copy = (e: ClipboardEvent) => {
-      e.clipboardData?.setData('text/plain', CtrlName);
-      e.preventDefault();
-      if (CtrlName != '' && CtrlName != null && CtrlName != undefined) {
-        CtrlName.text = 'copied';
+    if (selectedItem != undefined) {
+      let CtrlName: any;
+      if (IsRun) {
+        CtrlName = selectedItem.runFolderFragment;
       } else {
-        CtrlName.text = 'no data to copy';
+        CtrlName = selectedItem.cockpitfolderFragment;
       }
-    };
-    document.addEventListener('copy', create_copy);
-    document.execCommand('copy');
-    document.removeEventListener('copy', create_copy);
+
+      const create_copy = (e: ClipboardEvent) => {
+        e.clipboardData?.setData('text/plain', CtrlName);
+        e.preventDefault();
+        if (CtrlName != '' && CtrlName != null && CtrlName != undefined) {
+          this.ClipBoardText = 'copied';
+        } else {
+          this.ClipBoardText = 'no data to copy';
+        }
+      };
+      document.addEventListener('copy', create_copy);
+      document.execCommand('copy');
+      document.removeEventListener('copy', create_copy);
+      this.ClipBoardText = '';
+    }
   }
 
   selectionChanged(event: any[]) {

@@ -6,6 +6,7 @@ export class JobLayoutInfo implements Deserializable, Serializable {
   typeFragment: string;
   topicFragment: string;
   cockpitIdFragment: number;
+  cockpitfolderFragment: string;
   runnoFragment: string;
   runFolderFragment: string;
   statusFragment: string;
@@ -26,7 +27,7 @@ export class JobLayoutInfo implements Deserializable, Serializable {
   runningTasksCount: number;
   queuedTasksCount: number;
   finishedTasksCount: number;
-  clipboardtext: string;
+
   // PageNo: number;
   // PageSize: number;
   waitForChange: boolean;
@@ -45,6 +46,7 @@ export class JobLayoutInfo implements Deserializable, Serializable {
     this.numberOfTasksFragment = input.numberOfTasks;
     this.nodeGroupFragment = input.nodeGroup;
     this.pendingReasonFragment = input.pendingReason;
+    this.cockpitfolderFragment = input.cockpitFolder;
 
     //New
     this.startTime = input.startTime;
@@ -55,7 +57,7 @@ export class JobLayoutInfo implements Deserializable, Serializable {
     this.runningTasksCount = input.runningTasksCount;
     this.queuedTasksCount = input.queuedTasksCount;
     this.finishedTasksCount = input.finishedTasksCount;
-    this.clipboardtext = 'Copy directory path to clipboard';
+    // this.clipboardtext = 'Copy directory path to clipboard';
     return this;
   }
   serialize() {
@@ -65,6 +67,7 @@ export class JobLayoutInfo implements Deserializable, Serializable {
       typeFragment: this.typeFragment,
       topicFragment: this.topicFragment,
       cockpitIdFragment: this.cockpitIdFragment,
+      cockpitfolderFragment: this.cockpitfolderFragment,
       runnoFragment: this.runnoFragment,
       runFolderFragment: this.runFolderFragment,
       statusFragment: this.statusFragment,
@@ -74,7 +77,7 @@ export class JobLayoutInfo implements Deserializable, Serializable {
       nodeGroupFragment: this.nodeGroupFragment,
       pendingReasonFragment: this.pendingReasonFragment,
       Comment: this.pendingReasonFragment,
-      clipboardtext: this.clipboardtext,
+      // clipboardtext: this.clipboardtext,
       startTime: this.startTime,
       endTime: this.endTime,
       elapsedTime: this.elapsedTime,

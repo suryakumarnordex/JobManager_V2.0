@@ -202,8 +202,9 @@
     ></app-job-footer>
   </clr-dg-footer>
 </clr-datagrid>
-<!-- <clr-modal
-  [(clrModalOpen)]="this.TaskDetailsLocalVariable.openPopupModal"
+<clr-modal
+  *ngIf="LogFileData != ''"
+  [(clrModalOpen)]="this.LogModelOpen"
   [clrModalSize]="'lg'"
   [clrModalSkipAnimation]="'true'"
 >
@@ -212,4 +213,4 @@
       <li>{{ item }}</li>
     </ul>
   </div>
-</clr-modal> -->
+</clr-modal>

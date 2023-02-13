@@ -9,16 +9,21 @@ import { JobDetailsLocalVariable } from '../job-details/job-details-localvariabl
 export class TaskHeaderComponent implements OnInit {
   @Input() passingEvent: string;
   @Input() taskLength: number;
+
+  @Input() TaskRequeueDisable: boolean;
+
   constructor(
     public TaskDetailsLocalVariable: TaskDetailsLocalVariable,
     public JobDetailsLocalVariable: JobDetailsLocalVariable
   ) {}
 
   ngOnInit(): void {}
+
   openmodel(event: string) {
     this.JobDetailsLocalVariable.passingEventMsg = event;
     this.TaskDetailsLocalVariable.openPopupModal = true;
   }
+
   onModalClose() {
     this.TaskDetailsLocalVariable.openPopupModal = false;
   }
