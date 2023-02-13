@@ -454,9 +454,9 @@ export class JobDetailsComponent implements OnInit {
 
   copyRunClipboard(selectedItem: any) {
     const create_copy = (e: ClipboardEvent) => {
-      e.clipboardData?.setData('text/plain', selectedItem.runFolder);
+      e.clipboardData?.setData('text/plain', selectedItem.cockpitFolder);
       e.preventDefault();
-      if (selectedItem.runFolder != '' && selectedItem.runFolder != null) {
+      if (selectedItem.cockpitFolder != '' || selectedItem.cockpitFolder != null) {
         selectedItem.text = 'copied';
       } else {
         selectedItem.text = 'no data to copy';
@@ -479,6 +479,8 @@ export class JobDetailsComponent implements OnInit {
         selectedItem.text = 'no data to copy';
       }
     };
+    console.log(selectedItem,"SI");
+    
     document.addEventListener('copy', create_copy);
     document.execCommand('copy');
     document.removeEventListener('copy', create_copy);

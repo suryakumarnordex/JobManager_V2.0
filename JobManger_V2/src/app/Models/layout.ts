@@ -7,6 +7,8 @@ export class LayoutInfo implements Deserializable, Serializable {
   topicFragment: string;
   cockpitIdFragment: number;
   runnoFragment: string;
+  cockpitFolder:string;
+  // text:string;
   runFolderFragment: string;
   statusFragment: string;
   priorityFragment: string;
@@ -37,9 +39,11 @@ export class LayoutInfo implements Deserializable, Serializable {
     this.typeFragment = input.type;
     this.topicFragment = input.runTopic;
     this.cockpitIdFragment = input.cockpitId;
+    this.cockpitFolder= input.cockpitFolder;
     this.runnoFragment = input.runNumber;
     this.runFolderFragment = input.runFolder;
     this.statusFragment = input.state;
+    //this.text = input.text;
     this.priorityFragment = input.priority;
     this.progressFragment = input.progress;
     this.numberOfTasksFragment = input.numberOfTasks;
