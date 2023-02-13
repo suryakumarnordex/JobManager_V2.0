@@ -137,13 +137,50 @@
         *ngIf="JobDetailsLocalVariable.passingEventMsg == 'TaskRequeue'"
       >
         If you want to Requeue the Task
-        {{ TaskDetailsLocalVariable.SelectedtaskId }} ?
+        {{ TaskDetailsLocalVariable.SelectedtasksId }} ?
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="IsSuccess == false && PopupResult != undefined"
+        >
+          <div class="alert-items">
+            <div class="alert-item static">
+              <div class="alert-icon-wrapper">
+                <clr-icon
+                  class="alert-icon"
+                  shape="exclamation-circle"
+                ></clr-icon>
+              </div>
 
+              <span class="alert-text">
+                {{ PopupResult }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="alert alert-success"
+          role="alert"
+          *ngIf="IsSuccess == true && PopupResult != undefined"
+        >
+          <div class="alert-items">
+            <div class="alert-item static">
+              <div class="alert-icon-wrapper">
+                <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+              </div>
+
+              <span class="alert-text">
+                {{ PopupResult }}
+              </span>
+            </div>
+          </div>
+        </div>
         <div class="modal-footer">
           <button
             type="button"
             class="btn btn-outline"
-            (click)="parentChildConnection = false"
+            (click)="PopupModelClose()"
           >
             Cancel
           </button>
