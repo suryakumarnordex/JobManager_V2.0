@@ -1,4 +1,4 @@
-import { Deserializable, Serializable } from '../Models/helper';
+import { Deserializable } from '../Models/helper';
 
 export class JobDetailsModules implements Deserializable {
   jobIdFragment?: number;

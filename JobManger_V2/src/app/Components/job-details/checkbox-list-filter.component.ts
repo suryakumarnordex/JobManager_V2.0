@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ClrDatagridFilterInterface } from '@clr/angular';
 import { Subject } from 'rxjs';
-import { JobDetailsLocalVariable } from './job-details-localvariables';
 
 @Component({
   moduleId: 'checkbox-list-filter',

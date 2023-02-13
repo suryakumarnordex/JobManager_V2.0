@@ -1,4 +1,4 @@
-import { Deserializable, Serializable } from '../Models/helper';
+import { Deserializable } from '../Models/helper';
 
 export class TaskDetailsModules implements Deserializable {
   jobIdFragment?: number;
@@ -20,7 +20,7 @@ export class TaskDetailsModules implements Deserializable {
     this.nameFragment = input.taskName;
     this.statusFragment = input.taskState;
     this.exidCodeFragment = input.exitCode;
-    this.exidCodeNameFragment= input.exitCodeName;
+    this.exidCodeNameFragment = input.exitCodeName;
     this.startTimeFragment = input.startTime;
     this.endTimeFragment = input.endTime;
     this.allocatedNodesFragment = input.allocatedNodes;

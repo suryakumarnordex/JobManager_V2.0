@@ -8,20 +8,12 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
-import { LoggerService } from 'src/app/Services/logger.service';
-import { JobLayoutInfo } from 'src/app/Models/layout';
-import { SearchResultsLayout } from 'src/app/Models/helper';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
 import { JobDetailsComponent } from '../job-details/job-details.component';
 import { LoginService } from 'src/app/Services/login.service';
 import { ActivatedRoute } from '@angular/router';
-import { event } from '@cds/core/internal';
 import { JobDetaillocalstorage } from '../job-details/job-detail-Localstorage';
-import {
-  ClrDatagridColumn,
-  ClrDatagridStateInterface,
-  ClrNavLevel,
-} from '@clr/angular';
+import { ClrDatagridColumn } from '@clr/angular';
 @Component({
   selector: 'app-job-header',
   templateUrl: './job-header.component.html',
@@ -51,7 +43,6 @@ export class JobHeaderComponent implements OnInit {
     private router: Router,
     private ApiService: ApiServiceService,
     private route: ActivatedRoute,
-    private logger: LoggerService,
     private JobDetailsComponent: JobDetailsComponent,
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
     public JobDetaillocalstorage: JobDetaillocalstorage,

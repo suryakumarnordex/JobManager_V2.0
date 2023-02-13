@@ -7,26 +7,14 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
-import {
-  SearchResultsLayout,
-  SearchTaskResultsLayout,
-} from 'src/app/Models/helper';
-import { ClrDatagridSortOrder } from '@clr/angular';
+import { SearchResultsLayout } from 'src/app/Models/helper';
 import { LoggerService } from 'src/app/Services/logger.service';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetaillocalstorage } from './job-detail-Localstorage';
 import { JobDetailsLocalVariable } from './job-details-localvariables';
-import {
-  ClrDatagridColumn,
-  ClrDatagridStateInterface,
-  ClrNavLevel,
-} from '@clr/angular';
+import { ClrDatagridColumn, ClrDatagridStateInterface } from '@clr/angular';
 import { CheckboxListFilterComponent } from './checkbox-list-filter.component';
-import { User } from '../../Models/user';
 import { ActivatedRoute } from '@angular/router';
-import { LoginService } from '../../Services/login.service';
-import { JobHeaderComponent } from '../job-header/job-header.component';
-import { FormControl, FormGroup } from '@angular/forms';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { TaskDetaillocalstorage } from '../task-header/task-detail-Localstorage';
 @Component({
@@ -419,7 +407,7 @@ export class JobDetailsComponent implements OnInit {
 
   nodeGroupchange(
     event: any,
-    statusList: Array<string>,
+    _statusList: Array<string>,
     nodeGroupFragment: string
   ) {
     if (event !== null) {

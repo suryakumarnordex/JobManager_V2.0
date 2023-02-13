@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { JobDetailsComponent } from '../job-details/job-details.component';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';

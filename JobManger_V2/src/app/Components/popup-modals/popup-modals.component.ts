@@ -1,4 +1,3 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ApiServiceService } from 'src/app/api-service.service';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
