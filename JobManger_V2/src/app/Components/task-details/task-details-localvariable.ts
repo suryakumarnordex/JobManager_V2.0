@@ -13,6 +13,7 @@ export class TaskDetailsLocalVariable {
   public openPopupModal = false;
 
   public dataloading: boolean = false;
+  public ColumnProperties: any;
 
   //footer properties
   public totalPage: number;
@@ -21,4 +22,10 @@ export class TaskDetailsLocalVariable {
   public orderDescending: boolean = false;
   public recordperpage: number = 10;
   public currentpage: number = 1;
+
+  public FilterTaskId: number;
+  public FilterTaskname: string;
+  public FilterTaskExitCode: string;
+  public FilterTaskAllocatedNode: string;
+  public FilterTaskCommandline: string;
 }

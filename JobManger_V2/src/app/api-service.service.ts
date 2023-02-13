@@ -76,15 +76,7 @@ export class ApiServiceService {
     typeFragment.forEach(function (types: string) {
       params = params.append('typeFragment', types);
     });
-    console.log(
-      this.apiurl + 'SearchLayout',
-      {
-        headers: this.headers,
-        params: params,
-        withCredentials: true,
-      },
-      'SearchLayout'
-    );
+
     return this.http
       .get(this.apiurl + 'SearchLayout', {
         headers: this.headers,
@@ -113,6 +105,7 @@ export class ApiServiceService {
     commandLineFragment: string = '',
     PageNo: Number,
     PageSize: Number,
+    OrderBy: string,
     orderDescending: boolean
   ): Observable<SearchTaskResultsLayout> {
     let params = new HttpParams()
@@ -129,21 +122,14 @@ export class ApiServiceService {
         'commandLineFragment',
         commandLineFragment ? commandLineFragment : ''
       )
+      .set('orderBy', OrderBy ? OrderBy : '')
       .set('orderDescending', orderDescending.toString())
       .set('page', Number(PageNo))
       .set('PageSize', Number(PageSize));
     statusFragment.forEach(function (status: string) {
       params = params.append('statusFragment', status);
     });
-    console.log(
-      this.apiurl + 'SearchTaskLayout',
-      {
-        headers: this.headers,
-        params: params,
-        withCredentials: true,
-      },
-      'SearchLayout'
-    );
+
     return this.http
       .get(this.apiurl + 'SearchTaskLayout', {
         headers: this.headers,
@@ -156,7 +142,7 @@ export class ApiServiceService {
         }),
         tap((results: SearchTaskResultsLayout) => {
           this.logger.log(
-            `fetched ${results.results.length} search results for jobIdFragment=${jobIdFragment}, orderDescending=${orderDescending}, PageNo=${PageNo}, pageSize=${PageSize}`
+            `fetched ${results.results.length} search results for jobIdFragment=${jobIdFragment}, OrderBy=${OrderBy}, orderDescending=${orderDescending}, PageNo=${PageNo}, pageSize=${PageSize}`
           );
         })
       );

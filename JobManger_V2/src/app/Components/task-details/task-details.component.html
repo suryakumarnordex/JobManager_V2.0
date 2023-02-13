@@ -6,25 +6,38 @@
   style="height: 500px"
   HorizontalAlignment="auto"
   VerticalAlignment="auto"
+  (clrDgRefresh)="Columnfilters($event)"
   (clrDgSelectedChange)="selectionChanged($event)"
 >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.taskidcolumnWidthValue"
+    [clrDgField]="'taskIdFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'taskidcolumnwidth')"
     >Task ID</clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.tasknamecolumnWidthValue"
+    [clrDgField]="'tasknameFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'tasknamecolumnwidth')"
     >Task Name</clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.taskstatecolumnWidthValue"
+    [clrDgField]="'statusFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'taskstatecolumnwidth')"
-    >Task State</clr-dg-column
+  >
+    <clr-dg-filter [clrDgFilter]="statusFilter" [scrollLeft]="true">
+      <checkbox-list-filter
+        #statusFilter
+        [filterParamName]="'statusFragment'"
+        [items]="this.JobDetailsLocalVariable.AvailableState"
+      ></checkbox-list-filter>
+    </clr-dg-filter>
+    Task State</clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.exitcodecolumnWidthValue"
+    [clrDgField]="'exitcodeFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'exitcodecolumnwidth')"
     >Exit Code</clr-dg-column
   >
@@ -45,11 +58,13 @@
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.allocatednodescolumnWidthValue"
+    [clrDgField]="'allocatedFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'allocatednodecolumnwidth')"
     >Allocated Nodes</clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.commandlinecolumnWidthValue"
+    [clrDgField]="'commandlineFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'commandlinecolumnwidth')"
     >Command Line</clr-dg-column
   >

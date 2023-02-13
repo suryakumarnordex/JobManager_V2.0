@@ -40,10 +40,10 @@ export class JobDetailsComponent implements OnInit {
   @ViewChildren(CheckboxListFilterComponent)
   buildincolumns: QueryList<CheckboxListFilterComponent>;
 
-  priorityDisable: boolean = false;
-  requeueDisable: boolean = false;
-  cancelDisable: boolean = false;
-  submitDisable: boolean = false;
+  priorityDisable: boolean = true;
+  requeueDisable: boolean = true;
+  cancelDisable: boolean = true;
+  submitDisable: boolean = true;
 
   constructor(
     private ApiService: ApiServiceService,
@@ -61,6 +61,7 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.dataloading = true;
     this.GetLocalStorageColumnValue();
     this.GetMultipleSelectFiltersData();
+    this.JobDetailsLocalVariable.dataloading = false;
   }
   GetMultipleSelectFiltersData() {
     this.JobDetailsLocalVariable.AvailableUserName = [];
@@ -291,6 +292,11 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.selectedUsername = [];
       this.JobDetailsLocalVariable.selectedState = [];
     }
+    this.ColumnSorting(ColumnProperties);
+    this.CallSearchlayout();
+  }
+
+  ColumnSorting(ColumnProperties: ClrDatagridStateInterface) {
     if (ColumnProperties.sort?.by !== undefined) {
       switch (ColumnProperties.sort?.by) {
         case 'typeFragment': {
@@ -335,8 +341,6 @@ export class JobDetailsComponent implements OnInit {
     ColumnName == undefined
       ? (this.JobDetailsLocalVariable.orderDescending = true)
       : (this.JobDetailsLocalVariable.orderDescending = ColumnName);
-
-    this.CallSearchlayout();
   }
 
   CallSearchlayout() {
@@ -383,6 +387,12 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.currentpage = 1;
     this.ClearAllLocalVariables();
     this.CallSearchlayout();
+
+    this.priorityDisable = true;
+    this.requeueDisable = true;
+    this.submitDisable = true;
+    this.cancelDisable = true;
+    this.JobDetailsLocalVariable.dataloading = false;
   }
 
   ClearAllLocalVariables() {
@@ -456,7 +466,6 @@ export class JobDetailsComponent implements OnInit {
     event
       .map((e) => e.statusFragment)
       .forEach((status) => {
-        console.log(status, 'selectionChanged');
         switch (status.toString()) {
           case 'Finished': {
             this.priorityDisable = true;
@@ -532,6 +541,8 @@ export class JobDetailsComponent implements OnInit {
       this.localstorage.get('submittimecolumnwidth');
     this.JobDetailsLocalStorage.pendingreasoncolumnWidthValue =
       this.localstorage.get('pendingreasoncolumnwidth');
+    this.JobDetailsLocalVariable.recordperpagejob =
+      this.localstorage.get('recordperpage');
   }
 
   ButtonEvents(EventStr: string): Promise<any> {

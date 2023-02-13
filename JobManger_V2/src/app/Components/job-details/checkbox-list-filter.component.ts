@@ -49,7 +49,7 @@ export class CheckboxListFilterComponent
     value: string;
   }> = [];
 
-  constructor(public JobDetailsLocalVariable: JobDetailsLocalVariable) {}
+  constructor() {}
 
   public changes = new Subject<any>();
 

@@ -13,7 +13,7 @@ import { TaskDetailsLocalVariable } from './task-details-localvariable';
 import { TaskDetaillocalstorage } from '../task-header/task-detail-Localstorage';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
-import { ClrDatagridColumn } from '@clr/angular';
+import { ClrDatagridColumn, ClrDatagridStateInterface } from '@clr/angular';
 @Component({
   selector: 'app-task-details',
   templateUrl: './task-details.component.html',
@@ -27,11 +27,6 @@ export class TaskDetailsComponent implements OnInit {
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
   LogFileData: any;
 
-  // requestFromTask: boolean = true;
-  // selected = [] as any;
-  // pageSize: number = 1;
-  // totalRecords = 0;
-  // totalPage: number;
   dataloading: boolean = false;
 
   constructor(
@@ -40,18 +35,19 @@ export class TaskDetailsComponent implements OnInit {
     public TaskDetailsLocalVariable: TaskDetailsLocalVariable,
     public TaskDetailsLocalStorage: TaskDetaillocalstorage,
     private localstorage: LocalStorageService,
-    private JobDetailsLocalVariable: JobDetailsLocalVariable
+    public JobDetailsLocalVariable: JobDetailsLocalVariable
   ) {}
 
   ngOnInit(): void {
     this.GetTaskLocalStorageColumnValue();
-    this.GetTaskDetails();
   }
   showFileData(log: any) {
     this.LogFileData = null;
     this.getFilepath(log);
     if (this.LogFileData !== null) {
       this.TaskDetailsLocalVariable.openPopupModal = true;
+    } else {
+      this.TaskDetailsLocalVariable.openPopupModal = false;
     }
   }
   getFilepath(filepath: any) {
@@ -70,16 +66,17 @@ export class TaskDetailsComponent implements OnInit {
   CallSearchTaskLayout() {
     this.ApiService.searchTaskLayout(
       this.JobDetailsLocalVariable.SelectedJobId,
-      this.TaskDetailsLocalVariable.SelectedtaskId,
+      this.TaskDetailsLocalVariable.filterTaskId,
       this.TaskDetailsLocalVariable.filterName,
       this.TaskDetailsLocalVariable.selectedState,
       '',
       '',
-      '',
+      this.TaskDetailsLocalVariable.FilterTaskAllocatedNode,
       this.TaskDetailsLocalVariable.filterCommandLine,
       this.TaskDetailsLocalVariable.currentpage,
       this.TaskDetailsLocalVariable.recordperpage,
-      false
+      this.TaskDetailsLocalVariable.OrderBy,
+      this.TaskDetailsLocalVariable.orderDescending
     ).subscribe({
       next: (res: SearchTaskResultsLayout) => {
         this.taskLayout = res.results;
@@ -98,10 +95,13 @@ export class TaskDetailsComponent implements OnInit {
     });
   }
   selectionChanged(event: any[]) {
-    this.TaskDetailsLocalVariable.SelectedtasksId = event.map(
-      (e) => e.taskIdFragment
-    );
-    this.taskLength = this.TaskDetailsLocalVariable.SelectedtaskId.length;
+    if (this.TaskDetailsLocalVariable.SelectedtasksId !== undefined) {
+      this.TaskDetailsLocalVariable.SelectedtasksId = event.map(
+        (e) => e.taskIdFragment
+      );
+
+      this.taskLength = this.TaskDetailsLocalVariable.SelectedtaskId.length;
+    }
   }
   public TaskColumnResized(event: any, colType: string) {
     this.localstorage.set(colType, event);
@@ -164,6 +164,8 @@ export class TaskDetailsComponent implements OnInit {
       this.localstorage.get('allocatednodecolumnwidth');
     this.TaskDetailsLocalStorage.commandlinecolumnWidthValue =
       this.localstorage.get('commandlinecolumnwidth');
+    this.TaskDetailsLocalVariable.recordperpage =
+      this.localstorage.get('taskrecordperpage');
   }
   setRequeue() {
     this.ApiService.SetTaskRequeue(
@@ -198,5 +200,102 @@ export class TaskDetailsComponent implements OnInit {
     this.TaskDetailsLocalVariable.OrderBy = '';
     this.TaskDetailsLocalVariable.orderDescending = false;
     this.TaskDetailsLocalVariable.currentpage = 1;
+  }
+
+  Columnfilters(ColumnProperties: ClrDatagridStateInterface) {
+    this.TaskDetailsLocalVariable.ColumnProperties = ColumnProperties;
+
+    if (ColumnProperties.filters) {
+      this.TaskDetailsLocalVariable.dataloading = true;
+      for (const filterctrl of ColumnProperties.filters) {
+        if (filterctrl.filterParamName == 'statusFragment') {
+          filterctrl.selectedItems
+            .map((e: any) => e.value)
+            .forEach((value: string) => {
+              if (
+                !this.TaskDetailsLocalVariable.selectedState.includes(value)
+              ) {
+                this.TaskDetailsLocalVariable.selectedState.push(value);
+              }
+            });
+        }
+
+        const { property, value } = <{ property: string; value: string }>(
+          filterctrl
+        );
+
+        switch (property) {
+          case 'taskIdFragment': {
+            this.TaskDetailsLocalVariable.filterTaskId = value;
+            this.TaskDetailsLocalVariable.OrderBy = 'TaskId';
+            break;
+          }
+          case 'tasknameFragment': {
+            this.TaskDetailsLocalVariable.filterName = value;
+            this.TaskDetailsLocalVariable.OrderBy = 'Taskname';
+            break;
+          }
+
+          case 'exitcodeFragment': {
+            this.TaskDetailsLocalVariable.FilterTaskExitCode = value;
+            this.JobDetailsLocalVariable.OrderBy = 'ExitCode';
+            break;
+          }
+          case 'allocatedFragment': {
+            this.TaskDetailsLocalVariable.FilterTaskAllocatedNode = value;
+            this.TaskDetailsLocalVariable.OrderBy = 'AllocatedNodes';
+            break;
+          }
+          case 'commandlineFragment': {
+            this.TaskDetailsLocalVariable.filterCommandLine = value;
+            this.TaskDetailsLocalVariable.OrderBy = 'CommandLine';
+            break;
+          }
+          default: {
+            this.TaskDetailsLocalVariable.OrderBy = 'TaskId';
+          }
+        }
+      }
+    } else {
+      this.TaskDetailsLocalVariable.filterTaskId = '';
+      this.TaskDetailsLocalVariable.filterName = '';
+      this.TaskDetailsLocalVariable.FilterTaskExitCode = '';
+      this.TaskDetailsLocalVariable.FilterTaskAllocatedNode = '';
+      this.TaskDetailsLocalVariable.filterCommandLine = '';
+      this.TaskDetailsLocalVariable.selectedState = [];
+    }
+    this.ColumnSorting(ColumnProperties);
+    this.CallSearchTaskLayout();
+  }
+
+  ColumnSorting(ColumnProperties: ClrDatagridStateInterface) {
+    if (ColumnProperties.sort?.by !== undefined) {
+      switch (ColumnProperties.sort?.by) {
+        case 'taskIdFragment': {
+          this.TaskDetailsLocalVariable.OrderBy = 'TaskId';
+          break;
+        }
+        case 'tasknameFragment': {
+          this.TaskDetailsLocalVariable.OrderBy = 'Taskname';
+          break;
+        }
+        case 'exitcodeFragment': {
+          this.TaskDetailsLocalVariable.OrderBy = 'ExitCode';
+          break;
+        }
+        case 'allocatedFragment': {
+          this.TaskDetailsLocalVariable.OrderBy = 'AllocatedNodes';
+          break;
+        }
+        case 'commandlineFragment': {
+          this.TaskDetailsLocalVariable.OrderBy = 'CommandLine';
+          break;
+        }
+      }
+    }
+    let ColumnName = ColumnProperties.sort?.reverse;
+    ColumnName == undefined
+      ? (this.TaskDetailsLocalVariable.orderDescending = true)
+      : (this.TaskDetailsLocalVariable.orderDescending = ColumnName);
   }
 }
