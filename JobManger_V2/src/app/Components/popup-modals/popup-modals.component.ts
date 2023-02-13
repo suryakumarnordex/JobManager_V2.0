@@ -46,16 +46,16 @@ export class PopupModalsComponent implements OnInit {
   }
 
   PopupEvent() {
+    this.TaskDetailsLocalVariable.dataloading = false;
     this.passingEvent = this.JobDetailsLocalVariable.passingEventMsg;
     switch (this.JobDetailsLocalVariable.passingEventMsg) {
       case 'Priority': {
-        this.PriorityValue = this.PriorityValue.replace('+', '%2B');
         this.PopupResult = this.SetJobPriority();
         this.IsSuccess = true;
         break;
       }
-      default: {
-        this.JobDetailscomponent.ButtonEvents(
+      case 'TaskRequeue': {
+        this.TaskDetailsComponent.ButtonEvents(
           this.JobDetailsLocalVariable.passingEventMsg
         )
           .then((res) => {
@@ -80,6 +80,35 @@ export class PopupModalsComponent implements OnInit {
             this.PopupResult = error;
             this.IsSuccess = false;
           });
+        break;
+      }
+      default: {
+        this.JobDetailscomponent.ButtonEvents(
+          this.JobDetailsLocalVariable.passingEventMsg
+        )
+          .then((res) => {
+            Object.keys(res).forEach((key) => {
+              if (this.PopupResult == undefined) {
+                this.Popuploading = true;
+
+                this.PopupResult =
+                  'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+              } else {
+                this.PopupResult +=
+                  ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+              }
+
+              if (res[key].includes('Already')) {
+                this.IsSuccess = false;
+              } else {
+                this.IsSuccess = true;
+              }
+            });
+          })
+          .catch((error) => {
+            this.PopupResult = error;
+            this.IsSuccess = false;
+          });
 
         break;
       }
@@ -93,9 +122,9 @@ export class PopupModalsComponent implements OnInit {
     this.JobDetailsLocalVariable.disableButton = false;
     this.IsSuccess = false;
     this.PopupResult = undefined;
-    this.JobDetailscomponent.CallSearchlayout();
+    // this.JobDetailscomponent.CallSearchlayout();
     this.JobDetailscomponent.GetLocalStorageColumnValue();
-    this.JobDetailscomponent.GetMultipleSelectFiltersData();
+    // this.JobDetailscomponent.GetMultipleSelectFiltersData();
   }
 
   public SetJobPriority() {

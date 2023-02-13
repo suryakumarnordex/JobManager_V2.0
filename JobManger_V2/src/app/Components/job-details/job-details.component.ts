@@ -458,6 +458,7 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.SelectedjobsId = event.map(
       (e) => e.jobIdFragment
     );
+
     this.priorityDisable = false;
     this.requeueDisable = false;
     this.submitDisable = false;

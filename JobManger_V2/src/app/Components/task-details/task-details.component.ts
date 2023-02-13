@@ -95,12 +95,11 @@ export class TaskDetailsComponent implements OnInit {
     });
   }
   selectionChanged(event: any[]) {
-    if (this.TaskDetailsLocalVariable.SelectedtasksId !== undefined) {
+    if (event !== undefined) {
       this.TaskDetailsLocalVariable.SelectedtasksId = event.map(
         (e) => e.taskIdFragment
       );
-
-      this.taskLength = this.TaskDetailsLocalVariable.SelectedtaskId.length;
+      this.taskLength = this.TaskDetailsLocalVariable.SelectedtasksId.length;
     }
   }
   public TaskColumnResized(event: any, colType: string) {
@@ -297,5 +296,29 @@ export class TaskDetailsComponent implements OnInit {
     ColumnName == undefined
       ? (this.TaskDetailsLocalVariable.orderDescending = true)
       : (this.TaskDetailsLocalVariable.orderDescending = ColumnName);
+  }
+
+  ButtonEvents(EventStr: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      switch (EventStr) {
+        case 'TaskRequeue': {
+          this.ApiService.SetTaskRequeue(
+            this.JobDetailsLocalVariable.SelectedJobId,
+            this.TaskDetailsLocalVariable.SelectedtasksId
+          ).subscribe({
+            next: (res: any) => {
+              console.log(res);
+              resolve(res);
+            },
+            error: (error: string) => {
+              console.log(error);
+              this.JobDetailsLocalVariable.dataloading = false;
+              reject(error);
+            },
+          });
+          break;
+        }
+      }
+    });
   }
 }

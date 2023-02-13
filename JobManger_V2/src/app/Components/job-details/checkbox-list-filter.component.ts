@@ -84,9 +84,12 @@ export class CheckboxListFilterComponent
       this.selectedItems.push(item);
     } else {
       item.checked = false;
+      console.log(item, 'item');
       let index = this.selectedItems.indexOf(item);
 
       if (index >= 0) {
+        console.log(index, 'index');
+
         this.selectedItems.splice(index, 1);
       }
     }
