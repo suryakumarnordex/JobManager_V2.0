@@ -183,7 +183,10 @@ export class JobDetailsComponent implements OnInit {
 
   Columnfilters(ColumnProperties: ClrDatagridStateInterface) {
     this.JobDetailsLocalVariable.ColumnProperties = ColumnProperties;
-
+    this.JobDetailsLocalVariable.selectedType = [];
+    this.JobDetailsLocalVariable.selectedUsername = [];
+    this.JobDetailsLocalVariable.selectedState = [];
+    this.JobDetailsLocalVariable.currentpage = 1;
     if (ColumnProperties.filters) {
       this.JobDetailsLocalVariable.dataloading = true;
       for (const filterctrl of ColumnProperties.filters) {
@@ -451,11 +454,19 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.SelectedjobsId = event.map(
       (e) => e.jobIdFragment
     );
-
     this.priorityDisable = false;
     this.requeueDisable = false;
     this.submitDisable = false;
     this.cancelDisable = false;
+
+    if (this.JobDetailsLocalVariable.SelectedjobsId.length == 0) {
+      this.priorityDisable = true;
+      this.requeueDisable = true;
+      this.submitDisable = true;
+      this.cancelDisable = true;
+    }
+
+    event.map((e) => e.statusFragment).forEach((status) => {});
 
     event
       .map((e) => e.statusFragment)

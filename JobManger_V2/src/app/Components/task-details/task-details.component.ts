@@ -220,9 +220,10 @@ export class TaskDetailsComponent implements OnInit {
 
   Columnfilters(ColumnProperties: ClrDatagridStateInterface) {
     this.TaskDetailsLocalVariable.ColumnProperties = ColumnProperties;
-
+    this.TaskDetailsLocalVariable.currentpage = 1;
     if (ColumnProperties.filters) {
       this.TaskDetailsLocalVariable.dataloading = true;
+      this.TaskDetailsLocalVariable.selectedState = [];
       for (const filterctrl of ColumnProperties.filters) {
         if (filterctrl.filterParamName == 'statusFragment') {
           filterctrl.selectedItems
