@@ -187,6 +187,7 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.selectedUsername = [];
     this.JobDetailsLocalVariable.selectedState = [];
     this.JobDetailsLocalVariable.currentpage = 1;
+
     if (ColumnProperties.filters) {
       this.JobDetailsLocalVariable.dataloading = true;
       for (const filterctrl of ColumnProperties.filters) {
@@ -279,10 +280,11 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.filterTopic = '';
       this.JobDetailsLocalVariable.filternooftasks = '';
       this.JobDetailsLocalVariable.filterpriority = '';
-
       this.JobDetailsLocalVariable.selectedType = [];
       this.JobDetailsLocalVariable.selectedUsername = [];
       this.JobDetailsLocalVariable.selectedState = [];
+      this.JobDetailsLocalVariable.OrderBy = 'id';
+      this.JobDetailsLocalVariable.orderDescending = true;
     }
     this.ColumnSorting(ColumnProperties);
     this.CallSearchlayout();
@@ -437,16 +439,15 @@ export class JobDetailsComponent implements OnInit {
       const create_copy = (e: ClipboardEvent) => {
         e.clipboardData?.setData('text/plain', CtrlName);
         e.preventDefault();
-        if (CtrlName != '' && CtrlName != null && CtrlName != undefined) {
-          this.ClipBoardText = 'copied';
-        } else {
-          this.ClipBoardText = 'no data to copy';
-        }
+        // if (CtrlName != '' && CtrlName != null && CtrlName != undefined) {
+        //   this.ClipBoardText = 'copied';
+        // } else {
+        //   this.ClipBoardText = 'no data to copy';
+        // }
       };
       document.addEventListener('copy', create_copy);
       document.execCommand('copy');
       document.removeEventListener('copy', create_copy);
-      this.ClipBoardText = '';
     }
   }
 
