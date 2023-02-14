@@ -21,7 +21,7 @@
     "@cds/core": "^6.2.2",
     "@clr/angular": "^13.10.1",
     "@clr/icons": "^13.0.2",
-    "@clr/ui": "^13.10.1",
+    "@clr/ui": "^13.14.0",
     "bootstrap": "^5.2.3",
     "cdk": "^2.51.1",
     "child_process": "^1.0.2",

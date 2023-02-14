@@ -182,6 +182,13 @@ export class TaskDetailsComponent implements OnInit {
       this.localstorage.get('commandlinecolumnwidth');
     this.TaskDetailsLocalVariable.recordperpage =
       this.localstorage.get('taskrecordperpage');
+    if (
+      this.TaskDetailsLocalVariable.recordperpage == null ||
+      this.TaskDetailsLocalVariable.recordperpage == undefined ||
+      this.TaskDetailsLocalVariable.recordperpage
+    ) {
+      this.TaskDetailsLocalVariable.recordperpage = 10;
+    }
   }
   setRequeue() {
     this.ApiService.SetTaskRequeue(

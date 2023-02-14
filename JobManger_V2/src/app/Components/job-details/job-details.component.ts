@@ -362,7 +362,6 @@ export class JobDetailsComponent implements OnInit {
       next: (res: SearchResultsLayout) => {
         this.JobDetailsLocalVariable.Joblayout = res.results;
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
-
         this.JobDetailsLocalVariable.totalPage = Math.ceil(
           this.JobDetailsLocalVariable.jobCount /
             this.JobDetailsLocalVariable.recordperpagejob
@@ -549,6 +548,13 @@ export class JobDetailsComponent implements OnInit {
       this.localstorage.get('pendingreasoncolumnwidth');
     this.JobDetailsLocalVariable.recordperpagejob =
       this.localstorage.get('recordperpage');
+    if (
+      this.JobDetailsLocalVariable.recordperpagejob == null ||
+      this.JobDetailsLocalVariable.recordperpagejob == undefined ||
+      this.JobDetailsLocalVariable.recordperpagejob
+    ) {
+      this.JobDetailsLocalVariable.recordperpagejob = 10;
+    }
   }
 
   ButtonEvents(EventStr: string): Promise<any> {
