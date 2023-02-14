@@ -109,7 +109,7 @@ export class JobFooterComponent implements OnInit {
   }
   GetFooterDetails(isjob: boolean) {
     isjob
-      ? this.jobdetails.CallSearchlayout()
+      ? this.jobdetails.CallSearchlayout('GetFooterDetails')
       : this.taskdetails.GetTaskDetails();
   }
   onSelected(value: string) {

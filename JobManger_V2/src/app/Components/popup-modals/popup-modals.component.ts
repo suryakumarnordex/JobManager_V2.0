@@ -17,6 +17,8 @@ export class PopupModalsComponent implements OnInit {
   public PopupResult: any;
   public IsSuccess: boolean = false;
   public Popuploading: boolean = false;
+  public DisplayMsg: any;
+
   get parentChildConnection(): boolean {
     return this.isOpen;
   }

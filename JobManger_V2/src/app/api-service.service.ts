@@ -28,6 +28,7 @@ export class ApiServiceService {
   }
   // public AvailableUserName: { key: string; value: string }[] = [];
   searchLayout(
+    calleedFrom: string,
     jobIdFragment: string = '',
     userFragment: Array<string> = [],
     typeFragment: Array<string> = [],
@@ -76,7 +77,7 @@ export class ApiServiceService {
     typeFragment.forEach(function (types: string) {
       params = params.append('typeFragment', types);
     });
-
+    //console.log(calleedFrom, 'calleedFrom');
     return this.http
       .get(this.apiurl + 'SearchLayout', {
         headers: this.headers,

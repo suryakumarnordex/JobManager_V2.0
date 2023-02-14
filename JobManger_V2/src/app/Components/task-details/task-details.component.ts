@@ -183,9 +183,10 @@ export class TaskDetailsComponent implements OnInit {
     this.TaskDetailsLocalVariable.recordperpage =
       this.localstorage.get('taskrecordperpage');
     if (
-      this.TaskDetailsLocalVariable.recordperpage == null ||
-      this.TaskDetailsLocalVariable.recordperpage == undefined ||
-      this.TaskDetailsLocalVariable.recordperpage
+      this.localstorage.get('taskrecordperpage') == null ||
+      this.localstorage.get('taskrecordperpage') == undefined ||
+      isNaN(this.localstorage.get('taskrecordperpage')) ||
+      this.localstorage.get('taskrecordperpage') == ''
     ) {
       this.TaskDetailsLocalVariable.recordperpage = 10;
     }

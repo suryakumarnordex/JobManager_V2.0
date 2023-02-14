@@ -287,7 +287,7 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.orderDescending = true;
     }
     this.ColumnSorting(ColumnProperties);
-    this.CallSearchlayout();
+    this.CallSearchlayout('Columnfilters');
   }
 
   ColumnSorting(ColumnProperties: ClrDatagridStateInterface) {
@@ -337,10 +337,11 @@ export class JobDetailsComponent implements OnInit {
       : (this.JobDetailsLocalVariable.orderDescending = ColumnName);
   }
 
-  CallSearchlayout() {
+  CallSearchlayout(calleedFrom: string) {
     let waitForChange = false;
     this.JobDetailsLocalVariable.dataloading = true;
     this.ApiService.searchLayout(
+      calleedFrom,
       this.JobDetailsLocalVariable.filterJobid,
       this.JobDetailsLocalVariable.selectedUsername,
       this.JobDetailsLocalVariable.selectedType,
@@ -377,15 +378,14 @@ export class JobDetailsComponent implements OnInit {
   clearallFilters() {
     this.JobDetailsLocalVariable.dataloading = true;
     this.columns.forEach((column) => (column.filterValue = ''));
-    this.JobDetailsLocalVariable.currentpage = 1;
     this.ClearAllLocalVariables();
-    this.CallSearchlayout();
-
+    this.JobDetailsLocalVariable.currentpage = 1;
     this.priorityDisable = true;
     this.requeueDisable = true;
     this.submitDisable = true;
     this.cancelDisable = true;
     this.JobDetailsLocalVariable.dataloading = false;
+    this.CallSearchlayout('clearallFilters');
   }
 
   ClearAllLocalVariables() {
@@ -415,7 +415,7 @@ export class JobDetailsComponent implements OnInit {
     if (event !== null) {
       this.ClearAllLocalVariables();
       this.JobDetailsLocalVariable.SelectedNodeGroup = nodeGroupFragment;
-      this.CallSearchlayout();
+      this.CallSearchlayout('nodeGroupchange');
     }
   }
 
@@ -549,9 +549,10 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.recordperpagejob =
       this.localstorage.get('recordperpage');
     if (
-      this.JobDetailsLocalVariable.recordperpagejob == null ||
-      this.JobDetailsLocalVariable.recordperpagejob == undefined ||
-      this.JobDetailsLocalVariable.recordperpagejob
+      this.localstorage.get('recordperpage') == null ||
+      this.localstorage.get('recordperpage') == undefined ||
+      isNaN(this.localstorage.get('recordperpage')) ||
+      this.localstorage.get('recordperpage') == ''
     ) {
       this.JobDetailsLocalVariable.recordperpagejob = 10;
     }
