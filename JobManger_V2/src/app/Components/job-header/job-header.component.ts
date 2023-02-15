@@ -84,7 +84,14 @@ export class JobHeaderComponent implements OnInit {
   }
   refreshData() {
     this.JobDetailsComponent.GetLocalStorageColumnValue();
-    // this.JobDetailsComponent.GetMultipleSelectFiltersData();
+    if (
+      this.JobDetailsLocalVariable.selectedType.length == 0 &&
+      this.JobDetailsLocalVariable.selectedUsername.length == 0 &&
+      this.JobDetailsLocalVariable.selectedState.length == 0
+    ) {
+      this.JobDetailsComponent.GetMultipleSelectFiltersData();
+    }
+
     this.JobDetailsComponent.CallSearchlayout('refreshData from job header');
   }
   clearAllfilters() {
