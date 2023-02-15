@@ -183,9 +183,10 @@ export class JobDetailsComponent implements OnInit {
 
   Columnfilters(ColumnProperties: ClrDatagridStateInterface) {
     this.JobDetailsLocalVariable.ColumnProperties = ColumnProperties;
-    this.JobDetailsLocalVariable.selectedType = [];
-    this.JobDetailsLocalVariable.selectedUsername = [];
-    this.JobDetailsLocalVariable.selectedState = [];
+    console.log('Clear Calling');
+
+    this.JobDetailsLocalVariable.CheckBoxFilterClear();
+    console.log('Clear Called');
     this.JobDetailsLocalVariable.currentpage = 1;
 
     if (ColumnProperties.filters) {
@@ -378,8 +379,7 @@ export class JobDetailsComponent implements OnInit {
   clearallFilters() {
     this.JobDetailsLocalVariable.dataloading = true;
     this.columns.forEach((column) => (column.filterValue = ''));
-    this.ClearAllLocalVariables();
-    this.JobDetailsLocalVariable.currentpage = 1;
+    this.JobDetailsLocalVariable.ClearAllLocalVariables();
     this.priorityDisable = true;
     this.requeueDisable = true;
     this.submitDisable = true;
@@ -388,32 +388,13 @@ export class JobDetailsComponent implements OnInit {
     this.CallSearchlayout('clearallFilters');
   }
 
-  ClearAllLocalVariables() {
-    this.JobDetailsLocalVariable.filterJobid = '';
-    this.JobDetailsLocalVariable.filterTopic = '';
-    this.JobDetailsLocalVariable.filterCockpit = '';
-    this.JobDetailsLocalVariable.filterrunno = '';
-    this.JobDetailsLocalVariable.filterpriority = '';
-    this.JobDetailsLocalVariable.filternooftasks = '';
-    this.JobDetailsLocalVariable.SelectedNodeGroup = '';
-    this.JobDetailsLocalVariable.SelectedJobId = '';
-
-    this.JobDetailsLocalVariable.selectedUsername = [];
-    this.JobDetailsLocalVariable.selectedType = [];
-    this.JobDetailsLocalVariable.selectedState = [];
-
-    this.JobDetailsLocalVariable.OrderBy = '';
-    this.JobDetailsLocalVariable.orderDescending = false;
-    this.JobDetailsLocalVariable.currentpage = 1;
-  }
-
   nodeGroupchange(
     event: any,
     _statusList: Array<string>,
     nodeGroupFragment: string
   ) {
     if (event !== null) {
-      this.ClearAllLocalVariables();
+      this.JobDetailsLocalVariable.ClearAllLocalVariables();
       this.JobDetailsLocalVariable.SelectedNodeGroup = nodeGroupFragment;
       this.CallSearchlayout('nodeGroupchange');
     }
@@ -492,6 +473,7 @@ export class JobDetailsComponent implements OnInit {
           case 'Failed': {
             this.cancelDisable = true;
             this.submitDisable = true;
+            this.priorityDisable = true;
             break;
           }
           case 'Cancelled': {

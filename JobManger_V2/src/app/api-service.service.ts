@@ -77,7 +77,8 @@ export class ApiServiceService {
     typeFragment.forEach(function (types: string) {
       params = params.append('typeFragment', types);
     });
-    //console.log(calleedFrom, 'calleedFrom');
+    console.log(params, 'params');
+    console.log(calleedFrom, 'calledFrom');
     return this.http
       .get(this.apiurl + 'SearchLayout', {
         headers: this.headers,
@@ -155,7 +156,7 @@ export class ApiServiceService {
     });
     params = params.append('priority', priority);
 
-    return this.http.post(
+    return this.http.put(
       this.apiurl + 'SetPriorityBandHPCRestAPI',
       {},
       {

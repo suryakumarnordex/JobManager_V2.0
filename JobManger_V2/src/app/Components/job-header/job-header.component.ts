@@ -95,9 +95,9 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsComponent.CallSearchlayout('refreshData from job header');
   }
   clearAllfilters() {
-    this.JobDetailsComponent.clearallFilters();
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     this.JobDetailsComponent.GetMultipleSelectFiltersData();
+    this.JobDetailsComponent.clearallFilters();
   }
   onNodeGroupChange(event: any) {
     let statusList: string[] = [];

@@ -69,7 +69,11 @@
     >Command Line</clr-dg-column
   >
 
-  <clr-dg-row *ngFor="let task of taskLayout" [clrDgItem]="task">
+  <clr-dg-row
+    style="word-break: break-all"
+    *ngFor="let task of taskLayout"
+    [clrDgItem]="task"
+  >
     <clr-dg-cell
       ><div class="hidden">
         <span title="{{ task.taskIdFragment }}"

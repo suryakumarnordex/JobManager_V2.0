@@ -59,4 +59,29 @@ export class JobDetailsLocalVariable {
     'Queue BladedSimulation',
     'Queue PrePostProcessing',
   ];
+
+  ClearAllLocalVariables() {
+    this.filterJobid = '';
+    this.filterTopic = '';
+    this.filterCockpit = '';
+    this.filterrunno = '';
+    this.filterpriority = '';
+    this.filternooftasks = '';
+    this.SelectedNodeGroup = '';
+    this.SelectedJobId = '';
+
+    this.selectedUsername = [];
+    this.selectedType = [];
+    this.selectedState = [];
+
+    this.OrderBy = '';
+    this.orderDescending = false;
+    this.currentpage = 1;
+  }
+  CheckBoxFilterClear() {
+    this.selectedType = [];
+    this.selectedUsername = [];
+    this.selectedState = [];
+    console.log('All selected filteres cleared');
+  }
 }
