@@ -56,27 +56,6 @@ export class CheckboxListFilterComponent
     return this;
   }
 
-  // This will look into the list of items and attempt to match it
-  @Input('defaultFilterValues')
-  public set defaultFilterValues(newValues: string[]) {
-    if (newValues) {
-      this.selectedItems = [];
-      if (this.items && Array.isArray(this.items)) {
-        for (let item of this.items) {
-          if (newValues && Array.isArray(newValues)) {
-            for (let newValue of newValues) {
-              if (item.key === newValue) {
-                item.checked = true;
-                this.selectedItems.push(item);
-              }
-            }
-          }
-        }
-      }
-    }
-    this.changes.next(true);
-  }
-
   public onItemChanged(item: any, event: any) {
     if (!item.checked) {
       item.checked = true;

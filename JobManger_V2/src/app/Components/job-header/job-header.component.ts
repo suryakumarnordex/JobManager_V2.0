@@ -83,9 +83,9 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsLocalVariable.openPopupModal = true;
   }
   refreshData() {
-    this.JobDetailsComponent.CallSearchlayout('refreshData from job header');
     this.JobDetailsComponent.GetLocalStorageColumnValue();
-    this.JobDetailsComponent.GetMultipleSelectFiltersData();
+    // this.JobDetailsComponent.GetMultipleSelectFiltersData();
+    this.JobDetailsComponent.CallSearchlayout('refreshData from job header');
   }
   clearAllfilters() {
     this.JobDetailsComponent.clearallFilters();
