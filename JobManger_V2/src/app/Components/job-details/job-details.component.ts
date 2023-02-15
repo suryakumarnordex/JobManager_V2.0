@@ -183,10 +183,7 @@ export class JobDetailsComponent implements OnInit {
 
   Columnfilters(ColumnProperties: ClrDatagridStateInterface) {
     this.JobDetailsLocalVariable.ColumnProperties = ColumnProperties;
-    console.log('Clear Calling');
-
     this.JobDetailsLocalVariable.CheckBoxFilterClear();
-    console.log('Clear Called');
     this.JobDetailsLocalVariable.currentpage = 1;
 
     if (ColumnProperties.filters) {
@@ -378,8 +375,8 @@ export class JobDetailsComponent implements OnInit {
 
   clearallFilters() {
     this.JobDetailsLocalVariable.dataloading = true;
-    this.columns.forEach((column) => (column.filterValue = ''));
     this.JobDetailsLocalVariable.ClearAllLocalVariables();
+    this.columns.forEach((column) => (column.filterValue = ''));
     this.priorityDisable = true;
     this.requeueDisable = true;
     this.submitDisable = true;
