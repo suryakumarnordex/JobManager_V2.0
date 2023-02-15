@@ -17,6 +17,7 @@ import { CheckboxListFilterComponent } from './checkbox-list-filter.component';
 import { ActivatedRoute } from '@angular/router';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { TaskDetaillocalstorage } from '../task-header/task-detail-Localstorage';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-details.component.html',
@@ -27,7 +28,7 @@ export class JobDetailsComponent implements OnInit {
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
   @ViewChildren(CheckboxListFilterComponent)
   buildincolumns: QueryList<CheckboxListFilterComponent>;
-
+  toastRef:any;
   public ClipBoardText: string = '';
   priorityDisable: boolean = true;
   requeueDisable: boolean = true;
@@ -43,7 +44,8 @@ export class JobDetailsComponent implements OnInit {
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
     private route: ActivatedRoute,
     public TaskDetailsComponent: TaskDetailsComponent,
-    public TaskDetaillocalstorage: TaskDetaillocalstorage
+    public TaskDetaillocalstorage: TaskDetaillocalstorage,
+    public toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +53,20 @@ export class JobDetailsComponent implements OnInit {
     this.GetLocalStorageColumnValue();
     this.GetMultipleSelectFiltersData();
     this.JobDetailsLocalVariable.dataloading = false;
+  }
+  showSuccessToast() {
+    this.toastRef = this.toastr.success('', 'Refreshed Finished...', {
+      disableTimeOut: true,
+      tapToDismiss: false,
+      positionClass: 'toast-top-right',
+      toastClass: 'toast-icon custom-toast-success',
+    });
+    setTimeout(() => {
+      this.removeToast();
+    }, 2000);
+  }
+  removeToast() {
+    this.toastr.clear(this.toastRef.ToastId);
   }
   GetMultipleSelectFiltersData() {
     this.JobDetailsLocalVariable.AvailableUserName = [];

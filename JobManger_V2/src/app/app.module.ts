@@ -24,6 +24,7 @@ import { WINDOW_PROVIDERS } from './Services/window.providers';
 import { exec } from 'child_process';
 import { TaskHeaderComponent } from './Components/task-header/task-header.component';
 import { ToastrModule } from 'ngx-toastr';
+import { CustomToastComponent } from './Components/custom-toast/custom-toast.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -32,6 +33,13 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    CustomToastComponent,
+    ToastrModule.forRoot({
+      toastComponent: CustomToastComponent,
+      closeButton: true,
+      positionClass: 'toast-top-right',
+      newestOnTop: false, // added custom toast!
+    }), // ToastrModule added 
   ],
   declarations: [
     AppComponent,
@@ -42,7 +50,7 @@ import { ToastrModule } from 'ngx-toastr';
     JobHeaderComponent,
     PopupModalsComponent,
     CheckboxListFilterComponent,
-    TaskHeaderComponent,
+    TaskHeaderComponent,CustomToastComponent
   ],
   providers: [
     UtcConverterService,
