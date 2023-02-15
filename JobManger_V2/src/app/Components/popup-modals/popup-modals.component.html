@@ -17,50 +17,11 @@
 
       <div
         class="modal-body"
-        *ngIf="JobDetailsLocalVariable.passingEventMsg == 'Priority'"
-      >
-        <clr-input-container>
-          <label>Enter Priority</label>
-          <input
-            clrInput
-            type="text"
-            id="Priority"
-            name="Priority"
-            [(ngModel)]="PriorityValue"
-          />
-        </clr-input-container>
-        <br />
-        <clr-signpost>
-          <clr-signpost-content [clrPosition]="'bottom-right'" *clrIfOpen>
-            <h3 style="margin-top: 0">Example Priority</h3>
-            <p>
-              <code class="clr-code">
-                <li>Highest - 4000</li>
-                <li>AboveNormal - 3000</li>
-                <li>Normal - 2000</li>
-                <li>BelowNormal - 1000</li>
-                <li>Lowest - 0</li>
-              </code>
-            </p>
-          </clr-signpost-content>
-        </clr-signpost>
-
-        <button
-          style="float: right"
-          class="btn btn-outline"
-          type="button"
-          (click)="PopupEvent()"
-        >
-          Update
-        </button>
-      </div>
-
-      <div
-        class="modal-body"
         *ngIf="
           JobDetailsLocalVariable.passingEventMsg != 'TaskRequeue' &&
-          JobDetailsLocalVariable.passingEventMsg != 'Priority' &&
-          JobDetailsLocalVariable.passingEventMsg != 'Pending_Reason'
+            JobDetailsLocalVariable.passingEventMsg != 'Priority' &&
+            JobDetailsLocalVariable.passingEventMsg != 'Pending_Reason';
+          else elseblock
         "
       >
         <div
@@ -131,7 +92,58 @@
           </button>
         </div>
       </div>
+      <ng-template #elseblock>
+        <div
+          style="word-break: break-all"
+          *ngIf="
+            JobDetailsLocalVariable.passingEventMsg != 'Pending_Reason' &&
+            JobDetailsLocalVariable.passingEventMsg == 'Priority'
+          "
+        >
+          Are you sure you want to change the
+          {{ this.JobDetailsLocalVariable.passingEventMsg }} of
+          {{ JobDetailsLocalVariable.SelectedjobsId }} ?
+        </div>
+      </ng-template>
+      <div
+        class="modal-body"
+        *ngIf="JobDetailsLocalVariable.passingEventMsg == 'Priority'"
+      >
+        <clr-input-container>
+          <label>Enter Priority</label>
+          <input
+            clrInput
+            type="text"
+            id="Priority"
+            name="Priority"
+            [(ngModel)]="PriorityValue"
+          />
+        </clr-input-container>
+        <br />
+        <clr-signpost>
+          <clr-signpost-content [clrPosition]="'bottom-right'" *clrIfOpen>
+            <h3 style="margin-top: 0">Example Priority</h3>
+            <p>
+              <code class="clr-code">
+                <li>Highest - 4000</li>
+                <li>AboveNormal - 3000</li>
+                <li>Normal - 2000</li>
+                <li>BelowNormal - 1000</li>
+                <li>Lowest - 0</li>
+              </code>
+            </p>
+          </clr-signpost-content>
+        </clr-signpost>
 
+        <button
+          style="float: right"
+          class="btn btn-outline"
+          type="button"
+          (click)="PopupEvent()"
+        >
+          Update
+        </button>
+      </div>
       <!-- Task Headers-->
       <div
         class="modal-body"
