@@ -23,6 +23,7 @@ import { ErrorInterceptor } from './Services/error.interceptor';
 import { WINDOW_PROVIDERS } from './Services/window.providers';
 import { exec } from 'child_process';
 import { TaskHeaderComponent } from './Components/task-header/task-header.component';
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   imports: [
     BrowserModule,
