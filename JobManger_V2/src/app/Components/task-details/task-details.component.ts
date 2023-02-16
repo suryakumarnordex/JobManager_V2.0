@@ -53,8 +53,6 @@ export class TaskDetailsComponent implements OnInit {
 
   getFilepath(filepath: any) {
     this.ApiService.getFilePath(filepath).subscribe((data) => {
-      console.log(data);
-
       if (data !== null) {
         this.LogFileData = data;
         this.LogModelOpen = true;
