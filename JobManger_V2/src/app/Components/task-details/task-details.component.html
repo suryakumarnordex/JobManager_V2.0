@@ -28,6 +28,7 @@
   >
     <clr-dg-filter [clrDgFilter]="statusFilter" [scrollLeft]="true">
       <checkbox-list-filter
+        [id]="statusFilter"
         #statusFilter
         [filterParamName]="'statusFragment'"
         [items]="this.JobDetailsLocalVariable.AvailableState"
@@ -160,7 +161,7 @@
                 class="is-solid has-badge-info"
                 *ngIf="task.standardOutput != undefined"
               ></clr-icon>
-              <span class="tooltip-content">{{ task.standardOutput }}</span>
+              <span class="tooltip-content">{{ this.LogFileData }}</span>
             </a>
           </div>
         </div>

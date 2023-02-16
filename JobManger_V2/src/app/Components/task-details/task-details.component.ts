@@ -3,6 +3,7 @@ import {
   Input,
   OnInit,
   QueryList,
+  ViewChild,
   ViewChildren,
 } from '@angular/core';
 import { ApiServiceService } from 'src/app/api-service.service';
@@ -14,6 +15,7 @@ import { TaskDetaillocalstorage } from '../task-header/task-detail-Localstorage'
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
 import { ClrDatagridColumn, ClrDatagridStateInterface } from '@clr/angular';
+import { CheckboxListFilterComponent } from '../job-details/checkbox-list-filter.component';
 @Component({
   selector: 'app-task-details',
   templateUrl: './task-details.component.html',
@@ -25,7 +27,7 @@ export class TaskDetailsComponent implements OnInit {
   @Input() JobIDFragement: string;
   @Input() taskLength: number;
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
-
+  @ViewChild('statusFilter') statusFilter: CheckboxListFilterComponent;
   public LogFileData: any;
 
   dataloading: boolean = false;
@@ -51,6 +53,8 @@ export class TaskDetailsComponent implements OnInit {
 
   getFilepath(filepath: any) {
     this.ApiService.getFilePath(filepath).subscribe((data) => {
+      console.log(data);
+
       if (data !== null) {
         this.LogFileData = data;
         this.LogModelOpen = true;
@@ -220,7 +224,7 @@ export class TaskDetailsComponent implements OnInit {
     this.TaskDetailsLocalVariable.filterCommandLine = '';
     this.TaskDetailsLocalVariable.filterName = '';
     this.TaskDetailsLocalVariable.selectedState = [];
-
+    this.statusFilter.selectedItems = [];
     this.TaskDetailsLocalVariable.OrderBy = '';
     this.TaskDetailsLocalVariable.orderDescending = false;
     this.TaskDetailsLocalVariable.currentpage = 1;

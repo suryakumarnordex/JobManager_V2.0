@@ -92,16 +92,15 @@ export class JobHeaderComponent implements OnInit {
       this.JobDetailsComponent.GetMultipleSelectFiltersData();
     }
 
-    this.JobDetailsComponent.CallSearchlayout('refreshData from job header');
+    this.JobDetailsComponent.CallSearchlayout();
   }
   clearAllfilters() {
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     this.JobDetailsComponent.GetMultipleSelectFiltersData();
+    this.JobDetailsComponent.cockpitusernameFilter.selectedItems = [];
+    this.JobDetailsComponent.typeFilter.selectedItems = [];
+    this.JobDetailsComponent.statusFilter.selectedItems = [];
     this.JobDetailsComponent.clearallFilters();
-    console.log(
-      this.JobDetailsLocalVariable.selectedUsername,
-      'this.JobDetailsLocalVariable.selectedUsername'
-    );
   }
   onNodeGroupChange(event: any) {
     let statusList: string[] = [];

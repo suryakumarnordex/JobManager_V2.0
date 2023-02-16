@@ -301,7 +301,7 @@ export class JobDetailsComponent implements OnInit {
       this.typeFilter.selectedItems = [];
     }
     this.ColumnSorting(ColumnProperties);
-    this.CallSearchlayout('Columnfilters');
+    this.CallSearchlayout();
   }
 
   ColumnSorting(ColumnProperties: ClrDatagridStateInterface) {
@@ -351,11 +351,10 @@ export class JobDetailsComponent implements OnInit {
       : (this.JobDetailsLocalVariable.orderDescending = ColumnName);
   }
 
-  CallSearchlayout(calleedFrom: string) {
+  CallSearchlayout() {
     let waitForChange = false;
     this.JobDetailsLocalVariable.dataloading = true;
     this.ApiService.searchLayout(
-      calleedFrom,
       this.JobDetailsLocalVariable.filterJobid,
       this.JobDetailsLocalVariable.selectedUsername,
       this.JobDetailsLocalVariable.selectedType,
@@ -399,7 +398,7 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.dataloading = false;
     this.columns.forEach((column) => (column.filterValue = ''));
     this.checkboxFilter.selectedItems = [];
-    this.CallSearchlayout('clearallFilters');
+    this.CallSearchlayout();
     this.JobDataGrid.dataChanged();
   }
 
@@ -411,7 +410,7 @@ export class JobDetailsComponent implements OnInit {
     if (event !== null) {
       this.JobDetailsLocalVariable.ClearAllLocalVariables();
       this.JobDetailsLocalVariable.SelectedNodeGroup = nodeGroupFragment;
-      this.CallSearchlayout('nodeGroupchange');
+      this.CallSearchlayout();
     }
   }
 

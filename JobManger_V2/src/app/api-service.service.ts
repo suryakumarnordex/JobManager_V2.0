@@ -28,7 +28,6 @@ export class ApiServiceService {
   }
   // public AvailableUserName: { key: string; value: string }[] = [];
   searchLayout(
-    calleedFrom: string,
     jobIdFragment: string = '',
     userFragment: Array<string> = [],
     typeFragment: Array<string> = [],
