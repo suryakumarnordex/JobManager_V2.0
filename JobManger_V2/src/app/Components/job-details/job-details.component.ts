@@ -294,7 +294,8 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.selectedState = [];
       this.JobDetailsLocalVariable.OrderBy = 'id';
       this.JobDetailsLocalVariable.orderDescending = true;
-      // this.checkboxFilter.selectedItems = [];
+
+      this.checkboxFilter.selectedItems = [];
       this.cockpitusernameFilter.selectedItems = [];
       this.statusFilter.selectedItems = [];
       this.typeFilter.selectedItems = [];

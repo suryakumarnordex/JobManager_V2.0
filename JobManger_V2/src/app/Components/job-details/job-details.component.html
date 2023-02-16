@@ -175,9 +175,17 @@
           Submit
         </button>
       </clr-dg-action-overflow>
-      <clr-dg-cell style="text-align: left">{{
+      <!-- <clr-dg-cell style="text-align: left">{{
         job.jobIdFragment
-      }}</clr-dg-cell>
+      }}</clr-dg-cell> -->
+      <clr-dg-cell style="text-align: left">
+        <span
+          title=" Type : {{ job.typeFragment }}&#013;Topic : {{
+            job.topicFragment
+          }} "
+          >{{ job.jobIdFragment }}
+        </span>
+      </clr-dg-cell>
       <clr-dg-cell [style.width.px]="300" style="text-align: left"
         ><div class="hidden">
           <span title="{{ job.userFragment }}">{{ job.userFragment }} </span>
@@ -192,7 +200,7 @@
               class="tooltip tooltip-sm tooltip tooltip-right"
             >
               {{ job.cockpitIdFragment }}
-              <span class="tooltip-content">{{ job.cockpitIdFragment }} </span>
+              <!-- <span class="tooltip-content">{{ job.cockpitIdFragment }} </span> -->
             </div>
           </div>
           <div>
