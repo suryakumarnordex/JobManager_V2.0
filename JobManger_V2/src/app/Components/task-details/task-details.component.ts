@@ -320,7 +320,7 @@ export class TaskDetailsComponent implements OnInit {
     }
     let ColumnName = ColumnProperties.sort?.reverse;
     ColumnName == undefined
-      ? (this.TaskDetailsLocalVariable.orderDescending = true)
+      ? (this.TaskDetailsLocalVariable.orderDescending = false)
       : (this.TaskDetailsLocalVariable.orderDescending = ColumnName);
   }
 

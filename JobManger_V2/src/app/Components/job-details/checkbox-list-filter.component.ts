@@ -57,18 +57,17 @@ export class CheckboxListFilterComponent
   }
 
   public onItemChanged(item: any, event: any) {
-    if (!item.checked) {
-      item.checked = true;
+    item.checked = event.target.checked;
+    if (event.target.checked) {
       this.selectedItems.push(item);
     } else {
-      item.checked = false;
-
       let index = this.selectedItems.indexOf(item);
-
       if (index >= 0) {
+        delete this.selectedItems[index];
         this.selectedItems.splice(index, 1);
       }
     }
+
     this.changes.next(true);
   }
 

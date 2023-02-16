@@ -32,6 +32,7 @@
       <ng-container> User </ng-container>
       <clr-dg-filter [clrDgFilter]="cockpitusernameFilter" [scrollLeft]="true">
         <checkbox-list-filter
+          [id]="cockpitusernameFilter"
           #cockpitusernameFilter
           [filterParamName]="'userFragment'"
           [items]="JobDetailsLocalVariable.AvailableUserName"
@@ -57,6 +58,7 @@
     >
       <clr-dg-filter [clrDgFilter]="typeFilter" [scrollLeft]="true">
         <checkbox-list-filter
+          [id]="typeFilter"
           #typeFilter
           [filterParamName]="'typeFragment'"
           [items]="JobDetailsLocalVariable.AvailableType"
@@ -77,6 +79,7 @@
     >
       <clr-dg-filter [clrDgFilter]="statusFilter" [scrollLeft]="true">
         <checkbox-list-filter
+          [id]="statusFilter"
           #statusFilter
           [filterParamName]="'statusFragment'"
           [items]="JobDetailsLocalVariable.AvailableState"

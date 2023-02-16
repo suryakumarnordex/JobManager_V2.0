@@ -98,6 +98,10 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     this.JobDetailsComponent.GetMultipleSelectFiltersData();
     this.JobDetailsComponent.clearallFilters();
+    console.log(
+      this.JobDetailsLocalVariable.selectedUsername,
+      'this.JobDetailsLocalVariable.selectedUsername'
+    );
   }
   onNodeGroupChange(event: any) {
     let statusList: string[] = [];

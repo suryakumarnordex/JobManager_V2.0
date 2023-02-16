@@ -77,6 +77,7 @@ export class ApiServiceService {
     typeFragment.forEach(function (types: string) {
       params = params.append('typeFragment', types);
     });
+    //console.log(calleedFrom, 'calleedFrom');
 
     return this.http
       .get(this.apiurl + 'SearchLayout', {
@@ -89,9 +90,7 @@ export class ApiServiceService {
           return new SearchResultsLayout().deserialize(resp);
         }),
         tap((results: SearchResultsLayout) => {
-          this.logger.log(
-            `fetched ${results.results.length} search results for jobIdFragment=${jobIdFragment}, orderBy=${orderBy}, orderDescending=${orderDescending}, PageNo=${PageNo}, pageSize=${PageSize}`
-          );
+          this.logger.log(params.toString());
         })
       );
   }

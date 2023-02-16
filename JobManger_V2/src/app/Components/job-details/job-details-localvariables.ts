@@ -69,19 +69,17 @@ export class JobDetailsLocalVariable {
     this.filternooftasks = '';
     this.SelectedNodeGroup = '';
     this.SelectedJobId = '';
-
-    this.selectedUsername = [];
-    this.selectedType = [];
-    this.selectedState = [];
-
     this.OrderBy = '';
     this.orderDescending = false;
     this.currentpage = 1;
+    this.CheckBoxFilterClear();
   }
   CheckBoxFilterClear() {
     this.selectedType = [];
+    this.selectedType.length = 0;
     this.selectedUsername = [];
+    this.selectedUsername.length = 0;
     this.selectedState = [];
-    console.log('All selected filteres cleared');
+    this.selectedState.length = 0;
   }
 }

@@ -1,8 +1,10 @@
 import {
   Component,
+  ElementRef,
   Input,
   OnInit,
   QueryList,
+  ViewChild,
   ViewChildren,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -12,7 +14,11 @@ import { LoggerService } from 'src/app/Services/logger.service';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetaillocalstorage } from './job-detail-Localstorage';
 import { JobDetailsLocalVariable } from './job-details-localvariables';
-import { ClrDatagridColumn, ClrDatagridStateInterface } from '@clr/angular';
+import {
+  ClrDatagrid,
+  ClrDatagridColumn,
+  ClrDatagridStateInterface,
+} from '@clr/angular';
 import { CheckboxListFilterComponent } from './checkbox-list-filter.component';
 import { ActivatedRoute } from '@angular/router';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
@@ -25,8 +31,14 @@ import { TaskDetaillocalstorage } from '../task-header/task-detail-Localstorage'
 export class JobDetailsComponent implements OnInit {
   @Input() pageSize: number = 1;
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
-  @ViewChildren(CheckboxListFilterComponent)
-  buildincolumns: QueryList<CheckboxListFilterComponent>;
+  @ViewChild(ClrDatagrid) JobDataGrid!: ClrDatagrid;
+  @ViewChild(CheckboxListFilterComponent)
+  checkboxFilter!: CheckboxListFilterComponent;
+
+  @ViewChild('statusFilter') statusFilter: CheckboxListFilterComponent;
+  @ViewChild('cockpitusernameFilter')
+  cockpitusernameFilter: CheckboxListFilterComponent;
+  @ViewChild('typeFilter') typeFilter: CheckboxListFilterComponent;
 
   public ClipBoardText: string = '';
   priorityDisable: boolean = true;
@@ -185,7 +197,6 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.ColumnProperties = ColumnProperties;
     this.JobDetailsLocalVariable.CheckBoxFilterClear();
     this.JobDetailsLocalVariable.currentpage = 1;
-
     if (ColumnProperties.filters) {
       this.JobDetailsLocalVariable.dataloading = true;
       for (const filterctrl of ColumnProperties.filters) {
@@ -283,6 +294,10 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.selectedState = [];
       this.JobDetailsLocalVariable.OrderBy = 'id';
       this.JobDetailsLocalVariable.orderDescending = true;
+      // this.checkboxFilter.selectedItems = [];
+      this.cockpitusernameFilter.selectedItems = [];
+      this.statusFilter.selectedItems = [];
+      this.typeFilter.selectedItems = [];
     }
     this.ColumnSorting(ColumnProperties);
     this.CallSearchlayout('Columnfilters');
@@ -376,13 +391,15 @@ export class JobDetailsComponent implements OnInit {
   clearallFilters() {
     this.JobDetailsLocalVariable.dataloading = true;
     this.JobDetailsLocalVariable.ClearAllLocalVariables();
-    this.columns.forEach((column) => (column.filterValue = ''));
     this.priorityDisable = true;
     this.requeueDisable = true;
     this.submitDisable = true;
     this.cancelDisable = true;
     this.JobDetailsLocalVariable.dataloading = false;
+    this.columns.forEach((column) => (column.filterValue = ''));
+    this.checkboxFilter.selectedItems = [];
     this.CallSearchlayout('clearallFilters');
+    this.JobDataGrid.dataChanged();
   }
 
   nodeGroupchange(
@@ -432,6 +449,7 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.SelectedjobsId = event.map(
       (e) => e.jobIdFragment
     );
+
     this.priorityDisable = false;
     this.requeueDisable = false;
     this.submitDisable = false;
@@ -443,8 +461,6 @@ export class JobDetailsComponent implements OnInit {
       this.submitDisable = true;
       this.cancelDisable = true;
     }
-
-    event.map((e) => e.statusFragment).forEach((status) => {});
 
     event
       .map((e) => e.statusFragment)
