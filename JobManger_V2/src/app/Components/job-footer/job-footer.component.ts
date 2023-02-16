@@ -39,7 +39,7 @@ export class JobFooterComponent implements OnInit {
   goTofirstPage() {
     if (this.requestFromJob) {
       if (this.JobDetailsLocalVariable.currentpage != 1) {
-        this.JobDetailsLocalVariable.dataloading = true;
+        // this.JobDetailsLocalVariable.dataloading = true;
         this.JobDetailsLocalVariable.currentpage = 1;
         this.GetFooterDetails(this.requestFromJob);
       }
@@ -52,7 +52,7 @@ export class JobFooterComponent implements OnInit {
   goTonextPage() {
     if (this.requestFromJob) {
       if (this.JobDetailsLocalVariable.currentpage != this.totalPage) {
-        this.JobDetailsLocalVariable.dataloading = true;
+        //  this.JobDetailsLocalVariable.dataloading = true;
         this.JobDetailsLocalVariable.currentpage =
           this.JobDetailsLocalVariable.currentpage + 1;
         this.totalPage = Math.ceil(
@@ -72,7 +72,7 @@ export class JobFooterComponent implements OnInit {
   goTopriviousPage() {
     if (this.requestFromJob) {
       if (this.JobDetailsLocalVariable.currentpage != 1) {
-        this.JobDetailsLocalVariable.dataloading = true;
+        // this.JobDetailsLocalVariable.dataloading = true;
         this.JobDetailsLocalVariable.currentpage =
           this.JobDetailsLocalVariable.currentpage - 1;
         this.totalPage = Math.ceil(
@@ -93,7 +93,7 @@ export class JobFooterComponent implements OnInit {
   goTolastPage() {
     if (this.requestFromJob) {
       if (this.JobDetailsLocalVariable.currentpage != this.totalPage) {
-        this.JobDetailsLocalVariable.dataloading = true;
+        //  this.JobDetailsLocalVariable.dataloading = true;
         this.JobDetailsLocalVariable.currentpage = Math.ceil(
           this.totalRecords / this.JobDetailsLocalVariable.recordperpagejob
         );
@@ -115,7 +115,7 @@ export class JobFooterComponent implements OnInit {
   onSelected(value: string) {
     if (this.requestFromJob) {
       this.JobDetailsLocalVariable.recordperpagejob = Number(value);
-      this.JobDetailsLocalVariable.dataloading = true;
+      //this.JobDetailsLocalVariable.dataloading = true;
       this.JobDetailsLocalVariable.currentpage = 1;
       this.jobdetails.Columnfilters(
         this.JobDetailsLocalVariable.ColumnProperties

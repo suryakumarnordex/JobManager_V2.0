@@ -198,7 +198,7 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.CheckBoxFilterClear();
     this.JobDetailsLocalVariable.currentpage = 1;
     if (ColumnProperties.filters) {
-      this.JobDetailsLocalVariable.dataloading = true;
+      //this.JobDetailsLocalVariable.dataloading = true;
       for (const filterctrl of ColumnProperties.filters) {
         if (
           filterctrl.filterParamName == 'typeFragment' ||
@@ -389,13 +389,14 @@ export class JobDetailsComponent implements OnInit {
   }
 
   clearallFilters() {
-    this.JobDetailsLocalVariable.dataloading = true;
+    // this.JobDetailsLocalVariable.dataloading = true;
     this.JobDetailsLocalVariable.ClearAllLocalVariables();
     this.priorityDisable = true;
     this.requeueDisable = true;
     this.submitDisable = true;
     this.cancelDisable = true;
-    this.JobDetailsLocalVariable.dataloading = false;
+
+    // this.JobDetailsLocalVariable.dataloading = false;
     this.columns.forEach((column) => (column.filterValue = ''));
     this.checkboxFilter.selectedItems = [];
     this.CallSearchlayout();
@@ -566,7 +567,7 @@ export class JobDetailsComponent implements OnInit {
             },
             error: (error: string) => {
               console.log(error);
-              this.JobDetailsLocalVariable.dataloading = false;
+              //this.JobDetailsLocalVariable.dataloading = false;
               reject(error);
             },
           });

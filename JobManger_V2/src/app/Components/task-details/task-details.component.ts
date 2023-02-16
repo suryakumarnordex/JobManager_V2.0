@@ -340,7 +340,7 @@ export class TaskDetailsComponent implements OnInit {
             },
             error: (error: string) => {
               console.log(error);
-              this.JobDetailsLocalVariable.dataloading = false;
+              // this.JobDetailsLocalVariable.dataloading = false;
               reject(error);
             },
           });

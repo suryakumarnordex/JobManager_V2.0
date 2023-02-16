@@ -4,6 +4,7 @@ import {
   Input,
   OnInit,
   QueryList,
+  ViewChild,
   ViewChildren,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -14,6 +15,7 @@ import { LoginService } from 'src/app/Services/login.service';
 import { ActivatedRoute } from '@angular/router';
 import { JobDetaillocalstorage } from '../job-details/job-detail-Localstorage';
 import { ClrDatagridColumn } from '@clr/angular';
+import { FormControl, NgModelGroup } from '@angular/forms';
 @Component({
   selector: 'app-job-header',
   templateUrl: './job-header.component.html',
@@ -101,10 +103,11 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsComponent.typeFilter.selectedItems = [];
     this.JobDetailsComponent.statusFilter.selectedItems = [];
     this.JobDetailsComponent.clearallFilters();
+    this.JobDetailsLocalVariable.SelectedNodeGroup = '';
   }
   onNodeGroupChange(event: any) {
     let statusList: string[] = [];
-    this.JobDetailsLocalVariable.dataloading = true;
+    //this.JobDetailsLocalVariable.dataloading = true;
     let val = event.target.value;
     if (val.includes('Queue')) {
       this.JobDetailsLocalVariable.SelectedNodeGroup = val.replace(

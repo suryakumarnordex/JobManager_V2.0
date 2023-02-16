@@ -114,7 +114,7 @@ export class PopupModalsComponent implements OnInit {
         break;
       }
     }
-    this.JobDetailsLocalVariable.dataloading = false;
+    // this.JobDetailsLocalVariable.dataloading = false;
     this.Popuploading = false;
   }
 
