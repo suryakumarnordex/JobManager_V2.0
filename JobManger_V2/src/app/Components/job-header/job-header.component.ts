@@ -86,6 +86,7 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsLocalVariable.openPopupModal = true;
   }
   refreshData() {
+    this.JobDetailsLocalVariable.dataloading = true;
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     if (
       this.JobDetailsLocalVariable.selectedType.length == 0 &&
@@ -98,6 +99,7 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsComponent.CallSearchlayout();
   }
   clearAllfilters() {
+    this.JobDetailsLocalVariable.dataloading = true;
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     this.JobDetailsComponent.GetMultipleSelectFiltersData();
     this.JobDetailsComponent.cockpitusernameFilter.selectedItems = [];
@@ -106,6 +108,7 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsComponent.clearallFilters();
     this.JobDetailsLocalVariable.SelectedNodeGroup = '';
     this.selectedOption = this.JobDetailsLocalVariable.Nodelist[0];
+    //this.JobDetailsLocalVariable.dataloading = false;
   }
   changeSelectedOption() {
     this.clearAllfilters();
