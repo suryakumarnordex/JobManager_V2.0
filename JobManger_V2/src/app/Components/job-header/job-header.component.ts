@@ -98,7 +98,6 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsComponent.CallSearchlayout();
   }
   clearAllfilters() {
-    this.changeSelectedOption();
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     this.JobDetailsComponent.GetMultipleSelectFiltersData();
     this.JobDetailsComponent.cockpitusernameFilter.selectedItems = [];
@@ -106,9 +105,10 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsComponent.statusFilter.selectedItems = [];
     this.JobDetailsComponent.clearallFilters();
     this.JobDetailsLocalVariable.SelectedNodeGroup = '';
+    this.selectedOption = this.JobDetailsLocalVariable.Nodelist[0];
   }
   changeSelectedOption() {
-    this.selectedOption = this.JobDetailsLocalVariable.Nodelist[0];
+    this.clearAllfilters();
   }
   onNodeGroupChange(event: any) {
     let statusList: string[] = [];
