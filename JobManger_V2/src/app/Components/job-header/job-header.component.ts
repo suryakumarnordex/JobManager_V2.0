@@ -112,11 +112,7 @@ export class JobHeaderComponent implements OnInit {
   }
   onNodeGroupChange(event: any) {
     let statusList: string[] = [];
-
-    
-    //this.JobDetailsLocalVariable.dataloading = true;
     let val = event.target.value;
-    console.log(val,"NGC");
     if (val.includes('Queue')) {
       this.JobDetailsLocalVariable.SelectedNodeGroup = val.replace(
         'Queue ',
