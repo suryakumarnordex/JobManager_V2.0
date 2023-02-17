@@ -6,6 +6,12 @@
   height: 100%;
   top: 0;
 }
+#gridstyle{
+  right: 0px; bottom: 4%; position: fixed; left: 0px; top: 82px;
+}
+#cellstyle{
+  text-align: left
+}
 .wrapper {
   display: flex;
   justify-content: center;

@@ -16,21 +16,15 @@
       >
         <span class="nav-text">{{ NavigationUrl.name }}</span>
       </a>
-      <span
+      <span id = "modelspinner"
         *ngIf="!spinnerInlineloader"
-        style="
-          font-size: 17px;
-          position: absolute;
-          color: #e7e2e1;
-          top: 15px;
-          right: 20px;
-        "
+
       >
         <clr-icon shape="user"></clr-icon>
         {{ displayName }}
       </span>
       <span *ngIf="spinnerInlineloader">
-        <span class="spinner spinner-inline"> </span>
+        <span id = "modelspinner" class="spinner spinner-inline"> </span>
       </span>
     </div>
   </header>
@@ -42,7 +36,7 @@
       </li>
       <li>
         <div>
-          <select clrSelect name="options" (change)="onNodeGroupChange($event)">
+          <select clrSelect name="options" [(ngModel)]="selectedOption" (change)="onNodeGroupChange($event)">
             <option
               *ngFor="let Node of this.JobDetailsLocalVariable.Nodelist"
               [value]="Node"

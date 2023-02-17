@@ -53,7 +53,7 @@ export class JobDetailsLocalVariable {
 
   public SelectedNodeGroup: string = '';
 
-  public readonly Nodelist: Array<string> = [
+  public Nodelist: Array<string> = [
     'All jobs',
     'Queue Simulation',
     'Queue BladedSimulation',

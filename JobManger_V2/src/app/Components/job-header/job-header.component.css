@@ -6,6 +6,13 @@
     height: 100%;
     top: 0;
   }
+  #modelspinner{
+    font-size: 17px;
+    position: absolute;
+    color: #e7e2e1;
+    top: 15px;
+    right: 20px;
+  }
   .wrapper {
     display: flex;
     justify-content: center;

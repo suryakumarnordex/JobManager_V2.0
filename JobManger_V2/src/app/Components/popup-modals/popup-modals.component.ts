@@ -129,15 +129,18 @@ export class PopupModalsComponent implements OnInit {
   }
 
   public SetJobPriority() {
+    this.JobDetailsLocalVariable.dataloading = true;
     this.ApiService.SetJobPriority(
       this.JobDetailsLocalVariable.SelectedjobsId,
       this.PriorityValue
     ).subscribe({
       next: (res: any) => {
         console.log(res);
+        this.JobDetailsLocalVariable.dataloading = false;
       },
       error: (error: string) => {
         console.log(error);
+        this.JobDetailsLocalVariable.dataloading = false;
       },
     });
   }

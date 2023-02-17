@@ -69,6 +69,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   CallSearchTaskLayout() {
+    this.TaskDetailsLocalVariable.dataloading = true;
     this.ApiService.searchTaskLayout(
       this.JobDetailsLocalVariable.SelectedJobId,
       this.TaskDetailsLocalVariable.filterTaskId,
@@ -84,6 +85,7 @@ export class TaskDetailsComponent implements OnInit {
       this.TaskDetailsLocalVariable.orderDescending
     ).subscribe({
       next: (res: SearchTaskResultsLayout) => {
+        
         this.taskLayout = res.results;
 
         this.TaskDetailsLocalVariable.TaskCount = res.totalResults;
@@ -91,11 +93,11 @@ export class TaskDetailsComponent implements OnInit {
           this.TaskDetailsLocalVariable.TaskCount /
             this.TaskDetailsLocalVariable.recordperpage
         );
-        this.dataloading = false;
+        this.TaskDetailsLocalVariable.dataloading = false;
       },
       error: (error) => {
         this.logger.reportError(error);
-        this.dataloading = false;
+        this.TaskDetailsLocalVariable.dataloading = false;
       },
     });
   }
@@ -330,16 +332,20 @@ export class TaskDetailsComponent implements OnInit {
     return new Promise((resolve, reject) => {
       switch (EventStr) {
         case 'TaskRequeue': {
+          this.TaskDetailsLocalVariable.dataloading = true;
           this.ApiService.SetTaskRequeue(
             this.JobDetailsLocalVariable.SelectedJobId,
             this.TaskDetailsLocalVariable.SelectedtasksId
           ).subscribe({
             next: (res: any) => {
               console.log(res);
+              this.TaskDetailsLocalVariable.dataloading = false;
               resolve(res);
+              
             },
             error: (error: string) => {
               console.log(error);
+              this.TaskDetailsLocalVariable.dataloading = false;
               // this.JobDetailsLocalVariable.dataloading = false;
               reject(error);
             },

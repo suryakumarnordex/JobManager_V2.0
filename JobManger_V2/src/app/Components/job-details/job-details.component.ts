@@ -194,6 +194,7 @@ export class JobDetailsComponent implements OnInit {
   }
 
   Columnfilters(ColumnProperties: ClrDatagridStateInterface) {
+    this.JobDetailsLocalVariable.dataloading = true;
     this.JobDetailsLocalVariable.ColumnProperties = ColumnProperties;
     this.JobDetailsLocalVariable.CheckBoxFilterClear();
     this.JobDetailsLocalVariable.currentpage = 1;
@@ -380,23 +381,23 @@ export class JobDetailsComponent implements OnInit {
           this.JobDetailsLocalVariable.jobCount /
             this.JobDetailsLocalVariable.recordperpagejob
         );
+        this.JobDetailsLocalVariable.dataloading = false;
       },
       error: (error) => {
         this.logger.reportError(error);
+        this.JobDetailsLocalVariable.dataloading = false;
       },
     });
-    this.JobDetailsLocalVariable.dataloading = false;
+    
   }
 
-  clearallFilters() {
-    // this.JobDetailsLocalVariable.dataloading = true;
+  clearallFilters() {;
     this.JobDetailsLocalVariable.ClearAllLocalVariables();
     this.priorityDisable = true;
     this.requeueDisable = true;
     this.submitDisable = true;
     this.cancelDisable = true;
 
-    // this.JobDetailsLocalVariable.dataloading = false;
     this.columns.forEach((column) => (column.filterValue = ''));
     this.checkboxFilter.selectedItems = [];
     this.CallSearchlayout();
@@ -558,61 +559,72 @@ export class JobDetailsComponent implements OnInit {
     return new Promise((resolve, reject) => {
       switch (EventStr) {
         case 'Requeue': {
+          this.JobDetailsLocalVariable.dataloading = true;
           this.ApiService.SetRequeue(
             this.JobDetailsLocalVariable.SelectedjobsId
           ).subscribe({
             next: (res: any) => {
               console.log(res);
+              this.JobDetailsLocalVariable.dataloading = false;
               resolve(res);
             },
             error: (error: string) => {
               console.log(error);
-              //this.JobDetailsLocalVariable.dataloading = false;
+              this.JobDetailsLocalVariable.dataloading = false;
               reject(error);
             },
           });
           break;
         }
         case 'Pending_Reason': {
+          this.JobDetailsLocalVariable.dataloading = true;
           this.ApiService.GetPendingReason(
             this.JobDetailsLocalVariable.SelectedjobsId
           ).subscribe({
             next: (res: any) => {
               console.log(res);
+              this.JobDetailsLocalVariable.dataloading = false;
               resolve(res);
             },
             error: (error: string) => {
               console.log(error);
+              this.JobDetailsLocalVariable.dataloading = false;
               reject(error);
             },
           });
           break;
         }
         case 'Cancel': {
+          this.JobDetailsLocalVariable.dataloading = true;
           this.ApiService.SetCancel(
             this.JobDetailsLocalVariable.SelectedjobsId
           ).subscribe({
             next: (res: any) => {
               console.log(res);
+              this.JobDetailsLocalVariable.dataloading = false;
               resolve(res);
             },
             error: (error: string) => {
               console.log(error);
+              this.JobDetailsLocalVariable.dataloading = false;
               reject(error);
             },
           });
           break;
         }
         case 'Submit': {
+          this.JobDetailsLocalVariable.dataloading = true;
           this.ApiService.SetSubmit(
             this.JobDetailsLocalVariable.SelectedjobsId
           ).subscribe({
             next: (res: any) => {
               console.log(res);
+              this.JobDetailsLocalVariable.dataloading = false;
               resolve(res);
             },
             error: (error: string) => {
               console.log(error);
+              this.JobDetailsLocalVariable.dataloading = false;
               reject(error);
             },
           });

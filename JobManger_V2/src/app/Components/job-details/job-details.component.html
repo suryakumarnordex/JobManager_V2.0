@@ -10,7 +10,7 @@
   <clr-datagrid
     [(clrDgSelected)]="JobDetailsLocalVariable.CheckboxofJobRow"
     class="datagrid-compact"
-    style="right: 0px; bottom: 4%; position: fixed; left: 0px; top: 82px"
+    id="gridstyle"
     HorizontalAlignment="auto"
     VerticalAlignment="auto"
     (clrDgRefresh)="Columnfilters($event)"
@@ -175,10 +175,10 @@
           Submit
         </button>
       </clr-dg-action-overflow>
-      <!-- <clr-dg-cell style="text-align: left">{{
+      <!-- <clr-dg-cell id="cellstyle">{{
         job.jobIdFragment
       }}</clr-dg-cell> -->
-      <clr-dg-cell style="text-align: left">
+      <clr-dg-cell id="cellstyle">
         <span
           title=" Type : {{ job.typeFragment }}&#013;Topic : {{
             job.topicFragment
@@ -186,12 +186,12 @@
           >{{ job.jobIdFragment }}
         </span>
       </clr-dg-cell>
-      <clr-dg-cell [style.width.px]="300" style="text-align: left"
+      <clr-dg-cell [style.width.px]="300" id="cellstyle"
         ><div class="hidden">
           <span title="{{ job.userFragment }}">{{ job.userFragment }} </span>
         </div></clr-dg-cell
       >
-      <clr-dg-cell [style.width.px]="300" style="text-align: left">
+      <clr-dg-cell [style.width.px]="300" id="cellstyle">
         <div style="display: flex; justify-content: space-evenly">
           <div>
             <div
@@ -225,7 +225,7 @@
         </div>
       </clr-dg-cell>
 
-      <clr-dg-cell [style.width.px]="800" style="text-align: left">
+      <clr-dg-cell [style.width.px]="800" id="cellstyle">
         <div style="display: flex; justify-content: space-evenly">
           <span title="{{ job.runnoFragment }}">
             <a
@@ -257,12 +257,12 @@
         </div>
       </clr-dg-cell>
 
-      <clr-dg-cell [style.width.px]="500" style="text-align: left">
+      <clr-dg-cell [style.width.px]="500" id="cellstyle">
         <div class="hidden">
           <span title="{{ job.typeFragment }}">{{ job.typeFragment }} </span>
         </div></clr-dg-cell
       >
-      <clr-dg-cell [style.width.px]="800" style="text-align: left">
+      <clr-dg-cell [style.width.px]="800" id="cellstyle">
         <div class="hidden">
           <span title="{{ job.topicFragment }}">{{ job.topicFragment }} </span>
         </div>
@@ -332,7 +332,7 @@
       </clr-dg-cell>
 
       <clr-dg-cell
-        style="text-align: left"
+      id="cellstyle"
         [ngStyle]="{
           color: job.priorityFragment == 'Highest-100' ? 'red' : 'green'
         }"
@@ -343,37 +343,37 @@
           </span>
         </div></clr-dg-cell
       >
-      <clr-dg-cell [style.width.px]="200" style="text-align: left">{{
+      <clr-dg-cell [style.width.px]="200" id="cellstyle">{{
         job.numberOfTasksFragment
       }}</clr-dg-cell>
-      <clr-dg-cell [style.width.px]="200" style="text-align: left">{{
+      <clr-dg-cell [style.width.px]="200" id="cellstyle">{{
         job.runningTasksCount
       }}</clr-dg-cell>
-      <clr-dg-cell [style.width.px]="200" style="text-align: left">{{
+      <clr-dg-cell [style.width.px]="200" id="cellstyle">{{
         job.queuedTasksCount
       }}</clr-dg-cell>
-      <clr-dg-cell [style.width.px]="500" style="text-align: left">
+      <clr-dg-cell [style.width.px]="500" id="cellstyle">
         <div class="hidden">
           <span title="{{ job.startTime | utcToLocalTime : 'short' }}"
             >{{ job.startTime | utcToLocalTime : "short" }}
           </span>
         </div></clr-dg-cell
       >
-      <clr-dg-cell [style.width.px]="500" style="text-align: left">
+      <clr-dg-cell [style.width.px]="500" id="cellstyle">
         <div class="hidden">
           <span title="{{ job.endTime | utcToLocalTime : 'short' }}">
             {{ job.endTime | utcToLocalTime : "short" }}
           </span>
         </div></clr-dg-cell
       >
-      <clr-dg-cell [style.width.px]="500" style="text-align: left"
+      <clr-dg-cell [style.width.px]="500" id="cellstyle"
         ><div class="hidden">
           <span title="{{ job.submitTime | utcToLocalTime : 'short' }}">
             {{ job.submitTime | utcToLocalTime : "short" }}
           </span>
         </div></clr-dg-cell
       >
-      <clr-dg-cell [style.width.px]="500" style="text-align: left">{{
+      <clr-dg-cell [style.width.px]="500" id="cellstyle">{{
         job.elapsedTime
       }}</clr-dg-cell>
     </clr-dg-row>

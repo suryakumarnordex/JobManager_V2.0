@@ -41,6 +41,7 @@ export class JobHeaderComponent implements OnInit {
   spinnerInlineloader: boolean = true;
   hostName: string;
   loginModal = false;
+  selectedOption = this.JobDetailsLocalVariable.Nodelist[0];
   constructor(
     private router: Router,
     private ApiService: ApiServiceService,
@@ -97,6 +98,7 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsComponent.CallSearchlayout();
   }
   clearAllfilters() {
+    this.changeSelectedOption();
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     this.JobDetailsComponent.GetMultipleSelectFiltersData();
     this.JobDetailsComponent.cockpitusernameFilter.selectedItems = [];
@@ -105,10 +107,16 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsComponent.clearallFilters();
     this.JobDetailsLocalVariable.SelectedNodeGroup = '';
   }
+  changeSelectedOption() {
+    this.selectedOption = this.JobDetailsLocalVariable.Nodelist[0];
+  }
   onNodeGroupChange(event: any) {
     let statusList: string[] = [];
+
+    
     //this.JobDetailsLocalVariable.dataloading = true;
     let val = event.target.value;
+    console.log(val,"NGC");
     if (val.includes('Queue')) {
       this.JobDetailsLocalVariable.SelectedNodeGroup = val.replace(
         'Queue ',
