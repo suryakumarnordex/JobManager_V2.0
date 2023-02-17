@@ -41,7 +41,9 @@ export class TaskDetailsComponent implements OnInit {
     public TaskDetailsLocalStorage: TaskDetaillocalstorage,
     private localstorage: LocalStorageService,
     public JobDetailsLocalVariable: JobDetailsLocalVariable
-  ) {}
+  ) {
+    this.TaskDetailsLocalVariable.CheckboxofTaskRow=[];
+  }
 
   ngOnInit(): void {
     this.GetTaskLocalStorageColumnValue();
@@ -106,6 +108,7 @@ export class TaskDetailsComponent implements OnInit {
       this.TaskDetailsLocalVariable.SelectedtasksId = event.map(
         (e) => e.taskIdFragment
       );
+      
       this.taskLength = this.TaskDetailsLocalVariable.SelectedtasksId.length;
       event
         .map((e) => e.statusFragment)
