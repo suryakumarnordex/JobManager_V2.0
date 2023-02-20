@@ -29,8 +29,6 @@ export class TaskDetailsComponent implements OnInit {
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
   @ViewChild('statusFilter') statusFilter: CheckboxListFilterComponent;
   public LogFileData: any;
-
-  dataloading: boolean = false;
   TaskRequeueDisable: boolean = true;
   LogModelOpen: boolean = false;
 
@@ -47,6 +45,7 @@ export class TaskDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetTaskLocalStorageColumnValue();
+    this.TaskDetailsLocalVariable.dataloading = true;
   }
   showFileData(log: any) {
     this.LogFileData = '';
@@ -66,12 +65,11 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   GetTaskDetails() {
-    this.dataloading = true;
+    // this.dataloading = true;
     this.CallSearchTaskLayout();
   }
 
   CallSearchTaskLayout() {
-    this.TaskDetailsLocalVariable.dataloading = true;
     this.ApiService.searchTaskLayout(
       this.JobDetailsLocalVariable.SelectedJobId,
       this.TaskDetailsLocalVariable.filterTaskId,
@@ -205,11 +203,11 @@ export class TaskDetailsComponent implements OnInit {
     ).subscribe({
       next: (res: any) => {
         console.log(res);
-        this.dataloading = false;
+        this.TaskDetailsLocalVariable.dataloading = false;
       },
       error: (error: any) => {
         console.log(error);
-        this.dataloading = false;
+        this.TaskDetailsLocalVariable.dataloading = false;
       },
     });
   }
@@ -237,9 +235,9 @@ export class TaskDetailsComponent implements OnInit {
     this.TaskDetailsLocalVariable.ColumnProperties = ColumnProperties;
     this.TaskDetailsLocalVariable.currentpage = 1;
     if (ColumnProperties.filters) {
-      this.TaskDetailsLocalVariable.dataloading = true;
       this.TaskDetailsLocalVariable.selectedState = [];
       for (const filterctrl of ColumnProperties.filters) {
+
         if (filterctrl.filterParamName == 'statusFragment') {
           filterctrl.selectedItems
             .map((e: any) => e.value)
