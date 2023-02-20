@@ -1,7 +1,24 @@
 .hidden {
-    width: auto;
-    white-space: nowrap;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+  width: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.grid {
+  height: 500px;
+}
+
+.widthalign {
+  text-align: left;
+}
+.clipboards {
+  display: flex;
+  justify-content: space-evenly;
+}
+.list {
+  list-style-type: none;
+}
+.breaks {
+  word-break: break-all;
+}

@@ -6,11 +6,15 @@
   height: 100%;
   top: 0;
 }
-#gridstyle{
-  right: 0px; bottom: 4%; position: fixed; left: 0px; top: 82px;
+#gridstyle {
+  right: 0px;
+  bottom: 4%;
+  position: fixed;
+  left: 0px;
+  top: 82px;
 }
-#cellstyle{
-  text-align: left
+#cellstyle {
+  text-align: left;
 }
 .wrapper {
   display: flex;
@@ -93,7 +97,17 @@ header.header-6,
   animation-name: modal-animation;
   animation-duration: 0.5s;
 }
+.clipboards {
+  display: flex;
+  justify-content: space-evenly;
+}
+.breaks {
+  word-break: break-all;
+}
 
+.progress {
+  text-align: left;
+}
 @-webkit-keyframes modal-animation {
   from {
     top: -100px;

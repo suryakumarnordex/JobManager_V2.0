@@ -25,7 +25,7 @@
         "
       >
         <div
-          style="word-break: break-all"
+          class="text"
           *ngIf="JobDetailsLocalVariable.passingEventMsg != 'Pending_Reason'"
         >
           Are you sure you want to
@@ -94,7 +94,7 @@
       </div>
       <ng-template #elseblock>
         <div
-          style="word-break: break-all"
+          class="text"
           *ngIf="
             JobDetailsLocalVariable.passingEventMsg != 'Pending_Reason' &&
             JobDetailsLocalVariable.passingEventMsg == 'Priority'
@@ -122,7 +122,7 @@
         <br />
         <clr-signpost>
           <clr-signpost-content [clrPosition]="'bottom-right'" *clrIfOpen>
-            <h3 style="margin-top: 0">Example Priority</h3>
+            <h3 class="tooltip">Example Priority</h3>
             <p>
               <code class="clr-code">
                 <li>Highest</li>
@@ -135,12 +135,7 @@
           </clr-signpost-content>
         </clr-signpost>
 
-        <button
-          style="float: right"
-          class="btn btn-outline"
-          type="button"
-          (click)="PopupEvent()"
-        >
+        <button class="btn btn-outline" type="button" (click)="PopupEvent()">
           Update
         </button>
       </div>
