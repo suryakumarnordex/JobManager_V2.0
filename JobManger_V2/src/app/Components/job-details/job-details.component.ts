@@ -493,7 +493,8 @@ export class JobDetailsComponent implements OnInit {
             this.priorityDisable = true;
             break;
           }
-          case 'Cancelled': {
+          case 'Canceled': {
+            this.priorityDisable = true;
             this.cancelDisable = true;
             this.submitDisable = true;
             break;
