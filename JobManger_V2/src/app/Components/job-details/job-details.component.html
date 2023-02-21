@@ -21,10 +21,10 @@
     <clr-dg-column 
       [style.width.px]="JobDetailsLocalStorage.idcolumnWidthValue"
       [clrDgField]="'jobIdFragment'"
-      (clrDgColumnResize)="ColumnResized($event, 'idcolumnwidth')"
-      style="align-content: space-around"
+      (clrDgColumnResize)="ColumnResized($event, 'idcolumnwidth')"    
       ><ng-container *clrDgHideableColumn="{hidden: false}">ID</ng-container>
       </clr-dg-column
+      >ID</clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.usercolumnWidthValue"
@@ -193,7 +193,7 @@
         </div></clr-dg-cell
       >
       <clr-dg-cell [style.width.px]="300" id="cellstyle">
-        <div style="display: flex; justify-content: space-evenly">
+        <div class="clipboards">
           <div>
             <div
               role="tooltip"
@@ -227,7 +227,7 @@
       </clr-dg-cell>
 
       <clr-dg-cell [style.width.px]="800" id="cellstyle">
-        <div style="display: flex; justify-content: space-evenly">
+        <div class="clipboards">
           <span title="{{ job.runnoFragment }}">
             <a
               href="{{
@@ -289,11 +289,7 @@
         [style.width.px]="300"
         style="text-align: left; min-width: 113px"
       >
-        <h6
-          *ngIf="job.failedTasksCount > 0"
-          class="badge badge-danger"
-          style="padding: 3px"
-        >
+        <h6 *ngIf="job.failedTasksCount > 0" class="badge badge-danger">
           {{ job.failedTasksCount }}
         </h6>
         <a
@@ -311,7 +307,7 @@
           <span class="tooltip-content">
             Running:{{ job.runningTasksCount }}
             <br />
-            <span class="tooltip-content" style="width: fit-content">
+            <span class="tooltip-content">
               Finished:{{ job.finishedTasksCount }}&nbsp;({{
                 (job.finishedTasksCount / job.numberOfTasksFragment) * 100
                   | number : "1.0-0"
@@ -319,7 +315,7 @@
             </span>
             <br />
 
-            <span class="tooltip-content" style="width: fit-content">
+            <span class="tooltip-content">
               Failed:{{ job.failedTasksCount }}&nbsp;({{
                 (job.failedTasksCount / job.numberOfTasksFragment) * 100
                   | number : "1.0-0"
@@ -333,7 +329,7 @@
       </clr-dg-cell>
 
       <clr-dg-cell
-      id="cellstyle"
+        id="cellstyle"
         [ngStyle]="{
           color: job.priorityFragment == 'Highest-100' ? 'red' : 'green'
         }"

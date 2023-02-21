@@ -3,7 +3,7 @@
   class="datagrid-compact"
   [(clrDgSelected)]="this.TaskDetailsLocalVariable.CheckboxofTaskRow"
   [clrDgLoading]="this.TaskDetailsLocalVariable.dataloading"
-  style="height: 500px"
+  class="grid"
   HorizontalAlignment="auto"
   VerticalAlignment="auto"
   (clrDgSelectedChange)="selectionChanged($event)"
@@ -69,11 +69,7 @@
     >Command Line</clr-dg-column
   >
 
-  <clr-dg-row
-    style="word-break: break-all"
-    *ngFor="let task of taskLayout"
-    [clrDgItem]="task"
-  >
+  <clr-dg-row class="breaks" *ngFor="let task of taskLayout" [clrDgItem]="task">
     <clr-dg-cell
       ><div class="hidden">
         <span title="{{ task.taskIdFragment }}"
@@ -101,7 +97,7 @@
           : 'black'
       "
       [style.width.px]="200"
-      style="text-align: left"
+      class="widthalign"
     >
       <div class="hidden">
         <span title="{{ task.statusFragment }}"
@@ -113,12 +109,10 @@
       <div
         role="tooltip"
         aria-haspopup="true"
-        class="tooltip tooltip-lg tooltip-bottom-left"
+        class="tooltip tooltip-sm tooltip-bottom-right"
       >
         {{ task.exidCodeFragment }}
-        <span class="tooltip-content" style="width: auto">{{
-          task.exidCodeNameFragment
-        }}</span>
+        <span class="tooltip-content">{{ task.exidCodeNameFragment }}</span>
       </div>
     </clr-dg-cell>
 
@@ -131,14 +125,13 @@
       </button>
     </clr-dg-cell> -->
 
-    <clr-dg-cell style="text-align: left">
-      <div style="display: flex; justify-content: space-evenly">
+    <clr-dg-cell class="widthalign">
+      <div class="clipboards">
         <div>
           <div
             role="tooltip"
             aria-haspopup="true"
             class="tooltip tooltip-sm tooltip tooltip-right"
-            style="text-align: center"
           >
             <div class="hidden">
               <span title="{{ task.standardOutput }}"> </span>
@@ -213,7 +206,7 @@
   [clrModalSkipAnimation]="'true'"
 >
   <div class="modal-body" *ngFor="let item of this.LogFileData">
-    <ul style="list-style-type: none">
+    <ul class="list">
       <li>{{ item }}</li>
     </ul>
   </div>

@@ -16,27 +16,29 @@
       >
         <span class="nav-text">{{ NavigationUrl.name }}</span>
       </a>
-      <span id = "modelspinner"
-        *ngIf="!spinnerInlineloader"
-
-      >
+      <span id="modelspinner" *ngIf="!spinnerInlineloader">
         <clr-icon shape="user"></clr-icon>
         {{ displayName }}
       </span>
       <span *ngIf="spinnerInlineloader">
-        <span id = "modelspinner" class="spinner spinner-inline"> </span>
+        <span id="modelspinner" class="spinner spinner-inline"> </span>
       </span>
     </div>
   </header>
 
   <nav class="subnav">
     <ul class="nav">
-      <li class="nav-item" style="margin: 20px">
+      <li class="nav-item" class="nav-content">
         <a class="nav-link" (click)="nodeListPage()">Nodes</a>
       </li>
       <li>
         <div>
-          <select clrSelect name="options" [(ngModel)]="selectedOption" (change)="onNodeGroupChange($event)">
+          <select
+            clrSelect
+            name="options"
+            [(ngModel)]="selectedOption"
+            (change)="onNodeGroupChange($event)"
+          >
             <option
               *ngFor="let Node of this.JobDetailsLocalVariable.Nodelist"
               [value]="Node"
@@ -44,7 +46,7 @@
               {{ Node }}
             </option>
           </select>
-          <p style="display: hidden"></p>
+          <p class="display"></p>
         </div>
       </li>
 
@@ -104,7 +106,7 @@
       </div>
       <div class="btn-group">
         <button
-          style="right: 0"
+          class="align"
           type="button"
           class="btn btn-sm btn-secondary"
           (click)="refreshData()"
@@ -115,7 +117,7 @@
 
       <div class="btn-group">
         <button
-          style="right: 0"
+          class="align"
           type="button"
           class="btn btn-sm btn-secondary"
           (click)="clearAllfilters()"
