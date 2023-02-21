@@ -38,6 +38,7 @@ export class JobFooterComponent implements OnInit {
 
   goTofirstPage() {
     if (this.requestFromJob) {
+      this.JobDetailsLocalVariable.dataloading = true;
       if (this.JobDetailsLocalVariable.currentpage != 1) {
         // this.JobDetailsLocalVariable.dataloading = true;
         this.JobDetailsLocalVariable.currentpage = 1;
@@ -51,6 +52,7 @@ export class JobFooterComponent implements OnInit {
   }
   goTonextPage() {
     if (this.requestFromJob) {
+      this.JobDetailsLocalVariable.dataloading = true;
       if (this.JobDetailsLocalVariable.currentpage != this.totalPage) {
         //  this.JobDetailsLocalVariable.dataloading = true;
         this.JobDetailsLocalVariable.currentpage =
@@ -61,6 +63,7 @@ export class JobFooterComponent implements OnInit {
         this.GetFooterDetails(this.requestFromJob);
       }
     } else {
+      this.TaskDetailsLocalVariable.dataloading = true;
       this.TaskDetailsLocalVariable.currentpage =
         this.TaskDetailsLocalVariable.currentpage + 1;
       this.totalPagetask = Math.ceil(
@@ -71,6 +74,7 @@ export class JobFooterComponent implements OnInit {
   }
   goTopriviousPage() {
     if (this.requestFromJob) {
+      this.JobDetailsLocalVariable.dataloading = true;
       if (this.JobDetailsLocalVariable.currentpage != 1) {
         // this.JobDetailsLocalVariable.dataloading = true;
         this.JobDetailsLocalVariable.currentpage =
@@ -92,6 +96,7 @@ export class JobFooterComponent implements OnInit {
   }
   goTolastPage() {
     if (this.requestFromJob) {
+      this.JobDetailsLocalVariable.dataloading = true;
       if (this.JobDetailsLocalVariable.currentpage != this.totalPage) {
         //  this.JobDetailsLocalVariable.dataloading = true;
         this.JobDetailsLocalVariable.currentpage = Math.ceil(
@@ -114,6 +119,7 @@ export class JobFooterComponent implements OnInit {
   }
   onSelected(value: string) {
     if (this.requestFromJob) {
+      this.JobDetailsLocalVariable.dataloading = true;
       this.JobDetailsLocalVariable.recordperpagejob = Number(value);
       //this.JobDetailsLocalVariable.dataloading = true;
       this.JobDetailsLocalVariable.currentpage = 1;

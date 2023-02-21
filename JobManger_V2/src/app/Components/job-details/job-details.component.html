@@ -17,19 +17,21 @@
     [clrDgLoading]="JobDetailsLocalVariable.dataloading"
     (clrDgSelectedChange)="selectionChanged($event)"
   >
-    <clr-dg-column
+  
+    <clr-dg-column 
       [style.width.px]="JobDetailsLocalStorage.idcolumnWidthValue"
       [clrDgField]="'jobIdFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'idcolumnwidth')"
       style="align-content: space-around"
-      >ID</clr-dg-column
+      ><ng-container *clrDgHideableColumn="{hidden: false}">ID</ng-container>
+      </clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.usercolumnWidthValue"
       [clrDgField]="'userFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'usercolumnwidth')"
     >
-      <ng-container> User </ng-container>
+      <ng-container *clrDgHideableColumn="{hidden: false}"> User </ng-container>
       <clr-dg-filter [clrDgFilter]="cockpitusernameFilter" [scrollLeft]="true">
         <checkbox-list-filter
           [id]="cockpitusernameFilter"
@@ -43,13 +45,13 @@
       [style.width.px]="JobDetailsLocalStorage.cockpitcolumnWidthValue"
       [clrDgField]="'cockpitIdFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'cockpitcolumnwidth')"
-      >Cockpit Id</clr-dg-column
+      ><ng-container *clrDgHideableColumn="{hidden: false}">Cockpit Id</ng-container></clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.runcolumnWidthValue"
       [clrDgField]="'runnoFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'runcolumnwidth')"
-      >Run</clr-dg-column
+      ><ng-container *clrDgHideableColumn="{hidden: false}">Run</ng-container></clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.typecolumnWidthValue"
@@ -64,13 +66,12 @@
           [items]="JobDetailsLocalVariable.AvailableType"
         ></checkbox-list-filter>
       </clr-dg-filter>
-      Type</clr-dg-column
-    >
+      <ng-container *clrDgHideableColumn="{hidden: false}">Type</ng-container></clr-dg-column>
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.topiccolumnWidthValue"
       [clrDgField]="'topicFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'topiccolumnwidth')"
-      >Topic</clr-dg-column
+      > <ng-container *clrDgHideableColumn="{hidden: false}">Topic</ng-container></clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.statuscolumnWidthValue"
@@ -85,54 +86,54 @@
           [items]="JobDetailsLocalVariable.AvailableState"
         ></checkbox-list-filter>
       </clr-dg-filter>
-      Status</clr-dg-column
+      <ng-container *clrDgHideableColumn="{hidden: false}">Status</ng-container></clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.progresscolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'progresscolumnwidth')"
-      >Progress</clr-dg-column
+      > <ng-container *clrDgHideableColumn="{hidden: false}">Progress</ng-container></clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.prioritycolumnWidthValue"
       [clrDgField]="'priorityFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'prioritycolumnwidth')"
-      >Job Priority</clr-dg-column
+      > <ng-container *clrDgHideableColumn="{hidden: false}">Job Priority</ng-container></clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.notaskcolumnWidthValue"
       [clrDgField]="'numberOfTasksFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'notaskcolumnwidth')"
-      >Number Of Tasks</clr-dg-column
+      ><ng-container *clrDgHideableColumn="{hidden: false}">Number of Tasks</ng-container></clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.runningTaskcolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'runningTaskcolumnwidth')"
-      >Running Tasks</clr-dg-column
+      ><ng-container *clrDgHideableColumn="{hidden: false}">Running Tasks</ng-container></clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.queuedTaskcolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'queuedTaskcolumnwidth')"
-      >Queued Tasks</clr-dg-column
+      ><ng-container *clrDgHideableColumn="{hidden: false}">Queued Tasks</ng-container></clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.starttimecolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'starttimecolumnwidth')"
-      >Start Time (yy/mm/dd HH:mm)</clr-dg-column
+      ><ng-container *clrDgHideableColumn="{hidden: false}">Start Time (yy/mm/dd HH:mm)  </ng-container></clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.endtimecolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'endtimecolumnwidth')"
-      >End Time (yy/mm/dd HH:mm)</clr-dg-column
+      ><ng-container *clrDgHideableColumn="{hidden: false}">End Time (yy/mm/dd HH:mm)  </ng-container></clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.submittimecolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'submittimecolumnwidth')"
-      >Submit Time (yy/mm/dd HH:mm)</clr-dg-column
+      ><ng-container *clrDgHideableColumn="{hidden: false}">Submit Time (yy/mm/dd HH:mm) </ng-container></clr-dg-column
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.elapsedtimecolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'elapsedtimecolumnwidth')"
-      >Elapsed Time (HH:mm:ss)</clr-dg-column
+      ><ng-container *clrDgHideableColumn="{hidden: false}">Elapsed Time (HH:mm:ss)</ng-container></clr-dg-column
     >
 
     <clr-dg-row
@@ -389,6 +390,11 @@
       </app-task-details>
     </ng-template>
     <clr-dg-footer>
+      <clr-dg-column-toggle>
+        <clr-dg-column-toggle-title>COLUMNS</clr-dg-column-toggle-title>
+        <clr-dg-column-toggle-button clrType="selectAll">Select all</clr-dg-column-toggle-button>
+        <clr-dg-column-toggle-button clrType="ok"><clr-icon shape="check"></clr-icon></clr-dg-column-toggle-button>
+    </clr-dg-column-toggle>
       <app-job-footer
         [requestFromJob]="true"
         [totalRecords]="JobDetailsLocalVariable.jobCount"
