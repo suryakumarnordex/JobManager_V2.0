@@ -19,10 +19,12 @@ import {
   ClrDatagridColumn,
   ClrDatagridStateInterface,
 } from '@clr/angular';
+
 import { CheckboxListFilterComponent } from './checkbox-list-filter.component';
 import { ActivatedRoute } from '@angular/router';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { TaskDetaillocalstorage } from '../task-header/task-detail-Localstorage';
+import { DataService } from './DataService';
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-details.component.html',
@@ -55,7 +57,8 @@ export class JobDetailsComponent implements OnInit {
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
     private route: ActivatedRoute,
     public TaskDetailsComponent: TaskDetailsComponent,
-    public TaskDetaillocalstorage: TaskDetaillocalstorage
+    public TaskDetaillocalstorage: TaskDetaillocalstorage,
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
@@ -422,6 +425,7 @@ export class JobDetailsComponent implements OnInit {
     if (event !== null) {
       this.JobDetailsLocalVariable.SelectedJobId = event.jobIdFragment;
       // Call Task searchlayout
+      this.dataService.refreshComponent();
     }
   }
 

@@ -1,11 +1,13 @@
 import {
   Component,
   Input,
+  OnDestroy,
   OnInit,
   QueryList,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ApiServiceService } from 'src/app/api-service.service';
 import { SearchTaskResultsLayout } from 'src/app/Models/helper';
 import { TaskLayoutInfo } from 'src/app/Models/layout';
@@ -16,12 +18,13 @@ import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
 import { ClrDatagridColumn, ClrDatagridStateInterface } from '@clr/angular';
 import { CheckboxListFilterComponent } from '../job-details/checkbox-list-filter.component';
+import { DataService } from '../job-details/DataService';
 @Component({
   selector: 'app-task-details',
   templateUrl: './task-details.component.html',
   styleUrls: ['./task-details.component.css'],
 })
-export class TaskDetailsComponent implements OnInit {
+export class TaskDetailsComponent implements OnInit,OnDestroy  {
   @Input() recordPerPage: number = 10;
   @Input() taskLayout: TaskLayoutInfo[];
   @Input() JobIDFragement: string;
@@ -31,14 +34,15 @@ export class TaskDetailsComponent implements OnInit {
   public LogFileData: any;
   TaskRequeueDisable: boolean = true;
   LogModelOpen: boolean = false;
-
+  subscription: Subscription;
   constructor(
     private ApiService: ApiServiceService,
     private logger: LoggerService,
     public TaskDetailsLocalVariable: TaskDetailsLocalVariable,
     public TaskDetailsLocalStorage: TaskDetaillocalstorage,
     private localstorage: LocalStorageService,
-    public JobDetailsLocalVariable: JobDetailsLocalVariable
+    public JobDetailsLocalVariable: JobDetailsLocalVariable,
+    private dataService: DataService
   ) {
     this.TaskDetailsLocalVariable.CheckboxofTaskRow=[];
   }
@@ -46,6 +50,17 @@ export class TaskDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.GetTaskLocalStorageColumnValue();
     this.TaskDetailsLocalVariable.dataloading = true;
+    this.subscription = this.dataService.currentRefreshData.subscribe(
+      refreshData => {
+        if (refreshData) {
+          this.TaskDetailsLocalVariable.CheckboxofTaskRow=[];
+          this.CallSearchTaskLayout();
+        }
+      }
+    );
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
   showFileData(log: any) {
     this.LogFileData = '';
