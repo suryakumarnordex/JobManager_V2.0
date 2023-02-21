@@ -135,7 +135,12 @@
           </clr-signpost-content>
         </clr-signpost>
 
-        <button class="btn btn-outline" type="button" (click)="PopupEvent()">
+        <button
+          class="btn btn-outline"
+          type="button"
+          [disabled]="IsSuccess"
+          (click)="PopupEvent(); IsSuccess = true"
+        >
           Update
         </button>
       </div>
