@@ -12,13 +12,17 @@
     [style.width.px]="TaskDetailsLocalStorage.taskidcolumnWidthValue"
     [clrDgField]="'taskIdFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'taskidcolumnwidth')"
-    >Task ID</clr-dg-column
+    ><ng-container *clrDgHideableColumn="{ hidden: false }"
+      >Task ID</ng-container
+    ></clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.tasknamecolumnWidthValue"
     [clrDgField]="'tasknameFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'tasknamecolumnwidth')"
-    >Task Name</clr-dg-column
+    ><ng-container *clrDgHideableColumn="{ hidden: false }"
+      >Task Name</ng-container
+    ></clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.taskstatecolumnWidthValue"
@@ -33,40 +37,54 @@
         [items]="this.JobDetailsLocalVariable.AvailableState"
       ></checkbox-list-filter>
     </clr-dg-filter>
-    Task State</clr-dg-column
+    <ng-container *clrDgHideableColumn="{ hidden: false }"
+      >Task State</ng-container
+    ></clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.exitcodecolumnWidthValue"
     [clrDgField]="'exitcodeFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'exitcodecolumnwidth')"
-    >Exit Code</clr-dg-column
+    ><ng-container *clrDgHideableColumn="{ hidden: false }"
+      >Exit Code</ng-container
+    ></clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.tasklogcolumnWidthValue"
     (clrDgColumnResize)="TaskColumnResized($event, 'tasklogcolumnwidth')"
-    >Log</clr-dg-column
+    ><ng-container *clrDgHideableColumn="{ hidden: false }"
+      >Log</ng-container
+    ></clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.taskstartcolumnWidthValue"
     (clrDgColumnResize)="TaskColumnResized($event, 'taskstarttimecolumnwidth')"
-    >Start Time (yy/mm/dd HH:mm)</clr-dg-column
+    ><ng-container *clrDgHideableColumn="{ hidden: false }"
+      >Start Time (yy/mm/dd HH:mm)</ng-container
+    ></clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.taskendcolumnWidthValue"
     (clrDgColumnResize)="TaskColumnResized($event, 'taskendtimecolumnwidth')"
-    >End Time (yy/mm/dd HH:mm)</clr-dg-column
+    ><ng-container *clrDgHideableColumn="{ hidden: false }"
+      >End Time (yy/mm/dd HH:mm)</ng-container
+    ></clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.allocatednodescolumnWidthValue"
     [clrDgField]="'allocatedFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'allocatednodecolumnwidth')"
-    >Allocated Nodes</clr-dg-column
+    ><ng-container *clrDgHideableColumn="{ hidden: false }"
+      >Allocated Nodes</ng-container
+    ></clr-dg-column
   >
   <clr-dg-column
     [style.width.px]="400"
     [clrDgField]="'commandlineFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'commandlinecolumnwidth')"
-    >Command Line</clr-dg-column
+    ><ng-container *clrDgHideableColumn="{ hidden: false }"
+      >Command Line</ng-container
+    ></clr-dg-column
   >
 
   <clr-dg-row class="breaks" *ngFor="let task of taskLayout" [clrDgItem]="task">
