@@ -18,7 +18,7 @@ export class AlertService {
           // only keep for a single location change function
           this.keepAfterNavigationChange = false;
         } else {
-          // clear alert
+          // clear alert message
           this.subject.next(clearAlert);
         }
       });
