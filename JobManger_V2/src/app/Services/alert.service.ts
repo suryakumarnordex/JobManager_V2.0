@@ -15,7 +15,7 @@ export class AlertService {
       .pipe(filter((e) => e instanceof NavigationStart))
       .subscribe(() => {
         if (this.keepAfterNavigationChange) {
-          // only keep for a single location change
+          // only keep for a single location change function
           this.keepAfterNavigationChange = false;
         } else {
           // clear alert
