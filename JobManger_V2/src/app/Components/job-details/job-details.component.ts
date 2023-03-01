@@ -417,6 +417,7 @@ export class JobDetailsComponent implements OnInit {
     if (event !== null) {
       this.JobDetailsLocalVariable.ClearAllLocalVariables();
       this.JobDetailsLocalVariable.SelectedNodeGroup = nodeGroupFragment;
+      this.JobDetailsLocalVariable.selectedState = _statusList;
       this.CallSearchlayout();
     }
   }
