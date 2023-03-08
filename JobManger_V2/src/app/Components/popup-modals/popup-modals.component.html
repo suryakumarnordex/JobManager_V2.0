@@ -134,7 +134,43 @@
             </p>
           </clr-signpost-content>
         </clr-signpost>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="IsSuccess == false && PopupResult != undefined"
+        >
+          <div class="alert-items">
+            <div class="alert-item static">
+              <div class="alert-icon-wrapper">
+                <clr-icon
+                  class="alert-icon"
+                  shape="exclamation-circle"
+                ></clr-icon>
+              </div>
+              <span class="alert-text">
+                {{ PopupResult }}
+              </span>
+            </div>
+          </div>
+        </div>
 
+        <div
+          class="alert alert-success"
+          role="alert"
+          *ngIf="IsSuccess == true && PopupResult != undefined"
+        >
+          <div class="alert-items">
+            <div class="alert-item static">
+              <div class="alert-icon-wrapper">
+                <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+              </div>
+
+              <span class="alert-text">
+                {{ PopupResult }}
+              </span>
+            </div>
+          </div>
+        </div>
         <button
           class="btn btn-outline"
           type="button"

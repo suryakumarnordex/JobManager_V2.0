@@ -51,8 +51,29 @@ export class PopupModalsComponent implements OnInit {
     this.passingEvent = this.JobDetailsLocalVariable.passingEventMsg;
     switch (this.JobDetailsLocalVariable.passingEventMsg) {
       case 'Priority': {
-        this.PopupResult = this.SetJobPriority();
-        this.IsSuccess = true;
+        this.SetJobPriority()
+          .then((res) => {
+            Object.keys(res).forEach((key) => {
+              if (this.PopupResult == undefined) {
+                this.Popuploading = true;
+
+                this.PopupResult =
+                  'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+              } else {
+                this.PopupResult +=
+                  ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+              }
+              if (res[key].includes('Already')) {
+                this.IsSuccess = false;
+              } else {
+                this.IsSuccess = true;
+              }
+            });
+          })
+          .catch((error) => {
+            this.PopupResult = error;
+            this.IsSuccess = false;
+          });
         break;
       }
       case 'TaskRequeue': {
@@ -128,20 +149,24 @@ export class PopupModalsComponent implements OnInit {
     // this.JobDetailscomponent.GetMultipleSelectFiltersData();
   }
 
-  public SetJobPriority() {
-    this.JobDetailsLocalVariable.dataloading = true;
-    this.ApiService.SetJobPriority(
-      this.JobDetailsLocalVariable.SelectedjobsId,
-      this.PriorityValue
-    ).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        this.JobDetailsLocalVariable.dataloading = false;
-      },
-      error: (error: string) => {
-        console.log(error);
-        this.JobDetailsLocalVariable.dataloading = false;
-      },
+  public SetJobPriority(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.JobDetailsLocalVariable.dataloading = true;
+      this.ApiService.SetJobPriority(
+        this.JobDetailsLocalVariable.SelectedjobsId,
+        this.PriorityValue
+      ).subscribe({
+        next: (res: any) => {
+          console.log(res);
+          this.JobDetailsLocalVariable.dataloading = false;
+          resolve(res);
+        },
+        error: (error: string) => {
+          console.log(error);
+          this.JobDetailsLocalVariable.dataloading = false;
+          reject(error);
+        },
+      });
     });
   }
 }
