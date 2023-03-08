@@ -6,6 +6,7 @@
   class="grid"
   HorizontalAlignment="auto"
   VerticalAlignment="auto"
+  (clrDgRefresh)="Columnfilters($event)"
   (clrDgSelectedChange)="selectionChanged($event)"
 >
   <clr-dg-column
@@ -43,7 +44,6 @@
   >
   <clr-dg-column
     [style.width.px]="TaskDetailsLocalStorage.exitcodecolumnWidthValue"
-    [clrDgField]="'exitcodeFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'exitcodecolumnwidth')"
     ><ng-container *clrDgHideableColumn="{ hidden: false }"
       >Exit Code</ng-container
