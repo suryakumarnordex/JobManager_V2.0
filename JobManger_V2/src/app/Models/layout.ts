@@ -7,6 +7,7 @@ export class JobLayoutInfo implements Deserializable, Serializable {
   topicFragment: string;
   cockpitIdFragment: number;
   cockpitfolderFragment: string;
+  project: string;
   runnoFragment: string;
   runFolderFragment: string;
   statusFragment: string;
@@ -47,7 +48,7 @@ export class JobLayoutInfo implements Deserializable, Serializable {
     this.nodeGroupFragment = input.nodeGroup;
     this.pendingReasonFragment = input.pendingReason;
     this.cockpitfolderFragment = input.cockpitFolder;
-
+    this.project = input.project;
     //New
     this.startTime = input.startTime;
     this.endTime = input.endTime;
@@ -67,6 +68,7 @@ export class JobLayoutInfo implements Deserializable, Serializable {
       typeFragment: this.typeFragment,
       topicFragment: this.topicFragment,
       cockpitIdFragment: this.cockpitIdFragment,
+      project: this.project,
       cockpitfolderFragment: this.cockpitfolderFragment,
       runnoFragment: this.runnoFragment,
       runFolderFragment: this.runFolderFragment,
