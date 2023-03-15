@@ -1,17 +1,17 @@
 .head {
   font-size: 30px;
-
   position: sticky;
   width: 100%;
   height: 100%;
   top: 0;
 }
 #gridstyle {
-  right: 0px;
-  bottom: 4%;
-  position: fixed;
+  right: 50%;
   left: 0px;
-  top: 82px;
+  top:150px;
+  bottom:0%;
+  position: fixed;
+
 }
 #cellstyle {
   text-align: left;

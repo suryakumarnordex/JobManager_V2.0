@@ -1,12 +1,16 @@
-<div class="main-container">
-  <app-job-header
+<div class="main-container" style="overflow: hidden;">
+  <!-- <app-job-header
     [jobCountLength]="this.JobDetailsLocalVariable.jobCount"
     [priorityDisable]="this.priorityDisable"
     [requeueDisable]="this.requeueDisable"
     [cancelDisable]="this.cancelDisable"
     [submitDisable]="this.submitDisable"
-  ></app-job-header>
-
+  ></app-job-header> -->
+  <header class="header-5">
+    <div class="header-nav">
+      <a class="nav-link nav-text">Job Details</a>
+    </div>
+  </header>
   <clr-datagrid
     [(clrDgSelected)]="this.JobDetailsLocalVariable.CheckboxofJobRow"
     class="datagrid-compact"
@@ -436,4 +440,5 @@
       ></app-job-footer>
     </clr-dg-footer>
   </clr-datagrid>
-</div>
+
+<!-- </div> -->

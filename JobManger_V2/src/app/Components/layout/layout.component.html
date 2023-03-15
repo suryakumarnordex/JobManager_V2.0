@@ -1,0 +1,46 @@
+<div class="main-container" style="overflow: hidden;">
+  <app-job-header
+    [jobCountLength]="this.JobDetailsLocalVariable.jobCount"
+    [priorityDisable]="this.JobDetailsComponent.priorityDisable"
+    [requeueDisable]="this.JobDetailsComponent.requeueDisable"
+    [cancelDisable]="this.JobDetailsComponent.cancelDisable"
+    [submitDisable]="this.JobDetailsComponent.submitDisable"
+  ></app-job-header>
+<div style="display: flex;height: 100%;">
+
+    <app-job-details style="width: 50%;"></app-job-details>
+    <div style="display: flex; flex-direction: column; width: 50%">
+      <app-task-details style="flex: 1;"></app-task-details>
+      <div style="display: flex; flex-direction: column; height: 100%; width: 50%">
+    
+        <app-br-taskdetails style="flex: 1;"></app-br-taskdetails>
+        
+        <app-tr-customdetails style="flex: 1;"></app-tr-customdetails>
+        
+      </div>
+      <!-- <app-br-taskdetails style="flex: 1;"></app-br-taskdetails> -->
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="main-container" style="overflow: hidden;">
+  <app-job-header
+    [jobCountLength]="this.JobDetailsLocalVariable.jobCount"
+    [priorityDisable]="this.priorityDisable"
+    [requeueDisable]="this.requeueDisable"
+    [cancelDisable]="this.cancelDisable"
+    [submitDisable]="this.submitDisable"
+  ></app-job-header>
+  <div style="display: flex; height: calc(100% - 48px);">
+    <app-job-details style="width: 50%;"></app-job-details>
+    <div style="display: flex; flex-direction: column; width: 50%;">
+      <app-task-details style="flex: 1;"></app-task-details>
+      <div style="display: flex; height: calc(100% - 48px);">
+        <app-br-taskdetails style="flex: 1;"></app-br-taskdetails>
+        <app-tr-customdetails style="flex: 1;"></app-tr-customdetails>
+      </div>
+    </div>
+  </div>
+</div> -->
+

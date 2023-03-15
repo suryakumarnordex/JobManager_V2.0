@@ -5,11 +5,20 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.grid {
-  height: 95%;
-  width: 100%;
-}
+#gridstyle {
 
+
+  bottom:0%;
+  display: fixed;
+}
+.head {
+  font-size: 30px;
+
+  position: sticky;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
 .widthalign {
   text-align: left;
 }
@@ -23,3 +32,5 @@
 .breaks {
   word-break: break-all;
 }
+
+

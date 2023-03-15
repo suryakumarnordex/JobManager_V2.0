@@ -1,9 +1,17 @@
-<app-task-header [taskLength]="this.taskLength"></app-task-header>
+
+
+  <header class="header-4">
+    <div class="header-nav">
+      <a class="nav-link nav-text">Task Details</a>
+    </div>
+  </header>
+  <app-task-header [taskLength]="this.taskLength"></app-task-header>
 <clr-datagrid
   class="datagrid-compact"
   [(clrDgSelected)]="this.TaskDetailsLocalVariable.CheckboxofTaskRow"
   [clrDgLoading]="this.TaskDetailsLocalVariable.dataloading"
-  class="grid"
+  id="gridstyle"
+  style="position: fixed;    top: 180px;bottom: 40%; left: 50%; transform: translate(0, 0); display: flex; flex-direction: column; width: 50%"
   HorizontalAlignment="auto"
   VerticalAlignment="auto"
   (clrDgRefresh)="Columnfilters($event)"
@@ -217,6 +225,7 @@
     ></app-job-footer>
   </clr-dg-footer>
 </clr-datagrid>
+
 <clr-modal
   *ngIf="LogFileData != ''"
   [(clrModalOpen)]="this.LogModelOpen"

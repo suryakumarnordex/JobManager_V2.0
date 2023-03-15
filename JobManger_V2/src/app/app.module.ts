@@ -23,6 +23,11 @@ import { ErrorInterceptor } from './Services/error.interceptor';
 import { WINDOW_PROVIDERS } from './Services/window.providers';
 import { exec } from 'child_process';
 import { TaskHeaderComponent } from './Components/task-header/task-header.component';
+import { LayoutComponent } from './Components/layout/layout.component';
+import { LsJobdetailsComponent } from './Components/ls-jobdetails/ls-jobdetails.component';
+import { TrCustomdetailsComponent } from './Components/tr-customdetails/tr-customdetails.component';
+import { BrTaskdetailsComponent } from './Components/br-taskdetails/br-taskdetails.component';
+import { HighchartsService } from './Services/highcharts.service';
 @NgModule({
   imports: [
     BrowserModule,
@@ -42,6 +47,10 @@ import { TaskHeaderComponent } from './Components/task-header/task-header.compon
     PopupModalsComponent,
     CheckboxListFilterComponent,
     TaskHeaderComponent,
+    LayoutComponent,
+    LsJobdetailsComponent,
+    TrCustomdetailsComponent,
+    BrTaskdetailsComponent,
   ],
   providers: [
     UtcConverterService,
@@ -49,6 +58,9 @@ import { TaskHeaderComponent } from './Components/task-header/task-header.compon
     JobDetaillocalstorage,
     JobDetailsLocalVariable,
     TaskDetailsLocalVariable,
+    JobDetailsComponent,
+    TrCustomdetailsComponent,
+    HighchartsService,
     TaskDetaillocalstorage,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

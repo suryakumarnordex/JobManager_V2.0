@@ -1,0 +1,26 @@
+.parent {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .left-side {
+    width: 50%;
+    height: 100%;
+    background-color: gray;
+  }
+
+  .right-side {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .top-component {
+    flex: 1;
+    background-color: lightgray;
+  }
+
+  .bottom-component {
+    flex: 1;
+    background-color: darkgray;
+  }

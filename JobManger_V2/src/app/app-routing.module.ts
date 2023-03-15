@@ -5,8 +5,12 @@ import { JobFooterComponent } from './Components/job-footer/job-footer.component
 import { TaskDetailsComponent } from './Components/task-details/task-details.component';
 import { JobHeaderComponent } from './Components/job-header/job-header.component';
 import { PopupModalsComponent } from './Components/popup-modals/popup-modals.component';
+import { LayoutComponent } from './Components/layout/layout.component';
 const routes: Routes = [
-  { path: '', component: JobDetailsComponent },
+
+  
+   { path: 'app-job-details', component: JobDetailsComponent },
+  { path: '', component: LayoutComponent },
   {
     path: 'app-task-details',
     component: TaskDetailsComponent,
