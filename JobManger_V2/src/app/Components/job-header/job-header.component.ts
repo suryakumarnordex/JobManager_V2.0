@@ -121,8 +121,7 @@ export class JobHeaderComponent implements OnInit {
         'Queue ',
         ''
       );
-      statusList = ['Queued', 'Finished'];
-      //console.log(this.JobDetailsLocalVariable.selectedState, 'statusList');
+      statusList = ['Queued', 'Running'];
     } else {
       this.JobDetailsLocalVariable.SelectedNodeGroup = '';
       statusList = [];
