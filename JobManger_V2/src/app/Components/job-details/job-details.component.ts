@@ -65,7 +65,7 @@ export class JobDetailsComponent implements OnInit {
     // this.JobDetailsLocalVariable.dataloading = true;
     this.GetLocalStorageColumnValue();
     this.GetMultipleSelectFiltersData();
-   // this.JobDetailsLocalVariable.dataloading = false;
+    // this.JobDetailsLocalVariable.dataloading = false;
   }
   GetMultipleSelectFiltersData() {
     this.JobDetailsLocalVariable.AvailableUserName = [];
@@ -197,7 +197,7 @@ export class JobDetailsComponent implements OnInit {
   }
 
   Columnfilters(ColumnProperties: ClrDatagridStateInterface) {
-   //this.JobDetailsLocalVariable.dataloading = true;
+    //this.JobDetailsLocalVariable.dataloading = true;
     this.JobDetailsLocalVariable.ColumnProperties = ColumnProperties;
     this.JobDetailsLocalVariable.CheckBoxFilterClear();
     this.JobDetailsLocalVariable.currentpage = 1;
@@ -288,7 +288,6 @@ export class JobDetailsComponent implements OnInit {
         }
       }
     } else {
-      
       this.JobDetailsLocalVariable.filterJobid = '';
       this.JobDetailsLocalVariable.filterrunno = '';
       this.JobDetailsLocalVariable.filterTopic = '';
@@ -348,6 +347,10 @@ export class JobDetailsComponent implements OnInit {
           this.JobDetailsLocalVariable.OrderBy = 'priority';
           break;
         }
+        case 'nodegroupFragment': {
+          this.JobDetailsLocalVariable.OrderBy = 'nodegroup';
+          break;
+        }
       }
     }
     let ColumnName = ColumnProperties.sort?.reverse;
@@ -379,24 +382,22 @@ export class JobDetailsComponent implements OnInit {
       waitForChange
     ).subscribe({
       next: (res: SearchResultsLayout) => {
-      
         this.JobDetailsLocalVariable.Joblayout = res.results;
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
         this.JobDetailsLocalVariable.totalPage = Math.ceil(
           this.JobDetailsLocalVariable.jobCount /
             this.JobDetailsLocalVariable.recordperpagejob
         );
-       this.JobDetailsLocalVariable.dataloading = false;
+        this.JobDetailsLocalVariable.dataloading = false;
       },
       error: (error) => {
         this.logger.reportError(error);
         //this.JobDetailsLocalVariable.dataloading = false;
       },
     });
-    
   }
 
-  clearallFilters() {;
+  clearallFilters() {
     this.JobDetailsLocalVariable.ClearAllLocalVariables();
     this.priorityDisable = true;
     this.requeueDisable = true;
@@ -418,6 +419,7 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.ClearAllLocalVariables();
       this.JobDetailsLocalVariable.SelectedNodeGroup = nodeGroupFragment;
       this.JobDetailsLocalVariable.selectedState = _statusList;
+      this.JobDetailsLocalVariable.OrderBy = 'nodegroup';
       this.CallSearchlayout();
     }
   }
