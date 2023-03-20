@@ -420,6 +420,7 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.SelectedNodeGroup = nodeGroupFragment;
       this.JobDetailsLocalVariable.selectedState = _statusList;
       this.JobDetailsLocalVariable.OrderBy = 'nodegroup';
+      this.JobDetailsLocalVariable.orderDescending = true;
       this.CallSearchlayout();
     }
   }
