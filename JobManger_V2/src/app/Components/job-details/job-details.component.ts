@@ -353,6 +353,9 @@ export class JobDetailsComponent implements OnInit {
         }
       }
     }
+    if (this.JobDetailsLocalVariable.SelectedNodeGroup != '') {
+      this.JobDetailsLocalVariable.selectedState = ['Queued', 'Running'];
+    }
     let ColumnName = ColumnProperties.sort?.reverse;
     ColumnName == undefined
       ? (this.JobDetailsLocalVariable.orderDescending = true)
