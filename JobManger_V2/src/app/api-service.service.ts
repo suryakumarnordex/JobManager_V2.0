@@ -128,7 +128,7 @@ export class ApiServiceService {
     statusFragment.forEach(function (status: string) {
       params = params.append('statusFragment', status);
     });
-
+    console.log(params, 'params');
     return this.http
       .get(this.apiurl + 'SearchTaskLayout', {
         headers: this.headers,
