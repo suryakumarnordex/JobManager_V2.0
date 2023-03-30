@@ -24,7 +24,7 @@ import { DataService } from '../job-details/DataService';
   templateUrl: './task-details.component.html',
   styleUrls: ['./task-details.component.css'],
 })
-export class TaskDetailsComponent implements OnInit,OnDestroy  {
+export class TaskDetailsComponent implements OnInit, OnDestroy {
   @Input() recordPerPage: number = 10;
   @Input() taskLayout: TaskLayoutInfo[];
   @Input() JobIDFragement: string;
@@ -44,16 +44,16 @@ export class TaskDetailsComponent implements OnInit,OnDestroy  {
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
     private dataService: DataService
   ) {
-    this.TaskDetailsLocalVariable.CheckboxofTaskRow=[];
+    this.TaskDetailsLocalVariable.CheckboxofTaskRow = [];
   }
 
   ngOnInit(): void {
     this.GetTaskLocalStorageColumnValue();
     this.TaskDetailsLocalVariable.dataloading = true;
     this.subscription = this.dataService.currentRefreshData.subscribe(
-      refreshData => {
+      (refreshData) => {
         if (refreshData) {
-          this.TaskDetailsLocalVariable.CheckboxofTaskRow=[];
+          this.TaskDetailsLocalVariable.CheckboxofTaskRow = [];
           this.CallSearchTaskLayout();
         }
       }
@@ -64,6 +64,13 @@ export class TaskDetailsComponent implements OnInit,OnDestroy  {
   }
   showFileData(log: any) {
     this.LogFileData = '';
+    const create_copy = (e: ClipboardEvent) => {
+      e.clipboardData?.setData('text/plain', log);
+      e.preventDefault();
+    };
+    document.addEventListener('copy', create_copy);
+    document.execCommand('copy');
+    document.removeEventListener('copy', create_copy);
     this.getFilepath(log);
   }
 
@@ -100,7 +107,6 @@ export class TaskDetailsComponent implements OnInit,OnDestroy  {
       this.TaskDetailsLocalVariable.orderDescending
     ).subscribe({
       next: (res: SearchTaskResultsLayout) => {
-        
         this.taskLayout = res.results;
 
         this.TaskDetailsLocalVariable.TaskCount = res.totalResults;
@@ -121,7 +127,7 @@ export class TaskDetailsComponent implements OnInit,OnDestroy  {
       this.TaskDetailsLocalVariable.SelectedtasksId = event.map(
         (e) => e.taskIdFragment
       );
-      
+
       this.taskLength = this.TaskDetailsLocalVariable.SelectedtasksId.length;
       event
         .map((e) => e.statusFragment)
@@ -252,7 +258,6 @@ export class TaskDetailsComponent implements OnInit,OnDestroy  {
     if (ColumnProperties.filters) {
       this.TaskDetailsLocalVariable.selectedState = [];
       for (const filterctrl of ColumnProperties.filters) {
-
         if (filterctrl.filterParamName == 'statusFragment') {
           filterctrl.selectedItems
             .map((e: any) => e.value)
@@ -357,7 +362,6 @@ export class TaskDetailsComponent implements OnInit,OnDestroy  {
               console.log(res);
               this.TaskDetailsLocalVariable.dataloading = false;
               resolve(res);
-              
             },
             error: (error: string) => {
               console.log(error);
