@@ -19,6 +19,8 @@
 }
 .list {
   list-style-type: none;
+  word-wrap: break-word;
+ max-width: 100ch;
 }
 .breaks {
   word-break: break-all;
