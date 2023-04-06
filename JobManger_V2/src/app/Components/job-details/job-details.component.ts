@@ -520,6 +520,7 @@ export class JobDetailsComponent implements OnInit {
   openmodel(action: string, jobId: number) {
     this.JobDetailsLocalVariable.SelectedjobsId = [jobId];
     this.JobDetailsLocalVariable.passingEventMsg = action;
+
     this.JobDetailsLocalVariable.openPopupModal = true;
   }
   GetLocalStorageColumnValue() {

@@ -178,32 +178,37 @@
     >
       <clr-dg-action-overflow>
         <button
+          [disabled]="this.priorityDisable"
           class="action-item"
           (click)="openmodel('Priority', job.jobIdFragment)"
         >
           Priority
         </button>
         <button
+          [disabled]="this.requeueDisable"
           class="action-item"
           (click)="openmodel('Requeue', job.jobIdFragment)"
         >
           Requeue
         </button>
         <!-- pending reason -->
-        <button
+        <!-- <button
+          [disabled]="true"
           class="action-item"
           (click)="openmodel('Pending_Reason', job.jobIdFragment)"
         >
           Pending Reason
-        </button>
+        </button> -->
         <!-- Ends -->
         <button
+          [disabled]="this.cancelDisable"
           class="action-item"
           (click)="openmodel('Cancel', job.jobIdFragment)"
         >
           Cancel
         </button>
         <button
+          [disabled]="this.submitDisable"
           class="action-item"
           (click)="openmodel('Submit', job.jobIdFragment)"
         >
