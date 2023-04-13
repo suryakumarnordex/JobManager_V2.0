@@ -114,6 +114,7 @@ export class JobHeaderComponent implements OnInit {
     this.clearAllfilters();
   }
   onNodeGroupChange(event: any) {
+    this.clearAllfilters();
     let statusList: string[] = [];
     let val = event.target.value;
     if (val.includes('Queue')) {
