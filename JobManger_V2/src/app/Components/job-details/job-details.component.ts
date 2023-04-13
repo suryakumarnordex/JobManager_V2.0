@@ -422,8 +422,15 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.ClearAllLocalVariables();
       this.JobDetailsLocalVariable.SelectedNodeGroup = nodeGroupFragment;
       this.JobDetailsLocalVariable.selectedState = _statusList;
-      this.JobDetailsLocalVariable.OrderBy = 'nodegroup';
+      if (nodeGroupFragment != null) {
+        this.JobDetailsLocalVariable.OrderBy = 'nodegroup';
+      } else {
+        this.JobDetailsLocalVariable.OrderBy = 'id';
+      }
+
       this.JobDetailsLocalVariable.orderDescending = true;
+      this.columns.forEach((column) => (column.filterValue = ''));
+      this.checkboxFilter.selectedItems = [];
       this.CallSearchlayout();
     }
   }
