@@ -5,6 +5,8 @@
     [requeueDisable]="this.requeueDisable"
     [cancelDisable]="this.cancelDisable"
     [submitDisable]="this.submitDisable"
+    [countdown]="this.JobDetailsLocalVariable.countdown"
+    [timedOut]="this.JobDetailsLocalVariable.timedOut"
   ></app-job-header>
 
   <clr-datagrid
@@ -17,13 +19,13 @@
     [clrDgLoading]="JobDetailsLocalVariable.dataloading"
     (clrDgSelectedChange)="selectionChanged($event)"
   >
-     
+    
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.idcolumnWidthValue"
       [clrDgField]="'jobIdFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'idcolumnwidth')"
-      ><ng-container *clrDgHideableColumn="{ hidden: false }">ID</ng-container> 
-         
+      ><ng-container *clrDgHideableColumn="{ hidden: false }">ID</ng-container>
+    
     </clr-dg-column>
 
     <clr-dg-column

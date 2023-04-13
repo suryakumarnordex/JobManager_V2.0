@@ -13,6 +13,14 @@
   top: 15px;
   right: 20px;
 }
+#modelspinner-timing {
+  font-size: 15px;
+  position: absolute;
+  color: #0f0301;
+  font-weight: bolder;
+  top: 65px;
+  right: 20px;
+}
 .wrapper {
   display: flex;
   justify-content: center;

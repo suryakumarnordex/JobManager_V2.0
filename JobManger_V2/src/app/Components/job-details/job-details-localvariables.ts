@@ -34,7 +34,11 @@ export class JobDetailsLocalVariable {
   public filterrunno: string = '';
   public filterpriority: string = '';
   public filternooftasks: string = '';
-
+ //Timer properties
+ timedOut = false;
+ idleTimer: any;
+ countdownTimer: any;
+ countdown: number = 60;
   //footer properties
   public totalPage: number;
   public jobCount: number = 0;

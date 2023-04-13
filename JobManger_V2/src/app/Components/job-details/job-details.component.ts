@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  Injectable,
   Input,
   OnInit,
   QueryList,
@@ -19,7 +20,7 @@ import {
   ClrDatagridColumn,
   ClrDatagridStateInterface,
 } from '@clr/angular';
-
+import { JobHeaderComponent } from '../job-header/job-header.component';
 import { CheckboxListFilterComponent } from './checkbox-list-filter.component';
 import { ActivatedRoute } from '@angular/router';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
@@ -30,6 +31,7 @@ import { DataService } from './DataService';
   templateUrl: './job-details.component.html',
   styleUrls: ['./job-details.component.css'],
 })
+
 export class JobDetailsComponent implements OnInit {
   @Input() pageSize: number = 1;
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
@@ -56,16 +58,60 @@ export class JobDetailsComponent implements OnInit {
     public JobDetailsLocalStorage: JobDetaillocalstorage,
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
     private route: ActivatedRoute,
-    public TaskDetailsComponent: TaskDetailsComponent,
+        public TaskDetailsComponent: TaskDetailsComponent,
     public TaskDetaillocalstorage: TaskDetaillocalstorage,
     private dataService: DataService
   ) {}
 
   ngOnInit(): void {
+    document.addEventListener('mousemove', this.resetTimer.bind(this));
+    document.addEventListener('keypress', this.resetTimer.bind(this));
+    document.addEventListener('click', this.resetTimer.bind(this));
+    document.addEventListener('scroll', this.resetTimer.bind(this));
+    this.startIdleTimer();
     // this.JobDetailsLocalVariable.dataloading = true;
     this.GetLocalStorageColumnValue();
     this.GetMultipleSelectFiltersData();
     // this.JobDetailsLocalVariable.dataloading = false;
+  }
+  resetTimer() {
+    this.JobDetailsLocalVariable.timedOut = false;
+    clearTimeout(this.JobDetailsLocalVariable.idleTimer);
+    clearInterval(this.JobDetailsLocalVariable.countdownTimer);
+    this.startIdleTimer();
+  }
+  startIdleTimer() {
+    this.JobDetailsLocalVariable.idleTimer = setTimeout(() => {
+      this.startCountdownTimer();
+    }, 300000);
+  }
+
+  startCountdownTimer() {
+    this.JobDetailsLocalVariable.timedOut = true;
+    this.JobDetailsLocalVariable.countdown = 60;
+    this.JobDetailsLocalVariable.countdownTimer = setInterval(() => {
+      this.JobDetailsLocalVariable.countdown--;
+      if (this.JobDetailsLocalVariable.countdown <= 0) {
+        this.resetTimer();
+        this.refreshPage();
+      }
+      console.log(this.JobDetailsLocalVariable.countdown);
+      
+    }, 1000);
+  }
+  
+  refreshPage() {
+    this.JobDetailsLocalVariable.dataloading = true;
+    this.GetLocalStorageColumnValue();
+    if (
+      this.JobDetailsLocalVariable.selectedType.length == 0 &&
+      this.JobDetailsLocalVariable.selectedUsername.length == 0 &&
+      this.JobDetailsLocalVariable.selectedState.length == 0
+    ) {
+      this.GetMultipleSelectFiltersData();
+    }
+
+    this.CallSearchlayout();
   }
   GetMultipleSelectFiltersData() {
     this.JobDetailsLocalVariable.AvailableUserName = [];
