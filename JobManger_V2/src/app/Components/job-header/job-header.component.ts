@@ -31,6 +31,9 @@ export class JobHeaderComponent implements OnInit {
   @Input() recordPerPage: number = 10;
   @Input() recordPerPagerequest: number;
   @Input() passingEvent: string;
+  @Input() countdown: number;
+  @Input() timedOut: boolean;
+
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
   jobCount: number;
   totalPage: number;

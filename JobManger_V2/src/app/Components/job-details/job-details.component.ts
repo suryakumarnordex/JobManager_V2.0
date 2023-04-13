@@ -62,11 +62,61 @@ export class JobDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    document.addEventListener('mousemove', this.resetTimer.bind(this));
+    document.addEventListener('keypress', this.resetTimer.bind(this));
+    document.addEventListener('click', this.resetTimer.bind(this));
+    document.addEventListener('scroll', this.resetTimer.bind(this));
+    this.startIdleTimer();
+
     // this.JobDetailsLocalVariable.dataloading = true;
     this.GetLocalStorageColumnValue();
     this.GetMultipleSelectFiltersData();
     // this.JobDetailsLocalVariable.dataloading = false;
   }
+
+  resetTimer() {
+    this.JobDetailsLocalVariable.timedOut = false;
+    clearTimeout(this.JobDetailsLocalVariable.idleTimer);
+    clearInterval(this.JobDetailsLocalVariable.countdownTimer);
+    this.startIdleTimer();
+  }
+  startIdleTimer() {
+    this.JobDetailsLocalVariable.idleTimer = setTimeout(() => {
+      this.startCountdownTimer();
+    }, 180000);
+  }
+
+  startCountdownTimer() {
+    this.JobDetailsLocalVariable.timedOut = true;
+    this.JobDetailsLocalVariable.countdown = 60;
+    this.JobDetailsLocalVariable.countdownTimer = setInterval(() => {
+      this.JobDetailsLocalVariable.countdown--;
+      if (this.JobDetailsLocalVariable.countdown <= 0) {
+        this.resetTimer();
+        this.refreshPage();
+      }
+    }, 1000);
+  }
+
+  refreshPage() {
+    this.JobDetailsLocalVariable.dataloading = true;
+    this.JobDetailsLocalVariable.openPopupModal = false;
+    this.priorityDisable = true;
+    this.requeueDisable = true;
+    this.submitDisable = true;
+    this.cancelDisable = true;
+    this.GetLocalStorageColumnValue();
+    if (
+      this.JobDetailsLocalVariable.selectedType.length == 0 &&
+      this.JobDetailsLocalVariable.selectedUsername.length == 0 &&
+      this.JobDetailsLocalVariable.selectedState.length == 0
+    ) {
+      this.GetMultipleSelectFiltersData();
+    }
+
+    this.CallSearchlayout();
+  }
+
   GetMultipleSelectFiltersData() {
     this.JobDetailsLocalVariable.AvailableUserName = [];
     this.JobDetailsLocalVariable.AvailableType = [];

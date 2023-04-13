@@ -125,6 +125,12 @@
           <clr-icon shape="eraser"></clr-icon>&nbsp;Clear All
         </button>
       </div>
+      <div id="modelspinner-timing">
+        <span *ngIf="timedOut">
+          <clr-icon shape="alarm-clock"></clr-icon>&nbsp;
+          {{ countdown }} seconds
+        </span>
+      </div>
     </ul>
   </nav>
 </div>

@@ -43,6 +43,12 @@ export class JobDetailsLocalVariable {
   public recordperpagejob: number = 10;
   public currentpage: number = 1;
 
+  //Timer properties
+  timedOut = false;
+  idleTimer: any;
+  countdownTimer: any;
+  countdown: number = 60;
+
   //Filter properties
   public AvailableUserName: { key: string; value: string }[] = [];
   public selectedUsername: Array<string> = [];

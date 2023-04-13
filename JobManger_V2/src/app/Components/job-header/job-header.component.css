@@ -81,6 +81,14 @@ header.header-6,
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+#modelspinner-timing {
+  font-size: 15px;
+  position: absolute;
+  color: #424141;
+  font-weight: bold;
+  top: 65px;
+  right: 20px;
+}
 
 .modal:before {
   content: "";
