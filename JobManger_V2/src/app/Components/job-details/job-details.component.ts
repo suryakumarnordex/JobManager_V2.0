@@ -31,7 +31,6 @@ import { DataService } from './DataService';
   templateUrl: './job-details.component.html',
   styleUrls: ['./job-details.component.css'],
 })
-
 export class JobDetailsComponent implements OnInit {
   @Input() pageSize: number = 1;
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
@@ -58,7 +57,7 @@ export class JobDetailsComponent implements OnInit {
     public JobDetailsLocalStorage: JobDetaillocalstorage,
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
     private route: ActivatedRoute,
-        public TaskDetailsComponent: TaskDetailsComponent,
+    public TaskDetailsComponent: TaskDetailsComponent,
     public TaskDetaillocalstorage: TaskDetaillocalstorage,
     private dataService: DataService
   ) {}
@@ -83,7 +82,7 @@ export class JobDetailsComponent implements OnInit {
   startIdleTimer() {
     this.JobDetailsLocalVariable.idleTimer = setTimeout(() => {
       this.startCountdownTimer();
-    }, 300000);
+    }, 10000);
   }
 
   startCountdownTimer() {
@@ -95,13 +94,16 @@ export class JobDetailsComponent implements OnInit {
         this.resetTimer();
         this.refreshPage();
       }
-      console.log(this.JobDetailsLocalVariable.countdown);
-      
     }, 1000);
   }
-  
+
   refreshPage() {
     this.JobDetailsLocalVariable.dataloading = true;
+    this.JobDetailsLocalVariable.openPopupModal = false;
+    this.priorityDisable = true;
+    this.requeueDisable = true;
+    this.submitDisable = true;
+    this.cancelDisable = true;
     this.GetLocalStorageColumnValue();
     if (
       this.JobDetailsLocalVariable.selectedType.length == 0 &&
