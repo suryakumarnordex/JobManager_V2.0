@@ -83,12 +83,12 @@ export class JobDetailsComponent implements OnInit {
   startIdleTimer() {
     this.JobDetailsLocalVariable.idleTimer = setTimeout(() => {
       this.startCountdownTimer();
-    }, 180000);
+    }, 10000);
   }
 
   startCountdownTimer() {
     this.JobDetailsLocalVariable.timedOut = true;
-    this.JobDetailsLocalVariable.countdown = 60;
+    this.JobDetailsLocalVariable.countdown = 10;
     this.JobDetailsLocalVariable.countdownTimer = setInterval(() => {
       this.JobDetailsLocalVariable.countdown--;
       if (this.JobDetailsLocalVariable.countdown <= 0) {
