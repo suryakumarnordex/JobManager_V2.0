@@ -83,7 +83,7 @@ export class JobDetailsComponent implements OnInit {
   startIdleTimer() {
     this.JobDetailsLocalVariable.idleTimer = setTimeout(() => {
       this.startCountdownTimer();
-    }, 45000);
+    }, 60000);
   }
 
   startCountdownTimer() {
@@ -505,11 +505,6 @@ export class JobDetailsComponent implements OnInit {
       const create_copy = (e: ClipboardEvent) => {
         e.clipboardData?.setData('text/plain', CtrlName);
         e.preventDefault();
-        // if (CtrlName != '' && CtrlName != null && CtrlName != undefined) {
-        //   this.ClipBoardText = 'copied';
-        // } else {
-        //   this.ClipBoardText = 'no data to copy';
-        // }
       };
       document.addEventListener('copy', create_copy);
       document.execCommand('copy');
@@ -636,7 +631,6 @@ export class JobDetailsComponent implements OnInit {
             this.JobDetailsLocalVariable.SelectedjobsId
           ).subscribe({
             next: (res: any) => {
-              console.log(res);
               this.JobDetailsLocalVariable.dataloading = false;
               resolve(res);
             },
