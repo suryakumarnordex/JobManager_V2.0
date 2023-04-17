@@ -90,6 +90,7 @@ export class JobHeaderComponent implements OnInit {
   }
   refreshData() {
     this.JobDetailsLocalVariable.dataloading = true;
+    this.JobDetailsLocalVariable.SelectedjobsId = [];
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     if (
       this.JobDetailsLocalVariable.selectedType.length == 0 &&

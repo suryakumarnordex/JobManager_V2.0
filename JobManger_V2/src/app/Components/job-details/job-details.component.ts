@@ -101,6 +101,8 @@ export class JobDetailsComponent implements OnInit {
   refreshPage() {
     this.JobDetailsLocalVariable.dataloading = true;
     this.JobDetailsLocalVariable.openPopupModal = false;
+    this.JobDetailsLocalVariable.SelectedjobsId = [];
+    this.JobDetailsLocalVariable.CheckboxofJobRow = [];
     this.priorityDisable = true;
     this.requeueDisable = true;
     this.submitDisable = true;
@@ -343,6 +345,7 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.filterTopic = '';
       this.JobDetailsLocalVariable.filternooftasks = '';
       this.JobDetailsLocalVariable.filterpriority = '';
+      this.JobDetailsLocalVariable.SelectedjobsId = [];
       this.JobDetailsLocalVariable.selectedType = [];
       this.JobDetailsLocalVariable.selectedUsername = [];
       this.JobDetailsLocalVariable.selectedState = [];
@@ -513,9 +516,15 @@ export class JobDetailsComponent implements OnInit {
   }
 
   selectionChanged(event: any[]) {
+    console.log(event, 'selection changed');
+    this.JobDetailsLocalVariable.SelectedjobsId = [];
     this.JobDetailsLocalVariable.SelectedjobsId = event.map(
       (e) => e.jobIdFragment
     );
+    this.JobDetailsLocalVariable.SelectedjobsId =
+      this.JobDetailsLocalVariable.SelectedjobsId.filter(
+        (item, index, self) => self.indexOf(item) === index
+      );
 
     this.priorityDisable = false;
     this.requeueDisable = false;

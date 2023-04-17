@@ -144,9 +144,8 @@ export class PopupModalsComponent implements OnInit {
     this.JobDetailsLocalVariable.disableButton = false;
     this.IsSuccess = false;
     this.PopupResult = undefined;
-    // this.JobDetailscomponent.CallSearchlayout();
     this.JobDetailscomponent.GetLocalStorageColumnValue();
-    // this.JobDetailscomponent.GetMultipleSelectFiltersData();
+    this.JobDetailscomponent.refreshPage();
   }
 
   public SetJobPriority(): Promise<any> {
