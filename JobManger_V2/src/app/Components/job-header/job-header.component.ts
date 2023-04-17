@@ -91,6 +91,7 @@ export class JobHeaderComponent implements OnInit {
   refreshData() {
     this.JobDetailsLocalVariable.dataloading = true;
     this.JobDetailsLocalVariable.SelectedjobsId = [];
+    this.JobDetailsLocalVariable.CheckboxofJobRow = [];
     this.JobDetailsComponent.GetLocalStorageColumnValue();
     if (
       this.JobDetailsLocalVariable.selectedType.length == 0 &&
