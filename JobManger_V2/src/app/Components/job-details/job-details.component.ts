@@ -516,7 +516,6 @@ export class JobDetailsComponent implements OnInit {
   }
 
   selectionChanged(event: any[]) {
-    console.log(event, 'selection changed');
     this.JobDetailsLocalVariable.SelectedjobsId = [];
     this.JobDetailsLocalVariable.SelectedjobsId = event.map(
       (e) => e.jobIdFragment

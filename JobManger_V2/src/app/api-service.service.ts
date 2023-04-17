@@ -76,8 +76,6 @@ export class ApiServiceService {
     typeFragment.forEach(function (types: string) {
       params = params.append('typeFragment', types);
     });
-    console.log(params, 'params');
-
     return this.http
       .get(this.apiurl + 'SearchLayout', {
         headers: this.headers,
