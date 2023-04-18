@@ -473,14 +473,13 @@ export class JobDetailsComponent implements OnInit {
   ) {
     if (event !== null) {
       this.JobDetailsLocalVariable.ClearAllLocalVariables();
-      this.JobDetailsLocalVariable.SelectedNodeGroup = nodeGroupFragment;
+      this.JobDetailsLocalVariable.SelectedNodeGroup = nodeGroupFragment.trim();
       this.JobDetailsLocalVariable.selectedState = _statusList;
-      if (nodeGroupFragment != null) {
-        this.JobDetailsLocalVariable.OrderBy = 'nodegroup';
-      } else {
+      if (this.JobDetailsLocalVariable.SelectedNodeGroup.length == 0) {
         this.JobDetailsLocalVariable.OrderBy = 'id';
+      } else {
+        this.JobDetailsLocalVariable.OrderBy = 'nodegroup';
       }
-
       this.JobDetailsLocalVariable.orderDescending = true;
       this.columns.forEach((column) => (column.filterValue = ''));
       this.checkboxFilter.selectedItems = [];

@@ -129,6 +129,7 @@ export class JobHeaderComponent implements OnInit {
       statusList = ['Queued', 'Running'];
     } else {
       this.JobDetailsLocalVariable.SelectedNodeGroup = '';
+      this.JobDetailsLocalVariable.OrderBy = 'id';
       statusList = [];
       this.JobDetailsLocalVariable.currentpage = 1;
     }
