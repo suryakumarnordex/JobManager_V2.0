@@ -123,17 +123,21 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
     });
   }
   selectionChanged(event: any[]) {
+    this.TaskDetailsLocalVariable.SelectedtasksId = [];
     if (event !== undefined) {
       this.TaskDetailsLocalVariable.SelectedtasksId = event.map(
         (e) => e.taskIdFragment
       );
-
+      this.TaskDetailsLocalVariable.SelectedtasksId =
+        this.TaskDetailsLocalVariable.SelectedtasksId.filter(
+          (item, index, self) => self.indexOf(item) === index
+        );
       this.taskLength = this.TaskDetailsLocalVariable.SelectedtasksId.length;
       event
         .map((e) => e.statusFragment)
         .forEach((status) => {
           switch (status.toString()) {
-            case 'Failed' || 'Cancelled' || 'Running': {
+            case 'Failed' || 'Canceled' || 'Running': {
               this.TaskRequeueDisable = false;
               break;
             }
@@ -247,6 +251,8 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
     this.TaskDetailsLocalVariable.filterName = '';
     this.TaskDetailsLocalVariable.selectedState = [];
     this.statusFilter.selectedItems = [];
+    this.TaskDetailsLocalVariable.CheckboxofTaskRow = [];
+    this.TaskDetailsLocalVariable.SelectedtasksId = [];
     this.TaskDetailsLocalVariable.OrderBy = '';
     this.TaskDetailsLocalVariable.orderDescending = false;
     this.TaskDetailsLocalVariable.currentpage = 1;

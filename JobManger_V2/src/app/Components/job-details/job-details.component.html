@@ -16,11 +16,8 @@
     HorizontalAlignment="auto"
     VerticalAlignment="auto"
     (clrDgRefresh)="Columnfilters($event)"
-    [clrDgRowSelection]="true"
-    [clrDgLoading]="JobDetailsLocalVariable.dataloading"
-    (clrDgSelectedChange)="
-      selectionChanged(this.JobDetailsLocalVariable.CheckboxofJobRow)
-    "
+    [clrDgLoading]="this.JobDetailsLocalVariable.dataloading"
+    (clrDgSelectedChange)="selectionChanged($event)"
   >
      
     <clr-dg-column

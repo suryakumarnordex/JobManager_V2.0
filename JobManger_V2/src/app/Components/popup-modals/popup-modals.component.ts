@@ -142,10 +142,16 @@ export class PopupModalsComponent implements OnInit {
   PopupModelClose() {
     this.parentChildConnection = false;
     this.JobDetailsLocalVariable.disableButton = false;
-    this.IsSuccess = false;
     this.PopupResult = undefined;
     this.JobDetailscomponent.GetLocalStorageColumnValue();
-    this.JobDetailscomponent.refreshPage();
+    if (this.IsSuccess) {
+      if ((this.JobDetailsLocalVariable.passingEventMsg = 'TaskRequeue')) {
+        this.TaskDetailsComponent.CallSearchTaskLayout();
+      } else {
+        this.JobDetailscomponent.CallSearchlayout();
+      }
+    }
+    this.IsSuccess = false;
   }
 
   public SetJobPriority(): Promise<any> {
