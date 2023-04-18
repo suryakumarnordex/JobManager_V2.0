@@ -147,8 +147,12 @@ export class PopupModalsComponent implements OnInit {
     if (this.IsSuccess) {
       if ((this.JobDetailsLocalVariable.passingEventMsg = 'TaskRequeue')) {
         this.TaskDetailsComponent.CallSearchTaskLayout();
+        this.TaskDetailsLocalVariable.CheckboxofTaskRow = [];
+        this.TaskDetailsLocalVariable.SelectedtasksId = [];
       } else {
         this.JobDetailscomponent.CallSearchlayout();
+        this.JobDetailsLocalVariable.SelectedjobsId = [];
+        this.JobDetailsLocalVariable.CheckboxofJobRow = [];
       }
     }
     this.IsSuccess = false;
