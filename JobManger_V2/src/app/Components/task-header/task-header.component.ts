@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TaskDetailsLocalVariable } from '../task-details/task-details-localvariable';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
+import { TaskDetailsComponent } from '../task-details/task-details.component';
 @Component({
   selector: 'app-task-header',
   templateUrl: './task-header.component.html',
@@ -14,7 +15,8 @@ export class TaskHeaderComponent implements OnInit {
 
   constructor(
     public TaskDetailsLocalVariable: TaskDetailsLocalVariable,
-    public JobDetailsLocalVariable: JobDetailsLocalVariable
+    public JobDetailsLocalVariable: JobDetailsLocalVariable,
+    public TaskDetailsComponent: TaskDetailsComponent
   ) {}
 
   ngOnInit(): void {}
@@ -26,5 +28,11 @@ export class TaskHeaderComponent implements OnInit {
 
   onModalClose() {
     this.TaskDetailsLocalVariable.openPopupModal = false;
+  }
+  refreshData() {
+    console.log('Refresh called');
+    this.TaskDetailsComponent.CallSearchTaskLayout();
+    this.TaskDetailsLocalVariable.CheckboxofTaskRow = [];
+    this.TaskDetailsLocalVariable.SelectedtasksId = [];
   }
 }
