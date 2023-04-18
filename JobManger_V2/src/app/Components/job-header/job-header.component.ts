@@ -103,6 +103,7 @@ export class JobHeaderComponent implements OnInit {
 
     this.JobDetailsComponent.CallSearchlayout();
   }
+
   clearAllfilters() {
     this.JobDetailsLocalVariable.dataloading = true;
     this.JobDetailsComponent.GetLocalStorageColumnValue();
