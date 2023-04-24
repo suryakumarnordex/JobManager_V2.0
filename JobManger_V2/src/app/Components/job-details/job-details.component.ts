@@ -48,6 +48,9 @@ export class JobDetailsComponent implements OnInit {
   cancelDisable: boolean = true;
   submitDisable: boolean = true;
 
+  idleTime = 2 * 60 * 1000; // 2 minutes in milliseconds
+  timeoutId: any;
+
   constructor(
     private ApiService: ApiServiceService,
     private router: Router,
@@ -62,41 +65,37 @@ export class JobDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    document.addEventListener('mousemove', this.resetTimer.bind(this));
-    document.addEventListener('keypress', this.resetTimer.bind(this));
-    document.addEventListener('click', this.resetTimer.bind(this));
-    document.addEventListener('scroll', this.resetTimer.bind(this));
-    this.startIdleTimer();
-
+    this.startTimer();
     // this.JobDetailsLocalVariable.dataloading = true;
     this.GetLocalStorageColumnValue();
     this.GetMultipleSelectFiltersData();
     // this.JobDetailsLocalVariable.dataloading = false;
   }
+  startTimer() {
+    this.timeoutId = setTimeout(() => {
+      window.addEventListener('mousemove', this.refreshPageAfterIdleTime);
+
+      window.addEventListener('click', this.refreshPageAfterIdleTime);
+
+      window.addEventListener('keydown', this.refreshPageAfterIdleTime);
+    }, this.idleTime);
+  }
 
   resetTimer() {
-    this.JobDetailsLocalVariable.timedOut = false;
-    clearTimeout(this.JobDetailsLocalVariable.idleTimer);
-    clearInterval(this.JobDetailsLocalVariable.countdownTimer);
-    this.startIdleTimer();
-  }
-  startIdleTimer() {
-    this.JobDetailsLocalVariable.idleTimer = setTimeout(() => {
-      this.startCountdownTimer();
-    }, 60000);
+    clearTimeout(this.timeoutId);
+
+    this.startTimer();
   }
 
-  startCountdownTimer() {
-    this.JobDetailsLocalVariable.timedOut = true;
-    this.JobDetailsLocalVariable.countdown = 30;
-    this.JobDetailsLocalVariable.countdownTimer = setInterval(() => {
-      this.JobDetailsLocalVariable.countdown--;
-      if (this.JobDetailsLocalVariable.countdown <= 0) {
-        this.resetTimer();
-        this.refreshPage();
-      }
-    }, 1000);
-  }
+  refreshPageAfterIdleTime = () => {
+    window.removeEventListener('mousemove', this.refreshPageAfterIdleTime);
+
+    window.removeEventListener('click', this.refreshPageAfterIdleTime);
+
+    window.removeEventListener('keydown', this.refreshPageAfterIdleTime);
+
+    this.refreshPage();
+  };
 
   refreshPage() {
     this.JobDetailsLocalVariable.dataloading = true;
