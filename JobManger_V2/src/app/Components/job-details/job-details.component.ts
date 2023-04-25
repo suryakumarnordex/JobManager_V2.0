@@ -7,6 +7,7 @@ import {
   QueryList,
   ViewChild,
   ViewChildren,
+  HostListener
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/api-service.service';
@@ -50,6 +51,11 @@ export class JobDetailsComponent implements OnInit {
   cancelDisable: boolean = true;
   submitDisable: boolean = true;
 
+
+  idleTime = 3 * 60 * 1000; // 5 minutes in milliseconds
+  timeoutId: any;
+
+
   constructor(
     private ApiService: ApiServiceService,
     private router: Router,
@@ -64,41 +70,36 @@ export class JobDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    document.addEventListener('mousemove', this.resetTimer.bind(this));
-    document.addEventListener('keypress', this.resetTimer.bind(this));
-    document.addEventListener('click', this.resetTimer.bind(this));
-    document.addEventListener('scroll', this.resetTimer.bind(this));
-    this.startIdleTimer();
-    // this.JobDetailsLocalVariable.dataloading = true;
+    this.startTimer();
     this.GetLocalStorageColumnValue();
     this.GetMultipleSelectFiltersData();
-    // this.JobDetailsLocalVariable.dataloading = false;
   }
-  resetTimer() {
-    this.JobDetailsLocalVariable.timedOut = false;
-    clearTimeout(this.JobDetailsLocalVariable.idleTimer);
-    clearInterval(this.JobDetailsLocalVariable.countdownTimer);
-    this.startIdleTimer();
-  }
-  startIdleTimer() {
-    this.JobDetailsLocalVariable.idleTimer = setTimeout(() => {
-      this.startCountdownTimer();
-    }, 300000);
+  @HostListener('window:mousemove', ['$event'])
+  @HostListener('window:click', ['$event'])
+  @HostListener('window:keydown', ['$event'])
+  handleUserActivity(event: Event) {
+    this.resetTimer();
   }
 
-  startCountdownTimer() {
-    this.JobDetailsLocalVariable.timedOut = true;
-    this.JobDetailsLocalVariable.countdown = 60;
-    this.JobDetailsLocalVariable.countdownTimer = setInterval(() => {
-      this.JobDetailsLocalVariable.countdown--;
-      if (this.JobDetailsLocalVariable.countdown <= 0) {
-        this.resetTimer();
-        this.refreshPage();
-      }
-      console.log(this.JobDetailsLocalVariable.countdown);
-      
-    }, 1000);
+  startTimer() {
+    this.timeoutId = setTimeout(() => 
+     {
+      window.addEventListener('mousemove', this.refreshPageAfterIdleTime);
+      window.addEventListener('click', this.refreshPageAfterIdleTime);
+      window.addEventListener('keydown', this.refreshPageAfterIdleTime);
+    }, this.idleTime);
   }
+  resetTimer() {
+    clearTimeout(this.timeoutId);
+    this.startTimer();
+  }
+
+  refreshPageAfterIdleTime = () => {
+    window.removeEventListener('mousemove', this.refreshPageAfterIdleTime);
+    window.removeEventListener('click', this.refreshPageAfterIdleTime);
+    window.removeEventListener('keydown', this.refreshPageAfterIdleTime);
+    this.refreshPage();
+  };
   
   refreshPage() {
     this.JobDetailsLocalVariable.dataloading = true;
@@ -409,6 +410,7 @@ export class JobDetailsComponent implements OnInit {
   }
 
   CallSearchlayout() {
+    console.log("Search Layout called");
     let waitForChange = false;
     //this.JobDetailsLocalVariable.dataloading = true;
     this.ApiService.searchLayout(
