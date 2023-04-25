@@ -3,6 +3,7 @@ import { Deserializable, Serializable } from './helper';
 export class JobLayoutInfo implements Deserializable, Serializable {
   jobIdFragment: number;
   userFragment: string;
+  cockpitNameFragement: string;
   typeFragment: string;
   topicFragment: string;
   cockpitIdFragment: number;
@@ -36,6 +37,7 @@ export class JobLayoutInfo implements Deserializable, Serializable {
   deserialize(input: any): this {
     this.jobIdFragment = input.id;
     this.userFragment = input.cockpitUserName;
+    this.cockpitNameFragement = input.cockpitNameFragement;
     this.typeFragment = input.type;
     this.topicFragment = input.runTopic;
     this.cockpitIdFragment = input.cockpitId;
@@ -65,6 +67,7 @@ export class JobLayoutInfo implements Deserializable, Serializable {
     return {
       jobIdFragment: this.jobIdFragment,
       userFragment: this.userFragment,
+      cockpitNameFragement: this.cockpitNameFragement,
       typeFragment: this.typeFragment,
       topicFragment: this.topicFragment,
       cockpitIdFragment: this.cockpitIdFragment,

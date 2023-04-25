@@ -46,6 +46,15 @@
       </clr-dg-filter>
     </clr-dg-column>
     <clr-dg-column
+      [style.width.px]="JobDetailsLocalStorage.cockpitNamecolumnWidthValue"
+      [clrDgField]="'cockpitNameFragment'"
+      (clrDgColumnResize)="ColumnResized($event, 'cockpitNamecolumnwidth')"
+    >
+      <ng-container *clrDgHideableColumn="{ hidden: false }"
+        >Cockpit Name</ng-container
+      ></clr-dg-column
+    >
+    <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.cockpitcolumnWidthValue"
       [clrDgField]="'cockpitIdFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'cockpitcolumnwidth')"
@@ -231,6 +240,13 @@
       <clr-dg-cell [style.width.px]="300" id="cellstyle"
         ><div class="hidden">
           <span title="{{ job.userFragment }}">{{ job.userFragment }} </span>
+        </div></clr-dg-cell
+      >
+      <clr-dg-cell [style.width.px]="300" id="cellstyle"
+        ><div class="hidden">
+          <span title="{{ job.cockpitNameFragement }}"
+            >{{ job.cockpitNameFragement }}
+          </span>
         </div></clr-dg-cell
       >
       <clr-dg-cell [style.width.px]="300" id="cellstyle">

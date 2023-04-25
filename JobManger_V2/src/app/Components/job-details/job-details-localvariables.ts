@@ -7,8 +7,6 @@ export class JobDetailsLocalVariable {
   public Joblayout: JobLayoutInfo[];
   public taskLayout: TaskLayoutInfo[];
 
-  //public statusList: Array<string> = [];
-
   // Other properties
   public disableButton = false;
   public ColumnProperties: any;
@@ -16,20 +14,19 @@ export class JobDetailsLocalVariable {
   //Popup model properties
   public openPopupModal = false;
   public passingEventMsg: string = '';
-
   public JobManagerNavigation = [] as any;
 
   //Grid properties
 
   public dataloading: boolean = false;
   public CheckboxofJobRow = [] as any;
-
   public SelectedjobsId: Array<number>;
   public SelectedJobId: string;
 
   //Filter Values
   public filterJobid: string = '';
   public filterTopic: string = '';
+  public filterCockpitName: string = '';
   public filterCockpit: string = '';
   public filterrunno: string = '';
   public filterpriority: string = '';
@@ -56,7 +53,6 @@ export class JobDetailsLocalVariable {
   public selectedState: Array<string> = [];
   public AvailableType: { key: string; value: string }[] = [];
   public selectedType: Array<string> = [];
-
   public SelectedNodeGroup: string = '';
 
   public Nodelist: Array<string> = [
@@ -68,6 +64,7 @@ export class JobDetailsLocalVariable {
 
   ClearAllLocalVariables() {
     this.filterJobid = '';
+    this.filterCockpitName = '';
     this.filterTopic = '';
     this.filterCockpit = '';
     this.filterrunno = '';

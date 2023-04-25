@@ -3,6 +3,7 @@ import { Deserializable } from '../Models/helper';
 export class JobDetailsModules implements Deserializable {
   jobIdFragment?: number;
   userFragment?: string;
+  cockpitNameFragment?: string;
   typeFragment?: string;
   topicFragment?: string;
   cockpitIdFragment?: number;
@@ -32,6 +33,7 @@ export class JobDetailsModules implements Deserializable {
   deserialize(input: any): this {
     this.jobIdFragment = input.jobIdFragment;
     this.userFragment = input.userFragment;
+    this.cockpitNameFragment = input.cockpitNameFragment;
     this.typeFragment = input.typeFragment;
     this.topicFragment = input.topicFragment;
     this.cockpitIdFragment = input.cockpitIdFragment;

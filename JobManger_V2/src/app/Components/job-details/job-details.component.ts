@@ -53,12 +53,10 @@ export class JobDetailsComponent implements OnInit {
 
   constructor(
     private ApiService: ApiServiceService,
-    private router: Router,
     private logger: LoggerService,
     private localstorage: LocalStorageService,
     public JobDetailsLocalStorage: JobDetaillocalstorage,
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
-    private route: ActivatedRoute,
     public TaskDetailsComponent: TaskDetailsComponent,
     public TaskDetaillocalstorage: TaskDetaillocalstorage,
     private dataService: DataService
@@ -66,10 +64,8 @@ export class JobDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.startTimer();
-    // this.JobDetailsLocalVariable.dataloading = true;
     this.GetLocalStorageColumnValue();
     this.GetMultipleSelectFiltersData();
-    // this.JobDetailsLocalVariable.dataloading = false;
   }
   startTimer() {
     this.timeoutId = setTimeout(() => {
@@ -188,6 +184,10 @@ export class JobDetailsComponent implements OnInit {
         this.JobDetailsLocalStorage.idcolumnWidthValue = event;
         break;
       }
+      case 'cockpitNamecolumnwidth': {
+        this.JobDetailsLocalStorage.cockpitNamecolumnWidthValue = event;
+        break;
+      }
       case 'cockpitcolumnwidth': {
         this.JobDetailsLocalStorage.cockpitcolumnWidthValue = event;
         break;
@@ -248,7 +248,6 @@ export class JobDetailsComponent implements OnInit {
   }
 
   Columnfilters(ColumnProperties: ClrDatagridStateInterface) {
-    //this.JobDetailsLocalVariable.dataloading = true;
     this.JobDetailsLocalVariable.ColumnProperties = ColumnProperties;
     this.JobDetailsLocalVariable.CheckBoxFilterClear();
     this.JobDetailsLocalVariable.currentpage = 1;
@@ -312,7 +311,11 @@ export class JobDetailsComponent implements OnInit {
             this.JobDetailsLocalVariable.OrderBy = 'cockpitid';
             break;
           }
-
+          case 'cockpitNameFragment': {
+            this.JobDetailsLocalVariable.filterCockpitName = value;
+            this.JobDetailsLocalVariable.OrderBy = 'cockpitName';
+            break;
+          }
           case 'runnoFragment': {
             this.JobDetailsLocalVariable.filterrunno = value;
             this.JobDetailsLocalVariable.OrderBy = 'runnumber';
@@ -341,6 +344,7 @@ export class JobDetailsComponent implements OnInit {
     } else {
       this.JobDetailsLocalVariable.filterJobid = '';
       this.JobDetailsLocalVariable.filterrunno = '';
+      this.JobDetailsLocalVariable.filterCockpitName = '';
       this.JobDetailsLocalVariable.filterTopic = '';
       this.JobDetailsLocalVariable.filternooftasks = '';
       this.JobDetailsLocalVariable.filterpriority = '';
@@ -369,6 +373,14 @@ export class JobDetailsComponent implements OnInit {
         }
         case 'userFragment': {
           this.JobDetailsLocalVariable.OrderBy = 'cockpitusername';
+          break;
+        }
+        case 'cockpitNameFragment': {
+          this.JobDetailsLocalVariable.OrderBy = 'cockpitName';
+          break;
+        }
+        case 'topicFragment': {
+          this.JobDetailsLocalVariable.OrderBy = 'runtopic';
           break;
         }
         case 'statusFragment': {
@@ -420,6 +432,7 @@ export class JobDetailsComponent implements OnInit {
     this.ApiService.searchLayout(
       this.JobDetailsLocalVariable.filterJobid,
       this.JobDetailsLocalVariable.selectedUsername,
+      this.JobDetailsLocalVariable.filterCockpitName,
       this.JobDetailsLocalVariable.selectedType,
       this.JobDetailsLocalVariable.filterTopic,
       this.JobDetailsLocalVariable.filterCockpit,
@@ -586,6 +599,8 @@ export class JobDetailsComponent implements OnInit {
       this.localstorage.get('idcolumnwidth');
     this.JobDetailsLocalStorage.usercolumnWidthValue =
       this.localstorage.get('usercolumnwidth');
+    this.JobDetailsLocalStorage.cockpitNamecolumnWidthValue =
+      this.localstorage.get('cockpitNamecolumnwidth');
     this.JobDetailsLocalStorage.cockpitcolumnWidthValue =
       this.localstorage.get('cockpitcolumnwidth');
     this.JobDetailsLocalStorage.runcolumnWidthValue =

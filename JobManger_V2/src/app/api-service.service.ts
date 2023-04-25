@@ -30,6 +30,7 @@ export class ApiServiceService {
   searchLayout(
     jobIdFragment: string = '',
     userFragment: Array<string> = [],
+    cockpitNameFragment: string = '',
     typeFragment: Array<string> = [],
     topicFragment: string = '',
     cockpitIdFragment: string = '',
@@ -48,6 +49,10 @@ export class ApiServiceService {
   ): Observable<SearchResultsLayout> {
     let params = new HttpParams()
       .set('jobIdFragment', jobIdFragment ? jobIdFragment : '')
+      .set(
+        'cockpitNameFragment',
+        cockpitNameFragment ? cockpitNameFragment : ''
+      )
       .set('topicFragment', topicFragment ? topicFragment : '')
       .set('cockpitIdFragment', cockpitIdFragment ? cockpitIdFragment : '')
       .set('runnoFragment', runnoFragment ? runnoFragment : '')

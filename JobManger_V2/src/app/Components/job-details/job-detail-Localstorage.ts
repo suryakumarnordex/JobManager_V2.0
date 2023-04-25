@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 export class JobDetaillocalstorage {
   public idcolumnWidthValue: string;
   public usercolumnWidthValue: string;
+  public cockpitNamecolumnWidthValue: string;
   public cockpitcolumnWidthValue: string;
   public runcolumnWidthValue: string;
   public typecolumnWidthValue: string;
