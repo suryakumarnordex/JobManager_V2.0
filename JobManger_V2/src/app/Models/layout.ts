@@ -37,7 +37,7 @@ export class JobLayoutInfo implements Deserializable, Serializable {
   deserialize(input: any): this {
     this.jobIdFragment = input.id;
     this.userFragment = input.cockpitUserName;
-    this.cockpitNameFragement = input.cockpitNameFragement;
+    this.cockpitNameFragement = input.cockpitName;
     this.typeFragment = input.type;
     this.topicFragment = input.runTopic;
     this.cockpitIdFragment = input.cockpitId;
