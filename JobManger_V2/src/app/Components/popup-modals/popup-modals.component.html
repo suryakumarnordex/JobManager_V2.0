@@ -109,31 +109,53 @@
         class="modal-body"
         *ngIf="JobDetailsLocalVariable.passingEventMsg == 'Priority'"
       >
-        <clr-input-container>
-          <label>Enter Priority</label>
+        <div class="select-input-wrapper">
+          <clr-signpost *ngIf="PopupModelLocalvariable.isSignpost">
+            <clr-signpost-content [clrPosition]="'bottom-right'" *clrIfOpen>
+              <h3 class="tooltip">Example Priority</h3>
+              <p>
+                <code class="clr-code">
+                  <li>Highest</li>
+                  <li>AboveNormal</li>
+                  <li>Normal</li>
+                  <li>BelowNormal</li>
+                  <li>Lowest</li>
+                </code>
+              </p>
+            </clr-signpost-content> </clr-signpost
+          >&nbsp;
+          <clr-select-container>
+            <label>Enter Priority</label>
+
+            <select
+              clrSelect
+              name="options"
+              [(ngModel)]="PopupModelLocalvariable.PriorityValueoption"
+              (change)="
+                PopupModelLocalvariable.PriorityValue =
+                  PopupModelLocalvariable.PriorityValueoption
+              "
+            >
+              <option
+                *ngFor="let option of PopupModelLocalvariable.PrioriyArray"
+                (click)="PopupModelLocalvariable.PriorityValue = option.value"
+              >
+                {{ option.label }}
+              </option>
+            </select>
+            <clr-control-error>This field is required!</clr-control-error>
+          </clr-select-container>
           <input
             clrInput
             type="text"
             id="Priority"
             name="Priority"
-            [(ngModel)]="PriorityValue"
+            [(ngModel)]="PopupModelLocalvariable.PriorityValue"
+            required
           />
-        </clr-input-container>
+        </div>
         <br />
-        <clr-signpost>
-          <clr-signpost-content [clrPosition]="'bottom-right'" *clrIfOpen>
-            <h3 class="tooltip">Example Priority</h3>
-            <p>
-              <code class="clr-code">
-                <li>Highest</li>
-                <li>AboveNormal</li>
-                <li>Normal</li>
-                <li>BelowNormal</li>
-                <li>Lowest</li>
-              </code>
-            </p>
-          </clr-signpost-content>
-        </clr-signpost>
+
         <div
           class="alert alert-danger"
           role="alert"

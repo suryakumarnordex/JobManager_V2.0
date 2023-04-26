@@ -24,6 +24,7 @@ import { CheckboxListFilterComponent } from './checkbox-list-filter.component';
 import { ActivatedRoute } from '@angular/router';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { TaskDetaillocalstorage } from '../task-header/task-detail-Localstorage';
+import { PopupModelLocalvariable } from '../popup-modals/popup-modalslocalvariable';
 import { DataService } from './DataService';
 @Component({
   selector: 'app-job-details',
@@ -59,6 +60,7 @@ export class JobDetailsComponent implements OnInit {
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
     public TaskDetailsComponent: TaskDetailsComponent,
     public TaskDetaillocalstorage: TaskDetaillocalstorage,
+    public PopupModelLocalvariable: PopupModelLocalvariable,
     private dataService: DataService
   ) {}
 
@@ -527,6 +529,8 @@ export class JobDetailsComponent implements OnInit {
   }
 
   selectionChanged(event: any[]) {
+    this.PopupModelLocalvariable.PriorityValueoption = '';
+    this.PopupModelLocalvariable.PriorityValue = '';
     this.JobDetailsLocalVariable.SelectedjobsId = [];
     this.JobDetailsLocalVariable.SelectedjobsId = event.map(
       (e) => e.jobIdFragment

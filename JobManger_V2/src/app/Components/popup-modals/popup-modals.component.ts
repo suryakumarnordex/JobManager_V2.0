@@ -4,7 +4,7 @@ import { JobDetailsLocalVariable } from '../job-details/job-details-localvariabl
 import { JobDetailsComponent } from '../job-details/job-details.component';
 import { TaskDetailsLocalVariable } from '../task-details/task-details-localvariable';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
-
+import { PopupModelLocalvariable } from '../popup-modals/popup-modalslocalvariable';
 @Component({
   selector: 'app-popup-modals',
   templateUrl: './popup-modals.component.html',
@@ -13,7 +13,6 @@ import { TaskDetailsComponent } from '../task-details/task-details.component';
 export class PopupModalsComponent implements OnInit {
   @Input() passingEvent: string;
   isOpen: boolean = false;
-  public PriorityValue: string;
   public PopupResult: any;
   public IsSuccess: boolean = false;
   public Popuploading: boolean = false;
@@ -37,6 +36,7 @@ export class PopupModalsComponent implements OnInit {
   constructor(
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
     public TaskDetailsLocalVariable: TaskDetailsLocalVariable,
+    public PopupModelLocalvariable: PopupModelLocalvariable,
     private JobDetailscomponent: JobDetailsComponent,
     private TaskDetailsComponent: TaskDetailsComponent,
     private ApiService: ApiServiceService
@@ -59,9 +59,11 @@ export class PopupModalsComponent implements OnInit {
 
                 this.PopupResult =
                   'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                this.PopupModelLocalvariable.isSignpost = false;
               } else {
                 this.PopupResult +=
                   ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                this.PopupModelLocalvariable.isSignpost = false;
               }
               if (res[key].includes('Already')) {
                 this.IsSuccess = false;
@@ -143,6 +145,9 @@ export class PopupModalsComponent implements OnInit {
     this.parentChildConnection = false;
     this.JobDetailsLocalVariable.disableButton = false;
     this.PopupResult = undefined;
+    this.PopupModelLocalvariable.PriorityValueoption = '';
+    this.PopupModelLocalvariable.PriorityValue = '';
+    this.PopupModelLocalvariable.isSignpost = true;
     this.JobDetailscomponent.GetLocalStorageColumnValue();
 
     if (this.IsSuccess) {
@@ -164,7 +169,7 @@ export class PopupModalsComponent implements OnInit {
       this.JobDetailsLocalVariable.dataloading = true;
       this.ApiService.SetJobPriority(
         this.JobDetailsLocalVariable.SelectedjobsId,
-        this.PriorityValue
+        this.PopupModelLocalvariable.PriorityValue
       ).subscribe({
         next: (res: any) => {
           console.log(res);
