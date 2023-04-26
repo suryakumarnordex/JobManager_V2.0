@@ -7,3 +7,15 @@
 .text {
   word-break: break-all;
 }
+clr-select-container,
+input[name="Priority"] {
+  display: flex;
+  vertical-align: middle;
+  margin-right: 10px; /* add some margin between the elements */
+}
+.select-input-wrapper {
+  display: flex;
+  align-items: last baseline;
+  margin-right: 10px; 
+ /* add some margin between the elements */
+}

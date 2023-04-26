@@ -109,16 +109,16 @@
         class="modal-body"
         *ngIf="JobDetailsLocalVariable.passingEventMsg == 'Priority'"
       >
-        <clr-input-container>
-          <label>Enter Priority</label>
-          <input
-            clrInput
-            type="text"
-            id="Priority"
-            name="Priority"
-            [(ngModel)]="PriorityValue"
-          />
-        </clr-input-container>
+      <div class="select-input-wrapper">
+      <clr-select-container>
+        <label>Enter Priority</label>
+        <select clrSelect name="options" [(ngModel)]="PopupModelLocalvariable.PriorityValueoption" (change)="PopupModelLocalvariable.PriorityValue= PopupModelLocalvariable.PriorityValueoption">
+          <option *ngFor="let option of PopupModelLocalvariable.PrioriyArray" (click)="PopupModelLocalvariable.PriorityValue = option.value">{{ option.label }}</option>
+        </select>
+        <clr-control-error>This field is required!</clr-control-error>
+      </clr-select-container>
+      <input clrInput type="text" id="Priority" name="Priority" [(ngModel)]="PopupModelLocalvariable.PriorityValue" required />
+    </div>
         <br />
         <clr-signpost>
           <clr-signpost-content [clrPosition]="'bottom-right'" *clrIfOpen>

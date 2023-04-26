@@ -4,7 +4,8 @@ import { JobDetailsLocalVariable } from '../job-details/job-details-localvariabl
 import { JobDetailsComponent } from '../job-details/job-details.component';
 import { TaskDetailsLocalVariable } from '../task-details/task-details-localvariable';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
-
+import { ClrDropdownModule } from '@clr/angular';
+import {PopupModelLocalvariable} from './popup-modalslocalvariable';
 @Component({
   selector: 'app-popup-modals',
   templateUrl: './popup-modals.component.html',
@@ -13,11 +14,11 @@ import { TaskDetailsComponent } from '../task-details/task-details.component';
 export class PopupModalsComponent implements OnInit {
   @Input() passingEvent: string;
   isOpen: boolean = false;
-  public PriorityValue: string;
   public PopupResult: any;
   public IsSuccess: boolean = false;
   public Popuploading: boolean = false;
   public DisplayMsg: any;
+  
 
   get parentChildConnection(): boolean {
     return this.isOpen;
@@ -39,6 +40,7 @@ export class PopupModalsComponent implements OnInit {
     public TaskDetailsLocalVariable: TaskDetailsLocalVariable,
     private JobDetailscomponent: JobDetailsComponent,
     private TaskDetailsComponent: TaskDetailsComponent,
+    public PopupModelLocalvariable:PopupModelLocalvariable,
     private ApiService: ApiServiceService
   ) {}
 
@@ -47,6 +49,7 @@ export class PopupModalsComponent implements OnInit {
   }
 
   PopupEvent() {
+    
     this.TaskDetailsLocalVariable.dataloading = false;
     this.passingEvent = this.JobDetailsLocalVariable.passingEventMsg;
     switch (this.JobDetailsLocalVariable.passingEventMsg) {
@@ -140,6 +143,8 @@ export class PopupModalsComponent implements OnInit {
   }
 
   PopupModelClose() {
+    this.PopupModelLocalvariable.PriorityValueoption = '';
+    this.PopupModelLocalvariable.PriorityValue='';
     this.parentChildConnection = false;
     this.JobDetailsLocalVariable.disableButton = false;
     this.IsSuccess = false;
@@ -154,7 +159,7 @@ export class PopupModalsComponent implements OnInit {
       this.JobDetailsLocalVariable.dataloading = true;
       this.ApiService.SetJobPriority(
         this.JobDetailsLocalVariable.SelectedjobsId,
-        this.PriorityValue
+        this.PopupModelLocalvariable.PriorityValue
       ).subscribe({
         next: (res: any) => {
           console.log(res);

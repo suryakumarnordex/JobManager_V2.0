@@ -22,7 +22,9 @@ import { TokenInterceptor } from './Services/token.interceptor';
 import { ErrorInterceptor } from './Services/error.interceptor';
 import { WINDOW_PROVIDERS } from './Services/window.providers';
 import { exec } from 'child_process';
+
 import { TaskHeaderComponent } from './Components/task-header/task-header.component';
+import { PopupModelLocalvariable } from './Components/popup-modals/popup-modalslocalvariable';
 @NgModule({
   imports: [
     BrowserModule,
@@ -49,6 +51,7 @@ import { TaskHeaderComponent } from './Components/task-header/task-header.compon
     JobDetaillocalstorage,
     JobDetailsLocalVariable,
     TaskDetailsLocalVariable,
+    PopupModelLocalvariable,
     TaskDetaillocalstorage,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

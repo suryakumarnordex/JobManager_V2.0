@@ -21,6 +21,7 @@ import {
   ClrDatagridColumn,
   ClrDatagridStateInterface,
 } from '@clr/angular';
+import { PopupModelLocalvariable } from '../popup-modals/popup-modalslocalvariable';
 import { JobHeaderComponent } from '../job-header/job-header.component';
 import { CheckboxListFilterComponent } from './checkbox-list-filter.component';
 import { ActivatedRoute } from '@angular/router';
@@ -64,7 +65,8 @@ export class JobDetailsComponent implements OnInit {
     public JobDetailsLocalStorage: JobDetaillocalstorage,
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
     private route: ActivatedRoute,
-        public TaskDetailsComponent: TaskDetailsComponent,
+    public PopupModelLocalvariable:PopupModelLocalvariable,
+    public TaskDetailsComponent: TaskDetailsComponent,
     public TaskDetaillocalstorage: TaskDetaillocalstorage,
     private dataService: DataService
   ) {}
@@ -509,6 +511,8 @@ export class JobDetailsComponent implements OnInit {
   }
 
   selectionChanged(event: any[]) {
+    this.PopupModelLocalvariable.PriorityValueoption = '';
+    this.PopupModelLocalvariable.PriorityValue='';
     this.JobDetailsLocalVariable.SelectedjobsId = event.map(
       (e) => e.jobIdFragment
     );
