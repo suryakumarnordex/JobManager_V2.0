@@ -146,10 +146,6 @@ export class PopupModalsComponent implements OnInit {
     this.JobDetailscomponent.GetLocalStorageColumnValue();
 
     if (this.IsSuccess) {
-      console.log(
-        this.JobDetailsLocalVariable.passingEventMsg,
-        'Refresh called'
-      );
       if ((this.JobDetailsLocalVariable.passingEventMsg = 'TaskRequeue')) {
         this.TaskDetailsComponent.CallSearchTaskLayout();
         this.TaskDetailsLocalVariable.CheckboxofTaskRow = [];
