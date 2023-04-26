@@ -73,24 +73,31 @@
         </div>
 
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-outline"
-            (click)="PopupModelClose()"
-          >
-            No
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline"
-            [disabled]="this.JobDetailsLocalVariable.disableButton"
-            (click)="
-              PopupEvent(); this.JobDetailsLocalVariable.disableButton = true
-            "
-          >
-            Yes
-          </button>
+          <div class="progress-block">
+            <div class="progress loop" *ngIf="isProgressbar">
+              <progress></progress>       
+            </div>
+          </div>
+        
+          <div class="button-container right-align">
+            <button
+              type="button"
+              class="btn btn-outline"
+              (click)="PopupModelClose()"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline"
+              [disabled]="this.JobDetailsLocalVariable.disableButton"
+              (click)="PopupEvent(); this.JobDetailsLocalVariable.disableButton = true"
+            >
+              OK
+            </button>
+          </div>
         </div>
+        
       </div>
       <ng-template #elseblock>
         <div
@@ -231,10 +238,10 @@
             class="btn btn-outline"
             (click)="PopupModelClose()"
           >
-            No
+            Cancel
           </button>
           <button type="button" class="btn btn-outline" (click)="PopupEvent()">
-            Yes
+            OK
           </button>
         </div>
       </div>

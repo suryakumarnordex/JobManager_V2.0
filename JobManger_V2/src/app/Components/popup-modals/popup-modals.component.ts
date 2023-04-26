@@ -15,6 +15,7 @@ export class PopupModalsComponent implements OnInit {
   isOpen: boolean = false;
   public PriorityValue: string;
   public PopupResult: any;
+  public isProgressbar: boolean = false;
   public IsSuccess: boolean = false;
   public Popuploading: boolean = false;
   public DisplayMsg: any;
@@ -56,7 +57,6 @@ export class PopupModalsComponent implements OnInit {
             Object.keys(res).forEach((key) => {
               if (this.PopupResult == undefined) {
                 this.Popuploading = true;
-
                 this.PopupResult =
                   'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
               } else {
@@ -109,21 +109,36 @@ export class PopupModalsComponent implements OnInit {
           this.JobDetailsLocalVariable.passingEventMsg
         )
           .then((res) => {
+            this.isProgressbar = true;
             Object.keys(res).forEach((key) => {
               if (this.PopupResult == undefined) {
                 this.Popuploading = true;
-
-                this.PopupResult =
-                  'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+              
+                setTimeout(() => {
+                  this.PopupResult =
+                    'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                  this.Popuploading = false;
+                  this.isProgressbar = false;
+                }, 8000); // 10 seconds delay
               } else {
-                this.PopupResult +=
-                  ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                setTimeout(() => {
+                  this.PopupResult +=
+                    ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                  this.Popuploading = false;
+                }, 8000); // 10 seconds delay
               }
+              
 
               if (res[key].includes('Already')) {
-                this.IsSuccess = false;
+                setTimeout(() => {
+                  this.IsSuccess = false;
+                  this.isProgressbar = false;
+                }, 8000);
               } else {
-                this.IsSuccess = true;
+                setTimeout(() => {
+                  this.IsSuccess = true;
+                  this.isProgressbar = false;
+                }, 8000);
               }
             });
           })
