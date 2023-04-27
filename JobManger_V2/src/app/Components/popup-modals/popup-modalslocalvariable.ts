@@ -17,4 +17,9 @@ export class PopupModelLocalvariable {
 
     { value: 'Highest', label: 'Highest' },
   ];
+
+  //loding properties
+  public isProgressbar: boolean = false;
+  public isclose: boolean = false;
+  public iscloseheader: boolean = false;
 }

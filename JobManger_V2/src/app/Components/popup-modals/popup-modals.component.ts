@@ -53,18 +53,29 @@ export class PopupModalsComponent implements OnInit {
       case 'Priority': {
         this.SetJobPriority()
           .then((res) => {
+            this.PopupModelLocalvariable.isProgressbar = true;
+            this.PopupModelLocalvariable.isclose = true;
+            this.PopupModelLocalvariable.iscloseheader = true;
             Object.keys(res).forEach((key) => {
               if (this.PopupResult == undefined) {
                 this.Popuploading = true;
-
-                this.PopupResult =
-                  'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
-                this.PopupModelLocalvariable.isSignpost = false;
+                setTimeout(() => {
+                  this.PopupResult =
+                    'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                  this.PopupModelLocalvariable.isSignpost = false;
+                  this.PopupModelLocalvariable.isProgressbar = false;
+                  this.PopupModelLocalvariable.iscloseheader = false;
+                }, 8000); // 8 sec
               } else {
-                this.PopupResult +=
-                  ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
-                this.PopupModelLocalvariable.isSignpost = false;
+                setTimeout(() => {
+                  this.PopupResult +=
+                    ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                  this.PopupModelLocalvariable.isSignpost = false;
+                  this.PopupModelLocalvariable.isProgressbar = false;
+                  this.PopupModelLocalvariable.iscloseheader = false;
+                }, 8000);
               }
+
               if (res[key].includes('Already')) {
                 this.IsSuccess = false;
               } else {
@@ -83,15 +94,27 @@ export class PopupModalsComponent implements OnInit {
           this.JobDetailsLocalVariable.passingEventMsg
         )
           .then((res) => {
+            this.PopupModelLocalvariable.isProgressbar = true;
+            this.PopupModelLocalvariable.isclose = true;
+            this.PopupModelLocalvariable.iscloseheader = true;
             Object.keys(res).forEach((key) => {
               if (this.PopupResult == undefined) {
                 this.Popuploading = true;
-
-                this.PopupResult =
-                  'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                setTimeout(() => {
+                  this.PopupResult =
+                    'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                  this.PopupModelLocalvariable.isSignpost = false;
+                  this.PopupModelLocalvariable.isProgressbar = false;
+                  this.PopupModelLocalvariable.iscloseheader = false;
+                }, 8000);
               } else {
-                this.PopupResult +=
-                  ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                setTimeout(() => {
+                  this.PopupResult +=
+                    ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                  this.PopupModelLocalvariable.isSignpost = false;
+                  this.PopupModelLocalvariable.isProgressbar = false;
+                  this.PopupModelLocalvariable.iscloseheader = false;
+                }, 8000);
               }
               if (res[key].includes('Already')) {
                 this.IsSuccess = false;
@@ -111,29 +134,47 @@ export class PopupModalsComponent implements OnInit {
           this.JobDetailsLocalVariable.passingEventMsg
         )
           .then((res) => {
+            this.PopupModelLocalvariable.isProgressbar = true;
+            this.PopupModelLocalvariable.isclose = true;
+            this.PopupModelLocalvariable.iscloseheader = true;
             Object.keys(res).forEach((key) => {
               if (this.PopupResult == undefined) {
                 this.Popuploading = true;
-
-                this.PopupResult =
-                  'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                setTimeout(() => {
+                  this.PopupResult =
+                    'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                  this.Popuploading = false;
+                  this.PopupModelLocalvariable.isProgressbar = false;
+                  this.PopupModelLocalvariable.iscloseheader = false;
+                }, 8000); // 8 seconds delay
               } else {
-                this.PopupResult +=
-                  ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                setTimeout(() => {
+                  this.PopupResult +=
+                    ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                  this.Popuploading = false;
+                  this.PopupModelLocalvariable.isProgressbar = false;
+                  this.PopupModelLocalvariable.iscloseheader = true;
+                }, 8000); // 8 seconds delay
               }
 
               if (res[key].includes('Already')) {
-                this.IsSuccess = false;
+                setTimeout(() => {
+                  this.IsSuccess = false;
+                  this.PopupModelLocalvariable.isProgressbar = false;
+                }, 8000);
               } else {
-                this.IsSuccess = true;
+                setTimeout(() => {
+                  this.IsSuccess = true;
+                  this.PopupModelLocalvariable.isProgressbar = false;
+                }, 8000);
               }
             });
           })
           .catch((error) => {
             this.PopupResult = error;
+
             this.IsSuccess = false;
           });
-
         break;
       }
     }
@@ -151,12 +192,12 @@ export class PopupModalsComponent implements OnInit {
     this.JobDetailscomponent.GetLocalStorageColumnValue();
 
     if (this.IsSuccess) {
-      if ((this.JobDetailsLocalVariable.passingEventMsg = 'TaskRequeue')) {
+      if (this.JobDetailsLocalVariable.passingEventMsg == 'TaskRequeue') {
         this.TaskDetailsComponent.CallSearchTaskLayout();
         this.TaskDetailsLocalVariable.CheckboxofTaskRow = [];
         this.TaskDetailsLocalVariable.SelectedtasksId = [];
       } else {
-        this.JobDetailscomponent.refreshPage();
+        this.JobDetailscomponent.CallSearchlayout();
         this.JobDetailsLocalVariable.SelectedjobsId = [];
         this.JobDetailsLocalVariable.CheckboxofJobRow = [];
       }

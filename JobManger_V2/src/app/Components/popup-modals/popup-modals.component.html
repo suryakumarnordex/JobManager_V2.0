@@ -8,7 +8,11 @@
           type="button"
           (click)="PopupModelClose()"
         >
-          <clr-icon aria-hidden="true" shape="close"></clr-icon>
+          <clr-icon
+            aria-hidden="true"
+            shape="close"
+            [hidden]="PopupModelLocalvariable.iscloseheader"
+          ></clr-icon>
         </button>
         <h3 class="modal-title">
           {{ JobDetailsLocalVariable.passingEventMsg }}
@@ -73,23 +77,40 @@
         </div>
 
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-outline"
-            (click)="PopupModelClose()"
+          <div class="progress-block">
+            <div
+              class="progress loop"
+              *ngIf="PopupModelLocalvariable.isProgressbar"
+            >
+              <progress></progress>
+            </div>
+          </div>
+          <div
+            *ngIf="PopupModelLocalvariable.isProgressbar"
+            style="align-items: left"
           >
-            No
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline"
-            [disabled]="this.JobDetailsLocalVariable.disableButton"
-            (click)="
-              PopupEvent(); this.JobDetailsLocalVariable.disableButton = true
-            "
-          >
-            Yes
-          </button>
+            <b> Loading Results... </b>
+          </div>
+          <div class="button-container right-align">
+            <button
+              type="button"
+              class="btn btn-outline"
+              (click)="PopupModelClose()"
+              [disabled]="PopupModelLocalvariable.isclose"
+            >
+              No
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline"
+              [disabled]="this.JobDetailsLocalVariable.disableButton"
+              (click)="
+                PopupEvent(); this.JobDetailsLocalVariable.disableButton = true
+              "
+            >
+              Yes
+            </button>
+          </div>
         </div>
       </div>
       <ng-template #elseblock>
@@ -193,14 +214,33 @@
             </div>
           </div>
         </div>
-        <button
-          class="btn btn-outline"
-          type="button"
-          [disabled]="IsSuccess"
-          (click)="PopupEvent(); IsSuccess = true"
-        >
-          Update
-        </button>
+
+        <div class="modal-footer">
+          <div class="progress-block">
+            <div
+              class="progress loop"
+              *ngIf="PopupModelLocalvariable.isProgressbar"
+            >
+              <progress></progress>
+            </div>
+          </div>
+          <div
+            *ngIf="PopupModelLocalvariable.isProgressbar"
+            style="align-items: left"
+          >
+            <b> Loading Results... </b>
+          </div>
+          <div class="button-container right-align">
+            <button
+              class="btn btn-outline"
+              type="button"
+              [disabled]="IsSuccess"
+              (click)="PopupEvent(); IsSuccess = true"
+            >
+              Update
+            </button>
+          </div>
+        </div>
       </div>
       <!-- Task Headers-->
       <div
@@ -247,17 +287,40 @@
             </div>
           </div>
         </div>
+
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-outline"
-            (click)="PopupModelClose()"
+          <div class="progress-block">
+            <div
+              class="progress loop"
+              *ngIf="PopupModelLocalvariable.isProgressbar"
+            >
+              <progress></progress>
+            </div>
+          </div>
+          <div
+            *ngIf="PopupModelLocalvariable.isProgressbar"
+            style="align-items: left"
           >
-            No
-          </button>
-          <button type="button" class="btn btn-outline" (click)="PopupEvent()">
-            Yes
-          </button>
+            <b> Loading Results... </b>
+          </div>
+          <div class="button-container right-align">
+            <button
+              type="button"
+              class="btn btn-outline"
+              (click)="PopupModelClose()"
+              [disabled]="PopupModelLocalvariable.isclose"
+            >
+              No
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline"
+              (click)="PopupEvent()"
+              [disabled]="PopupModelLocalvariable.isclose"
+            >
+              Yes
+            </button>
+          </div>
         </div>
       </div>
       <br />

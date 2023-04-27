@@ -112,7 +112,6 @@ export class JobDetailsComponent implements OnInit {
     ) {
       this.GetMultipleSelectFiltersData();
     }
-
     this.CallSearchlayout();
   }
 
@@ -529,6 +528,8 @@ export class JobDetailsComponent implements OnInit {
   }
 
   selectionChanged(event: any[]) {
+    this.PopupModelLocalvariable.isclose = false;
+    this.PopupModelLocalvariable.iscloseheader = false;
     this.PopupModelLocalvariable.PriorityValueoption = '';
     this.PopupModelLocalvariable.PriorityValue = '';
     this.JobDetailsLocalVariable.SelectedjobsId = [];

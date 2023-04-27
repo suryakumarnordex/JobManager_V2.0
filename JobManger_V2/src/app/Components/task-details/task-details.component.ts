@@ -19,6 +19,7 @@ import { JobDetailsLocalVariable } from '../job-details/job-details-localvariabl
 import { ClrDatagridColumn, ClrDatagridStateInterface } from '@clr/angular';
 import { CheckboxListFilterComponent } from '../job-details/checkbox-list-filter.component';
 import { DataService } from '../job-details/DataService';
+import { PopupModelLocalvariable } from '../popup-modals/popup-modalslocalvariable';
 @Component({
   selector: 'app-task-details',
   templateUrl: './task-details.component.html',
@@ -42,7 +43,8 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
     public TaskDetailsLocalStorage: TaskDetaillocalstorage,
     private localstorage: LocalStorageService,
     public JobDetailsLocalVariable: JobDetailsLocalVariable,
-    private dataService: DataService
+    private dataService: DataService,
+    public PopupModelLocalvariable: PopupModelLocalvariable
   ) {
     this.TaskDetailsLocalVariable.CheckboxofTaskRow = [];
   }
@@ -123,6 +125,7 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
     });
   }
   selectionChanged(event: any[]) {
+    this.PopupModelLocalvariable.isclose = false;
     this.TaskDetailsLocalVariable.SelectedtasksId = [];
     if (event !== undefined) {
       this.TaskDetailsLocalVariable.SelectedtasksId = event.map(
