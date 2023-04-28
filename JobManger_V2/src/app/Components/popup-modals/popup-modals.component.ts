@@ -15,6 +15,8 @@ export class PopupModalsComponent implements OnInit {
   isOpen: boolean = false;
   public PriorityValue: string;
   public PopupResult: any;
+  public isclose: boolean = false;
+  public iscloseheader:boolean = false;
   public isProgressbar: boolean = false;
   public IsSuccess: boolean = false;
   public Popuploading: boolean = false;
@@ -110,6 +112,8 @@ export class PopupModalsComponent implements OnInit {
         )
           .then((res) => {
             this.isProgressbar = true;
+            this.isclose = true;
+            this.iscloseheader=true;
             Object.keys(res).forEach((key) => {
               if (this.PopupResult == undefined) {
                 this.Popuploading = true;
@@ -119,12 +123,16 @@ export class PopupModalsComponent implements OnInit {
                     'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
                   this.Popuploading = false;
                   this.isProgressbar = false;
+                  this.iscloseheader = false;
+                 
                 }, 8000); // 10 seconds delay
               } else {
                 setTimeout(() => {
                   this.PopupResult +=
                     ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
                   this.Popuploading = false;
+                  this.isProgressbar = false;
+                  this.iscloseheader = true;
                 }, 8000); // 10 seconds delay
               }
               

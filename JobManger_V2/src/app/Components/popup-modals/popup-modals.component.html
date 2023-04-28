@@ -8,7 +8,7 @@
           type="button"
           (click)="PopupModelClose()"
         >
-          <clr-icon aria-hidden="true" shape="close"></clr-icon>
+          <clr-icon aria-hidden="true" shape="close" [hidden]="iscloseheader"></clr-icon>
         </button>
         <h3 class="modal-title">
           {{ JobDetailsLocalVariable.passingEventMsg }}
@@ -71,12 +71,15 @@
             </div>
           </div>
         </div>
-
+      
         <div class="modal-footer">
+        
           <div class="progress-block">
             <div class="progress loop" *ngIf="isProgressbar">
+              
               <progress></progress>       
-            </div>
+            </div> &nbsp;&nbsp;
+            <div *ngIf="isProgressbar"><b> Loading Results... </b></div>
           </div>
         
           <div class="button-container right-align">
@@ -84,6 +87,7 @@
               type="button"
               class="btn btn-outline"
               (click)="PopupModelClose()"
+              [disabled]="isclose"
             >
               Cancel
             </button>
