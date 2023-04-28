@@ -52,7 +52,7 @@ export class JobDetailsComponent implements OnInit {
   submitDisable: boolean = true;
 
 
-  idleTime = 3 * 60 * 1000; // 5 minutes in milliseconds
+  idleTime = 1 * 60 * 1000; // 1 minutes in milliseconds
   timeoutId: any;
 
 
