@@ -66,9 +66,9 @@ export class CheckboxListFilterComponent
         delete this.selectedItems[index];
         this.selectedItems.splice(index, 1);
       }
-      if (index == 0) {
-        this.selectedItems = [];
-      }
+      // if (index == 0) {
+      //   this.selectedItems = [];
+      // }
     }
 
     this.changes.next(true);
