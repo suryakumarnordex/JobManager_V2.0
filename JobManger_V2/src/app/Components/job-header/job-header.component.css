@@ -100,6 +100,10 @@ header.header-6,
 .align {
   right: 0;
 }
+.align-excel{
+  right: 0;
+  margin-right: 20px;
+}
 .modal-dialog {
   display: inline-block;
   vertical-align: middle;

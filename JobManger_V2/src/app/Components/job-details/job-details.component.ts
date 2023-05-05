@@ -19,7 +19,7 @@ import {
   ClrDatagridColumn,
   ClrDatagridStateInterface,
 } from '@clr/angular';
-
+import {ExcelService} from '../services/excel.service';
 import { CheckboxListFilterComponent } from './checkbox-list-filter.component';
 import { ActivatedRoute } from '@angular/router';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
@@ -61,7 +61,8 @@ export class JobDetailsComponent implements OnInit {
     public TaskDetailsComponent: TaskDetailsComponent,
     public TaskDetaillocalstorage: TaskDetaillocalstorage,
     public PopupModelLocalvariable: PopupModelLocalvariable,
-    private dataService: DataService
+    private dataService: DataService,
+    private excelService:ExcelService
   ) {}
 
   ngOnInit(): void {
@@ -246,6 +247,10 @@ export class JobDetailsComponent implements OnInit {
         break;
       }
     }
+  }
+  
+  exportAsXLSX():void {
+    this.excelService.exportAsExcelFile(this.JobDetailsLocalVariable.Joblayout, 'sample');
   }
 
   Columnfilters(ColumnProperties: ClrDatagridStateInterface) {
@@ -452,7 +457,6 @@ export class JobDetailsComponent implements OnInit {
     ).subscribe({
       next: (res: SearchResultsLayout) => {
         console.log(typeof res,"JOB RAW");
-        
         this.JobDetailsLocalVariable.Joblayout = res.results;
         console.log(this.JobDetailsLocalVariable.Joblayout,"JOB DATAS");
         this.JobDetailsLocalVariable.jobCount = res.totalResults;

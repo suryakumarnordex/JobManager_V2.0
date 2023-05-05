@@ -22,6 +22,7 @@ import { TaskDetailsLocalVariable } from './Components/task-details/task-details
 import { TokenInterceptor } from './Services/token.interceptor';
 import { ErrorInterceptor } from './Services/error.interceptor';
 import { WINDOW_PROVIDERS } from './Services/window.providers';
+import { ExcelService } from './Components/services/excel.service';
 import { exec } from 'child_process';
 import { TaskHeaderComponent } from './Components/task-header/task-header.component';
 @NgModule({
@@ -35,6 +36,7 @@ import { TaskHeaderComponent } from './Components/task-header/task-header.compon
   ],
   declarations: [
     AppComponent,
+   
     JobDetailsComponent,
     UtcToLocalTimePipe,
     TaskDetailsComponent,
@@ -46,6 +48,7 @@ import { TaskHeaderComponent } from './Components/task-header/task-header.compon
   ],
   providers: [
     UtcConverterService,
+    ExcelService,
     TaskDetailsComponent,
     JobDetaillocalstorage,
     JobDetailsLocalVariable,
