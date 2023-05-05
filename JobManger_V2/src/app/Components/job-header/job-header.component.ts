@@ -33,7 +33,7 @@ export class JobHeaderComponent implements OnInit {
   @Input() passingEvent: string;
   @Input() countdown: number;
   @Input() timedOut: boolean;
-
+  @Input() selecteddownload:boolean;
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
   jobCount: number;
   totalPage: number;
@@ -105,6 +105,9 @@ export class JobHeaderComponent implements OnInit {
   }
   exportData(){
     this.JobDetailsComponent.exportAsXLSX();
+  }
+  exportDataselected(){
+    this.JobDetailsComponent.exportSelectedAsXLSX();
   }
   clearAllfilters() {
     this.JobDetailsLocalVariable.dataloading = true;

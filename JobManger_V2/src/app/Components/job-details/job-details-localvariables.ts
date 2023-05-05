@@ -5,6 +5,7 @@ import { JobLayoutInfo, TaskLayoutInfo } from 'src/app/Models/layout';
 export class JobDetailsLocalVariable {
   //Layout info properties
   public Joblayout: JobLayoutInfo[];
+  public selectedJoblayout: JobLayoutInfo[];
   public taskLayout: TaskLayoutInfo[];
 
   // Other properties
@@ -54,7 +55,7 @@ export class JobDetailsLocalVariable {
   public AvailableType: { key: string; value: string }[] = [];
   public selectedType: Array<string> = [];
   public SelectedNodeGroup: string = '';
-
+  public downloadallDisable:boolean = true;
   public Nodelist: Array<string> = [
     'All jobs',
     'Queue Simulation',
