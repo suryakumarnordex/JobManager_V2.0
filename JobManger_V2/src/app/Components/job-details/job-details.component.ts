@@ -451,7 +451,10 @@ export class JobDetailsComponent implements OnInit {
       waitForChange
     ).subscribe({
       next: (res: SearchResultsLayout) => {
+        console.log(typeof res,"JOB RAW");
+        
         this.JobDetailsLocalVariable.Joblayout = res.results;
+        console.log(this.JobDetailsLocalVariable.Joblayout,"JOB DATAS");
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
         this.JobDetailsLocalVariable.totalPage = Math.ceil(
           this.JobDetailsLocalVariable.jobCount /
