@@ -23,7 +23,7 @@
       [style.width.px]="JobDetailsLocalStorage.idcolumnWidthValue"
       [clrDgField]="'jobIdFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'idcolumnwidth')"
-      ><ng-container *clrDgHideableColumn="{ hidden: false }">ID</ng-container> 
+      ><ng-container *clrDgHideableColumn="{ hidden: false }">ID</ng-container>
     </clr-dg-column>
 
     <clr-dg-column
@@ -152,6 +152,7 @@
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.starttimecolumnWidthValue"
+      [clrDgField]="'startTime'"
       (clrDgColumnResize)="ColumnResized($event, 'starttimecolumnwidth')"
       ><ng-container *clrDgHideableColumn="{ hidden: false }"
         >Start Time (yy/mm/dd HH:mm)
@@ -159,6 +160,7 @@
     >
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.endtimecolumnWidthValue"
+      [clrDgField]="'endTime'"
       (clrDgColumnResize)="ColumnResized($event, 'endtimecolumnwidth')"
       ><ng-container *clrDgHideableColumn="{ hidden: false }"
         >End Time (yy/mm/dd HH:mm)
@@ -167,6 +169,7 @@
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.submittimecolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'submittimecolumnwidth')"
+      [clrDgField]="'submitTime'"
       ><ng-container *clrDgHideableColumn="{ hidden: false }"
         >Submit Time (yy/mm/dd HH:mm)
       </ng-container></clr-dg-column
@@ -174,6 +177,7 @@
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.elapsedtimecolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'elapsedtimecolumnwidth')"
+      [clrDgField]="'elapsedTime'"
       ><ng-container *clrDgHideableColumn="{ hidden: false }"
         >Elapsed Time (HH:mm:ss)</ng-container
       ></clr-dg-column
@@ -281,7 +285,9 @@
           <span title="{{ job.runnoFragment }}">
             <a
               href="{{
-                'http://ldms.nordex-ag.com/NXplore2/data?projectId=498&run=' +
+                'http://ldms.nordex-ag.com/NXplore2/data?projectId=' +
+                  job.cockpitIdFragment +
+                  '&run=' +
                   job.runnoFragment
               }}"
               target="_blank"
