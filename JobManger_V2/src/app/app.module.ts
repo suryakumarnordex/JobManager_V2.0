@@ -24,6 +24,7 @@ import { ErrorInterceptor } from './Services/error.interceptor';
 import { WINDOW_PROVIDERS } from './Services/window.providers';
 import { exec } from 'child_process';
 import { TaskHeaderComponent } from './Components/task-header/task-header.component';
+import { NodeListComponent } from './Components/node-list/node-list.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -43,6 +44,7 @@ import { TaskHeaderComponent } from './Components/task-header/task-header.compon
     PopupModalsComponent,
     CheckboxListFilterComponent,
     TaskHeaderComponent,
+    NodeListComponent,
   ],
   providers: [
     UtcConverterService,

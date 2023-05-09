@@ -1,0 +1,88 @@
+<div class="main-container">
+  <header class="header header-12">
+    <div class="header-nav">
+      <img
+        src="http://kghapp83v/QuickerView/assets/nordex_logo.png"
+        alt="No image"
+        height="50"
+      />
+      <a *ngFor="let n of navArray" class="nav-link" [href]="n.url">
+        <span class="nav-text">{{ n.name }}</span>
+      </a>
+    </div>
+  </header>
+  <nav class="subnav">
+    <ul class="nav">
+      <li class="nav-item" class="nav-content">
+        <a class="nav-link" (click)="homePage()">Jobs</a>
+      </li>
+      <li>
+        <div style="padding: 20px">
+          <select clrSelect name="options" (change)="onNodeGroupChange($event)">
+            <option *ngFor="let item of listItems" [value]="item">
+              {{ item }}
+            </option>
+          </select>
+          <p class="display"></p>
+        </div>
+      </li>
+    </ul>
+  </nav>
+  <clr-datagrid
+    [(clrDgSingleSelected)]="selectedNode"
+    [clrDgLoading]="nodesLoading"
+  >
+    <clr-dg-action-bar>
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-sm btn-secondary"
+          (click)="update(selectedNode)"
+          [disabled]="!selectedNode || stateChangeActive"
+        >
+          <span *ngIf="!stateChangeActive">
+            {{
+              !selectedNode
+                ? "No node selected"
+                : selectedNode.state
+                ? "Take node offline"
+                : "Take node online"
+            }}
+          </span>
+          <span *ngIf="stateChangeActive">
+            <span class="spinner spinner-inline"> Loading... </span>
+            <span> Loading... </span>
+          </span>
+        </button>
+      </div>
+    </clr-dg-action-bar>
+
+    <clr-dg-column [clrDgSortBy]="'name'" [clrDgSortOrder]="ascSort"
+      >Hostname</clr-dg-column
+    >
+    <clr-dg-column [clrDgSortBy]="'description'">Description</clr-dg-column>
+    <clr-dg-column>State</clr-dg-column>
+
+    <clr-dg-row *clrDgItems="let node of nodeList" [clrDgItem]="node">
+      <clr-dg-cell>{{ node.name }}</clr-dg-cell>
+      <clr-dg-cell>{{ node.description }}</clr-dg-cell>
+      <clr-dg-cell>
+        <span *ngIf="!stateChangeActive || selectedNode != node">
+          {{ node.state ? "Node online" : "Node offline" }}
+        </span>
+
+        <span *ngIf="stateChangeActive && selectedNode == node">
+          <span class="spinner spinner-inline"> Loading... </span>
+          <span> Loading... </span>
+        </span>
+
+        <!-- <div class="toggle-switch right-label">
+        <input type="checkbox" name="state" id="state" [(ngModel)]="node.state" (ngModelChange)="updateNode(node)">
+        <label for="nodeState">{{node.state ? 'Node enabled' : 'Node disabled'}}</label>
+      </div> -->
+      </clr-dg-cell>
+    </clr-dg-row>
+
+    <clr-dg-footer>{{ nodeList.length }} nodes</clr-dg-footer>
+  </clr-datagrid>
+</div>

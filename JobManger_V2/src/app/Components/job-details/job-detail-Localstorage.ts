@@ -20,4 +20,5 @@ export class JobDetaillocalstorage {
   public submittimecolumnWidthValue: string;
   public elapsedtimecolumnWidthValue: string;
   public pendingreasoncolumnWidthValue: string;
+  public nodegroupcolumnWidthValue: string;
 }

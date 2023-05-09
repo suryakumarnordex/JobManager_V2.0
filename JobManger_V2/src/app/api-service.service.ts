@@ -8,6 +8,7 @@ import { JobDetailsModules } from './Modules/JobDetailsModules';
 import { SearchResultsLayout, SearchTaskResultsLayout } from './Models/helper';
 import { JobDetailsLocalVariable } from './Components/job-details/job-details-localvariables';
 import { JobDetaillocalstorage } from './Components/job-details/job-detail-Localstorage';
+import { HpcNode } from '../../src/app/Models/hpc-node';
 @Injectable({
   providedIn: 'root',
 })
@@ -26,7 +27,7 @@ export class ApiServiceService {
     let url = 'http://ldms/navigations.json';
     return this.http.get(url);
   }
-  // public AvailableUserName: { key: string; value: string }[] = [];
+
   searchLayout(
     jobIdFragment: string = '',
     userFragment: Array<string> = [],
@@ -264,5 +265,28 @@ export class ApiServiceService {
     return this.http.get(this.apiurl + 'GetStatusList', {
       headers: this.headers,
     });
+  }
+  public list(): Observable<HpcNode[]> {
+    return this.http.get(this.apiurl + 'List', { headers: this.headers }).pipe(
+      map((resp: any) => {
+        const nodeList = [];
+        for (const hpcNodeObject of resp) {
+          nodeList.push(new HpcNode().deserialize(hpcNodeObject));
+        }
+        return nodeList;
+      }),
+      tap((node: HpcNode[]) => {})
+    );
+  }
+  public state(isOnline: boolean, name: string): Observable<string> {
+    const params = new HttpParams()
+      .set('isOnline', isOnline.toString())
+      .set('computerName', name);
+
+    return this.http.post<string>(
+      this.apiurl + 'State',
+      {},
+      { headers: this.headers, params: params }
+    );
   }
 }

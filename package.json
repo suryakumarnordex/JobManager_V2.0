@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@clr/icons": "^13.0.2"
+    "@clr/icons": "^13.0.2",
+    "@clr/ui": "^15.3.0"
   }
 }

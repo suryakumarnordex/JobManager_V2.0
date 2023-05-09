@@ -180,6 +180,15 @@
         >Elapsed Time (HH:mm:ss)</ng-container
       ></clr-dg-column
     >
+    <clr-dg-column
+      [style.width.px]="JobDetailsLocalStorage.nodegroupcolumnWidthValue"
+      [clrDgField]="'nodeGroupFragment'"
+      (clrDgColumnResize)="ColumnResized($event, 'nodegroupcolumnWidth')"
+    >
+      <ng-container *clrDgHideableColumn="{ hidden: false }"
+        >Node Group</ng-container
+      ></clr-dg-column
+    >
 
     <clr-dg-row
       style="word-break: break-all"
@@ -428,6 +437,13 @@
       <clr-dg-cell [style.width.px]="500" id="cellstyle">{{
         job.elapsedTime
       }}</clr-dg-cell>
+      <clr-dg-cell [style.width.px]="500" id="cellstyle"
+        ><div class="hidden">
+          <span title="{{ job.nodeGroupFragment }}"
+            >{{ job.nodeGroupFragment }}
+          </span>
+        </div></clr-dg-cell
+      >
     </clr-dg-row>
     <ng-template
       clrIfDetail

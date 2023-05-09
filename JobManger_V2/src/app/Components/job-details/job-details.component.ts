@@ -245,6 +245,10 @@ export class JobDetailsComponent implements OnInit {
         this.JobDetailsLocalStorage.elapsedtimecolumnWidthValue = event;
         break;
       }
+      case 'nodegroupcolumnWidth': {
+        this.JobDetailsLocalStorage.nodegroupcolumnWidthValue = event;
+        break;
+      }
     }
   }
 
@@ -337,6 +341,11 @@ export class JobDetailsComponent implements OnInit {
             this.JobDetailsLocalVariable.OrderBy = 'priority';
             break;
           }
+          case 'nodeGroupFragment': {
+            this.JobDetailsLocalVariable.SelectedNodeGroup = value;
+            this.JobDetailsLocalVariable.OrderBy = 'nodegroup';
+            break;
+          }
           default: {
             this.JobDetailsLocalVariable.OrderBy = 'id';
           }
@@ -349,6 +358,7 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.filterTopic = '';
       this.JobDetailsLocalVariable.filternooftasks = '';
       this.JobDetailsLocalVariable.filterpriority = '';
+      this.JobDetailsLocalVariable.SelectedNodeGroup = '';
       this.JobDetailsLocalVariable.SelectedjobsId = [];
       this.JobDetailsLocalVariable.selectedType = [];
       this.JobDetailsLocalVariable.selectedUsername = [];
@@ -636,6 +646,8 @@ export class JobDetailsComponent implements OnInit {
       this.localstorage.get('submittimecolumnwidth');
     this.JobDetailsLocalStorage.pendingreasoncolumnWidthValue =
       this.localstorage.get('pendingreasoncolumnwidth');
+    this.JobDetailsLocalStorage.nodegroupcolumnWidthValue =
+      this.localstorage.get('nodegroupcolumnWidth');
     this.JobDetailsLocalVariable.recordperpagejob =
       this.localstorage.get('recordperpage');
     if (

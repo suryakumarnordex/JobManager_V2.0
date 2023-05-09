@@ -5,6 +5,7 @@ import { JobFooterComponent } from './Components/job-footer/job-footer.component
 import { TaskDetailsComponent } from './Components/task-details/task-details.component';
 import { JobHeaderComponent } from './Components/job-header/job-header.component';
 import { PopupModalsComponent } from './Components/popup-modals/popup-modals.component';
+import { NodeListComponent } from './Components/node-list/node-list.component';
 const routes: Routes = [
   { path: '', component: JobDetailsComponent },
   {
@@ -21,9 +22,13 @@ const routes: Routes = [
     component: JobHeaderComponent,
   },
   {
-    path:'app-popup-modals',
-    component:PopupModalsComponent,
-  }
+    path: 'app-popup-modals',
+    component: PopupModalsComponent,
+  },
+  {
+    path: 'nodelist',
+    component: NodeListComponent,
+  },
 ];
 
 @NgModule({
