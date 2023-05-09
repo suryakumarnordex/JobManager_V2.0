@@ -19,13 +19,11 @@
     [clrDgLoading]="this.JobDetailsLocalVariable.dataloading"
     (clrDgSelectedChange)="selectionChanged($event)"
   >
-     
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.idcolumnWidthValue"
       [clrDgField]="'jobIdFragment'"
       (clrDgColumnResize)="ColumnResized($event, 'idcolumnwidth')"
       ><ng-container *clrDgHideableColumn="{ hidden: false }">ID</ng-container> 
-         
     </clr-dg-column>
 
     <clr-dg-column
@@ -196,7 +194,7 @@
       [clrDgItem]="job"
       class="align"
     >
-      <clr-dg-action-overflow>
+      <!-- <clr-dg-action-overflow>
         <button
           [disabled]="this.priorityDisable"
           class="action-item"
@@ -211,15 +209,6 @@
         >
           Requeue
         </button>
-        <!-- pending reason -->
-        <!-- <button
-          [disabled]="true"
-          class="action-item"
-          (click)="openmodel('Pending_Reason', job.jobIdFragment)"
-        >
-          Pending Reason
-        </button> -->
-        <!-- Ends -->
         <button
           [disabled]="this.cancelDisable"
           class="action-item"
@@ -234,10 +223,7 @@
         >
           Submit
         </button>
-      </clr-dg-action-overflow>
-      <!-- <clr-dg-cell id="cellstyle">{{
-        job.jobIdFragment
-      }}</clr-dg-cell> -->
+      </clr-dg-action-overflow> -->
       <clr-dg-cell id="cellstyle">
         <span
           title=" Type : {{ job.typeFragment }}&#013;Topic : {{
