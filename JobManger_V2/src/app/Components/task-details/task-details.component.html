@@ -79,7 +79,7 @@
     ></clr-dg-column
   >
   <clr-dg-column
-    [style.width.px]="400"
+    [style.width.px]="130"
     [clrDgField]="'commandlineFragment'"
     (clrDgColumnResize)="TaskColumnResized($event, 'commandlinecolumnwidth')"
     ><ng-container *clrDgHideableColumn="{ hidden: false }"
@@ -189,32 +189,21 @@
         </span>
       </div></clr-dg-cell
     >
-    <clr-dg-cell class="widthalign" [style.width.px]="50">
-      <div class="clipboards">
-        <div
+    <clr-dg-cell>
+      <div (click)="showFileData(task.commandLineFragment)">
+        <a
+          href="javascript:void(0)"
           role="tooltip"
           aria-haspopup="true"
           class="tooltip tooltip-sm tooltip tooltip-right"
-        ></div>
-        <div>
-          <div (click)="showFileData(task.commandLineFragment)">
-            <a
-              href="javascript:void(0)"
-              role="tooltip"
-              aria-haspopup="true"
-              class="tooltip tooltip-sm tooltip tooltip-right"
-            >
-              <clr-icon
-                shape="copy-to-clipboard"
-                class="is-solid has-badge-info"
-                *ngIf="task.commandLineFragment != undefined"
-              ></clr-icon>
-              <span class="tooltip-content">{{
-                task.commandLineFragment
-              }}</span>
-            </a>
-          </div>
-        </div>
+        >
+          <clr-icon
+            shape="copy-to-clipboard"
+            class="is-solid has-badge-info"
+            *ngIf="task.commandLineFragment != undefined"
+          ></clr-icon>
+          <span class="tooltip-content">{{ task.commandLineFragment }}</span>
+        </a>
       </div>
     </clr-dg-cell>
   </clr-dg-row>
