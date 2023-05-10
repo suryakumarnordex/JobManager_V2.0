@@ -47,6 +47,7 @@ export class PopupModalsComponent implements OnInit {
   }
 
   PopupEvent() {
+
     this.TaskDetailsLocalVariable.dataloading = false;
     this.passingEvent = this.JobDetailsLocalVariable.passingEventMsg;
     switch (this.JobDetailsLocalVariable.passingEventMsg) {
@@ -68,6 +69,7 @@ export class PopupModalsComponent implements OnInit {
                 }, 8000); // 8 sec
               } else {
                 setTimeout(() => {
+                  this.PopupResult='';
                   this.PopupResult +=
                     ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
                   this.PopupModelLocalvariable.isSignpost = false;
@@ -156,7 +158,6 @@ export class PopupModalsComponent implements OnInit {
                   this.PopupModelLocalvariable.iscloseheader = true;
                 }, 8000); // 8 seconds delay
               }
-
               if (res[key].includes('Already')) {
                 setTimeout(() => {
                   this.IsSuccess = false;

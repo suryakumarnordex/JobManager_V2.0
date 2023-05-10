@@ -127,11 +127,11 @@
       </div>
 
       <div class="btn-group btn-sm btn-primary btn-icon">
-        <button class="btn" (click)="exportData()">
+        <button class="btn" (click)="exportData()" title="Export All">
             <clr-icon shape="download"></clr-icon>
            
         </button>
-        <button class="btn" (click)="exportDataselected()" [disabled]="this.selecteddownload">
+        <button class="btn" (click)="exportDataselected()" [disabled]="this.selecteddownload" title="Export Selected">
             <clr-icon shape="collapse-card"></clr-icon>
            
         </button>
