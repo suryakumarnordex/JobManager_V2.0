@@ -133,16 +133,6 @@
         <span class="tooltip-content">{{ task.exidCodeNameFragment }}</span>
       </div>
     </clr-dg-cell>
-
-    <!-- <clr-dg-cell>
-      <button
-        class="btn btn-outline btn-sm"
-        (click)="showFileData(task.standardOutput)"
-      >
-        Link To Standard Output
-      </button>
-    </clr-dg-cell> -->
-
     <clr-dg-cell class="widthalign">
       <div class="clipboards">
         <div>
@@ -199,13 +189,34 @@
         </span>
       </div></clr-dg-cell
     >
-    <clr-dg-cell [style.width.px]="200"
-      ><div class="hidden">
-        <span title="{{ task.commandLineFragment }}"
-          >{{ task.commandLineFragment }}
-        </span>
-      </div></clr-dg-cell
-    >
+    <clr-dg-cell class="widthalign" [style.width.px]="50">
+      <div class="clipboards">
+        <div
+          role="tooltip"
+          aria-haspopup="true"
+          class="tooltip tooltip-sm tooltip tooltip-right"
+        ></div>
+        <div>
+          <div (click)="showFileData(task.commandLineFragment)">
+            <a
+              href="javascript:void(0)"
+              role="tooltip"
+              aria-haspopup="true"
+              class="tooltip tooltip-sm tooltip tooltip-right"
+            >
+              <clr-icon
+                shape="copy-to-clipboard"
+                class="is-solid has-badge-info"
+                *ngIf="task.commandLineFragment != undefined"
+              ></clr-icon>
+              <span class="tooltip-content">{{
+                task.commandLineFragment
+              }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </clr-dg-cell>
   </clr-dg-row>
   <clr-dg-footer>
     <app-job-footer

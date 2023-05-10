@@ -384,4 +384,22 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
       }
     });
   }
+  CopyClipboard(IsRun: boolean, selectedItem: any) {
+    if (selectedItem != undefined) {
+      let CtrlName: any;
+      if (IsRun) {
+        CtrlName = selectedItem.runFolderFragment;
+      } else {
+        CtrlName = selectedItem.cockpitfolderFragment;
+      }
+
+      const create_copy = (e: ClipboardEvent) => {
+        e.clipboardData?.setData('text/plain', CtrlName);
+        e.preventDefault();
+      };
+      document.addEventListener('copy', create_copy);
+      document.execCommand('copy');
+      document.removeEventListener('copy', create_copy);
+    }
+  }
 }
