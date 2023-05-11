@@ -238,6 +238,14 @@
             >
               Update
             </button>
+            <button
+            type="button"
+            class="btn btn-outline"
+            (click)="PopupModelClose()"
+            [disabled]="PopupModelLocalvariable.isclose"
+          >
+            Close
+          </button>
           </div>
         </div>
       </div>
