@@ -19,7 +19,7 @@ import {
   ClrDatagridColumn,
   ClrDatagridStateInterface,
 } from '@clr/angular';
-
+import {ExcelService} from '../services/excel.service';
 import { CheckboxListFilterComponent } from './checkbox-list-filter.component';
 import { ActivatedRoute } from '@angular/router';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
@@ -48,7 +48,7 @@ export class JobDetailsComponent implements OnInit {
   requeueDisable: boolean = true;
   cancelDisable: boolean = true;
   submitDisable: boolean = true;
-
+  selecteddownload:boolean=true;
   idleTime = 2 * 60 * 1000; // 2 minutes in milliseconds
   timeoutId: any;
 
@@ -61,7 +61,8 @@ export class JobDetailsComponent implements OnInit {
     public TaskDetailsComponent: TaskDetailsComponent,
     public TaskDetaillocalstorage: TaskDetaillocalstorage,
     public PopupModelLocalvariable: PopupModelLocalvariable,
-    private dataService: DataService
+    private dataService: DataService,
+    private excelService:ExcelService
   ) {}
 
   ngOnInit(): void {
@@ -250,6 +251,14 @@ export class JobDetailsComponent implements OnInit {
         break;
       }
     }
+  }
+
+  exportAsXLSX():void {
+    this.excelService.exportAsExcelFile(this.JobDetailsLocalVariable.Joblayout, 'Job_Datas');
+  }
+
+  exportSelectedAsXLSX():void {
+    this.excelService.exportAsExcelFile(this.JobDetailsLocalVariable.selectedJoblayout, 'Selected_Job _Data');
   }
 
   Columnfilters(ColumnProperties: ClrDatagridStateInterface) {
@@ -461,7 +470,9 @@ export class JobDetailsComponent implements OnInit {
       waitForChange
     ).subscribe({
       next: (res: SearchResultsLayout) => {
+        console.log(typeof res,"JOB RAW");
         this.JobDetailsLocalVariable.Joblayout = res.results;
+        console.log(this.JobDetailsLocalVariable.Joblayout,"JOB DATAS");
         this.JobDetailsLocalVariable.jobCount = res.totalResults;
         this.JobDetailsLocalVariable.totalPage = Math.ceil(
           this.JobDetailsLocalVariable.jobCount /
@@ -538,7 +549,11 @@ export class JobDetailsComponent implements OnInit {
   }
 
   selectionChanged(event: any[]) {
+    this.JobDetailsLocalVariable.selectedJoblayout= event;
+  
     this.PopupModelLocalvariable.isclose = false;
+    //console.log(this.JobDetailsLocalVariable.SelectedjobsId.length,"Length");
+    
     this.PopupModelLocalvariable.iscloseheader = false;
     this.PopupModelLocalvariable.PriorityValueoption = '';
     this.PopupModelLocalvariable.PriorityValue = '';
@@ -550,17 +565,18 @@ export class JobDetailsComponent implements OnInit {
       this.JobDetailsLocalVariable.SelectedjobsId.filter(
         (item, index, self) => self.indexOf(item) === index
       );
-
+    
     this.priorityDisable = false;
     this.requeueDisable = false;
     this.submitDisable = false;
     this.cancelDisable = false;
-
+    this.selecteddownload = false;
     if (this.JobDetailsLocalVariable.SelectedjobsId.length == 0) {
       this.priorityDisable = true;
       this.requeueDisable = true;
       this.submitDisable = true;
       this.cancelDisable = true;
+      this.selecteddownload = true;
     }
 
     event

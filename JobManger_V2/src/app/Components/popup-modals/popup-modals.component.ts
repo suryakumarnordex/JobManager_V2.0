@@ -47,6 +47,7 @@ export class PopupModalsComponent implements OnInit {
   }
 
   PopupEvent() {
+    this.PopupResult = undefined;
     this.TaskDetailsLocalVariable.dataloading = false;
     this.passingEvent = this.JobDetailsLocalVariable.passingEventMsg;
     switch (this.JobDetailsLocalVariable.passingEventMsg) {
@@ -56,20 +57,26 @@ export class PopupModalsComponent implements OnInit {
             this.PopupModelLocalvariable.isProgressbar = true;
             this.PopupModelLocalvariable.isclose = true;
             this.PopupModelLocalvariable.iscloseheader = true;
-            Object.keys(res).forEach((key) => {
-              if (this.PopupResult == undefined) {
+            Object.keys(res).forEach((key) => { 
+              if (this.PopupResult == undefined && Object.keys(res).length == 1) {
                 this.Popuploading = true;
                 setTimeout(() => {
                   this.PopupResult =
                     'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                  this.PopupModelLocalvariable.isclose=false;
                   this.PopupModelLocalvariable.isSignpost = false;
                   this.PopupModelLocalvariable.isProgressbar = false;
                   this.PopupModelLocalvariable.iscloseheader = false;
-                }, 8000); // 8 sec
+                }, 8000);
               } else {
                 setTimeout(() => {
-                  this.PopupResult +=
-                    ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                    if(this.PopupResult == undefined || (this.PopupResult != undefined && Object.keys(res).length == 1)){
+                      this.PopupResult='Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];;
+                    }
+                    else{
+                      this.PopupResult += ',' + 'Job' + ' ' + key + ' ' + 'is' + ' ' + res[key];
+                    }
+                  this.PopupModelLocalvariable.isclose=false;
                   this.PopupModelLocalvariable.isSignpost = false;
                   this.PopupModelLocalvariable.isProgressbar = false;
                   this.PopupModelLocalvariable.iscloseheader = false;
@@ -156,7 +163,6 @@ export class PopupModalsComponent implements OnInit {
                   this.PopupModelLocalvariable.iscloseheader = true;
                 }, 8000); // 8 seconds delay
               }
-
               if (res[key].includes('Already')) {
                 setTimeout(() => {
                   this.IsSuccess = false;

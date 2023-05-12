@@ -22,6 +22,7 @@ import { TaskDetailsLocalVariable } from './Components/task-details/task-details
 import { TokenInterceptor } from './Services/token.interceptor';
 import { ErrorInterceptor } from './Services/error.interceptor';
 import { WINDOW_PROVIDERS } from './Services/window.providers';
+import { ExcelService } from './Components/services/excel.service';
 import { exec } from 'child_process';
 import { TaskHeaderComponent } from './Components/task-header/task-header.component';
 import { NodeListComponent } from './Components/node-list/node-list.component';
@@ -36,6 +37,7 @@ import { NodeListComponent } from './Components/node-list/node-list.component';
   ],
   declarations: [
     AppComponent,
+   
     JobDetailsComponent,
     UtcToLocalTimePipe,
     TaskDetailsComponent,
@@ -48,6 +50,7 @@ import { NodeListComponent } from './Components/node-list/node-list.component';
   ],
   providers: [
     UtcConverterService,
+    ExcelService,
     TaskDetailsComponent,
     JobDetaillocalstorage,
     JobDetailsLocalVariable,

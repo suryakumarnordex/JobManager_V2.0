@@ -2,5 +2,6 @@
   "dependencies": {
     "@clr/icons": "^13.0.2",
     "@clr/ui": "^15.3.0"
+    "file-saver": "^2.0.5"
   }
 }

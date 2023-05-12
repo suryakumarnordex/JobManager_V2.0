@@ -7,6 +7,7 @@
     [submitDisable]="this.submitDisable"
     [countdown]="this.JobDetailsLocalVariable.countdown"
     [timedOut]="this.JobDetailsLocalVariable.timedOut"
+    [selecteddownload]="this.selecteddownload"
   ></app-job-header>
 
   <clr-datagrid
@@ -43,6 +44,7 @@
         ></checkbox-list-filter>
       </clr-dg-filter>
     </clr-dg-column>
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.cockpitNamecolumnWidthValue"
       [clrDgField]="'cockpitNameFragment'"
@@ -52,6 +54,7 @@
         >Cockpit Name</ng-container
       ></clr-dg-column
     >
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.cockpitcolumnWidthValue"
       [clrDgField]="'cockpitIdFragment'"
@@ -60,6 +63,7 @@
         >Cockpit Id</ng-container
       ></clr-dg-column
     >
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.runcolumnWidthValue"
       [clrDgField]="'runnoFragment'"
@@ -68,6 +72,7 @@
         >Run</ng-container
       ></clr-dg-column
     >
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.typecolumnWidthValue"
       [clrDgField]="'typeFragment'"
@@ -85,6 +90,7 @@
         >Type</ng-container
       ></clr-dg-column
     >
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.topiccolumnWidthValue"
       [clrDgField]="'topicFragment'"
@@ -94,6 +100,7 @@
         >Topic</ng-container
       ></clr-dg-column
     >
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.statuscolumnWidthValue"
       [clrDgField]="'statusFragment'"
@@ -111,6 +118,7 @@
         >Status</ng-container
       ></clr-dg-column
     >
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.progresscolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'progresscolumnwidth')"
@@ -119,6 +127,7 @@
         >Progress</ng-container
       ></clr-dg-column
     >
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.prioritycolumnWidthValue"
       [clrDgField]="'priorityFragment'"
@@ -128,6 +137,7 @@
         >Job Priority</ng-container
       ></clr-dg-column
     >
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.notaskcolumnWidthValue"
       [clrDgField]="'numberOfTasksFragment'"
@@ -136,6 +146,7 @@
         >Number of Tasks</ng-container
       ></clr-dg-column
     >
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.runningTaskcolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'runningTaskcolumnwidth')"
@@ -143,6 +154,7 @@
         >Running Tasks</ng-container
       ></clr-dg-column
     >
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.queuedTaskcolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'queuedTaskcolumnwidth')"
@@ -150,6 +162,7 @@
         >Queued Tasks</ng-container
       ></clr-dg-column
     >
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.starttimecolumnWidthValue"
       [clrDgField]="'startTime'"
@@ -158,6 +171,7 @@
         >Start Time (yy/mm/dd HH:mm)
       </ng-container></clr-dg-column
     >
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.endtimecolumnWidthValue"
       [clrDgField]="'endTime'"
@@ -166,6 +180,7 @@
         >End Time (yy/mm/dd HH:mm)
       </ng-container></clr-dg-column
     >
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.submittimecolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'submittimecolumnwidth')"
@@ -174,6 +189,7 @@
         >Submit Time (yy/mm/dd HH:mm)
       </ng-container></clr-dg-column
     >
+
     <clr-dg-column
       [style.width.px]="JobDetailsLocalStorage.elapsedtimecolumnWidthValue"
       (clrDgColumnResize)="ColumnResized($event, 'elapsedtimecolumnwidth')"
@@ -198,36 +214,6 @@
       [clrDgItem]="job"
       class="align"
     >
-      <!-- <clr-dg-action-overflow>
-        <button
-          [disabled]="this.priorityDisable"
-          class="action-item"
-          (click)="openmodel('Priority', job.jobIdFragment)"
-        >
-          Priority
-        </button>
-        <button
-          [disabled]="this.requeueDisable"
-          class="action-item"
-          (click)="openmodel('Requeue', job.jobIdFragment)"
-        >
-          Requeue
-        </button>
-        <button
-          [disabled]="this.cancelDisable"
-          class="action-item"
-          (click)="openmodel('Cancel', job.jobIdFragment)"
-        >
-          Cancel
-        </button>
-        <button
-          [disabled]="this.submitDisable"
-          class="action-item"
-          (click)="openmodel('Submit', job.jobIdFragment)"
-        >
-          Submit
-        </button>
-      </clr-dg-action-overflow> -->
       <clr-dg-cell id="cellstyle">
         <span
           title=" Type : {{ job.typeFragment }}&#013;Topic : {{
@@ -236,18 +222,21 @@
           >{{ job.jobIdFragment }}
         </span>
       </clr-dg-cell>
+
       <clr-dg-cell [style.width.px]="300" id="cellstyle"
         ><div class="hidden">
           <span title="{{ job.userFragment }}">{{ job.userFragment }} </span>
         </div></clr-dg-cell
       >
+
       <clr-dg-cell [style.width.px]="300" id="cellstyle"
         ><div class="hidden">
-          <span title="{{ job.cockpitNameFragement }}"
-            >{{ job.cockpitNameFragement }}
+          <span title="{{ job.project }}"
+            >{{ job.project.slice(0,job.project.lastIndexOf(" ")) }}
           </span>
         </div></clr-dg-cell
       >
+
       <clr-dg-cell [style.width.px]="300" id="cellstyle">
         <div class="clipboards">
           <div>
@@ -273,7 +262,7 @@
                   class="is-solid has-badge-info"
                   *ngIf="job.cockpitIdFragment != undefined"
                 ></clr-icon>
-                <span class="tooltip-content">{{ job.project }}</span>
+                <span class="tooltip-content">{{ job.cockpitNameFragement }}</span>
               </a>
             </div>
           </div>
@@ -319,11 +308,13 @@
           <span title="{{ job.typeFragment }}">{{ job.typeFragment }} </span>
         </div></clr-dg-cell
       >
+
       <clr-dg-cell [style.width.px]="800" id="cellstyle">
         <div class="hidden">
           <span title="{{ job.topicFragment }}">{{ job.topicFragment }} </span>
         </div>
       </clr-dg-cell>
+
       <clr-dg-cell
         [style.color]="
           job.statusFragment == 'Failed'
@@ -396,15 +387,19 @@
           </span>
         </div></clr-dg-cell
       >
+
       <clr-dg-cell [style.width.px]="200" id="cellstyle">{{
         job.numberOfTasksFragment
       }}</clr-dg-cell>
+
       <clr-dg-cell [style.width.px]="200" id="cellstyle">{{
         job.runningTasksCount
       }}</clr-dg-cell>
+
       <clr-dg-cell [style.width.px]="200" id="cellstyle">{{
         job.queuedTasksCount
       }}</clr-dg-cell>
+
       <clr-dg-cell [style.width.px]="500" id="cellstyle">
         <div class="hidden">
           <span title="{{ job.startTime | utcToLocalTime : 'short' }}"
@@ -412,6 +407,7 @@
           </span>
         </div></clr-dg-cell
       >
+
       <clr-dg-cell [style.width.px]="500" id="cellstyle">
         <div class="hidden">
           <span title="{{ job.endTime | utcToLocalTime : 'short' }}">
@@ -419,6 +415,7 @@
           </span>
         </div></clr-dg-cell
       >
+
       <clr-dg-cell [style.width.px]="500" id="cellstyle"
         ><div class="hidden">
           <span title="{{ job.submitTime | utcToLocalTime : 'short' }}">
@@ -426,6 +423,7 @@
           </span>
         </div></clr-dg-cell
       >
+
       <clr-dg-cell [style.width.px]="500" id="cellstyle">{{
         job.elapsedTime
       }}</clr-dg-cell>
