@@ -114,7 +114,6 @@ export class JobHeaderComponent implements OnInit {
     this.JobDetailsComponent.clearallFilters();
     this.JobDetailsLocalVariable.SelectedNodeGroup = '';
     this.selectedOption = this.JobDetailsLocalVariable.Nodelist[0];
-    //this.JobDetailsLocalVariable.dataloading = false;
   }
   changeSelectedOption() {
     this.clearAllfilters();

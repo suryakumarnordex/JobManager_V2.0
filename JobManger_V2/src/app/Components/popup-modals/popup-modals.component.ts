@@ -225,4 +225,18 @@ export class PopupModalsComponent implements OnInit {
       });
     });
   }
+
+  public Validation() {
+    let isnum = /^\d+$/.test(this.PopupModelLocalvariable.PriorityValue);
+    let SpecialChar: string = '';
+    if (isnum) {
+      if (this.PopupModelLocalvariable.PriorityValue.includes('+')) {
+        SpecialChar = '+';
+      } else if (this.PopupModelLocalvariable.PriorityValue.includes('-')) {
+        SpecialChar = '-';
+      } else {
+        SpecialChar = '';
+      }
+    }
+  }
 }

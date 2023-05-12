@@ -35,4 +35,10 @@ export class TaskHeaderComponent implements OnInit {
     this.TaskDetailsLocalVariable.CheckboxofTaskRow = [];
     this.TaskDetailsLocalVariable.SelectedtasksId = [];
   }
+  clearAllfilters() {
+    this.TaskDetailsComponent.clearallFilters();
+  }
+  FailedTaskOnly() {
+    this.TaskDetailsLocalVariable.selectedState = ['Failed'];
+  }
 }
