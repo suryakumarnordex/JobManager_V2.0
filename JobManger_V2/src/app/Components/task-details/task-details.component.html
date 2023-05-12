@@ -32,10 +32,10 @@
   >
     <clr-dg-filter [clrDgFilter]="statusFilter" [scrollLeft]="true">
       <checkbox-list-filter
-        [id]="statusFilter"
+        [id]="statusTaskFilter"
         #statusFilter
         [filterParamName]="'statusFragment'"
-        [items]="this.JobDetailsLocalVariable.AvailableState"
+        [items]="this.TaskDetailsLocalVariable.AvailableState"
       ></checkbox-list-filter>
     </clr-dg-filter>
     <ng-container *clrDgHideableColumn="{ hidden: false }"

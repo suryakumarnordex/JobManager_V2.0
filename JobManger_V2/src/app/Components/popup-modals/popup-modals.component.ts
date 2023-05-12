@@ -204,8 +204,10 @@ export class PopupModalsComponent implements OnInit {
         this.TaskDetailsLocalVariable.SelectedtasksId = [];
       } else {
         this.JobDetailscomponent.CallSearchlayout();
+        this.JobDetailscomponent.DisableButtons(true);
         this.JobDetailsLocalVariable.SelectedjobsId = [];
         this.JobDetailsLocalVariable.CheckboxofJobRow = [];
+
       }
     }
     this.IsSuccess = false;

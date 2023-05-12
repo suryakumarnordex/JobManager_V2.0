@@ -17,6 +17,7 @@ import { JobDetaillocalstorage } from './Components/job-details/job-detail-Local
 import { TaskDetaillocalstorage } from './Components/task-header/task-detail-Localstorage';
 import { JobDetailsLocalVariable } from './Components/job-details/job-details-localvariables';
 import { CheckboxListFilterComponent } from './Components/job-details/checkbox-list-filter.component';
+import { CheckboxTaskListFilterComponent } from './Components/task-details/checkbox-task-list-filter.component';
 import { PopupModelLocalvariable } from './Components/popup-modals/popup-modalslocalvariable';
 import { TaskDetailsLocalVariable } from './Components/task-details/task-details-localvariable';
 import { TokenInterceptor } from './Services/token.interceptor';

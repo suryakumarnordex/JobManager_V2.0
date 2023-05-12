@@ -30,7 +30,6 @@ export class TaskHeaderComponent implements OnInit {
     this.TaskDetailsLocalVariable.openPopupModal = false;
   }
   refreshData() {
-    console.log('Refresh called');
     this.TaskDetailsComponent.CallSearchTaskLayout();
     this.TaskDetailsLocalVariable.CheckboxofTaskRow = [];
     this.TaskDetailsLocalVariable.SelectedtasksId = [];
@@ -40,5 +39,6 @@ export class TaskHeaderComponent implements OnInit {
   }
   FailedTaskOnly() {
     this.TaskDetailsLocalVariable.selectedState = ['Failed'];
+    this.TaskDetailsComponent.CallSearchTaskLayout();
   }
 }

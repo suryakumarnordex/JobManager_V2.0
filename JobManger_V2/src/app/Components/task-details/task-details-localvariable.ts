@@ -7,6 +7,7 @@ export class TaskDetailsLocalVariable {
   public filterCommandLine: string = '';
 
   public CheckboxofTaskRow = [] as any;
+  public AvailableState: { key: string; value: string }[] = [];
   public selectedState: Array<string> = [];
   public SelectedtasksId: Array<number>;
   public SelectedtaskId: string;

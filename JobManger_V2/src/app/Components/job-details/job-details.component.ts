@@ -486,14 +486,17 @@ export class JobDetailsComponent implements OnInit {
       },
     });
   }
-
+DisableButtons(IsDisable: boolean)
+{
+  this.priorityDisable = IsDisable;
+  this.requeueDisable = IsDisable;
+  this.submitDisable = IsDisable;
+  this.cancelDisable = IsDisable;
+  this.selecteddownload = IsDisable;
+}
   clearallFilters() {
-    this.JobDetailsLocalVariable.ClearAllLocalVariables();
-    this.priorityDisable = true;
-    this.requeueDisable = true;
-    this.submitDisable = true;
-    this.cancelDisable = true;
-
+    this.JobDetailsLocalVariable.ClearAllLocalVariables();   
+   this. DisableButtons(true);   
     this.columns.forEach((column) => (column.filterValue = ''));
     this.checkboxFilter.selectedItems = [];
     this.CallSearchlayout();
@@ -549,11 +552,8 @@ export class JobDetailsComponent implements OnInit {
   }
 
   selectionChanged(event: any[]) {
-    this.JobDetailsLocalVariable.selectedJoblayout= event;
-  
-    this.PopupModelLocalvariable.isclose = false;
-    //console.log(this.JobDetailsLocalVariable.SelectedjobsId.length,"Length");
-    
+    this.JobDetailsLocalVariable.selectedJoblayout= event;  
+    this.PopupModelLocalvariable.isclose = false;      
     this.PopupModelLocalvariable.iscloseheader = false;
     this.PopupModelLocalvariable.PriorityValueoption = '';
     this.PopupModelLocalvariable.PriorityValue = '';
@@ -564,31 +564,18 @@ export class JobDetailsComponent implements OnInit {
     this.JobDetailsLocalVariable.SelectedjobsId =
       this.JobDetailsLocalVariable.SelectedjobsId.filter(
         (item, index, self) => self.indexOf(item) === index
-      );
-    
-    this.priorityDisable = false;
-    this.requeueDisable = false;
-    this.submitDisable = false;
-    this.cancelDisable = false;
-    this.selecteddownload = false;
+      );  
+      this. DisableButtons(false);   
     if (this.JobDetailsLocalVariable.SelectedjobsId.length == 0) {
-      this.priorityDisable = true;
-      this.requeueDisable = true;
-      this.submitDisable = true;
-      this.cancelDisable = true;
-      this.selecteddownload = true;
-    }
+      this. DisableButtons(true);                     }
 
     event
       .map((e) => e.statusFragment)
       .forEach((status) => {
         switch (status.toString()) {
-          case 'Finished': {
-            this.priorityDisable = true;
-            this.requeueDisable = true;
-            this.submitDisable = true;
-            this.cancelDisable = true;
-            break;
+          case 'Finished': {         
+            this. DisableButtons(true);  
+                       break;
           }
           case 'Running': {
             this.requeueDisable = true;

@@ -17,7 +17,7 @@ import { TaskDetaillocalstorage } from '../task-header/task-detail-Localstorage'
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { JobDetailsLocalVariable } from '../job-details/job-details-localvariables';
 import { ClrDatagridColumn, ClrDatagridStateInterface } from '@clr/angular';
-import { CheckboxListFilterComponent } from '../job-details/checkbox-list-filter.component';
+import { CheckboxTaskListFilterComponent } from '../task-details/checkbox-task-list-filter.component';
 import { DataService } from '../job-details/DataService';
 import { PopupModelLocalvariable } from '../popup-modals/popup-modalslocalvariable';
 @Component({
@@ -31,7 +31,7 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
   @Input() JobIDFragement: string;
   @Input() taskLength: number;
   @ViewChildren(ClrDatagridColumn) columns: QueryList<ClrDatagridColumn>;
-  @ViewChild('statusFilter') statusFilter: CheckboxListFilterComponent;
+  @ViewChild('statusTaskFilter') statusTaskFilter: CheckboxTaskListFilterComponent;
   public LogFileData: any;
   TaskRequeueDisable: boolean = true;
   LogModelOpen: boolean = false;
@@ -51,6 +51,7 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.GetTaskLocalStorageColumnValue();
+    this.GetMultipleSelectFiltersData();
     this.TaskDetailsLocalVariable.dataloading = true;
     this.subscription = this.dataService.currentRefreshData.subscribe(
       (refreshData) => {
@@ -243,17 +244,18 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
   clearallFilters() {
     this.TaskDetailsLocalVariable.dataloading = true;
     this.columns.forEach((column) => (column.filterValue = ''));
-    this.TaskDetailsLocalVariable.currentpage = 1;
+    this.TaskDetailsLocalVariable.currentpage = 1;  
     this.ClearAllLocalVariables();
+    this.GetMultipleSelectFiltersData();
     this.CallSearchTaskLayout();
   }
 
   ClearAllLocalVariables() {
     this.TaskDetailsLocalVariable.filterTaskId = '';
     this.TaskDetailsLocalVariable.filterCommandLine = '';
-    this.TaskDetailsLocalVariable.filterName = '';
+    this.TaskDetailsLocalVariable.filterName = '';  
+    this.TaskDetailsLocalVariable.selectedState.length = 0;
     this.TaskDetailsLocalVariable.selectedState = [];
-    this.statusFilter.selectedItems = [];
     this.TaskDetailsLocalVariable.CheckboxofTaskRow = [];
     this.TaskDetailsLocalVariable.SelectedtasksId = [];
     this.TaskDetailsLocalVariable.OrderBy = '';
@@ -338,6 +340,10 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
           this.TaskDetailsLocalVariable.OrderBy = 'Taskname';
           break;
         }
+        case 'statusFragment': {
+          this.TaskDetailsLocalVariable.OrderBy = 'taskstate';
+          break;
+        }
         case 'exitcodeFragment': {
           this.TaskDetailsLocalVariable.OrderBy = 'ExitCode';
           break;
@@ -401,5 +407,27 @@ export class TaskDetailsComponent implements OnInit, OnDestroy {
       document.execCommand('copy');
       document.removeEventListener('copy', create_copy);
     }
+  }
+  GetMultipleSelectFiltersData() {
+    this.TaskDetailsLocalVariable.AvailableState = [];
+     //Get Available Status list
+    this.ApiService.GetStatusList().subscribe({
+      next: (res: any) => {
+        res.forEach((state: any) => {
+          if (!this.TaskDetailsLocalVariable.AvailableState)
+            this.TaskDetailsLocalVariable.AvailableState = [
+              { key: state, value: state },
+            ];
+          else
+            this.TaskDetailsLocalVariable.AvailableState.push({
+              key: state,
+              value: state,
+            });
+        });
+      },
+      error: (error: string) => {
+        console.log(error);
+      },
+    });
   }
 }
