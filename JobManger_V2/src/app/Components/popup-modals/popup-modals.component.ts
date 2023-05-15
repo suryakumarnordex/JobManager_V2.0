@@ -60,7 +60,7 @@ export class PopupModalsComponent implements OnInit {
         }
         else
         {
-          PriorityBand = this.Validation(this.PopupModelLocalvariable.PriorityValue)
+          PriorityBand = this.Validation(this.PopupModelLocalvariable.PriorityValue);
         }        
         if(PriorityBand <=4000)
           {          
