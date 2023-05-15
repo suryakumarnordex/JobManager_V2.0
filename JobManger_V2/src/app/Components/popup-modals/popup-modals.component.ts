@@ -52,6 +52,18 @@ export class PopupModalsComponent implements OnInit {
     this.passingEvent = this.JobDetailsLocalVariable.passingEventMsg;
     switch (this.JobDetailsLocalVariable.passingEventMsg) {
       case 'Priority': {
+        let PriorityBand = 0;
+        var IsNumber = Number(this.PopupModelLocalvariable.PriorityValue);
+        if(IsNumber)
+        {
+          PriorityBand = IsNumber;
+        }
+        else
+        {
+          PriorityBand = this.Validation(this.PopupModelLocalvariable.PriorityValue)
+        }        
+        if(PriorityBand <=4000)
+          {          
         this.SetJobPriority()
           .then((res) => {
             this.PopupModelLocalvariable.isProgressbar = true;
@@ -91,10 +103,17 @@ export class PopupModalsComponent implements OnInit {
             });
           })
           .catch((error) => {
-            this.PopupResult = error;
             this.IsSuccess = false;
+            this.PopupResult = error;            
           });
         break;
+      }
+      else
+        {
+          this.IsSuccess = false;
+          this.PopupResult = "Not allowed this priority value " + this.PopupModelLocalvariable.PriorityValue;         
+          break;
+        }
       }
       case 'TaskRequeue': {
         this.TaskDetailsComponent.ButtonEvents(
@@ -233,18 +252,113 @@ export class PopupModalsComponent implements OnInit {
       });
     });
   }
+  
+  Validation(priorityStr: string): number {
+    try {
+        let sumValue = 0;
+        let priorityValue = '';
+        let specialChar = '';
 
-  public Validation() {
-    let isnum = /^\d+$/.test(this.PopupModelLocalvariable.PriorityValue);
-    let SpecialChar: string = '';
-    if (isnum) {
-      if (this.PopupModelLocalvariable.PriorityValue.includes('+')) {
-        SpecialChar = '+';
-      } else if (this.PopupModelLocalvariable.PriorityValue.includes('-')) {
-        SpecialChar = '-';
-      } else {
-        SpecialChar = '';
-      }
+        const containsInt = /\d/.test(priorityStr);
+        if (containsInt) {
+            const chars = ['+', '-'];
+            for (const char of chars) {
+                if (priorityStr.includes(char.trim())) {
+                    specialChar = char.trim();
+                    break;
+                }
+            }
+
+            if (specialChar !== '') {
+                const priorityStrList = priorityStr.split(specialChar);
+
+                if (priorityStrList.length > 1) {
+                    priorityValue = priorityStrList[0].toUpperCase().trim();
+                    const value = parseInt(priorityStrList[1].toString().trim());
+                    if (!isNaN(value)) {
+                        sumValue = value;
+                    }
+                }
+            }
+        }
+
+        if (specialChar === '') {
+            priorityValue = priorityStr.toUpperCase().trim();
+            sumValue = 0;
+        }
+
+        let priorityBand = 0;
+        switch (priorityValue.trim()) {
+            case 'LOWEST':
+                if (specialChar === '+') {
+                    priorityBand = 0 + sumValue;
+                } else if (specialChar === '-') {
+                    priorityBand = 0 - sumValue;
+                } else {
+                    priorityBand = 0;
+                }
+                break;
+
+            case 'BELOWNORMAL':
+                if (specialChar === '+') {
+                    priorityBand = 1000 + sumValue;
+                } else if (specialChar === '-') {
+                    priorityBand = 1000 - sumValue;
+                } else {
+                    priorityBand = 1000;
+                }
+                break;
+
+            case 'NORMAL':
+                if (specialChar === '+') {
+                    priorityBand = 2000 + sumValue;
+                } else if (specialChar === '-') {
+                    priorityBand = 2000 - sumValue;
+                } else {
+                    priorityBand = 2000;
+                }
+                break;
+
+            case 'ABOVENORMAL':
+                if (specialChar === '+') {
+                    priorityBand = 3000 + sumValue;
+                } else if (specialChar === '-') {
+                    priorityBand = 3000 - sumValue;
+                } else {
+                    priorityBand = 3000;
+                }
+                break;
+
+            case 'HIGHEST':
+                if (specialChar === '+') {
+                    priorityBand = 4000 + sumValue;
+                } else if (specialChar === '-') {
+                    priorityBand = 4000 - sumValue;
+                } else {
+                    priorityBand = 4000;
+                }
+                break;
+        }
+
+        return priorityBand;
+    } catch (ex) {
+        console.log(ex);
+        return 0;
     }
-  }
+}
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
 }
