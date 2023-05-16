@@ -19,6 +19,10 @@ export class JobLayoutInfo implements Deserializable, Serializable {
   pendingReasonFragment: string;
   orderBy: string;
   orderDescending: boolean;
+  parentJobIdsFragment:string;
+  parentJobIdsStatusFragment:string;
+  toolChainVersionFragment : string;
+
 
   //New
   startTime: string;
@@ -51,6 +55,9 @@ export class JobLayoutInfo implements Deserializable, Serializable {
     this.pendingReasonFragment = input.pendingReason;
     this.cockpitfolderFragment = input.cockpitFolder;
     this.project = input.project;
+    this.parentJobIdsFragment=input.parentJobIds;
+    this.parentJobIdsStatusFragment=input.parentJobIdsStatus;
+    this.toolChainVersionFragment=input.toolChainVersion;
     //New
     this.startTime = input.startTime;
     this.endTime = input.endTime;
@@ -82,6 +89,9 @@ export class JobLayoutInfo implements Deserializable, Serializable {
       nodeGroupFragment: this.nodeGroupFragment,
       pendingReasonFragment: this.pendingReasonFragment,
       Comment: this.pendingReasonFragment,
+      parentJobIdsFragment:this.parentJobIdsFragment,
+      parentJobIdsStatusFragment:this.parentJobIdsStatusFragment,
+      toolChainVersionFragment:this.toolChainVersionFragment,
       // clipboardtext: this.clipboardtext,
       startTime: this.startTime,
       endTime: this.endTime,

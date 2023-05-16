@@ -21,4 +21,5 @@ export class JobDetaillocalstorage {
   public elapsedtimecolumnWidthValue: string;
   public pendingreasoncolumnWidthValue: string;
   public nodegroupcolumnWidthValue: string;
+  public toolChainVersioncolumnWidthValue: string;
 }
